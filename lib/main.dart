@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 
 void main() {
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LogInScreen(),
+      home: const EditCustomerInfo(),
     );
   }
 }

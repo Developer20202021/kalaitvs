@@ -15,6 +15,7 @@ class CreateNewCustomer extends StatefulWidget {
 class _CreateNewCustomerState extends State<CreateNewCustomer> {
   TextEditingController myEmailController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
+  TextEditingController customerPhoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                     
                     Center(
                       child: Lottie.asset(
-                      'lib/images/animation_lk8g4ixk.json',
+                      'lib/images/animation_lmsev4au.json',
                         fit: BoxFit.cover,
                         width: 300,
                         height: 200
@@ -158,7 +159,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: customerPhoneNumberController,
                     ),
             
             
@@ -201,15 +202,6 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                     ),
 
                    
-
-
-
-
-
-
-
-
-
 
 
             
