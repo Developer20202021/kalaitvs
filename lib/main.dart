@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
+import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
+import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 
 void main() {
@@ -35,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const EditCustomerInfo(),
+      home: const UploadCustomerInfo(),
     );
   }
 }

@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 
-class UploadCustomerInfo extends StatefulWidget {
-  const UploadCustomerInfo({super.key});
+class PaymentHistory extends StatefulWidget {
+  const PaymentHistory({super.key});
 
   @override
-  State<UploadCustomerInfo> createState() => _UploadCustomerInfoState();
+  State<PaymentHistory> createState() => _PaymentHistoryState();
 }
 
-class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
-
+class _PaymentHistoryState extends State<PaymentHistory> {
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Upload Customer File", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Your Payment History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -156,25 +152,6 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
                           borderRadius: BorderRadius.circular(5),
                         ), 
 
-                      title: Text("File Name", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("Done"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
                       title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                       trailing: Text("complete"),
                       subtitle: Text("Date: 21/12/2023"),
@@ -204,120 +181,28 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
 
 
                     SizedBox(height: 14,),
+
+
                     
-Table(
-border: TableBorder.all(color: Colors.green, width: 1.5),
-  children: const [
-    TableRow(children: [
-      Text("1", style: TextStyle(fontSize: 15.0),),
-      Text("Mohit", style: TextStyle(fontSize: 15.0),),
-      Text("25", style: TextStyle(fontSize: 15.0),),
-    ]),
-    TableRow(children: [
-      Text("2", style: TextStyle(fontSize: 15.0),),
-      Text("Ankit", style: TextStyle(fontSize: 15.0),),
-      Text("27", style: TextStyle(fontSize: 15.0),),
-    ]),
-    TableRow(children: [
-      Text("3", style: TextStyle(fontSize: 15.0),),
-      Text("Rakhi", style: TextStyle(fontSize: 15.0),),
-      Text("26", style: TextStyle(fontSize: 15.0),),
-    ]),
-    TableRow(children: [
-      Text("4", style: TextStyle(fontSize: 15.0),),
-      Text("Yash", style: TextStyle(fontSize: 15.0),),
-      Text("29", style: TextStyle(fontSize: 15.0),),
-    ]),
-    TableRow(children: [
-      Text("5", style: TextStyle(fontSize: 15.0),),
-      Text("Pragati", style: TextStyle(fontSize: 15.0),),
-      Text("28", style: TextStyle(fontSize: 15.0),),
-    ]),
-  ],
-),
+                    ListTile(
+                       shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(5),
+                        ), 
+
+                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                      trailing: Text("complete"),
+                      subtitle: Text("Date: 21/12/2023"),
 
 
 
-                  ]))),
-                    floatingActionButton: FloatingActionButton(
-                    onPressed: (){
-                      showAlertDialog(context);
-                    },
-                    tooltip: 'Upload',
-                    child: const Icon(Icons.upload_file_outlined),
-                  ),
-                  
-                  );
+                    ),
+
+
+                    SizedBox(height: 14,),
+
+
+
+                  ]))));
   }
-}
-
-
-showAlertDialog(BuildContext context) {
-
-    TextEditingController myEmailController = TextEditingController();
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text("Cancel"),
-    onPressed:  () {},
-  );
-  Widget continueButton = TextButton(
-    child: Text("Continue"),
-    onPressed:  () {},
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Choose File"),
-    content: Column(
-      children: [
-        IconButton(onPressed: (){
-
-        }, icon: Icon(Icons.file_upload_outlined)),
-
-          TextField(
-               
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter File Name',
-                           labelStyle: TextStyle(
-                  ),
-                          hintText: 'Enter File Name',
-            
-                          //  enabledBorder: OutlineInputBorder(
-                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //     ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                              ),
-                          
-                          
-                          ),
-                      controller: myEmailController,
-                    ),
-            
-            
-      ],
-    ),
-
-    
-
-
-
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }
