@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,9 +16,10 @@ class CreateNewCustomer extends StatefulWidget {
 }
 
 class _CreateNewCustomerState extends State<CreateNewCustomer> {
-  TextEditingController myEmailController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
   TextEditingController customerPhoneNumberController = TextEditingController();
+  TextEditingController customerNameController = TextEditingController();
+  TextEditingController customerAddressController = TextEditingController();
+  TextEditingController customerNIDController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: customerNameController,
                     ),
             
             
@@ -105,7 +107,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                     TextField(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Enter Address',
+                          labelText: 'Enter Customer Address',
                            labelStyle: TextStyle(
               color: myFocusNode.hasFocus ? Colors.purple: Colors.black
                   ),
@@ -123,7 +125,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: customerAddressController,
                     ),
             
                     SizedBox(
@@ -196,7 +198,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: customerNIDController,
                     ),
             
                     SizedBox(
@@ -219,7 +221,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-
+                  createCustomer(customerNameController.text, customerNIDController.text, customerAddressController.text, customerPhoneNumberController.text);
 
                         }, child: Text("Save", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
@@ -297,4 +299,27 @@ class CurvePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
+}
+
+
+
+
+
+
+Future createCustomer(String CustomerName, CustomerNID, CustomerAddress, CustomerPhoneNumber) async{
+
+  final docUser = FirebaseFirestore.instance.collection("customer");
+
+  final jsonData ={
+    "CustomerName":CustomerName,
+    "CustomerNID":CustomerNID,
+    "CustomerAddress":CustomerAddress,
+    "CustomerPhoneNumber":CustomerPhoneNumber
+  };
+
+
+ await docUser.doc(CustomerNID).set(jsonData);
+
+
+
 }
