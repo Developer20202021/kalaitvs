@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
+import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
-import 'package:tvs_app/Screens/AdminScreen/ProductScreenToAllCustomer.dart';
 
 
-class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+class ProductScreenToAllCustomer extends StatefulWidget {
+  const ProductScreenToAllCustomer({super.key});
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  State<ProductScreenToAllCustomer> createState() => _ProductScreenToAllCustomerState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _ProductScreenToAllCustomerState extends State<ProductScreenToAllCustomer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _ProductScreenState extends State<ProductScreen> {
       appBar:  AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Bikes", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -45,20 +45,7 @@ class _ProductScreenState extends State<ProductScreen> {
               // All actions are defined in the children parameter.
               children: const [
                 // A SlidableAction can have an icon and/or a label.
-                SlidableAction(
-                  onPressed: doNothing,
-                  backgroundColor: Color(0xFFFE4A49),
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  label: 'Previous Sale',
-                ),
-                SlidableAction(
-                  onPressed: doNothing,
-                  backgroundColor: Color(0xFF21B7CA),
-                  foregroundColor: Colors.white,
-                  icon: Icons.info,
-                  label: 'View',
-                ),
+             
               ],
             ),
 
@@ -66,7 +53,6 @@ class _ProductScreenState extends State<ProductScreen> {
             endActionPane: const ActionPane(
               motion: ScrollMotion(),
               children: [
-              
               
               ],
             ),
@@ -80,19 +66,20 @@ class _ProductScreenState extends State<ProductScreen> {
         child: Text("S"),
       ),
 
-      subtitle: Text('Bike Model and '),
-      trailing:   TextButton(onPressed: (){
-
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreenToAllCustomer()));
+      subtitle: Text('NID:89089'),
+      trailing: TextButton(onPressed: (){
 
 
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditCustomerInfo()));
 
-      }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+
+
+      }, child: Text("Get", style: TextStyle(color: Colors.white),), style: ButtonStyle(
        
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
               ),),
               
-              title: Text('Bike Name', style: TextStyle(
+              title: Text('Mahadi Hasan', style: TextStyle(
                 fontWeight: FontWeight.bold
               ),)),
           );
@@ -105,14 +92,14 @@ class _ProductScreenState extends State<ProductScreen> {
 
 void doNothing(BuildContext context) {}
 
-void EveryPaymentHistory(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
-}
+// void EveryPaymentHistory(BuildContext context){
+//   Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
+// }
 
 
 
 
 
-void CustomerAddPayment(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
-}
+// void CustomerAddPayment(BuildContext context){
+//   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
+// }
