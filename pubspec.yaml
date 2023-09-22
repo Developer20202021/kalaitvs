@@ -40,6 +40,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^23.1.36
   flutter_ui_toolkit: ^0.0.3+9
   syncfusion_flutter_charts: ^23.1.36
+  http: ^1.1.0
   
   
 

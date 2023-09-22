@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class SalesPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -15,6 +14,15 @@ class SalesPageState extends State<SalesPage> {
   late List<_ChartData> data;
   late TooltipBehavior _tooltip;
   double myValue = 1412;
+
+
+     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+      // TODO: implement your code here
+
+      dynamic value = args.value;
+      
+      print(value);
+    }
  
   @override
   void initState() {
@@ -42,15 +50,64 @@ class SalesPageState extends State<SalesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar:  AppBar(
+        
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
+
         title: const Text("Your Sales", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+       actions: [
+        IconButton(onPressed: (){
+
+
+          showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+
+
+          Container(
+                child: SfDateRangePicker(
+                  onSelectionChanged: _onSelectionChanged,
+                  selectionMode: DateRangePickerSelectionMode.range,
+                  todayHighlightColor: Colors.purple,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 150,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.purple),
+                  ),
+                ),
+              )
+        
+        ],
+      );
+    });
+
+        }, icon: Icon(Icons.date_range, color: Colors.purple,))
+
+      ],
         
       ),
+
+
+      
         body: SfCartesianChart(
             primaryXAxis: CategoryAxis(),
             primaryYAxis: NumericAxis(minimum: 0, maximum: myValue, interval: 1000),
@@ -73,4 +130,7 @@ class _ChartData {
   final String x;
   final double y;
 }
+
+
+
 

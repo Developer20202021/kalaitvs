@@ -3,6 +3,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/DueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/SalesPage.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  SalesPage(),
+      home:  DueCustomer(),
     );
   }
 }
