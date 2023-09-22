@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:tvs_app/Screens/AdminScreen/BlockAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
+import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 
 
-class AllAdmin extends StatefulWidget {
-  const AllAdmin({super.key});
+class AllProduct extends StatefulWidget {
+  const AllProduct({super.key});
 
   @override
-  State<AllAdmin> createState() => _AllAdminState();
+  State<AllProduct> createState() => _AllProductState();
 }
 
-class _AllAdminState extends State<AllAdmin> {
+class _AllProductState extends State<AllProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _AllAdminState extends State<AllAdmin> {
       appBar:  AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Admins", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Bikes", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -57,7 +57,7 @@ class _AllAdminState extends State<AllAdmin> {
                   backgroundColor: Color(0xFF21B7CA),
                   foregroundColor: Colors.white,
                   icon: Icons.info,
-                  label: 'All Info',
+                  label: 'View',
                 ),
               ],
             ),
@@ -69,29 +69,50 @@ class _AllAdminState extends State<AllAdmin> {
                 SlidableAction(
                   // An action can be bigger than the others.
                   flex: 2,
-                  onPressed: BlockYourAdmin,
+                  onPressed: CustomerAddPayment,
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.payment,
-                  label: 'Block Admin',
+                  label: 'Previous Sale',
                 ),
-              
+                SlidableAction(
+                  onPressed: EveryPaymentHistory,
+                  backgroundColor: Color(0xFF0392CF),
+                  foregroundColor: Colors.white,
+                  icon: Icons.save,
+                  label: 'Edit',
+                ),
               ],
             ),
 
             // The child of the Slidable is what the user sees when the
             // component is not dragged.
-            child: const ListTile(
+            child:  ListTile(
               
                  leading: CircleAvatar(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.purple,
         child: Text("S"),
       ),
 
-      subtitle: Text('ID:89089'),
-      trailing: Text("blocked"),
+      subtitle: Text('Bike Available: 2'),
+      trailing: TextButton(onPressed: () {
+
+
+      
+
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo()));
+
+
+
+      }, child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+       
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+              ),),
+
+
               
-              title: Text('Mahadi Hasan', style: TextStyle(
+              
+              title: Text('Bike Name', style: TextStyle(
                 fontWeight: FontWeight.bold
               ),)),
           );
@@ -102,7 +123,11 @@ class _AllAdminState extends State<AllAdmin> {
   }
 }
 
-void doNothing(BuildContext context) {}
+void doNothing(BuildContext context) {
+
+   Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo()));
+
+}
 
 void EveryPaymentHistory(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
@@ -112,6 +137,6 @@ void EveryPaymentHistory(BuildContext context){
 
 
 
-void BlockYourAdmin(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BlockAdmin()));
+void CustomerAddPayment(BuildContext context){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
 }

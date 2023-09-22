@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
-import 'package:tvs_app/Screens/AdminScreen/ProductScreenToAllCustomer.dart';
+
 
 
 class ProductScreen extends StatefulWidget {
@@ -80,10 +81,13 @@ class _ProductScreenState extends State<ProductScreen> {
         child: Text("S"),
       ),
 
-      subtitle: Text('Bike Model and '),
-      trailing:   TextButton(onPressed: (){
+      subtitle: Text('Bike Model'),
+      trailing:   TextButton(onPressed: () async{
 
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreenToAllCustomer()));
+
+      
+
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer()));
 
 
 
@@ -116,3 +120,6 @@ void EveryPaymentHistory(BuildContext context){
 void CustomerAddPayment(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
 }
+
+
+

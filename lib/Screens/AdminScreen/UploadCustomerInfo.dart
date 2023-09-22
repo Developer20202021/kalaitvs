@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tvs_app/Screens/AdminScreen/SingleBikeInfo.dart';
 
 class UploadCustomerInfo extends StatefulWidget {
   const UploadCustomerInfo({super.key});
@@ -18,6 +19,17 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+        actions: [
+    IconButton(
+      icon: Icon(
+        Icons.save_as_outlined,
+        color: Colors.purple,
+      ),
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleBikeInfo()));
+      },
+    )
+  ],
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Upload Customer File", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),

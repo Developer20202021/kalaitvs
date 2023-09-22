@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 
 
@@ -711,7 +712,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
 
                             Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LogInScreen()),
+                        MaterialPageRoute(builder: (context) => const UploadCustomerInfo()),
                       );
 
 
