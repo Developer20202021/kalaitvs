@@ -16,6 +16,21 @@ class UploadProduct extends StatefulWidget {
 
 class _UploadProductState extends State<UploadProduct> {
   TextEditingController myEmailController = TextEditingController();
+  TextEditingController BikeTypeController = TextEditingController();
+  TextEditingController BikeEngineCapacityController = TextEditingController();
+  TextEditingController BikeMaximumPowerController = TextEditingController();
+  TextEditingController BikeMaximumTorqueController = TextEditingController();
+  TextEditingController BikeFuelSupplySystemController = TextEditingController();
+  TextEditingController BikeFuelsupplysystemController = TextEditingController();
+  TextEditingController BikeValvePerCylinderController = TextEditingController();
+  TextEditingController BikePowertoWeightRationController = TextEditingController();
+  TextEditingController BikeCoolingSystemController = TextEditingController();
+  TextEditingController BikeMufflerController = TextEditingController();
+  TextEditingController BikeGearBoxController = TextEditingController();
+  TextEditingController BikeRearSuspensionController = TextEditingController();
+  TextEditingController BikeFrameController = TextEditingController();
+  TextEditingController BikeFrontSuspensionController = TextEditingController();
+  TextEditingController BikeMaxSpeedController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
 
   @override
@@ -222,7 +237,7 @@ class _UploadProductState extends State<UploadProduct> {
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.purple: Colors.black
               ),
-                      hintText: 'Enter Your Password',
+                      hintText: 'valve per cylinder',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -341,7 +356,7 @@ class _UploadProductState extends State<UploadProduct> {
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.purple: Colors.black
               ),
-                      hintText: 'Enter Your Password',
+                      hintText: 'Gear Box',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -421,33 +436,7 @@ class _UploadProductState extends State<UploadProduct> {
                 ),
       
       
-                  TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Front Suspension',
-                       labelStyle: TextStyle(
-          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-              ),
-                      hintText: 'Front Suspension',
-                      //  enabledBorder: OutlineInputBorder(
-                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                      //   ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.purple),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                        ),
-                      
-                      
-                      ),
-                  controller: myPassController,
-                ),
-              
-                SizedBox(
-                  height: 10,
-                ),
+                  
       
       
       

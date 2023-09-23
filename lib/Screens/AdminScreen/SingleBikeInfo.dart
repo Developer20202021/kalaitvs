@@ -604,7 +604,7 @@ class CurvePainter extends CustomPainter {
           
 Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String Amount,String BikeName, String BikeEngineNo,String BikeChassisNo, String BikeConditionMonth, String BikeBillPay) async {
 
-  var customerMsg = "Dear Customer আপনি TVS কালাই শুরুম থেকে ${CustomerNID} Account No এ ${Amount}৳ টাকায় ${BikeEngineNo} & ${BikeChassisNo} ${BikeName} নামের ${BikeBillPay} টাকা পরিশোধ করে Bike ক্রয় করেছেন। ধন্যবাদ ";
+  var customerMsg = "Dear Customer আপনি TVS কালাই শুরুম থেকে ${Amount}৳ টাকায় ${BikeName} Bike ${BikeBillPay} টাকা পরিশোধ করে ক্রয় করেছেন।";
 
 
 
