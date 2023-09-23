@@ -41,14 +41,6 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
         
 
-
-        
-
-        
-
-
-
-
       }
   
 
