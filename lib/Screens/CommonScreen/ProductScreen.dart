@@ -87,9 +87,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
       
 
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer()));
-
-
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
 
       }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
        

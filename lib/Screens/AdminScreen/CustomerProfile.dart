@@ -4,7 +4,16 @@ import 'package:flutter/src/widgets/framework.dart';
 
 
 class CustomerProfile extends StatefulWidget {
-  const CustomerProfile({super.key});
+
+
+  final String CustomerNID;
+  
+
+
+
+
+
+  const CustomerProfile({super.key, required this.CustomerNID});
 
   @override
   State<CustomerProfile> createState() => _EditCustomerInfoState();

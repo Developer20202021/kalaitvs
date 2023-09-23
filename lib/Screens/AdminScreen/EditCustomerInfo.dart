@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -6,15 +7,48 @@ import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 
 
 class EditCustomerInfo extends StatefulWidget {
-  const EditCustomerInfo({super.key});
+
+  
+
+  final String CustomerNID;
+  final String CustomerName;
+  final String CustomerAddress;
+  final String CustomerPhoneNumber;
+  final String BikeName;
+  final String BikeColor;
+  final String BikeModelName;
+  final String BikeSalePrice;
+
+
+  const EditCustomerInfo({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber, required this.BikeColor, required this.BikeModelName, required this.BikeName, required this.BikeSalePrice});
 
   @override
   State<EditCustomerInfo> createState() => _EditCustomerInfoState();
 }
 
 class _EditCustomerInfoState extends State<EditCustomerInfo> {
-  TextEditingController myEmailController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+  TextEditingController CustomerNameController = TextEditingController();
+  TextEditingController CustomerFatherNameController = TextEditingController();
+  TextEditingController CustomerMotherNameController = TextEditingController();
+  TextEditingController CustomerAddressController = TextEditingController();
+  TextEditingController CustomerPhoneNumberController = TextEditingController();
+  TextEditingController CustomerEmailController = TextEditingController();
+  TextEditingController CustomerNIDController = TextEditingController();
+  TextEditingController CustomerGuarantor1NameController = TextEditingController();
+  TextEditingController CustomerGuarantor1NIDController = TextEditingController();
+  TextEditingController CustomerGuarantor1PhoneNumberController = TextEditingController();
+  TextEditingController CustomerGuarantor1AddressController = TextEditingController();
+
+  TextEditingController CustomerGuarantor2NameController = TextEditingController();
+  TextEditingController CustomerGuarantor2PhoneNumberController = TextEditingController();
+  TextEditingController CustomerGuarantor2AddressController = TextEditingController();
+  TextEditingController CustomerGuarantor2NIDController = TextEditingController();
+  
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +56,19 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
     FocusNode myFocusNode = new FocusNode();
 
     bool value = false;
+
+
+    // Create New Customer Page Data set to textField
+    CustomerNameController.text = widget.CustomerName;
+    CustomerAddressController.text = widget.CustomerAddress;
+    CustomerPhoneNumberController.text = widget.CustomerPhoneNumber;
+    CustomerNIDController.text = widget.CustomerNID;
+
+
+
+
+
+
 
 
  
@@ -85,7 +132,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: CustomerNameController,
                     ),
             
             
@@ -123,7 +170,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerFatherNameController,
                     ),
 
 
@@ -161,7 +208,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerMotherNameController,
                     ),
 
 
@@ -193,7 +240,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerAddressController,
                     ),
             
                     SizedBox(
@@ -231,7 +278,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: CustomerPhoneNumberController,
                     ),
             
             
@@ -266,7 +313,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerEmailController,
                     ),
             
                     SizedBox(
@@ -301,7 +348,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerNIDController,
                     ),
 
 
@@ -376,7 +423,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor1NameController,
                     ),
 
 
@@ -421,7 +468,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor1PhoneNumberController,
                     ),
 
 
@@ -467,7 +514,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor1NIDController,
                     ),
 
 
@@ -514,7 +561,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor1AddressController,
                     ),
 
 
@@ -552,7 +599,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor2NameController,
                     ),
 
 
@@ -588,7 +635,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor2PhoneNumberController,
                     ),
 
 
@@ -634,7 +681,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor2NIDController,
                     ),
 
 
@@ -681,7 +728,7 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerGuarantor2AddressController,
                     ),
 
 
@@ -710,10 +757,108 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                       children: [
                         Container(width: 150, child:TextButton(onPressed: (){
 
-                            Navigator.push(
+
+
+
+
+
+
+          //Update Firebase Collection Customer Data 
+
+              Future EditCustomerInformation(String CustomerFatherName, String CustomerMotherName, String CustomerAddress, String CustomerEmail, String CustomerGuarantor1Name, String CustomerGuarantor1PhoneNumber, String CustomerGuarantor1NID, String CustomerGuarantor1Address, String CustomerGuarantor2Name, String CustomerGuarantor2PhoneNumber, String CustomerGuarantor2NID, String CustomerGuarantor2Address, String CustomerNID) async{
+
+
+                  final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
+
+                  final UpadateData ={
+                  "CustomerFatherName":CustomerFatherName,
+                  "CustomerMotherName":CustomerMotherName,
+                  "CustomerEmail":CustomerEmail,
+                  "CustomerAddress":CustomerAddress,
+                  "CustomerGuarantor1Name":CustomerGuarantor1Name,
+                  "CustomerGuarantor1NID":CustomerGuarantor1NID,
+                  "CustomerGuarantor1Address": CustomerGuarantor1Address,
+                  "CustomerGuarantor1PhoneNumber":CustomerGuarantor1PhoneNumber,
+                  "CustomerGuarantor2Name":CustomerGuarantor2Name,
+                  "CustomerGuarantor2NID":CustomerGuarantor2NID,
+                  "CustomerGuarantor2Address":CustomerGuarantor2Address,
+                  "CustomerGuarantor2PhoneNumber":CustomerGuarantor2PhoneNumber
+                
+                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.green,
+                              content: const Text('Customer Information Setup Seccessful!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+
+              }
+
+
+
+
+
+
+
+
+                          EditCustomerInformation(CustomerFatherNameController.text, CustomerMotherNameController.text, CustomerAddressController.text, CustomerEmailController.text, CustomerGuarantor1NameController.text, CustomerGuarantor1PhoneNumberController.text, CustomerGuarantor1NIDController.text, CustomerGuarantor1AddressController.text, CustomerGuarantor2NameController.text, CustomerGuarantor2PhoneNumberController.text, CustomerGuarantor2NIDController.text, CustomerGuarantor2AddressController.text, widget.CustomerNID);
+
+                          
+
+                         
+
+                
+
+
+
+
+
+
+
+                          // Delay call Function and go to next screen
+
+                          Future.delayed(const Duration(milliseconds: 4500), () {
+
+                              // Here you can write your code
+
+                                setState(() {
+                    
+                    
+                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const UploadCustomerInfo()),
+                        MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber,)),
                       );
+
+
+                                });
+
+                              });
+                          
+
+                        
 
 
 
@@ -784,3 +929,10 @@ class CurvePainter extends CustomPainter {
     return true;
   }
 }
+
+
+
+
+
+
+

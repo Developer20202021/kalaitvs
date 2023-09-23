@@ -9,7 +9,15 @@ import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 
 
 class CreateNewCustomer extends StatefulWidget {
-  const CreateNewCustomer({super.key});
+
+  final String BikeName;
+  final String BikeModelName;
+  final String BikeColor;
+  final String BikeSalePrice;
+
+
+
+  const CreateNewCustomer({super.key, required this.BikeName, required this.BikeColor, required this.BikeModelName, required this.BikeSalePrice});
 
   @override
   State<CreateNewCustomer> createState() => _CreateNewCustomerState();
@@ -68,7 +76,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             // enter your email 
             
                     TextField(
-                      focusNode: myFocusNode,
+                      
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Name',
@@ -141,7 +149,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             
             
                     TextField(
-                      focusNode: myFocusNode,
+                      
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Phone Number',
@@ -214,14 +222,82 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                       children: [
                         Container(width: 150, child:TextButton(onPressed: (){
 
-                            Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const EditCustomerInfo()),
-                      );
+
+
+                          
+                    Future createCustomer(String CustomerName, CustomerNID, CustomerAddress, CustomerPhoneNumber) async{
+
+                      final docUser = FirebaseFirestore.instance.collection("customer");
+
+                      final jsonData ={
+                        "CustomerName":CustomerName,
+                        "CustomerNID":CustomerNID,
+                        "CustomerAddress":CustomerAddress,
+                        "CustomerPhoneNumber":CustomerPhoneNumber,
+                        "BikeName":widget.BikeName,
+                        "BikeColor":widget.BikeColor,
+                        "BikeModelName":widget.BikeModelName,
+                        "BikeSalePrice":widget.BikeSalePrice
+                      };
+
+
+                    await docUser.doc(CustomerNID).set(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.green,
+                              content: const Text('Customer Information Setup Seccessful!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+                    }
+
+
+
+
+
+
+
+                  
 
 
 
                   createCustomer(customerNameController.text, customerNIDController.text, customerAddressController.text, customerPhoneNumberController.text);
+
+
+
+
+                      Future.delayed(const Duration(milliseconds: 500), () {
+
+                      // Here you can write your code
+
+                        setState(() {
+                                Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  EditCustomerInfo(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice,)),
+                      );
+                        });
+
+                      });
+
+
+
+                      
+
+                  
 
                         }, child: Text("Save", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
@@ -323,3 +399,8 @@ Future createCustomer(String CustomerName, CustomerNID, CustomerAddress, Custome
 
 
 }
+
+
+
+
+

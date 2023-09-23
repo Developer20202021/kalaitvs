@@ -43,7 +43,10 @@ class _SingleCustomerState extends State<SingleCustomer> {
                       title: Text("Name: Mahadi Hasan", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                       trailing: TextButton(onPressed: (){
 
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditCustomerInfo()));
+
+                        // back 
+                        
+        //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditCustomerInfo(CustomerNID: "343",)));
 
 
 

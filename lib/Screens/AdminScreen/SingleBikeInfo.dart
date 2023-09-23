@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,20 +11,40 @@ import 'package:http/http.dart' as http;
 
 
 class SingleBikeInfo extends StatefulWidget {
-  const SingleBikeInfo({super.key});
+
+  final String BikeName;
+  final String BikeColor;
+  final String BikeSalePrice;
+  final String CustomerNID;
+  final String CustomerPhoneNumber;
+
+
+
+  const SingleBikeInfo({super.key, required this.BikeName, required this.BikeColor, required this.BikeSalePrice, required this.CustomerNID, required this.CustomerPhoneNumber});
 
   @override
   State<SingleBikeInfo> createState() => _SingleBikeInfoState();
 }
 
 class _SingleBikeInfoState extends State<SingleBikeInfo> {
-  TextEditingController myEmailController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+
+  TextEditingController BikeNameController = TextEditingController();
+  TextEditingController BikeChassisNoController = TextEditingController();
+  TextEditingController BikeEngineNoController = TextEditingController();
+  TextEditingController BikeColorController = TextEditingController();
+  TextEditingController BikeSalePriceController = TextEditingController();
+  TextEditingController BikeDeliveryNoController = TextEditingController();
+  TextEditingController BikeConditionMonthController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+    BikeNameController.text = widget.BikeName;
+    BikeSalePriceController.text = widget.BikeSalePrice;
+    BikeColorController.text = widget.BikeColor;
  
 
     return Scaffold(
@@ -82,7 +103,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: BikeNameController,
                     ),
             
             
@@ -118,7 +139,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: BikeChassisNoController,
                     ),
             
                     SizedBox(
@@ -149,7 +170,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: BikeEngineNoController,
                     ),
             
                     SizedBox(
@@ -161,11 +182,11 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                      
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Enter Color',
+                          labelText: 'Enter Bike Color',
                            labelStyle: TextStyle(
               color: myFocusNode.hasFocus ? Colors.purple: Colors.black
                   ),
-                          hintText: 'Enter Color',
+                          hintText: 'Enter Bike Color',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
@@ -179,7 +200,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: BikeColorController,
                     ),
             
                     SizedBox(
@@ -208,12 +229,76 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: BikeDeliveryNoController,
                     ),
             
                     SizedBox(
                       height: 10,
                     ),
+
+                     TextField(
+                    keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Per Bike Sale price',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              ),
+                      hintText: 'Per Bike Sale price',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: BikeSalePriceController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+                Text("আপনি কত মাসের কিস্তিতে দিতে চান?", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+
+
+                 TextField(
+                    keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Condition Month',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              ),
+                      hintText: 'Condition Month',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: BikeConditionMonthController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
 
 
 
@@ -227,14 +312,151 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{
 
+
+
+
+
+
+          
+          //Update Firebase Collection Customer Data 
+
+              Future EditCustomerInformation(String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeDeliveryNo, String BikeSalePrice) async{
+
+
+                  final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
+
+                  final UpadateData ={
+
+                    "BikeChassisNo":BikeChassisNo,
+                    "BikeEngineNo":BikeEngineNo,
+                    "BikeConditionMonth":BikeConditionMonth,
+                    "BikeDeliveryNo":BikeDeliveryNo,
+                    "BikeSalePrice":BikeSalePrice,
+                    "BikeDeliveryDate":DateTime.now()
+
+                
+                
+                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.green,
+                              content: const Text('Customer Information Setup Seccessful! and Message Sent'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong!!! Try again'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+              
+
+              }
+
+
+
+
+
+
+
+
+                          EditCustomerInformation(widget.CustomerNID, BikeChassisNoController.text, BikeEngineNoController.text, BikeConditionMonthController.text, BikeDeliveryNoController.text, BikeSalePriceController.text);
+
+                          
+
+                         
+
+
+
+
+
+            Future CustomerBikeSaleInfo(String BikeName, String BikeColor, String BikeChassisNo, String BikeEngineNo,String BikeDeliveryNo,  String BikeSalePrice, String CustomerNID) async{
+
+                      final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo");
+
+                      final jsonData ={
+                        
+                        "CustomerNID": widget.CustomerNID,
+                        "BikeChassisNo":BikeChassisNo,
+                        "BikeEngineNo":BikeEngineNo,
+                        "BikeDeliveryNo":BikeDeliveryNo,
+                        "BikeName":widget.BikeName,
+                        "BikeColor":widget.BikeColor,
+                        "BikeSalePrice":widget.BikeSalePrice,
+                        "BikeDeliveryDate":DateTime.now()
+                      };
+
+
+                    await docUser.doc(CustomerNID).set(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.green,
+                              content: const Text('Customer Information Setup Seccessful!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+                    }
+
+
+
+
+
+
+
+                  
+
+
+
+                  CustomerBikeSaleInfo(widget.BikeName, widget.BikeColor, widget.BikeColor, BikeEngineNoController.text, BikeDeliveryNoController.text, BikeSalePriceController.text, widget.CustomerNID);
+
+
+
+                
+
+
+
+
+
+
+
                           // fetchAlbum();
 
                           
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile()));
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID)));
 
 
 
-                        }, child: Text("Send", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                        }, child: Text("Save", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
               ),),),
@@ -292,7 +514,7 @@ class CurvePainter extends CustomPainter {
 
 
 
-Future SendSMSToNewCustomer() async {
+Future SendSMSToNewCustomer(String CustomerPhoneNumber, String NewCustomerMsg) async {
   final response = await http
       .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1006521063716953951972494eacc94f0c06da0f4d7f5e6a81d19&to=01721915550,01822237022&message=%E0%A6%8F%E0%A6%9F%E0%A6%BF%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%9F%E0%A7%87%E0%A6%B8%E0%A7%8D%E0%A6%9F%20message'));
 

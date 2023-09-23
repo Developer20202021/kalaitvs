@@ -1,51 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:tvs_app/Screens/AdminScreen/SingleBikeInfo.dart';
-
-class UploadCustomerInfo extends StatefulWidget {
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 
-  
-  final String CustomerNID;
-  final String BikeName;
-  final String BikeColor;
-  final String BikeSalePrice;
-  final String CustomerPhoneNumber;
 
-  const UploadCustomerInfo({super.key, required this.CustomerNID, required this.BikeColor, required this.BikeName, required this.BikeSalePrice, required this.CustomerPhoneNumber});
+
+class PerDaySalesHistory extends StatefulWidget {
+  const PerDaySalesHistory({super.key});
 
   @override
-  State<UploadCustomerInfo> createState() => _UploadCustomerInfoState();
+  State<PerDaySalesHistory> createState() => _PerDaySalesHistoryState();
 }
 
-class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
+class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
+
+
+  // এখানে Date দিয়ে Data fetch করতে হবে। 
+
+
+     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+      // TODO: implement your code here
+
+      dynamic value = args.value;
+      
+      print(value);
+    }
+ 
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        actions: [
-    IconButton(
-      icon: Icon(
-        Icons.save_as_outlined,
-        color: Colors.purple,
-      ),
-      onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleBikeInfo(BikeName: widget.BikeName, BikeColor: widget.BikeColor, BikeSalePrice: widget.BikeSalePrice, CustomerNID: widget.CustomerNID, CustomerPhoneNumber: widget.CustomerPhoneNumber,)));
-      },
-    )
-  ],
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Upload Customer File", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text(" Today Sales History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+         actions: [
+        IconButton(onPressed: (){
+
+
+          showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+
+
+          Container(
+                child: SfDateRangePicker(
+                  onSelectionChanged: _onSelectionChanged,
+                  selectionMode: DateRangePickerSelectionMode.range,
+                  todayHighlightColor: Colors.purple,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 150,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.purple),
+                  ),
+                ),
+              )
+        
+        ],
+      );
+    });
+
+        }, icon: Icon(Icons.date_range, color: Colors.purple,))
+
+      ],
         
       ),
       body: SingleChildScrollView(
@@ -177,25 +219,6 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
                           borderRadius: BorderRadius.circular(5),
                         ), 
 
-                      title: Text("File Name", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("Done"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
                       title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                       trailing: Text("complete"),
                       subtitle: Text("Date: 21/12/2023"),
@@ -225,89 +248,28 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
 
 
                     SizedBox(height: 14,),
+
+
                     
+                    ListTile(
+                       shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(5),
+                        ), 
+
+                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                      trailing: Text("complete"),
+                      subtitle: Text("Date: 21/12/2023"),
 
 
-                  ]))),
-                    floatingActionButton: FloatingActionButton(
-                    onPressed: (){
-                      showAlertDialog(context);
-                    },
-                    tooltip: 'Upload',
-                    child: const Icon(Icons.upload_file_outlined),
-                  ),
-                  
-                  );
+
+                    ),
+
+
+                    SizedBox(height: 14,),
+
+
+
+                  ]))));
   }
-}
-
-
-showAlertDialog(BuildContext context) {
-
-    TextEditingController myEmailController = TextEditingController();
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text("Cancel"),
-    onPressed:  () {},
-  );
-  Widget continueButton = TextButton(
-    child: Text("Continue"),
-    onPressed:  () {},
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Choose File"),
-    content: Column(
-      children: [
-        IconButton(onPressed: (){
-
-        }, icon: Icon(Icons.file_upload_outlined)),
-
-          TextField(
-               
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter File Name',
-                           labelStyle: TextStyle(
-                  ),
-                          hintText: 'Enter File Name',
-            
-                          //  enabledBorder: OutlineInputBorder(
-                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //     ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                              ),
-                          
-                          
-                          ),
-                      controller: myEmailController,
-                    ),
-            
-            
-      ],
-    ),
-
-    
-
-
-
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }

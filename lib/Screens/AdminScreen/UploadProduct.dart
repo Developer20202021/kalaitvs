@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -1199,6 +1200,71 @@ class _UploadProductState extends State<UploadProduct> {
                 SizedBox(
                   height: 10,
                 ),
+
+
+
+                   TextField(
+                    keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Per Bike Buying price',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              ),
+                      hintText: 'Per Bike Buying price',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: myPassController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+                 TextField(
+                    keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Per Bike Sale price',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              ),
+                      hintText: 'Per Bike Sale price',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: myPassController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+
+                
       
       
       
@@ -1262,3 +1328,23 @@ class _UploadProductState extends State<UploadProduct> {
 
 
 
+
+
+
+Future UploadProductInfo(String CustomerName, CustomerNID, CustomerAddress, CustomerPhoneNumber) async{
+
+  final docUser = FirebaseFirestore.instance.collection("Bikes");
+
+  final jsonData ={
+    "CustomerName":CustomerName,
+    "CustomerNID":CustomerNID,
+    "CustomerAddress":CustomerAddress,
+    "CustomerPhoneNumber":CustomerPhoneNumber
+  };
+
+
+ await docUser.doc(CustomerNID).set(jsonData);
+
+
+
+}
