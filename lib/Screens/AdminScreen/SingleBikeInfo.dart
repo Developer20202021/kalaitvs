@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -41,28 +40,18 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
   
-   void snackShow(bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeName, String BikeBillPay) async{
+   void snackShow(context,bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeName, String BikeBillPay) async{
 
 
         if (snackVisible == true) {
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
+          // await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
 
+      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ));
 
-
-                  Future.delayed(const Duration(milliseconds: 2500), () {
-
-                      // Here you can write your code
-
-                        setState(() {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ),
-                      );
-                        });
-
-                      });
+                  
 
    
           
@@ -389,17 +378,56 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
         Future EditCustomerInformation(String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeDeliveryNo, String BikeSalePrice, String BikeBillPay) async{
 
 
+              int BikeSalePriceInt = int.parse(BikeSalePrice);
+              int BikeBillPayInt = int.parse(BikeBillPay);
+              int BikePaymentDueInt =  BikeSalePriceInt - BikeBillPayInt;
+              var CustomerType = "Due";
+
+              if (BikePaymentDueInt == 0) {
+
+                setState(() {
+                  CustomerType = "Paid";
+                });
+
+                
+              } else {
+
+                CustomerType = "Due";
+                
+              }
+
+
+
+              var BikePaymentDueString = BikePaymentDueInt.toString();
+
+              int DuePaymentGivingDayInt = int.parse(DateTime.now().day.toString());
+
+              if (DuePaymentGivingDayInt>30) {
+
+                DuePaymentGivingDayInt = 30;
+                
+              }
+
+
             final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
 
-            final UpadateData ={
+            
 
-              "BikeChassisNo":BikeChassisNo,
-              "BikeEngineNo":BikeEngineNo,
-              "BikeConditionMonth":BikeConditionMonth,
-              "BikeDeliveryNo":BikeDeliveryNo,
-              "BikeSalePrice":BikeSalePrice,
+            final UpadateData ={
+              "BikeName":BikeNameController.text,
+              "BikeColor":BikeColorController.text,
+              "BikeChassisNo":BikeChassisNoController.text,
+              "BikeEngineNo":BikeEngineNoController.text,
+              "BikeConditionMonth":BikeConditionMonthController.text,
+              "BikeDeliveryNo":BikeDeliveryNoController.text,
+              "BikeSalePrice":BikeSalePriceController.text,
               "BikeDeliveryDate":DateTime.now(),
-              "BikeBillPay":BikeBillPay
+              "BikeBillPay":BikeBillPay,
+              "BikePaymentDue":BikePaymentDueString,
+              "CustomerType":CustomerType,
+              "DuePaymentGivingDay":DuePaymentGivingDayInt.toString()
+              
+            
 
           
           
@@ -455,23 +483,46 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
             Future CustomerBikeSaleInfo(String BikeName, String BikeColor, String BikeChassisNo, String BikeEngineNo,String BikeDeliveryNo,  String BikeSalePrice, String CustomerNID, String BikeBillPay) async{
 
+
+                int BikeSalePriceInt = int.parse(BikeSalePrice);
+                int BikeBillPayInt = int.parse(BikeBillPay);
+                int BikePaymentDueInt =  BikeSalePriceInt - BikeBillPayInt;
+                var CustomerType = "Due";
+
+              if (BikePaymentDueInt == 0) {
+
+                setState(() {
+                  CustomerType = "Paid";
+                });
+
+                
+              } else {
+
+                CustomerType = "Due";
+                
+              }
+                var BikePaymentDueString = BikePaymentDueInt.toString();
+
+
                 final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo");
 
                 final jsonData ={
                   
                   "CustomerNID": widget.CustomerNID,
-                  "BikeChassisNo":BikeChassisNo,
-                  "BikeEngineNo":BikeEngineNo,
-                  "BikeDeliveryNo":BikeDeliveryNo,
-                  "BikeName":widget.BikeName,
-                  "BikeColor":widget.BikeColor,
-                  "BikeSalePrice":widget.BikeSalePrice,
+                  "BikeChassisNo":BikeChassisNoController.text,
+                  "BikeEngineNo":BikeEngineNoController.text,
+                  "BikeDeliveryNo":BikeDeliveryNoController.text,
+                  "BikeName":BikeNameController.text,
+                  "BikeColor":BikeColorController.text,
+                  "BikeSalePrice":BikeSalePriceController.text,
                   "BikeDeliveryDate":DateTime.now(),
-                  "BikeBillPay":BikeBillPay
+                  "BikeBillPay":BikeBillPayController.text,
+                  "BikePaymentDue":BikePaymentDueString,
+                  "CustomerType":CustomerType
                 };
 
 
-              await docUser.doc(CustomerNID).set(jsonData).then((value) => snackShow(true, widget.CustomerPhoneNumber, widget.BikeSalePrice, CustomerNID, BikeChassisNo, BikeEngineNo, BikeConditionMonthController.text, BikeName, BikeBillPay)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              await docUser.doc(CustomerNID).set(jsonData).then((value) => snackShow(context,true, widget.CustomerPhoneNumber, widget.BikeSalePrice, CustomerNID, BikeChassisNo, BikeEngineNo, BikeConditionMonthController.text, BikeName, BikeBillPay)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
                         content: const Text('Something Wrong!'),
                         action: SnackBarAction(
@@ -499,6 +550,23 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
             CustomerBikeSaleInfo(widget.BikeName, widget.BikeColor, widget.BikeColor, BikeEngineNoController.text, BikeDeliveryNoController.text, BikeSalePriceController.text, widget.CustomerNID, BikeBillPayController.text);
 
 
+
+
+
+
+
+                          Future.delayed(const Duration(milliseconds: 2500), () {
+
+                      // Here you can write your code
+
+                        setState(() {
+                                Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ),
+                      );
+                        });
+
+                      });
 
           
 
@@ -540,6 +608,34 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
       
     );
   }
+
+
+
+  
+ final snackBar = SnackBar(
+            content: const Text('Customer Information Setup Seccessful!'),
+            backgroundColor: (Colors.green),
+            action: SnackBarAction(
+              label: 'dismiss',
+              onPressed: () {
+
+                
+                
+              },
+            ),
+          );
+
+
+
+          final wrongSnackBar = SnackBar(
+            content: const Text('Something Wrong!! Try again'),
+            backgroundColor: (Colors.red),
+            action: SnackBarAction(
+              label: 'dismiss',
+              onPressed: () {
+              },
+            ),
+          );
 }
 
 
@@ -572,27 +668,6 @@ class CurvePainter extends CustomPainter {
 
 
 
- final snackBar = SnackBar(
-            content: const Text('Customer Information Setup Seccessful!'),
-            backgroundColor: (Colors.green),
-            action: SnackBarAction(
-              label: 'dismiss',
-              onPressed: () {
-              },
-            ),
-          );
-
-
-
-          final wrongSnackBar = SnackBar(
-            content: const Text('Something Wrong!! Try again'),
-            backgroundColor: (Colors.red),
-            action: SnackBarAction(
-              label: 'dismiss',
-              onPressed: () {
-              },
-            ),
-          );
 
 
 
@@ -615,6 +690,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
     // If the server did return a 200 OK response,
     // then parse the JSON.
     print(jsonDecode(response.body));
+    
    
   } else {
     // If the server did not return a 200 OK response,

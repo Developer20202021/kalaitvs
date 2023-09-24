@@ -15,7 +15,7 @@ class UploadProduct extends StatefulWidget {
 }
 
 class _UploadProductState extends State<UploadProduct> {
-  TextEditingController myEmailController = TextEditingController();
+  
   TextEditingController BikeTypeController = TextEditingController();
   TextEditingController BikeEngineCapacityController = TextEditingController();
   TextEditingController BikeMaximumPowerController = TextEditingController();
@@ -32,7 +32,29 @@ class _UploadProductState extends State<UploadProduct> {
   TextEditingController BikeFrontSuspensionController = TextEditingController();
   TextEditingController BikeMaxSpeedController = TextEditingController();
   TextEditingController BikeBatteryRatingController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+  TextEditingController BikeTailLampController = TextEditingController();
+  TextEditingController BikeTyreFrontController = TextEditingController();
+  TextEditingController BikeHeadlampController = TextEditingController();
+  TextEditingController BikeTyreRearController = TextEditingController();
+  TextEditingController BikeABSController = TextEditingController();
+  TextEditingController BikeBrakeFluidController = TextEditingController();
+  TextEditingController BikeBrakeFrontController = TextEditingController();
+  TextEditingController BikeBrakeRearController = TextEditingController();
+  TextEditingController BikeFuelTankCapacityController = TextEditingController();
+  TextEditingController BikeGroundClearanceController = TextEditingController();
+  TextEditingController BikeHeightController = TextEditingController();
+  TextEditingController BikeLengthController = TextEditingController();
+  TextEditingController BikeWidthController = TextEditingController();
+  TextEditingController BikeKerbWeightController = TextEditingController();
+  TextEditingController BikeSaddleHeightController = TextEditingController();
+  TextEditingController BikeWheelBaseController = TextEditingController();
+  TextEditingController BikeFeaturesController = TextEditingController();
+  TextEditingController BikeShowroomAvailableNumberController = TextEditingController();
+  TextEditingController BikeBuyingPriceController = TextEditingController();
+  TextEditingController BikeSalePriceController = TextEditingController();
+  
+  
+  
 
 
   @override
@@ -100,7 +122,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myEmailController,
+                  controller: BikeTypeController,
                 ),
               
               
@@ -135,7 +157,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeEngineCapacityController,
                 ),
               
                 SizedBox(
@@ -165,7 +187,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeMaximumPowerController,
                 ),
               
                 SizedBox(
@@ -194,7 +216,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeMaximumTorqueController,
                 ),
               
                 SizedBox(
@@ -223,7 +245,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeFuelSupplySystemController,
                 ),
               
                 SizedBox(
@@ -253,7 +275,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeValvePerCylinderController,
                 ),
               
                 SizedBox(
@@ -283,7 +305,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikePowertoWeightRationController,
                 ),
               
                 SizedBox(
@@ -312,7 +334,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeCoolingSystemController,
                 ),
               
                 SizedBox(
@@ -342,7 +364,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller:BikeMufflerController,
                 ),
               
                 SizedBox(
@@ -372,7 +394,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeGearBoxController,
                 ),
               
                 SizedBox(
@@ -401,7 +423,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeRearSuspensionController,
                 ),
               
                 SizedBox(
@@ -430,7 +452,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeFrameController,
                 ),
               
                 SizedBox(
@@ -464,7 +486,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeMaxSpeedController,
                 ),
               
                 SizedBox(
@@ -488,30 +510,7 @@ class _UploadProductState extends State<UploadProduct> {
       
       
                 
-                  TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Frame',
-                       labelStyle: TextStyle(
-          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-              ),
-                      hintText: 'Frame',
-                      //  enabledBorder: OutlineInputBorder(
-                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                      //   ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.purple),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                        ),
-                      
-                      
-                      ),
-                  controller: myPassController,
-                ),
-              
+                 
                 SizedBox(
                   height: 10,
                 ),
@@ -538,41 +537,14 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeFrontSuspensionController,
                 ),
               
                 SizedBox(
                   height: 10,
                 ),
       
-                 TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Rear Suspension',
-                       labelStyle: TextStyle(
-          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-              ),
-                      hintText: 'Rear Suspension',
-                      //  enabledBorder: OutlineInputBorder(
-                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                      //   ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.purple),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                        ),
-                      
-                      
-                      ),
-                  controller: myPassController,
-                ),
-              
-                SizedBox(
-                  height: 10,
-                ),
-      
+                
                  TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -594,7 +566,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeBatteryRatingController,
                 ),
               
                 SizedBox(
@@ -605,11 +577,11 @@ class _UploadProductState extends State<UploadProduct> {
                  TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Headlamp',
+                      labelText: 'Head lamp',
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.purple: Colors.black
               ),
-                      hintText: 'Headlamp',
+                      hintText: 'Head lamp',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -623,7 +595,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeHeadlampController,
                 ),
               
                 SizedBox(
@@ -652,7 +624,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeTailLampController,
                 ),
               
                 SizedBox(
@@ -693,7 +665,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeTyreFrontController,
                 ),
               
                 SizedBox(
@@ -710,7 +682,7 @@ class _UploadProductState extends State<UploadProduct> {
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.purple: Colors.black
               ),
-                      hintText: 'Tail Rear',
+                      hintText: 'Tyre Rear',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -724,7 +696,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeTyreRearController,
                 ),
               
                 SizedBox(
@@ -755,7 +727,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeABSController,
                 ),
               
                 SizedBox(
@@ -786,7 +758,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeBrakeFluidController,
                 ),
               
                 SizedBox(
@@ -816,7 +788,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeBrakeFrontController,
                 ),
               
                 SizedBox(
@@ -846,7 +818,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeBrakeRearController,
                 ),
               
                 SizedBox(
@@ -887,7 +859,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeFuelTankCapacityController,
                 ),
               
                 SizedBox(
@@ -917,7 +889,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeGroundClearanceController,
                 ),
               
                 SizedBox(
@@ -948,7 +920,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeHeightController,
                 ),
               
                 SizedBox(
@@ -980,7 +952,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeLengthController,
                 ),
               
                 SizedBox(
@@ -1011,7 +983,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeWidthController,
                 ),
               
                 SizedBox(
@@ -1042,7 +1014,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeKerbWeightController,
                 ),
               
                 SizedBox(
@@ -1074,7 +1046,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeSaddleHeightController,
                 ),
               
                 SizedBox(
@@ -1105,7 +1077,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeWheelBaseController,
                 ),
               
                 SizedBox(
@@ -1145,7 +1117,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeFeaturesController,
                 ),
               
                 SizedBox(
@@ -1185,7 +1157,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeShowroomAvailableNumberController,
                 ),
               
                 SizedBox(
@@ -1198,11 +1170,11 @@ class _UploadProductState extends State<UploadProduct> {
                     keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Per Bike Buying price',
+                      labelText: 'Per Bike Buying Price',
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.purple: Colors.black
               ),
-                      hintText: 'Per Bike Buying price',
+                      hintText: 'Per Bike Buying Price',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -1216,7 +1188,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeBuyingPriceController,
                 ),
               
                 SizedBox(
@@ -1246,7 +1218,7 @@ class _UploadProductState extends State<UploadProduct> {
                       
                       
                       ),
-                  controller: myPassController,
+                  controller: BikeSalePriceController,
                 ),
               
                 SizedBox(

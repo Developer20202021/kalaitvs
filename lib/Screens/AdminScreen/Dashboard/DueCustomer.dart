@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
+import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/SendSMSToDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 
@@ -13,6 +15,55 @@ class DueCustomer extends StatefulWidget {
 }
 
 class _DueCustomerState extends State<DueCustomer> {
+
+
+
+   // Firebase All Customer Data Load
+
+List  AllData = [0];
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('customer');
+
+Future<void> getData() async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("CustomerType", isEqualTo: "Due");
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllData);
+}
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +71,7 @@ class _DueCustomerState extends State<DueCustomer> {
       appBar:  AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Due Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -43,17 +94,11 @@ class _DueCustomerState extends State<DueCustomer> {
               dismissible: DismissiblePane(onDismissed: () {}),
 
               // All actions are defined in the children parameter.
-              children: const [
+              children:  [
                 // A SlidableAction can have an icon and/or a label.
+             
                 SlidableAction(
-                  onPressed: doNothing,
-                  backgroundColor: Color(0xFFFE4A49),
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  label: 'Delete',
-                ),
-                SlidableAction(
-                  onPressed: doNothing,
+                  onPressed: (context) => DueCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
                   backgroundColor: Color(0xFF21B7CA),
                   foregroundColor: Colors.white,
                   icon: Icons.info,
@@ -63,20 +108,20 @@ class _DueCustomerState extends State<DueCustomer> {
             ),
 
             // The end action pane is the one at the right or the bottom side.
-            endActionPane: const ActionPane(
+            endActionPane:  ActionPane(
               motion: ScrollMotion(),
               children: [
                 SlidableAction(
                   // An action can be bigger than the others.
                   flex: 2,
-                  onPressed: CustomerAddPayment,
+                  onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"]  ),
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.payment,
                   label: 'Add Payment',
                 ),
                 SlidableAction(
-                  onPressed: EveryPaymentHistory,
+                  onPressed: (Context) => EveryPaymentHistory(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"] ),
                   backgroundColor: Color(0xFF0392CF),
                   foregroundColor: Colors.white,
                   icon: Icons.save,
@@ -94,13 +139,20 @@ class _DueCustomerState extends State<DueCustomer> {
         child: Text("S"),
       ),
 
-      subtitle: Text('ID:89089'),
+      subtitle: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('NID:${AllData[index]["CustomerNID"]}'),
+          Text('${AllData[index]["CustomerType"]}'),
+        ],
+      ),
       trailing: TextButton(onPressed: () {
 
 
       
 
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendSMSToDueCustomer()));
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendSMSToDueCustomer(CustomerNID: AllData[index]["CustomerNID"], CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"], BikePaymentDue: AllData[index]["BikePaymentDue"],BikeDuePaymentGivingDay: AllData[index]["DuePaymentGivingDay"],)));
 
 
 
@@ -109,12 +161,12 @@ class _DueCustomerState extends State<DueCustomer> {
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
               ),),
               
-              title: Text('Mahadi Hasan', style: TextStyle(
+              title: Text('${AllData[index]["CustomerName"]}', style: TextStyle(
                 fontWeight: FontWeight.bold
               ),)),
           );
         },
-        itemCount: 25,
+        itemCount: AllData.length,
       ),
     );
   }
@@ -122,20 +174,37 @@ class _DueCustomerState extends State<DueCustomer> {
 
 void doNothing(BuildContext context) {}
 
-void EveryPaymentHistory(BuildContext context){
-
-
-  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
 
 
 
 
+
+
+
+
+
+
+void DueCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
 }
 
 
 
 
 
-void CustomerAddPayment(BuildContext context){
-  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
+void EveryPaymentHistory(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
+}
+
+
+
+
+
+
+
+
+ void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
+
+
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
 }

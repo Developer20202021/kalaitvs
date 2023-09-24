@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
+import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 
 
@@ -100,17 +101,17 @@ Future<void> getData() async {
               dismissible: DismissiblePane(onDismissed: () {}),
 
               // All actions are defined in the children parameter.
-              children: const [
+              children:  [
                 // A SlidableAction can have an icon and/or a label.
                 SlidableAction(
-                  onPressed: doNothing,
+                  onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"] ),
                   backgroundColor: Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
                   label: 'Delete',
                 ),
                 SlidableAction(
-                  onPressed: doNothing,
+                  onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
                   backgroundColor: Color(0xFF21B7CA),
                   foregroundColor: Colors.white,
                   icon: Icons.info,
@@ -152,7 +153,7 @@ Future<void> getData() async {
       ),
 
       subtitle:  Text('NID:${AllData[index]["CustomerNID"]}'),
-      trailing: Text("Due"),
+      trailing: Text("${AllData[index]["CustomerType"]}"),
               
               title: Text("${AllData[index]["CustomerName"]}", style: TextStyle(
                 fontWeight: FontWeight.bold
@@ -165,7 +166,9 @@ Future<void> getData() async {
   }
 }
 
-void doNothing(BuildContext context) {}
+void AllCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
+}
 
 
 
@@ -184,6 +187,6 @@ void EveryPaymentHistory(BuildContext context, String CustomerNID, String Custom
 
  void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
 
-    print("Done ${CustomerNID}");
+
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
 }

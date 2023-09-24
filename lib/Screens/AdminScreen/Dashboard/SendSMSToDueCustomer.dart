@@ -10,21 +10,47 @@ import 'package:http/http.dart' as http;
 
 
 class SendSMSToDueCustomer extends StatefulWidget {
+
+
+  final CustomerNID;
+  final CustomerPhoneNumber;
+  final BikePaymentDue;
+  final BikeDuePaymentGivingDay;
   
-  const SendSMSToDueCustomer({super.key});
+  const SendSMSToDueCustomer({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue, required this.BikeDuePaymentGivingDay});
 
   @override
   State<SendSMSToDueCustomer> createState() => _SendSMSToDueCustomerState();
 }
 
 class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
-  TextEditingController myEmailController = TextEditingController();
+  TextEditingController DueCustomerMsgController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
+
+
+
+
+
+   
 
   @override
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+ 
+  DueCustomerMsgController.text = "Dear Customer, Tvs কালাই শোরুমে ${widget.CustomerNID} Ac No. এ ${widget.BikePaymentDue}৳ টাকা বকেয়া আছে। ${widget.BikeDuePaymentGivingDay}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()} তারিখের মধ্যে পরিশোধ করুন। ধন্যবাদ";
+
+   
+
+
+
+
+
+
+
+
+
  
 
     return Scaffold(
@@ -90,7 +116,7 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: DueCustomerMsgController,
                     ),
             
                     SizedBox(
@@ -104,7 +130,7 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                         Container(width: 150, child:TextButton(onPressed: (){
 
 
-                          // SendSMSToCustomer();
+                          SendSMSToCustomer(context, widget.CustomerNID, widget.CustomerPhoneNumber, widget.BikePaymentDue, DueCustomerMsgController.text);
 
 
 
@@ -167,9 +193,15 @@ class CurvePainter extends CustomPainter {
 
 
 
-Future SendSMSToCustomer() async {
+Future SendSMSToCustomer(context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, String DueCustomerMsg) async {
+
+
+
+
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1006521063716953951972494eacc94f0c06da0f4d7f5e6a81d19&to=01721915550&message=%E0%A6%8F%E0%A6%9F%E0%A6%BF%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%9F%E0%A7%87%E0%A6%B8%E0%A7%8D%E0%A6%9F%20message'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1006521063716953951972494eacc94f0c06da0f4d7f5e6a81d19&to=${CustomerPhoneNumber}&message=${DueCustomerMsg}'));
+
+           Navigator.pop(context);
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
