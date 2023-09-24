@@ -11,11 +11,12 @@ class CustomerPaymentAdd extends StatefulWidget {
 
   final CustomerNID;
   final CustomerPhoneNumber;
+  final BikePaymentDue;
 
 
 
 
-  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber});
+  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue});
 
   @override
   State<CustomerPaymentAdd> createState() => _CustomerPaymentAddState();
@@ -57,6 +58,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
           
         // }
 
+
+        
+
         
 
       }
@@ -66,7 +70,12 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
   Widget build(BuildContext context) {
     FocusNode myFocusNode = new FocusNode();
 
-    dynamic paymentDate = DateTime.now();
+    dynamic paymentDateTime = DateTime.now();
+
+    var PaymentDate = "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
+
+
+
 
     CustomerNIDController.text = widget.CustomerNID;
     CustomerPhoneNumberController.text = widget.CustomerPhoneNumber;
@@ -241,6 +250,18 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                   onPressed: () {
 
 
+                    int LastBikeDuePayment = 0;
+
+                    int BikePaymentDueInt = int.parse(widget.BikePaymentDue.toString());
+                    int AmountInt = int.parse(PaidAmountController.text.toString());
+
+                    LastBikeDuePayment = BikePaymentDueInt - AmountInt;
+
+
+                    print(AmountInt.toString());
+                    print(BikePaymentDueInt.toString());
+                    print(LastBikeDuePayment.toString());
+
 
 
                      Future DuePaymentAdd(String CustomerNID, String CustomerPhoneNumber, String Amount) async{
@@ -248,10 +269,14 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                       final docUser = FirebaseFirestore.instance.collection("DuePaymentAddInfo");
 
                       final jsonData ={
+
+                        
                         "CustomerNID":CustomerNID,
                         "CustomerPhoneNumber":CustomerPhoneNumber,
                         "Amount": Amount,
-                        "PaymentDate":paymentDate
+                        "PaymentDateTime":paymentDateTime,
+                        "PaymentDate":PaymentDate
+
                         
                       };
 
@@ -275,6 +300,66 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
                 DuePaymentAdd(CustomerNIDController.text, CustomerPhoneNumberController.text, PaidAmountController.text);
+
+
+
+
+
+
+
+
+
+
+
+
+
+                final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNIDController.text);
+
+            
+
+            final UpadateData ={
+
+
+              "BikePaymentDue":LastBikeDuePayment.toString()
+          
+              
+            
+
+          
+          
+          };
+
+
+
+
+
+          // user Data Update and show snackbar
+
+            docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.green,
+                        content: const Text('Customer Information Setup Seccessful! and Message Sent'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+                        content: const Text('Something Wrong!!! Try again'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      )));
+
+
+        
+
+        
+
                 
 
 

@@ -5,12 +5,14 @@ import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/DueCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistoryChart.dart';
 
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/SalesPage.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadBikeImage.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  DueCustomer(),
+      home:  PerDayDuePaymentAddHistory(),
     );
   }
 }

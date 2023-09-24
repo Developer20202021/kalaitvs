@@ -1,28 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:path/path.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/SendSMSToDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 
 
-class AllCustomer extends StatefulWidget {
-  const AllCustomer({super.key});
+class PerDayDueCustomer extends StatefulWidget {
+  const PerDayDueCustomer({super.key});
 
   @override
-  State<AllCustomer> createState() => _AllCustomerState();
+  State<PerDayDueCustomer> createState() => _PerDayDueCustomerState();
 }
 
-class _AllCustomerState extends State<AllCustomer> {
+class _PerDayDueCustomerState extends State<PerDayDueCustomer> {
 
 
 
- 
-
-
-
-// Firebase All Customer Data Load
+   // Firebase All Customer Data Load
 
 List  AllData = [0];
 
@@ -32,19 +28,21 @@ List  AllData = [0];
 
 Future<void> getData() async {
     // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _collectionRef.get();
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("CustomerType", isEqualTo: "Due").where("DuePaymentGivingDay", isEqualTo: DateTime.now().day.toString());
+    QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
      setState(() {
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      });
 
     print(AllData);
 }
-
-
-
 
 
 @override
@@ -62,23 +60,18 @@ Future<void> getData() async {
 
 
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
-
-
-
-
-   
-
-
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:  AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Per Day Due Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -103,15 +96,9 @@ Future<void> getData() async {
               // All actions are defined in the children parameter.
               children:  [
                 // A SlidableAction can have an icon and/or a label.
+             
                 SlidableAction(
-                  onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"] ),
-                  backgroundColor: Color(0xFFFE4A49),
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  label: 'Delete',
-                ),
-                SlidableAction(
-                  onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
+                  onPressed: (context) => PerDayDueCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
                   backgroundColor: Color(0xFF21B7CA),
                   foregroundColor: Colors.white,
                   icon: Icons.info,
@@ -127,7 +114,7 @@ Future<void> getData() async {
                 SlidableAction(
                   // An action can be bigger than the others.
                   flex: 2,
-                  onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"]),
+                  onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"]  ),
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.payment,
@@ -152,10 +139,33 @@ Future<void> getData() async {
         child: Text("S"),
       ),
 
-      subtitle:  Text('NID:${AllData[index]["CustomerNID"]}'),
-      trailing: Text("${AllData[index]["CustomerType"]}"),
+      subtitle: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('NID:${AllData[index]["CustomerNID"]}'),
+          Text('${AllData[index]["CustomerType"]}'),
+          Text('Day:${AllData[index]["DuePaymentGivingDay"]}'),
+        ],
+      ),
+      trailing: TextButton(onPressed: () {
+
+
+      
+
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendSMSToDueCustomer(CustomerNID: AllData[index]["CustomerNID"], CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"], BikePaymentDue: AllData[index]["BikePaymentDue"],BikeDuePaymentGivingDay: AllData[index]["DuePaymentGivingDay"],)));
+
+
+
+
+
+
+      }, child: Text("Send Message", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+       
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+              ),),
               
-              title: Text("${AllData[index]["CustomerName"]}", style: TextStyle(
+              title: Text('${AllData[index]["CustomerName"]}', style: TextStyle(
                 fontWeight: FontWeight.bold
               ),)),
           );
@@ -166,7 +176,19 @@ Future<void> getData() async {
   }
 }
 
-void AllCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
+void doNothing(BuildContext context) {}
+
+
+
+
+
+
+
+
+
+
+
+void PerDayDueCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
 }
 
@@ -185,7 +207,7 @@ void EveryPaymentHistory(BuildContext context, String CustomerNID, String Custom
 
 
 
- void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, BikePaymentDue){
+ void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue){
 
 
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue,)));
