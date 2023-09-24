@@ -7,7 +7,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CustomerPaymentAdd extends StatefulWidget {
-  const CustomerPaymentAdd({super.key});
+
+
+  final CustomerNID;
+  final CustomerPhoneNumber;
+
+
+
+
+  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber});
 
   @override
   State<CustomerPaymentAdd> createState() => _CustomerPaymentAddState();
@@ -30,14 +38,24 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           // await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount);
+
+          CustomerNIDController.clear();
+          CustomerPhoneNumberController.clear();
+          PaidAmountController.clear();
+          
+
+         
           
         }
 
-        if (snackVisible == false) {
 
-          ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
+        
+
+        // if (snackVisible == false) {
+
+        //   ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
           
-        }
+        // }
 
         
 
@@ -49,6 +67,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
     FocusNode myFocusNode = new FocusNode();
 
     dynamic paymentDate = DateTime.now();
+
+    CustomerNIDController.text = widget.CustomerNID;
+    CustomerPhoneNumberController.text = widget.CustomerPhoneNumber;
 
     // date pick 
 
@@ -235,9 +256,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                       };
 
 
-                    await docUser.doc(CustomerNID).set(jsonData).then((value) => snackShow(true, CustomerPhoneNumber, Amount, CustomerNID)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                              content: const Text('Something Wrong!'),
+                    await docUser.add(jsonData).then((value) => snackShow(true, CustomerPhoneNumber, Amount, CustomerNID)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: const Text('Customer Payment Add Successful!!!'),
+            backgroundColor: (Colors.green),
                               action: SnackBarAction(
                                 label: 'Undo',
                                 onPressed: () {
@@ -331,6 +352,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
+    
     print(jsonDecode(response.body));
    
   } else {

@@ -105,7 +105,7 @@ class _AllAdminState extends State<AllAdmin> {
 void doNothing(BuildContext context) {}
 
 void EveryPaymentHistory(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
+  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
 }
 
 

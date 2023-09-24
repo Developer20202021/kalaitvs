@@ -280,7 +280,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-                      Future.delayed(const Duration(milliseconds: 500), () {
+                      Future.delayed(const Duration(milliseconds: 1500), () {
 
                       // Here you can write your code
 

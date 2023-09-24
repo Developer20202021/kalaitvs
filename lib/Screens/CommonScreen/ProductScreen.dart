@@ -246,7 +246,7 @@ class _ProductScreenState extends State<ProductScreen> {
 void doNothing(BuildContext context) {}
 
 void EveryPaymentHistory(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
+  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
 }
 
 
@@ -254,7 +254,7 @@ void EveryPaymentHistory(BuildContext context){
 
 
 void CustomerAddPayment(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
+  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
 }
 
 

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:path/path.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 
@@ -12,8 +14,64 @@ class AllCustomer extends StatefulWidget {
 }
 
 class _AllCustomerState extends State<AllCustomer> {
+
+
+
+ 
+
+
+
+// Firebase All Customer Data Load
+
+List  AllData = [0];
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('customer');
+
+Future<void> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllData);
+}
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
+
+   
+
+
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:  AppBar(
@@ -62,20 +120,20 @@ class _AllCustomerState extends State<AllCustomer> {
             ),
 
             // The end action pane is the one at the right or the bottom side.
-            endActionPane: const ActionPane(
+            endActionPane:  ActionPane(
               motion: ScrollMotion(),
               children: [
                 SlidableAction(
                   // An action can be bigger than the others.
                   flex: 2,
-                  onPressed: CustomerAddPayment,
+                  onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"]  ),
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
                   icon: Icons.payment,
                   label: 'Add Payment',
                 ),
                 SlidableAction(
-                  onPressed: EveryPaymentHistory,
+                  onPressed: (Context) => EveryPaymentHistory(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"] ),
                   backgroundColor: Color(0xFF0392CF),
                   foregroundColor: Colors.white,
                   icon: Icons.save,
@@ -86,22 +144,22 @@ class _AllCustomerState extends State<AllCustomer> {
 
             // The child of the Slidable is what the user sees when the
             // component is not dragged.
-            child: const ListTile(
+            child:  ListTile(
               
                  leading: CircleAvatar(
         backgroundColor: Colors.pink,
         child: Text("S"),
       ),
 
-      subtitle: Text('ID:89089'),
+      subtitle:  Text('NID:${AllData[index]["CustomerNID"]}'),
       trailing: Text("Due"),
               
-              title: Text('Mahadi Hasan', style: TextStyle(
+              title: Text("${AllData[index]["CustomerName"]}", style: TextStyle(
                 fontWeight: FontWeight.bold
               ),)),
           );
         },
-        itemCount: 25,
+        itemCount: AllData.length,
       ),
     );
   }
@@ -109,14 +167,23 @@ class _AllCustomerState extends State<AllCustomer> {
 
 void doNothing(BuildContext context) {}
 
-void EveryPaymentHistory(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory()));
+
+
+
+
+void EveryPaymentHistory(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
 }
 
 
 
 
 
-void CustomerAddPayment(BuildContext context){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd()));
+
+
+
+ void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
+
+    print("Done ${CustomerNID}");
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
 }

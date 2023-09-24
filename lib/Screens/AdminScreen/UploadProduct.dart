@@ -31,7 +31,9 @@ class _UploadProductState extends State<UploadProduct> {
   TextEditingController BikeFrameController = TextEditingController();
   TextEditingController BikeFrontSuspensionController = TextEditingController();
   TextEditingController BikeMaxSpeedController = TextEditingController();
+  TextEditingController BikeBatteryRatingController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
