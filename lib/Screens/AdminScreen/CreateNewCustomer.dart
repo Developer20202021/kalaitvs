@@ -241,16 +241,10 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                       };
 
 
-                    await docUser.doc(CustomerNID).set(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.green,
-                              content: const Text('Customer Information Setup Seccessful!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    await docUser.doc(CustomerNID).set(jsonData).then((value) =>               Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  EditCustomerInfo(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice,)),
+                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong!'),
                               action: SnackBarAction(
@@ -280,18 +274,18 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-                      Future.delayed(const Duration(milliseconds: 1500), () {
+                      // Future.delayed(const Duration(milliseconds: 1500), () {
 
-                      // Here you can write your code
+                      // // Here you can write your code
 
-                        setState(() {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>  EditCustomerInfo(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice,)),
-                      );
-                        });
+                      //   setState(() {
+                      //           Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) =>  EditCustomerInfo(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice,)),
+                      // );
+                      //   });
 
-                      });
+                      // });
 
 
 

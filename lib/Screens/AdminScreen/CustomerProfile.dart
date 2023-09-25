@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
 
 
 
@@ -298,103 +299,6 @@ Future<void> getData(String CustomerNID) async {
 
                     
 
-
-
-
-                      
-
-
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
-
-
-
-                        
-                        //   TableRow(children: [
-                        //   Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                        //   Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        // ]),
                        
                   
                      
@@ -404,131 +308,41 @@ Future<void> getData(String CustomerNID) async {
 
 
 
-                    SizedBox(height: 50,),
-
-                    Text("File Information:", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
 
-                       Table(
-                    border: TableBorder.all(color: Colors.purple, width: 1.5),
-                    textBaseline: TextBaseline.ideographic,
+
+
+                    SizedBox(height: 15,),
+
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
 
-
-                 TableRow(children: [
-                          Text("Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mahadi Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
+                        Container(width: 150, child:TextButton(onPressed: (){
 
 
-                 
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFile(CustomerNID: widget.CustomerNID)));
 
-                    
+
+                         
 
 
 
 
-                      
 
-
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-                       
-                  
-                     
+                        }, child: Text("All Files", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                         
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+              ),),),
                       ],
-                    ),
+                    )
 
+
+
+
+                   
 
 
 

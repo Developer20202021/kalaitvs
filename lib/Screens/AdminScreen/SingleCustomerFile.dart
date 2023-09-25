@@ -1,21 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFileView.dart';
 
-class PaymentHistory extends StatefulWidget {
+class SingleCustomerFile extends StatefulWidget {
 
   final CustomerNID;
-  final CustomerPhoneNumber;
+  
 
 
 
 
-  const PaymentHistory({super.key, required this.CustomerNID, required this.CustomerPhoneNumber});
+  const SingleCustomerFile({super.key, required this.CustomerNID});
 
   @override
-  State<PaymentHistory> createState() => _PaymentHistoryState();
+  State<SingleCustomerFile> createState() => _SingleCustomerFileState();
 }
 
-class _PaymentHistoryState extends State<PaymentHistory> {
+class _SingleCustomerFileState extends State<SingleCustomerFile> {
 
 
   // Firebase All Customer Data Load
@@ -24,7 +25,7 @@ List  AllData = [0];
 
 
   CollectionReference _collectionRef =
-    FirebaseFirestore.instance.collection('DuePaymentAddInfo');
+    FirebaseFirestore.instance.collection('CustomerFileInfo');
 
 Future<void> getData(String CustomerNID) async {
     // Get docs from collection reference
@@ -75,7 +76,7 @@ Future<void> getData(String CustomerNID) async {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Your Payment History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("${widget.CustomerNID} File Info", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -87,7 +88,7 @@ Future<void> getData(String CustomerNID) async {
             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 25,),
             itemBuilder: (BuildContext context, int index) {
 
-              DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
+              // DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
 
 
               return   Padding(
@@ -98,16 +99,34 @@ Future<void> getData(String CustomerNID) async {
                   borderRadius: BorderRadius.circular(5),
                 ), 
                     
-                          title: Text("${AllData[index]["Amount"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                          trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
+                          title: Text("${AllData[index]["FileName"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 10),),
+
+                          trailing: Container(width: 150, child:TextButton(onPressed: (){
+
+
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFileView(FileUrl: AllData[index]["CustomerFileUrl"])));
+
+
+                         
+
+
+
+
+
+                        }, child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                         
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+              ),),),
                           subtitle: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
 
-                              Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
+                              Text("${AllData[index]["BikeName"]}"),
 
-                              Text("Date: ${paymentDateTime.toString()}"),
+                              Text("NID:${AllData[index]["CustomerNID"]}"),
+
+                              Text("Date: ${AllData[index]["FileUploadDateTime"]}"),
                             ],
                           ),
                     

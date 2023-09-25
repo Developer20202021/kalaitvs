@@ -33,33 +33,33 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
   File? _photo;
   final ImagePicker _picker = ImagePicker();
 
-  Future imgFromGallery() async {
+  Future imgFromGallery(Context) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
         _photo = File(pickedFile.path);
-        uploadFile();
+        uploadFile(context);
       } else {
         print('No image selected.');
       }
     });
   }
 
-  Future imgFromCamera() async {
+  Future imgFromCamera(Context) async {
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       if (pickedFile != null) {
         _photo = File(pickedFile.path);
-        uploadFile();
+        uploadFile(context);
       } else {
         print('No image selected.');
       }
     });
   }
 
-  Future uploadFile() async {
+  Future uploadFile(Context) async {
     if (_photo == null) return;
     final fileName = basename(_photo!.path);
     final destination = 'files/$fileName';
@@ -68,11 +68,63 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
       final ref = firebase_storage.FirebaseStorage.instance
           .ref(destination)
           .child('file/');
-      await ref.putFile(_photo!);
-
-      setState(() {
+      await ref.putFile(_photo!).then((p0) =>setState(() {
         count++;
-      });
+
+        print(p0);
+      }));
+
+
+     String BikeImageUrl = (await ref.getDownloadURL()).toString();
+   
+
+
+
+
+
+
+
+          saveBikeImage(String BikeName, BikeImageUrl) async{
+
+                      final docUser = FirebaseFirestore.instance.collection("BikeImage");
+
+                      final jsonData ={
+                        "BikeName":BikeName,
+                        "BikeImageUrl":BikeImageUrl,
+                       
+                   
+                      };
+
+
+           await docUser.add(jsonData).then((value) =>print("Done")).onError((error, stackTrace) => print(error));
+
+
+
+                    }
+
+
+
+
+
+
+
+                  
+
+
+
+                  saveBikeImage("tvs", BikeImageUrl);
+
+
+
+
+
+      
+
+      // setState(() {
+      //   count++;
+
+      
+      // });
 
 
       
@@ -123,6 +175,30 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
           SizedBox(
             height: 12,
           ),
+
+
+
+          Container(
+
+            color: Colors.purple,
+            
+            
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("আপনি ${count} টি Image Upload করেছেন।", style: TextStyle(color: Colors.white),),
+            )),
+
+
+
+
+            
+          SizedBox(height: 25,),
+
+
+
+
+
+
           Center(
             child: GestureDetector(
               onTap: () {
@@ -182,21 +258,7 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
 
 
             
-          Container(
-
-            color: Colors.purple,
-            
-            
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("আপনি ${count} টি Image Upload করেছেন।", style: TextStyle(color: Colors.white),),
-            )),
-
-
-
-
-            
-          SizedBox(height: 25,),
+        
 
 
 
@@ -238,14 +300,14 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
                       leading: new Icon(Icons.photo_library),
                       title: new Text('Gallery'),
                       onTap: () {
-                        imgFromGallery();
+                        imgFromGallery(context);
                         Navigator.of(context).pop();
                       }),
                   new ListTile(
                     leading: new Icon(Icons.photo_camera),
                     title: new Text('Camera'),
                     onTap: () {
-                      imgFromCamera();
+                      imgFromCamera(context);
                       Navigator.of(context).pop();
                     },
                   ),

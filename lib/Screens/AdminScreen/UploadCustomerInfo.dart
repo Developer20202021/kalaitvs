@@ -1,5 +1,16 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleBikeInfo.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+
+
+
+
 
 class UploadCustomerInfo extends StatefulWidget {
 
@@ -19,8 +30,142 @@ class UploadCustomerInfo extends StatefulWidget {
 
 class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
 
+
+
+     firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  int count = 0;
+
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery(Context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future imgFromCamera(Context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future uploadFile(Context) async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!).then((p0) =>setState(() {
+        count++;
+
+        print(p0);
+      }));
+
+
+     String BikeImageUrl = (await ref.getDownloadURL()).toString();
+   
+
+
+
+
+
+
+
+
+          saveBikeImage(String  CustomerFileUrl, CustomerNID, BikeName) async{
+
+                      final docUser = FirebaseFirestore.instance.collection("CustomerFileInfo");
+
+                      final jsonData ={
+                        "FileName":"${count}/${destination}/${BikeName}/${DateTime.now().toString()}",
+                        "CustomerFileUrl":CustomerFileUrl,
+                        "BikeName":BikeName,
+                        "FileUploadDateTime":DateTime.now().toString(),
+                        "CustomerNID":CustomerNID
+                       
+                   
+                      };
+
+
+           await docUser.add(jsonData).then((value) =>print("Done")).onError((error, stackTrace) => print(error));
+
+
+
+                    }
+
+
+
+
+
+
+
+                  
+
+
+
+                  saveBikeImage(BikeImageUrl, widget.CustomerNID, widget.BikeName);
+
+
+
+
+
+      
+
+      // setState(() {
+      //   count++;
+
+      
+      // });
+
+
+      
+      
+   
+     
+    } catch (e) {
+      print('error occured');
+    }
+  }
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -57,257 +202,172 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
                   children: [
 
 
+                      Container(
 
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
+            color: Colors.purple,
+            
+            
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("আপনি ${count} টি Image Upload করেছেন।", style: TextStyle(color: Colors.white),),
+            )),
 
 
-                    ),
 
 
-                    SizedBox(height: 14,),
+            
+          SizedBox(height: 25,),
+
+
+
+
+
+
+
+                    Center(
+            child: GestureDetector(
+              onTap: () {
+                _showPicker(context);
+              },
+              child: CircleAvatar(
+                radius: 155,
+                backgroundColor: Colors.purple,
+                child: _photo != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.file(
+                          _photo!,
+                          width: 400,
+                          height: 400,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 400,
+                        height: 400,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 15,),
+
+
+          
+          Container(
+
+            color: Color.fromARGB(255, 245, 201, 42),
+            
+            
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("আপনি একাধিক Image Select করতে পারেন। আপনার Image Selection শেষ হলে Save Button এ Click করুন।", style: TextStyle(color: Colors.black),),
+            )),
+
+
+
+
+
+
+
+
+
+
+
+
+
+           SizedBox(height: 15,),
+
+
+
+           Container(width: 150, child:TextButton(onPressed: (){
+
+
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleBikeInfo(BikeName: widget.BikeName, BikeColor: widget.BikeColor, BikeSalePrice: widget.BikeSalePrice, CustomerNID: widget.CustomerNID, CustomerPhoneNumber: widget.CustomerPhoneNumber,)));
+
+
+
+
+
+                        }, child: Text("Save", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                         
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+              ),),),
+
+
+
+
+
+
+
 
 
                     
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("File Name", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("Done"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
                     
 
 
                   ]))),
-                    floatingActionButton: FloatingActionButton(
-                    onPressed: (){
-                      showAlertDialog(context);
-                    },
-                    tooltip: 'Upload',
-                    child: const Icon(Icons.upload_file_outlined),
-                  ),
+                  
                   
                   );
   }
-}
 
 
-showAlertDialog(BuildContext context) {
 
-    TextEditingController myEmailController = TextEditingController();
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text("Cancel"),
-    onPressed:  () {},
-  );
-  Widget continueButton = TextButton(
-    child: Text("Continue"),
-    onPressed:  () {},
-  );
 
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Choose File"),
-    content: Column(
-      children: [
-        IconButton(onPressed: (){
 
-        }, icon: Icon(Icons.file_upload_outlined)),
-
-          TextField(
-               
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter File Name',
-                           labelStyle: TextStyle(
+void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Gallery'),
+                      onTap: () {
+                        imgFromGallery(context);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      imgFromCamera(context);
+                      Navigator.of(context).pop();
+                    },
                   ),
-                          hintText: 'Enter File Name',
-            
-                          //  enabledBorder: OutlineInputBorder(
-                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //     ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                              ),
-                          
-                          
-                          ),
-                      controller: myEmailController,
-                    ),
-            
-            
-      ],
-    ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
-    
-
-
-
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

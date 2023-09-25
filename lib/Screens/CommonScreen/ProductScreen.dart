@@ -67,7 +67,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: NetworkImage("https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                      image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/tvsapp-ac523.appspot.com/o/files%2FXRecorder_17092023_075512.png%2Ffile?alt=media&token=40515d48-ed40-4321-bd06-c3acba9b6f6d"),
                       fit: BoxFit.cover,
                     ),
                   ),

@@ -2,8 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+
 
 
 class EditCustomerInfo extends StatefulWidget {
@@ -43,6 +52,152 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
   TextEditingController CustomerGuarantor2PhoneNumberController = TextEditingController();
   TextEditingController CustomerGuarantor2AddressController = TextEditingController();
   TextEditingController CustomerGuarantor2NIDController = TextEditingController();
+
+
+
+String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png";
+
+bool loading = false;
+
+
+
+
+   firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  int count = 0;
+
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
+
+
+  Future uploadFile(Context) async {
+    if (_photo == null) return;
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+  // image loading sign
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!).then((p0) =>setState(() {
+        count++;
+
+        print(p0);
+      }));
+
+
+      String CustomerImageUrl = (await ref.getDownloadURL()).toString();
+
+     //Update Firebase Collection Customer Data 
+
+              Future EditCustomerInformation(String CustomerImageUrl) async{
+
+
+                  final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerNID);
+
+                  final UpadateData ={
+                  "CustomerImageUrl":CustomerImageUrl,
+               
+                
+                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) =>    
+                  setState(() {
+                    loading = false;
+              LastUpdatedCustomerImageUrl = CustomerImageUrl; 
+                  })).onError((error, stackTrace) => print(error));
+
+
+
+
+              }
+
+
+
+
+
+
+
+
+                          EditCustomerInformation(CustomerImageUrl);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    } catch (e) {
+      print('error occured');
+    }
+  }
+
+
+
+
+
+  Future imgFromGallery(Context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future imgFromCamera(Context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+  
+
+
+
+
+
+
+
+
+ 
   
 
 
@@ -71,7 +226,17 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+   
 
     return  Scaffold(
       backgroundColor: Colors.white,
@@ -95,11 +260,18 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                   children: [
             
                     
+                    loading?Center(
+        child: LoadingAnimationWidget.twistingDots(
+          leftDotColor: const Color(0xFF1A1A3F),
+          rightDotColor: Colors.purple,
+          size: 50,
+        ),
+      ):
                     Center(
                       child:  CircleAvatar(
                         radius: 70,
                         backgroundImage: NetworkImage(
-                          "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+                          "${LastUpdatedCustomerImageUrl}",
                         ),
                       ),
                     ),
@@ -357,32 +529,6 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
                       height: 10,
                     ),
 
-                    Row(
-                      children: [
-
-                           Checkbox(
-                          value: value,
-                          onChanged: ( value) {
-                            setState(() {
-                              value = value;
-                            });
-                          },
-                        ), 
-
-
-                         SizedBox(
-                      width: 10,
-                            ),
-
-
-
-
-                           Flexible(child: Text("Your customer purchase your product using condition?", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
-
-
-
-
-                    ],),
 
 
 
@@ -792,16 +938,11 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
 
                 // user Data Update and show snackbar
 
-                  docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.green,
-                              content: const Text('Customer Information Setup Seccessful!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  docUser.update(UpadateData).then((value) =>    
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber,)),
+                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong'),
                               action: SnackBarAction(
@@ -840,22 +981,22 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
 
                           // Delay call Function and go to next screen
 
-                          Future.delayed(const Duration(milliseconds: 4500), () {
+                    //       Future.delayed(const Duration(milliseconds: 4500), () {
 
-                              // Here you can write your code
+                    //           // Here you can write your code
 
-                                setState(() {
+                    //             setState(() {
                     
                     
-                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber,)),
-                      );
+                    //  Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber,)),
+                    //   );
 
 
-                                });
+                    //             });
 
-                              });
+                    //           });
                           
 
                         
@@ -893,13 +1034,61 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
         floatingActionButton: FloatingActionButton(
       onPressed: (){
 
+
+
+        
+
+        
+          _showPicker(context);
+
+
       },
         tooltip: 'Upload Customer Image',
         child: const Icon(Icons.upload_outlined),
       ), 
       
     );
+
+
+    
   }
+
+
+
+  
+   void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child:  Wrap(
+                children: <Widget>[
+                 ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Gallery'),
+                      onTap: () {
+                        imgFromGallery(context);
+                        Navigator.of(context).pop();
+                      }),
+                   ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      imgFromCamera(context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+
+
+
 }
 
 
