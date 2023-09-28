@@ -1,10 +1,20 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 
 
 class SingleProductInfo extends StatefulWidget {
-  const SingleProductInfo({super.key});
+
+
+  final BikeID;
+
+
+
+
+  const SingleProductInfo({super.key, required this.BikeID});
 
   @override
   State<SingleProductInfo> createState() => _EditCustomerInfoState();
@@ -13,68 +23,122 @@ class SingleProductInfo extends StatefulWidget {
 class _EditCustomerInfoState extends State<SingleProductInfo> {
 
 
+
+
+
+
+
+
+
+  
+
+   // Firebase Single Bike Data Load
+
+List  AllData = [0];
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('product');
+
+Future<void> getData(String BikeID) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("BikeID", isEqualTo: BikeID);
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllData);
+}
+
+
+
+
+
+
+
+
+
+
+   // Firebase Bike Image Data Load
+
+List  AllBikeImageData = [];
+
+
+
+
+Future<void> getBikeImageData(String BikeID) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+  CollectionReference _BikeImageRef =
+    FirebaseFirestore.instance.collection("BikeImage");
+
+    Query BikeImagequery = _BikeImageRef.where("BikeID", isEqualTo: BikeID);
+    QuerySnapshot BikeImagequerySnapshot = await BikeImagequery.get();
+
+    // Get data from docs and convert map to List
+     AllBikeImageData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+
+     setState(() {
+       AllBikeImageData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllBikeImageData);
+}
+
+
+
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    getData(widget.BikeID);
+    getBikeImageData(widget.BikeID);
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
 
 
-    List CustomerInfo = [
-
-      <String, String>{
-
-        "Name":"Mahadi Hasan",
-        "FatherName": "Mosta Hasan",
-        "MotherName": "Amena Khanam",
-        "Address":"Joypurhat sadar, Joypurhat",
-        "PhoneNumber":"01767298388",
-        "NID":"24529525",
-        "Email":"",
-        "Guarantor1Name":"None",
-        "Guarantor1PhoneNumber":"34239482374",
-        "Guarantor1Adress":"komorgram",
-        "Guarantor1NID":"23477434",
-        "Guarantor2Name":"None",
-        "Guarantor2PhoneNumber":"34239482374",
-        "Guarantor2Adress":"komorgram",
-        "Guarantor2NID":"23477434",
-        "PurchasedProduct":"2",
-      
-      },
-
-
-      {
-
-          "customerFile":[
-
-
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-
-
-
-
-        ]
-
-
-      }
-
     
-
-
-
-
-    ];
-
 
 
 
@@ -108,14 +172,43 @@ class _EditCustomerInfoState extends State<SingleProductInfo> {
                   children: [
             
                     
-                    Center(
-                      child:  CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                          "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
-                        ),
-                      ),
+                   CarouselSlider(
+              items: [
+                  
+                //1st Image of Slider
+
+            for(int i = 0; i<AllBikeImageData.length; i++ )
+
+
+                Container(
+                  margin: EdgeInsets.all(6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    image: DecorationImage(
+                      image: NetworkImage("${AllBikeImageData[i]["BikeImageUrl"]}"),
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                ),
+                  
+          
+  
+          ],
+              
+            //Slider Container properties
+              options: CarouselOptions(
+                height: 180.0,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                viewportFraction: 0.8,
+              ),
+          ),
+
+
             
              SizedBox(
                       height: 20,
@@ -123,16 +216,826 @@ class _EditCustomerInfoState extends State<SingleProductInfo> {
 
 
                 Table(
-                    border: TableBorder.all(color: Colors.purple, width: 1.5),
+                    border: TableBorder(
+                     horizontalInside:
+                BorderSide(color: Colors.white, width: 10.0)),
                     textBaseline: TextBaseline.ideographic,
+                    
                       children: [
 
 
-                 TableRow(children: [
-                          Text("Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mahadi Hasan", style: TextStyle(fontSize: 15.0),),
+
+          
+                      
+                 TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeName"]}",overflow: TextOverflow.clip),
+                            )),
+                      
                         
                         ]),
+
+
+
+
+
+                                 
+                 TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Type", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeType"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike ABS", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeABS"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+                        
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Battery Rating", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBatteryRating"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+                        
+                        
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Brake Fluid", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBrakeFluid"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                                
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Brake Front", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBrakeFront"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                                 
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Brake Rear", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBrakeRear"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                                       
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Buying Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBuyingPrice"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Cooling System", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeCoolingSystem"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Engine Capacity", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeEngineCapacity"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Features", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeFeatures"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Frame", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeFrame"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+                           
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Front Suspension", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeFrontSuspension"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+
+
+
+                           
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Fuel Supply System", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeFuelSupplySystem"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+                            
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Fuel Tank Capacity", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeFuelTankCapacity"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        
+                            
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Gear Box", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeGearBox"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                          
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Ground Clearance", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeGroundClearance"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Head lamp", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeHeadlamp"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Height", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeHeight"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Kerb Weight", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeKerbWeight"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Length", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeLength"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+
+                        
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike MaxSpeed", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeMaxSpeed"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Maximum Power", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeMaximumPower"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                           
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Maximum Torque", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeMaximumTorque"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+                            
+                          TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Muffler", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeMuffler"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                             TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Power to Weight Ration", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                            height: 50,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikePowertoWeightRation"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 
+
+
+
+
+
+                 
+
+
+
 
 
                  
@@ -144,98 +1047,6 @@ class _EditCustomerInfoState extends State<SingleProductInfo> {
 
                       
 
-
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
                        
                   
                      
@@ -247,130 +1058,7 @@ class _EditCustomerInfoState extends State<SingleProductInfo> {
 
                     SizedBox(height: 50,),
 
-                    Text("File Information:", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-
-
-                       Table(
-                    border: TableBorder.all(color: Colors.purple, width: 1.5),
-                    textBaseline: TextBaseline.ideographic,
-                      children: [
-
-
-                 TableRow(children: [
-                          Text("Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mahadi Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                 
-
-                    
-
-
-
-
-                      
-
-
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-
-
-
-                        
-                          TableRow(children: [
-                          Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                          Text("Mosta Hasan", style: TextStyle(fontSize: 15.0),),
-                        
-                        ]),
-                       
-                  
-                     
-                      ],
-                    ),
-
-
+                   
 
 
             

@@ -90,70 +90,7 @@ Future<void> getData(String CustomerNID) async {
 
 
 
-    List CustomerInfo = [
-
-      <String, String>{
-
-        "Name":"Mahadi Hasan",
-        "FatherName": "Mosta Hasan",
-        "MotherName": "Amena Khanam",
-        "Address":"Joypurhat sadar, Joypurhat",
-        "PhoneNumber":"01767298388",
-        "NID":"24529525",
-        "Email":"",
-        "Guarantor1Name":"None",
-        "Guarantor1PhoneNumber":"34239482374",
-        "Guarantor1Adress":"komorgram",
-        "Guarantor1NID":"23477434",
-        "Guarantor2Name":"None",
-        "Guarantor2PhoneNumber":"34239482374",
-        "Guarantor2Adress":"komorgram",
-        "Guarantor2NID":"23477434",
-        "PurchasedProduct":"2",
-      
-      },
-
-
-      {
-
-          "customerFile":[
-
-
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-          {"FileName":"Nid File", "FileID":"2432", "FileUrl":""},
-
-
-
-
-        ]
-
-
-      }
-
     
-
-
-
-
-    ];
-
-
-
-
-
-
-
-  
 
 
  

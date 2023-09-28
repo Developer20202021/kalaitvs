@@ -19,6 +19,7 @@ import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
+import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 
 Future main() async{
 
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  ProductScreen(),
+      home:  SingleProductInfo(BikeID: "c9f5dfe2-1511-4e9a-80c0-1a058de853f3"),
     );
   }
 }

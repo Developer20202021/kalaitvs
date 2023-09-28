@@ -100,7 +100,7 @@ class _AllProductState extends State<AllProduct> {
 
       
 
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo()));
+        //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo()));
 
 
 
@@ -125,7 +125,7 @@ class _AllProductState extends State<AllProduct> {
 
 void doNothing(BuildContext context) {
 
-   Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo()));
+  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo()));
 
 }
 

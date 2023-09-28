@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadBikeImage.dart';
+import 'package:uuid/uuid.dart';
 
 
 
@@ -15,6 +16,9 @@ class UploadProduct extends StatefulWidget {
 }
 
 class _UploadProductState extends State<UploadProduct> {
+
+  var uuid = Uuid();
+ 
   
   TextEditingController BikeTypeController = TextEditingController();
   TextEditingController BikeEngineCapacityController = TextEditingController();
@@ -52,6 +56,7 @@ class _UploadProductState extends State<UploadProduct> {
   TextEditingController BikeShowroomAvailableNumberController = TextEditingController();
   TextEditingController BikeBuyingPriceController = TextEditingController();
   TextEditingController BikeSalePriceController = TextEditingController();
+  TextEditingController BikeNameController = TextEditingController();
   
   
   
@@ -61,6 +66,8 @@ class _UploadProductState extends State<UploadProduct> {
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+     var bikeid = uuid.v4();
  
 
     return Scaffold(
@@ -91,6 +98,43 @@ class _UploadProductState extends State<UploadProduct> {
               SizedBox(
                   height: 20,
                 ),
+
+
+
+                TextField(
+                 
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Bike Name',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              ),
+                      hintText: 'Bike Name',
+              
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: Colors.purple),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                          ),
+                      
+                      
+                      ),
+                  controller: BikeNameController,
+                ),
+              
+              
+              
+              
+                SizedBox(
+                  height: 20,
+                ),
+              
+              
               
            
               Text("ENGINE & PERFORMANCE", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
@@ -100,7 +144,7 @@ class _UploadProductState extends State<UploadProduct> {
                 ),
               
                 TextField(
-                  focusNode: myFocusNode,
+                 
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Type',
@@ -1251,11 +1295,112 @@ class _UploadProductState extends State<UploadProduct> {
                     Container(width: 150, child:TextButton(onPressed: (){
 
 
-                            Navigator.push(
-                        context,
 
-             MaterialPageRoute(builder: (context) => const UploadBikeImage()),
-                      );
+
+
+
+
+                        Future uploadBike() async{
+
+                      final docUser = FirebaseFirestore.instance.collection("product");
+
+                      // var productID = docUser.doc().id;
+                      print("___________________________________________________________________________________________________${bikeid}");
+
+                      final jsonData ={
+                        "BikeName":BikeNameController.text,
+                        "BikeType":BikeTypeController.text,
+                        "BikeABS":BikeABSController.text,
+                        "BikeBatteryRating":BikeBatteryRatingController.text,
+                        "BikeBrakeFluid":BikeBrakeFluidController.text,
+                        "BikeBrakeFront":BikeBrakeFrontController.text,
+                        "BikeBrakeRear":BikeBrakeRearController.text,
+                        "BikeBuyingPrice":BikeBuyingPriceController.text,
+                        "BikeCoolingSystem":BikeCoolingSystemController.text,
+                        "BikeEngineCapacity":BikeEngineCapacityController.text,
+                        "BikeFeatures":BikeFeaturesController.text,
+                        "BikeFrame":BikeFrameController.text,
+                        "BikeFrontSuspension":BikeFrontSuspensionController.text,
+                        "BikeFuelSupplySystem":BikeFuelSupplySystemController.text,
+                        "BikeFuelTankCapacity":BikeFuelTankCapacityController.text,
+                        "BikeFuelsupplysystem":BikeFuelSupplySystemController.text,
+                        "BikeGearBox":BikeGearBoxController.text,
+                        "BikeGroundClearance":BikeGroundClearanceController.text,
+                        "BikeHeadlamp":BikeHeadlampController.text,
+                        "BikeHeight":BikeHeightController.text,
+                        "BikeKerbWeight":BikeKerbWeightController.text,
+                        "BikeLength":BikeLengthController.text,
+                        "BikeMaxSpeed":BikeMaxSpeedController.text,
+                        "BikeMaximumPower":BikeMaximumPowerController.text,
+                        "BikeMaximumTorque":BikeMaximumTorqueController.text,
+                        "BikeMuffler":BikeMufflerController.text,
+                        "BikePowertoWeightRation":BikePowertoWeightRationController.text,
+                        "BikeRearSuspension":BikeRearSuspensionController.text,
+                        "BikeSaddleHeight":BikeSaddleHeightController.text,
+                        "BikeSalePrice":BikeSalePriceController.text,
+                        "BikeShowroomAvailableNumber":BikeShowroomAvailableNumberController.text,
+                        "BikeTailLamp":BikeTailLampController.text,
+                        "BikeTyreFront":BikeTyreFrontController.text,
+                        "BikeTyreRear":BikeTyreRearController.text,
+                        "BikeValvePerCylinder":BikeValvePerCylinderController.text,
+                        "BikeWheelBase":BikeWheelBaseController.text,
+                        "BikeWidth":BikeWidthController.text,
+                        "BikeID":bikeid
+
+                  
+                      };
+
+
+                    await docUser.doc(bikeid).set(jsonData).then((value) =>               Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  UploadBikeImage(BikeName: BikeNameController.text, BikeID:bikeid)),
+                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+                              uploadBike();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //                 Navigator.push(
+            //             context,
+
+            //  MaterialPageRoute(builder: (context) => const UploadBikeImage()),
+            //           );
 
 
 

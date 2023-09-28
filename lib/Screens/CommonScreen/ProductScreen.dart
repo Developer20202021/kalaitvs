@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 
 
 class ProductScreen extends StatefulWidget {
@@ -14,6 +16,63 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+
+
+
+
+
+
+  // Firebase All Customer Data Load
+
+List  AllData = [0];
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('product');
+
+Future<void> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllData);
+}
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,21 +96,21 @@ class _ProductScreenState extends State<ProductScreen> {
             children: [
               ListTile(
                 leading: Icon(Icons.arrow_drop_down_circle),
-                title: const Text('Card title 1'),
+                title:  Text('${AllData[index]["BikeName"]}'),
                 subtitle: Text(
-                  'Secondary Text',
+                  '${AllData[index]["BikeType"]}',
                   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                  '${AllData[index]["BikeFeatures"]}',
                   style: TextStyle(color: Colors.black.withOpacity(0.6)),
                 ),
               ),
            
-            //  Image.network("https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+       
 
 
 
@@ -67,7 +126,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/tvsapp-ac523.appspot.com/o/files%2FXRecorder_17092023_075512.png%2Ffile?alt=media&token=40515d48-ed40-4321-bd06-c3acba9b6f6d"),
+                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -79,7 +138,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: NetworkImage("https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -91,7 +150,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: NetworkImage("https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -103,7 +162,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: NetworkImage("https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -115,7 +174,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: NetworkImage("https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -156,7 +215,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                     
 
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
 
                     }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                     
@@ -172,7 +231,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
       
 
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
+               
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo(BikeID: "${AllData[index]["BikeID"]}")));
 
               },
               
@@ -182,12 +242,15 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),),
 
 
-                      TextButton(onPressed: () async{
+                      TextButton(onPressed: () {
 
 
       
 
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
+
+
+
+                
 
               },
               
@@ -237,7 +300,7 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
           );
         },
-        itemCount: 25,
+        itemCount: AllData.length,
       ),
     );
   }

@@ -17,7 +17,17 @@ import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
 
 class UploadBikeImage extends StatefulWidget {
-  const UploadBikeImage({super.key});
+
+
+  final BikeName;
+
+  final BikeID;
+
+
+
+
+
+  const UploadBikeImage({super.key, required this.BikeName, required this.BikeID});
 
   @override
   State<UploadBikeImage> createState() => _UploadBikeImageState();
@@ -89,10 +99,9 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
                       final docUser = FirebaseFirestore.instance.collection("BikeImage");
 
                       final jsonData ={
-                        "BikeName":BikeName,
-                        "BikeImageUrl":BikeImageUrl,
-                       
-                   
+                        "BikeID":widget.BikeID,
+                        "BikeName":widget.BikeName,
+                        "BikeImageUrl":BikeImageUrl,                                          
                       };
 
 
@@ -113,6 +122,54 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
 
 
                   saveBikeImage("tvs", BikeImageUrl);
+
+
+
+
+
+
+
+
+
+
+
+                  //Update Firebase Collection Customer Data 
+
+              Future EditCustomerBikeImageUrl() async{
+
+
+                  final docUser = FirebaseFirestore.instance.collection("product").doc(widget.BikeID);
+
+                  print("___________________________________________________________________________________________________${widget.BikeID}");
+
+
+                  final UpadateData ={
+                  "BikeImageUrl":BikeImageUrl,
+               
+                
+                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) => print("Done")).onError((error, stackTrace) => print(error));
+
+
+
+
+              }
+
+
+
+
+
+
+
+
+                          EditCustomerBikeImageUrl();
 
 
 
