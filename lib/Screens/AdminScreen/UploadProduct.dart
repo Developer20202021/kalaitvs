@@ -1335,6 +1335,11 @@ class _UploadProductState extends State<UploadProduct> {
                         "BikeMaximumTorque":BikeMaximumTorqueController.text,
                         "BikeMuffler":BikeMufflerController.text,
                         "BikePowertoWeightRation":BikePowertoWeightRationController.text,
+
+
+                        //
+
+                        
                         "BikeRearSuspension":BikeRearSuspensionController.text,
                         "BikeSaddleHeight":BikeSaddleHeightController.text,
                         "BikeSalePrice":BikeSalePriceController.text,

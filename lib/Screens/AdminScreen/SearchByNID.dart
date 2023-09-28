@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
@@ -8,23 +10,114 @@ import 'package:tvs_app/Screens/AdminScreen/SingleCustomer.dart';
 
 
 class SearchByNID extends StatefulWidget {
-  const SearchByNID({super.key});
+
+
+
+final BikeName;
+final BikeColor;
+final BikeModelName;
+final BikeSalePrice;
+
+
+
+
+  const SearchByNID({super.key, required this.BikeName, required this.BikeColor, required this.BikeModelName, required this.BikeSalePrice});
 
   @override
   State<SearchByNID> createState() => _SearchByNIDState();
 }
 
 class _SearchByNIDState extends State<SearchByNID> {
-  TextEditingController myEmailController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+  TextEditingController CustomerNIDController = TextEditingController();
+  TextEditingController CustomerPhoneNumberController = TextEditingController();
+
+
+  bool nidFound = true;
+
+
+
+  
+   // Firebase All Customer Data Load
+
+List  AllData = [];
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('customer');
+
+Future<void> getData(context) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("CustomerNID", isEqualTo: CustomerNIDController.text);
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     int AllDataLength = AllData.length;
+
+     print(AllDataLength);
+
+     if (AllDataLength == 0) {
+
+      setState(() {
+        nidFound = false;
+        print("No Customer Found");
+
+        CustomerNIDController.clear();
+        CustomerPhoneNumberController.clear();
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+      });
+       
+     } else {
+
+           Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomer(BikeName: widget.BikeName, BikeModelName: widget.BikeModelName, BikeColor: widget.BikeColor, BikeSalePrice: widget.BikeSalePrice, CustomerNID: AllData[0]["CustomerNID"], CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"], CustomerAddress: AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"], CustomerType: AllData[0]["CustomerType"],)));
+
+       
+     }
+
+
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllData);
+}
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    // getData(widget.CustomerNID);
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
 
-    FocusNode myFocusNode = new FocusNode();
+    
  
 
     return Scaffold(
+      
       backgroundColor: Colors.white,
       
       appBar: AppBar(
@@ -47,10 +140,42 @@ class _SearchByNIDState extends State<SearchByNID> {
             
             
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
+
+
+                  nidFound? Text(""):  Center(
+                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                    
+                    
+                                      child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.close, color: Colors.red,),
+                          Text("No Data Found !!!"),
+                        ],
+                      ),
+                                      ),
+                       
+                                   decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                    
+                                    border: Border.all(
+                            width: 2,
+                            color: Colors.white
+
+                            
+                          ),
+                                    borderRadius: BorderRadius.circular(10)      
+                                   ),)),
+                    ),
+
             
                     
                     // Center(
@@ -63,20 +188,18 @@ class _SearchByNIDState extends State<SearchByNID> {
                     // ),
             
             SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
             
             
             
                     TextField(
                       keyboardType: TextInputType.number,
-                      focusNode: myFocusNode,
+                      
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter NID',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
+                
                           hintText: 'Enter Your NID',
             
                           //  enabledBorder: OutlineInputBorder(
@@ -92,14 +215,14 @@ class _SearchByNIDState extends State<SearchByNID> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: CustomerNIDController,
                     ),
             
             
             
             
                     SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
             
             
@@ -111,9 +234,7 @@ class _SearchByNIDState extends State<SearchByNID> {
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Phone Number',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
+                         
                           hintText: 'Enter Your Phone Number',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
@@ -128,21 +249,25 @@ class _SearchByNIDState extends State<SearchByNID> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: CustomerPhoneNumberController,
                     ),
             
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
             
             
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(width: 150, child:TextButton(onPressed: (){
+                        Container(width: 150, child:TextButton(onPressed: () async{
 
 
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomer()));
+
+                          getData(context);
+
+
+                     
 
 
 

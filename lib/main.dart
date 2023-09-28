@@ -13,6 +13,7 @@ import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFileView.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadBikeImage.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
@@ -58,10 +59,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  SingleProductInfo(BikeID: "c9f5dfe2-1511-4e9a-80c0-1a058de853f3"),
+      home:  ProductScreen(),
     );
   }
 }
+
+
+// SingleProductInfo(BikeID: "c9f5dfe2-1511-4e9a-80c0-1a058de853f3")
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

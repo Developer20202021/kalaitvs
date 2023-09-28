@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
 
@@ -25,7 +26,7 @@ class _EditCustomerInfoState extends State<SingleProductInfo> {
 
 
 
-
+bool loading = true;
 
 
 
@@ -52,7 +53,12 @@ Future<void> getData(String BikeID) async {
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
      setState(() {
-       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      loading = false;
+      if (AllData.length==0) {
+        loading = true;
+      }
+      else{
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();}
      });
 
     print(AllData);
@@ -165,7 +171,17 @@ Future<void> getBikeImageData(String BikeID) async {
       ),
       body: SingleChildScrollView(
 
-              child: Padding(
+              child: loading? Padding(
+                padding: const EdgeInsets.only(top: 70),
+                child: Center(
+                      child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+                    ),
+              ): Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +250,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -243,7 +259,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeName"]}",overflow: TextOverflow.clip),
@@ -264,7 +280,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Type", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -273,7 +289,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeType"]}",overflow: TextOverflow.clip),
@@ -293,7 +309,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike ABS", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -302,7 +318,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeABS"]}",overflow: TextOverflow.clip),
@@ -322,7 +338,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Battery Rating", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -331,7 +347,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeBatteryRating"]}",overflow: TextOverflow.clip),
@@ -352,7 +368,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Brake Fluid", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -361,7 +377,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeBrakeFluid"]}",overflow: TextOverflow.clip),
@@ -380,7 +396,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Brake Front", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -389,7 +405,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeBrakeFront"]}",overflow: TextOverflow.clip),
@@ -408,7 +424,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Brake Rear", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -417,7 +433,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeBrakeRear"]}",overflow: TextOverflow.clip),
@@ -436,7 +452,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Buying Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -445,7 +461,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeBuyingPrice"]}",overflow: TextOverflow.clip),
@@ -463,7 +479,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Cooling System", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -472,7 +488,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeCoolingSystem"]}",overflow: TextOverflow.clip),
@@ -490,7 +506,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Engine Capacity", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -499,7 +515,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeEngineCapacity"]}",overflow: TextOverflow.clip),
@@ -518,7 +534,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Features", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -527,7 +543,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeFeatures"]}",overflow: TextOverflow.clip),
@@ -546,7 +562,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Frame", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -555,7 +571,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeFrame"]}",overflow: TextOverflow.clip),
@@ -575,7 +591,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Front Suspension", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -584,7 +600,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeFrontSuspension"]}",overflow: TextOverflow.clip),
@@ -609,7 +625,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Fuel Supply System", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -618,7 +634,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeFuelSupplySystem"]}",overflow: TextOverflow.clip),
@@ -639,7 +655,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Fuel Tank Capacity", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -648,7 +664,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeFuelTankCapacity"]}",overflow: TextOverflow.clip),
@@ -668,7 +684,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Gear Box", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -677,7 +693,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeGearBox"]}",overflow: TextOverflow.clip),
@@ -696,7 +712,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Ground Clearance", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -705,7 +721,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeGroundClearance"]}",overflow: TextOverflow.clip),
@@ -723,7 +739,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Head lamp", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -732,7 +748,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeHeadlamp"]}",overflow: TextOverflow.clip),
@@ -749,7 +765,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Height", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -758,7 +774,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeHeight"]}",overflow: TextOverflow.clip),
@@ -777,7 +793,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Kerb Weight", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -786,7 +802,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                         
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeKerbWeight"]}",overflow: TextOverflow.clip),
@@ -805,7 +821,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Length", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -814,7 +830,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeLength"]}",overflow: TextOverflow.clip),
@@ -837,7 +853,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike MaxSpeed", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -846,7 +862,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeMaxSpeed"]}",overflow: TextOverflow.clip),
@@ -865,7 +881,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Maximum Power", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -874,7 +890,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeMaximumPower"]}",overflow: TextOverflow.clip),
@@ -893,7 +909,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Maximum Torque", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -902,7 +918,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeMaximumTorque"]}",overflow: TextOverflow.clip),
@@ -920,7 +936,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Muffler", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -929,7 +945,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeMuffler"]}",overflow: TextOverflow.clip),
@@ -947,7 +963,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                           Container(
                             
-                            height: 50,
+                            
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("Bike Power to Weight Ration", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
@@ -956,7 +972,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
                               Container(
                             
-                            height: 50,
+                           
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikePowertoWeightRation"]}", overflow: TextOverflow.clip,),
@@ -964,6 +980,305 @@ Future<void> getBikeImageData(String BikeID) async {
                       
                         
                         ]),
+
+
+
+
+
+
+
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Rear Suspension", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeRearSuspension"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Saddle Height", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeSaddleHeight"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+                                TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Sale Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeSalePrice"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+                                    TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Showroom Available Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeShowroomAvailableNumber"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                              TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Tail Lamp", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeTailLamp"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+
+                            TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Tyre Front", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeTyreFront"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+                            TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Tyre Rear", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeTyreRear"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+      TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Valve Per Cylinder", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeValvePerCylinder"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+              TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Wheel Base", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeWheelBase"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+            TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Width", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeWidth"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

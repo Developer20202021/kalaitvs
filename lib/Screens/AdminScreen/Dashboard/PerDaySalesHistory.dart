@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -16,14 +17,116 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
 
   // এখানে Date দিয়ে Data fetch করতে হবে। 
 
+  var VisiblePaymentDate = "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
+  
+
 
      void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
       // TODO: implement your code here
 
-      dynamic value = args.value;
+          if (args.value is PickerDateRange) {
+
+            try {
+          final DateTime rangeStartDate = args.value.startDate;
+          var adminSetDay = rangeStartDate.day;
+          var adminSetMonth = rangeStartDate.month;
+          var adminSetYear = rangeStartDate.year;
+
+          var paymentDate = "${adminSetDay}/${adminSetMonth}/${adminSetYear}";
+
+          VisiblePaymentDate = paymentDate;
+
+          print("${adminSetDay}/${adminSetMonth}/${adminSetYear}");
+
+
+          getData(paymentDate);
+
+
+
+
+
+          final DateTime rangeEndDate = args.value.endDate;
+              
+            } catch (e) {
+              
+            }
+         
+        } else if (args.value is DateTime) {
+          final DateTime selectedDate = args.value;
+          print(selectedDate);
+        } else if (args.value is List<DateTime>) {
+          final List<DateTime> selectedDates = args.value;
+          print(selectedDates);
+        } else {
+          final List<PickerDateRange> selectedRanges = args.value;
+          print(selectedRanges);
+        }
+
+
+
+
       
-      print(value);
+      
     }
+
+
+
+ var PaymentDate = "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
+
+
+    
+  // Firebase All Customer Data Load
+
+List  AllData = [0];
+    int moneyAdd = 0;
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('BikeSalePrice');
+
+Future<void> getData(String paymentDate) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("BikeSaleDate", isEqualTo: paymentDate);
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+     moneyAdd = 0;
+
+     for (var i = 0; i < AllData.length; i++) {
+
+       var money = AllData[i]["SalePrice"];
+      int moneyInt = int.parse(money);
+
+      
+
+      setState(() {
+        moneyAdd = moneyAdd + moneyInt;
+      });
+       
+     }
+
+     print(moneyAdd);
+
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+    print(AllData);
+}
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    getData(PaymentDate);
+    super.initState();
+  }
+
  
 
 
@@ -39,7 +142,7 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text(" Today Sales History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Per Day Sales History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -55,6 +158,17 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
 
+          Container(
+            
+            color:Colors.purple,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("${VisiblePaymentDate} তারিখে ${moneyAdd}৳ টাকা বিক্রয় হয়েছে।", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            ),),
+
+
+            SizedBox(height: 10,),
+
 
           Container(
                 child: SfDateRangePicker(
@@ -66,20 +180,7 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                width: 150,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<Color>(Colors.purple),
-                  ),
-                ),
-              )
+          
         
         ],
       );
@@ -90,186 +191,41 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
       ],
         
       ),
-      body: SingleChildScrollView(
+      body: ListView.separated(
+            itemCount: AllData.length,
+            separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15,),
+            itemBuilder: (BuildContext context, int index) {
 
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
+                  //  DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
 
 
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
+              return   Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                           shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(5),
+                ), 
                     
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
+                          title: Text("${AllData[index]["SalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                          trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
+                          subtitle: Column(
 
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
 
+                              Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
 
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
+                              Text("Date: ${AllData[index]["BikeSaleDate"]}"),
+                            ],
+                          ),
                     
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
                     
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
                     
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-                    
-                    ListTile(
-                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(5),
-                        ), 
-
-                      title: Text("300 tk", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: Text("complete"),
-                      subtitle: Text("Date: 21/12/2023"),
-
-
-
-                    ),
-
-
-                    SizedBox(height: 14,),
-
-
-
-                  ]))));
+                        ),
+              );
+            },
+          ));
   }
 }

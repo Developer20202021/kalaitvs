@@ -141,7 +141,7 @@ class _BlockAdminState extends State<BlockAdmin> {
                         Container(width: 150, child:TextButton(onPressed: (){
 
 
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomer()));
+                          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomer()));
 
 
 

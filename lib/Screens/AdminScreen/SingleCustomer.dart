@@ -2,7 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 
 class SingleCustomer extends StatefulWidget {
-  const SingleCustomer({super.key});
+
+
+  final CustomerNID;
+  final CustomerAddress;
+  final CustomerName;
+  final CustomerPhoneNumber;
+  final BikeColor;
+  final BikeModelName;
+  final BikeName;
+  final BikeSalePrice;
+  final CustomerType;
+
+
+
+
+  const SingleCustomer({super.key, required this.BikeName, required this.BikeModelName, required this.BikeColor, required this.BikeSalePrice, required this.CustomerNID, required this.CustomerPhoneNumber, required this.CustomerAddress, required this.CustomerName, required this.CustomerType});
 
   @override
   State<SingleCustomer> createState() => _SingleCustomerState();
@@ -40,21 +55,22 @@ class _SingleCustomerState extends State<SingleCustomer> {
                           borderRadius: BorderRadius.circular(5),
                         ), 
 
-                      title: Text("Name: Mahadi Hasan", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                      trailing: TextButton(onPressed: (){
+                      title: Text("Name: ${widget.CustomerName}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                      trailing: widget.CustomerType=="Paid"?TextButton(onPressed: (){
 
 
-                        // back 
-                        
-        //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditCustomerInfo(CustomerNID: "343",)));
+            Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  EditCustomerInfo(CustomerNID: widget.CustomerNID, CustomerAddress: widget.CustomerAddress, CustomerName: widget.CustomerName, CustomerPhoneNumber: widget.CustomerPhoneNumber, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice,)),
+                      );
 
 
 
       }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
        
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-              ),),
-                      subtitle: Text("NID:84238443 Phone Number:42352452545"),
+              ),):Text("${widget.CustomerType}"),
+                      subtitle: Text("NID:${widget.CustomerNID} Phone Number:${widget.CustomerPhoneNumber}"),
 
 
 

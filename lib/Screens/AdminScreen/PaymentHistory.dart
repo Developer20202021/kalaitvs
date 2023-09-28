@@ -75,7 +75,7 @@ Future<void> getData(String CustomerNID) async {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Your Payment History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Payment History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -87,33 +87,45 @@ Future<void> getData(String CustomerNID) async {
             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 25,),
             itemBuilder: (BuildContext context, int index) {
 
-              DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
+              late DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
 
 
               return   Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                           shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5),
-                ), 
-                    
-                          title: Text("${AllData[index]["Amount"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                          trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
-                          subtitle: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                child: Container(
+                     
+               decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 250, 230, 250),
 
-                              Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
-
-                              Text("Date: ${paymentDateTime.toString()}"),
-                            ],
-                          ),
-                    
-                    
-                    
+                border: Border.all(
+                          width: 2,
+                          color: Colors.purple
                         ),
+                borderRadius: BorderRadius.circular(10)      
+               ),
+
+                  
+                  child: ListTile(
+                    
+                 
+                      
+                            title: Text("${AllData[index]["Amount"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                            trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
+                            subtitle: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                
+                                Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
+                
+                                Text("Date: ${AllData[index]["PaymentDate"]}"),
+                              ],
+                            ),
+                      
+                      
+                      
+                          ),
+                ),
               );
             },
           ));

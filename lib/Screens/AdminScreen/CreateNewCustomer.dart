@@ -307,7 +307,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
                             Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SearchByNID()),
+                        MaterialPageRoute(builder: (context) =>  SearchByNID(BikeName: widget.BikeName, BikeColor:widget.BikeColor, BikeModelName: widget.BikeModelName, BikeSalePrice: widget.BikeSalePrice)),
                       );
 
 

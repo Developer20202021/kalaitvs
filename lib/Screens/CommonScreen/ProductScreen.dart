@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 
 
@@ -19,7 +21,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
 
 
-
+bool loading = true;
 
 
   // Firebase All Customer Data Load
@@ -37,6 +39,7 @@ Future<void> getData() async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      setState(() {
+      loading = false;
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      });
 
@@ -87,7 +90,14 @@ Future<void> getData() async {
         centerTitle: true,
         
       ),
-      body: ListView.separated(
+      body: loading?Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+      ): ListView.separated(
         separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 35,),
         itemBuilder: (BuildContext context, int index) {
           return Card(
@@ -242,10 +252,17 @@ Future<void> getData() async {
                       ),),
 
 
+
+
+
+
+
+
+
                       TextButton(onPressed: () {
 
 
-      
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByNID(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
 
 
 
@@ -279,6 +296,27 @@ Future<void> getData() async {
                       ),),
                 ],
               ),
+
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+
+                  child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Text("Out of Stock"):Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
+                     
+               decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 250, 230, 250),
+
+                border: Border.all(
+                          width: 2,
+                          color: Colors.purple
+                        ),
+                borderRadius: BorderRadius.circular(10)      
+               ),))
+
+
+
+
 
 
 

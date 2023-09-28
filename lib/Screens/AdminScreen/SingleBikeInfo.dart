@@ -46,7 +46,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
         if (snackVisible == true) {
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          // await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
+          // await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
 
       Navigator.push(context,
                         MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ));
@@ -504,6 +504,25 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                 var BikePaymentDueString = BikePaymentDueInt.toString();
 
 
+
+
+                List CustomerData = [0];
+
+
+      CollectionReference _collectionDataRef =
+    FirebaseFirestore.instance.collection('customer');
+
+    
+    Query queryData = _collectionDataRef.where("CustomerNID", isEqualTo: CustomerNID);
+    QuerySnapshot querySnapshot = await queryData.get();
+
+    // Get data from docs and convert map to List
+     CustomerData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+
+
+
                 final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo");
 
                 final jsonData ={
@@ -518,7 +537,22 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                   "BikeDeliveryDate":DateTime.now(),
                   "BikeBillPay":BikeBillPayController.text,
                   "BikePaymentDue":BikePaymentDueString,
-                  "CustomerType":CustomerType
+                  "CustomerType":CustomerType,
+                  "CustomerName":CustomerData[0]["CustomerName"],
+                  "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
+                  "BikeConditionMonth":CustomerData[0]["BikeConditionMonth"],
+                  "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
+                  "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
+                  "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
+                  "CustomerGuarantor1Name":CustomerData[0]["CustomerGuarantor1Name"],
+                  "CustomerGuarantor1PhoneNumber":CustomerData[0]["CustomerGuarantor1PhoneNumber"],
+                  "CustomerGuarantor2Address":CustomerData[0]["CustomerGuarantor2Address"],
+                  "CustomerGuarantor2NID":CustomerData[0]["CustomerGuarantor2NID"],
+                  "CustomerGuarantor2Name":CustomerData[0]["CustomerGuarantor2Name"],
+                  "CustomerGuarantor2PhoneNumber":CustomerData[0]["CustomerGuarantor2PhoneNumber"],
+                  "DuePaymentGivingDay":CustomerData[0]["DuePaymentGivingDay"],
+                  "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
+                  
                 };
 
 
@@ -535,6 +569,65 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
 
+
+
+
+
+
+
+
+                      final salePrice = FirebaseFirestore.instance.collection("BikeSalePrice");
+
+                      final saleData ={
+
+                        "SalePrice":BikeSalePrice,
+                        "DuePrice":BikePaymentDueInt.toString(),
+                        "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                        "CustomerNID":CustomerNID,
+                        "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"]
+
+
+                      };
+
+                    await salePrice.add(saleData).then((value) => print(""));
+
+
+
+
+
+
+
+
+
+                    List BikeData = [0];
+
+
+      CollectionReference _BikecollectionDataRef =
+    FirebaseFirestore.instance.collection('product');
+
+    
+    Query BikequeryData = _BikecollectionDataRef.where("BikeName", isEqualTo: BikeName);
+    QuerySnapshot BikequerySnapshot = await BikequeryData.get();
+
+    // Get data from docs and convert map to List
+     BikeData = BikequerySnapshot.docs.map((doc) => doc.data()).toList();
+
+     var bikeAvailableNumber = BikeData[0]["BikeShowroomAvailableNumber"];
+
+     int bikeAvailableNumberInt = int.parse(bikeAvailableNumber.toString());
+
+     int BikeUpdateAvailableNumber = bikeAvailableNumberInt - 1;
+
+     
+    BikequerySnapshot.docs[0].reference.update({"BikeShowroomAvailableNumber":BikeUpdateAvailableNumber.toString()}).then((value) => print("Done"));
+
+
+
+
+
+
+
+                        
               }
 
 
