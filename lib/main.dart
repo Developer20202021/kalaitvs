@@ -10,6 +10,7 @@ import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory
 
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/SalesPage.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
+import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  ProductScreen(),
+      home:  HomeScreen(),
     );
   }
 }

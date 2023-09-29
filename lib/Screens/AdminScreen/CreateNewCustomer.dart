@@ -59,14 +59,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                   children: [
             
                     
-                    Center(
-                      child: Lottie.asset(
-                      'lib/images/animation_lmsev4au.json',
-                        fit: BoxFit.cover,
-                        width: 300,
-                        height: 200
-                      ),
-                    ),
+                 
             
             // SizedBox(
             //           height: 20,
