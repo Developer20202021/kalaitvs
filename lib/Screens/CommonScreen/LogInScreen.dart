@@ -1,8 +1,15 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
+import 'package:tvs_app/Screens/CommonScreen/StaffScreen.dart';
 
 
 
@@ -17,6 +24,14 @@ class _LogInScreenState extends State<LogInScreen> {
   TextEditingController myEmailController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
 
+
+
+   var createUserErrorCode = "";
+
+   bool loading = false;
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -28,7 +43,7 @@ class _LogInScreenState extends State<LogInScreen> {
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
-        leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
+        automaticallyImplyLeading: false,
         title: const Text("Log In",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
@@ -36,142 +51,393 @@ class _LogInScreenState extends State<LogInScreen> {
         centerTitle: true,
         
       ),
-      body: Container(
+      body: SingleChildScrollView(
 
-        child:  CustomPaint(
-          painter: CurvePainter(),
-
-     
-              
-            
-            
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-            
-                    
-                    Center(
-                      child: Lottie.asset(
-                      'lib/images/animation_lk8fkoa8.json',
-                        fit: BoxFit.cover,
-                        width: 200,
-                        height: 200
+        child: loading?Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Center(
+                      child: LoadingAnimationWidget.discreteCircle(
+                        color: const Color(0xFF1A1A3F),
+                        secondRingColor: const Color(0xFFEA3799),
+                        thirdRingColor: Colors.white,
+                        size: 100,
                       ),
                     ),
-            
-            SizedBox(
-                      height: 20,
-                    ),
-            
-            
-            
-                    TextField(
-                      focusNode: myFocusNode,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Email',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Email',
-            
-                          //  enabledBorder: OutlineInputBorder(
-                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //     ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                              ),
-                          
-                          
-                          ),
-                      controller: myEmailController,
-                    ),
-            
-            
-            
-            
-                    SizedBox(
-                      height: 20,
-                    ),
-            
-            
-            
-            
-            
-                    TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Password',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Password',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myPassController,
-                    ),
-            
-                    SizedBox(
-                      height: 10,
-                    ),
-            
-            
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(width: 150, child:TextButton(onPressed: (){}, child: Text("Log in", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                         
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-              ),),),
-
-
-
-                    Container(width: 150, child:TextButton(onPressed: (){
-
-                           Navigator.push(
-                        context,
-
-             MaterialPageRoute(builder: (context) => const RegistrationScreen()),
-                      );
-
-
-
-
-                    }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                         
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-              ),),),
+              ): Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
 
 
 
 
 
-                      ],
-                    )
-            
-            
-            
+               createUserErrorCode=="wrong-password"? Center(
+                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+              
+              
+                                child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.red,),
+                    Text("Wrong password provided for that user."),
                   ],
                 ),
-              ),
+                                ),
+                 
+                             decoration: BoxDecoration(
+                              color: Colors.red[100],
+              
+                              border: Border.all(
+                      width: 2,
+                      color: Colors.white
+
+                      
+                    ),
+                              borderRadius: BorderRadius.circular(10)      
+                             ),)),
+              ):Text(""),
+
+
+
+
+
+
+
+              createUserErrorCode=="user-not-found"? Center(
+                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+              
+              
+                                child: Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 8),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.red,),
+                    Text("No user found for that email.", overflow: TextOverflow.clip,),
+                  ],
+                ),
+                                ),
+                 
+                             decoration: BoxDecoration(
+                              color: Colors.red[100],
+              
+                              border: Border.all(
+                      width: 2,
+                      color: Colors.white
+
+                      
+                    ),
+                              borderRadius: BorderRadius.circular(10)      
+                             ),)),
+              ):Text(""),
+
+
+
+
+
+
+
+
+              
+
+
+
+
+            
+              
+              // Center(
+              //   child: Lottie.asset(
+              //   'lib/images/animation_lk8fkoa8.json',
+              //     fit: BoxFit.cover,
+              //     width: 200,
+              //     height: 200
+              //   ),
+              // ),
+            
+            // SizedBox(
+            //           height: 20,
+            //         ),
+            
+            
+            
+              TextField(
+                
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter Email',
+                     labelStyle: TextStyle(
+        color: myFocusNode.hasFocus ? Colors.purple: Colors.black
             ),
+                    hintText: 'Enter Your Email',
+            
+                    //  enabledBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                    //     ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                    
+                    
+                    ),
+                controller: myEmailController,
+              ),
+            
+            
+            
+            
+              SizedBox(
+                height: 20,
+              ),
+            
+            
+            
+            
+            
+              TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter Password',
+                     labelStyle: TextStyle(
+        color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+            ),
+                    hintText: 'Enter Your Password',
+                    //  enabledBorder: OutlineInputBorder(
+                    //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                    //   ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 3, color: Colors.purple),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    
+                    
+                    ),
+                controller: myPassController,
+              ),
+            
+              SizedBox(
+                height: 10,
+              ),
+            
+            
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(width: 150, child:TextButton(onPressed: () async{
+
+
+                    setState(() {
+                      loading = true;
+                    });
+
+                    try {
+                      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: myEmailController.text.trim(),
+                        password: myPassController.text.trim()
+                      );
+
+                      var userName = credential.user!.displayName;
+                      var userEmail = credential.user!.email;
+                      var userVerified = credential.user!.emailVerified;
+
+
+                      if (userVerified) {
+
+
+                        List  AllData = [];
+
+
+                    CollectionReference _collectionRef =
+                      FirebaseFirestore.instance.collection('admin');
+
+                      Query query = _collectionRef.where("userEmail", isEqualTo: myEmailController.text);
+                    QuerySnapshot querySnapshot = await query.get();
+
+                
+                      // Get docs from collection reference
+                     
+
+                      // Get data from docs and convert map to List
+                      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+                      setState(() {
+                        
+                        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+                      });
+
+
+
+
+
+                      print(AllData);
+            
+
+
+               
+
+
+
+                  if (AllData[0]["AdminApprove"] == "true") {
+
+                    setState(() {
+                          loading=false;
+                        });
+
+
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, userEmail: userEmail)),);
+
+                    
+                  }
+
+                  else{
+
+                    setState(() {
+                          loading=false;
+                        });
+
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) => StaffScreen()),);
+
+
+                  }
+
+
+
+                        
+
+
+
+
+
+
+
+
+
+
+
+                       
+
+
+
+
+
+
+
+
+
+                        
+
+                        
+                      }
+                      else{
+
+
+                          await credential.user?.delete();
+
+                             CollectionReference _collectionRef =
+                      FirebaseFirestore.instance.collection('admin');
+                          _collectionRef.doc(userEmail).delete().then(
+      (doc) => print("Document deleted"),
+      onError: (e) => print("Error updating document $e"),
+    );
+
+                            setState(() {
+                          loading=false;
+                        });
+                        
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()),);
+
+
+                      }
+
+
+
+
+                
+
+
+
+                      
+                  
+
+
+
+
+
+
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+
+                        setState(() {
+                          loading=false;
+                          createUserErrorCode = "user-not-found";
+                          
+                        });
+                        print('No user found for that email.');
+                      } else if (e.code == 'wrong-password') {
+
+
+                        setState(() {
+                          loading=false;
+                          createUserErrorCode = "wrong-password";
+                          
+                        });
+                        print('Wrong password provided for that user.');
+                      }
+                    }
+
+
+
+
+
+
+
+                  }, child: Text("Log in", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                   
+          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+        ),),),
+
+
+
+              Container(width: 150, child:TextButton(onPressed: (){
+
+                     Navigator.push(
+                  context,
+
+             MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+                );
+
+
+
+
+              }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                   
+          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+        ),),),
+
+
+
+
+
+                ],
+              )
+            
+            
+            
+            ],
+          ),
+        ),
         ),
       
       

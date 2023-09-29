@@ -74,10 +74,10 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
  var PaymentDate = "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
 
 
-    
+   var DataLoad = ""; 
   // Firebase All Customer Data Load
 
-List  AllData = [0];
+List  AllData = [];
     int moneyAdd = 0;
 
   CollectionReference _collectionRef =
@@ -97,7 +97,21 @@ Future<void> getData(String paymentDate) async {
 
      moneyAdd = 0;
 
-     for (var i = 0; i < AllData.length; i++) {
+
+
+
+     if (AllData.length == 0) {
+       setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+        DataLoad = "";
+      });
+
+      for (var i = 0; i < AllData.length; i++) {
 
        var money = AllData[i]["SalePrice"];
       int moneyInt = int.parse(money);
@@ -106,15 +120,41 @@ Future<void> getData(String paymentDate) async {
 
       setState(() {
         moneyAdd = moneyAdd + moneyInt;
+        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
       });
        
      }
 
      print(moneyAdd);
+       
+     }
 
-     setState(() {
-       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-     });
+
+
+
+
+
+
+
+
+    //  for (var i = 0; i < AllData.length; i++) {
+
+    //    var money = AllData[i]["SalePrice"];
+    //   int moneyInt = int.parse(money);
+
+      
+
+    //   setState(() {
+    //     moneyAdd = moneyAdd + moneyInt;
+    //   });
+       
+    //  }
+
+    //  print(moneyAdd);
+
+    //  setState(() {
+    //    AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    //  });
 
     print(AllData);
 }
@@ -191,7 +231,7 @@ Future<void> getData(String paymentDate) async {
       ],
         
       ),
-      body: ListView.separated(
+      body:DataLoad == "0"? Center(child: Text("No Data Available")): ListView.separated(
             itemCount: AllData.length,
             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15,),
             itemBuilder: (BuildContext context, int index) {

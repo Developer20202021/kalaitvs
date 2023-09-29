@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 
@@ -15,11 +19,40 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController myEmailController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
+  TextEditingController myAddressController = TextEditingController();
+  TextEditingController myPhoneNumberController = TextEditingController();
+  TextEditingController myAdminNameController = TextEditingController();
+
+ var createUserErrorCode = "";
+
+ bool loading = false;
+
+
+  
+  @override
+  void initState() {
+  
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+
+
+   
+
+
+
+
+
+
+
+    
 
 
  
@@ -29,7 +62,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
-        leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
+       automaticallyImplyLeading: false,
         title: const Text("Create Your Account", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
@@ -39,21 +72,111 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
       body: SingleChildScrollView(
 
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-            
-                    
-                    Center(
-                      child: Lottie.asset(
-                      'lib/images/animation_lk8g4ixk.json',
-                        fit: BoxFit.cover,
-                        width: 300,
-                        height: 200
+              child:  loading?Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Center(
+                      child: LoadingAnimationWidget.discreteCircle(
+                        color: const Color(0xFF1A1A3F),
+                        secondRingColor: const Color(0xFFEA3799),
+                        thirdRingColor: Colors.white,
+                        size: 100,
                       ),
                     ),
+              ):Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+
+
+
+                    createUserErrorCode=="weak-password"? Center(
+                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                    
+                    
+                                      child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.close, color: Colors.red,),
+                          Text("The password provided is too weak."),
+                        ],
+                      ),
+                                      ),
+                       
+                                   decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                    
+                                    border: Border.all(
+                            width: 2,
+                            color: Colors.white
+
+                            
+                          ),
+                                    borderRadius: BorderRadius.circular(10)      
+                                   ),)),
+                    ):Text(""),
+
+
+
+
+
+
+
+                    createUserErrorCode=="email-already-in-use"? Center(
+                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                    
+                    
+                                      child: Padding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 8),
+                      child: Row(
+                        children: [
+                          Icon(Icons.close, color: Colors.red,),
+                          Text("The account already exists for that email.", overflow: TextOverflow.clip,),
+                        ],
+                      ),
+                                      ),
+                       
+                                   decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                    
+                                    border: Border.all(
+                            width: 2,
+                            color: Colors.white
+
+                            
+                          ),
+                                    borderRadius: BorderRadius.circular(10)      
+                                   ),)),
+                    ):Text(""),
+
+
+
+
+
+
+
+
+                    
+
+
+
+
+            
+                    
+                    // Center(
+                    //   child: Lottie.asset(
+                    //   'lib/images/animation_lk8g4ixk.json',
+                    //     fit: BoxFit.cover,
+                    //     width: 300,
+                    //     height: 200
+                    //   ),
+                    // ),
             
             // SizedBox(
             //           height: 20,
@@ -62,7 +185,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             
             
                     TextField(
-                      focusNode: myFocusNode,
+                      
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Name',
@@ -84,57 +207,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: myAdminNameController,
                     ),
             
             
             
             
+                 
+            
+            
+            
+            
+                   
                     SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
-            
-            
+
+
+
             
             
             
                     TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Address',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Address',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myPassController,
-                    ),
-            
-                    SizedBox(
-                      height: 10,
-                    ),
-
-
-
-                    SizedBox(
-                      height: 20,
-                    ),
-            
-            
-            
-                    TextField(
+                      keyboardType: TextInputType.phone,
                       focusNode: myFocusNode,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -157,14 +252,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           
                           
                           ),
-                      controller: myEmailController,
+                      controller: myPhoneNumberController,
                     ),
             
             
             
             
                     SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
             
             
@@ -192,11 +287,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           
                           
                           ),
-                      controller: myPassController,
+                      controller: myEmailController,
                     ),
             
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
 
                     TextField(
@@ -225,7 +320,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             
 
             SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
 
 
@@ -242,28 +337,159 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(width: 150, child:TextButton(onPressed: (){
+                        Container(width: 150, child:TextButton(onPressed: () async{
 
-                            Navigator.push(
+                   
+
+
+                          setState(() {
+                            loading = true;
+                          });
+
+
+
+
+
+                      try {
+                        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          email: myEmailController.text.trim(),
+                          password: myPassController.text.trim(),
+                        );
+
+                      
+
+
+
+                       
+                        await credential.user?.updateDisplayName(myAdminNameController.text.trim());
+                        
+
+
+                     
+                      
+                  await credential.user?.sendEmailVerification();
+
+                 
+
+
+                   
+
+                      final docUser =  FirebaseFirestore.instance.collection("admin");
+
+                      final jsonData ={
+
+                        "userName":myAdminNameController.text,
+                        "userEmail":myEmailController.text,
+                        "emailVerified":"",
+                        "AdminApprove":"false",
+                        "userPhoneNumber":myPhoneNumberController.text,
+                        "userPassword":myPassController.text
+                     
+                      };
+
+
+
+
+                    await docUser.doc(myEmailController.text).set(jsonData).then((value) =>   Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const LogInScreen()),
+                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+                  
+
+
+
+                     myAdminNameController.clear();
+                      myEmailController.clear();
+                      myPassController.clear();
+
+                     setState(() {
+                    loading = false;
+                  });
+
+              
+
+       
+
+
+                        
+
+                        // print(credential.user!.email.toString());
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+
+                          setState(() {
+                            loading = false;
+                            createUserErrorCode = "weak-password";
+                          });
+                          print('The password provided is too weak.');
+                        } else if (e.code == 'email-already-in-use') {
+
+                          setState(() {
+                            loading = false;
+                            createUserErrorCode = "email-already-in-use";
+                          });
+                          print('The account already exists for that email.');
+                        }
+                      } catch (e) {
+                        loading = false;
+                        print(e);
+                      }
+
+
+
+
+
+
+
+
+
+
+
+
+                      
+                        }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                         
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+              ),),),
+
+
+
+
+
+
+               Container(width: 150, child:TextButton(onPressed: (){
+
+                           Navigator.push(
+                        context,
+
+             MaterialPageRoute(builder: (context) => const LogInScreen()),
                       );
 
 
 
 
-
-                        }, child: Text("Log in", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                    }, child: Text("Log In", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
               ),),),
 
 
 
-                    Container(width: 150, child:TextButton(onPressed: (){}, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                         
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-              ),),),
+
+
+               
 
 
 

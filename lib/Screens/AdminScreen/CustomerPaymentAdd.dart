@@ -432,7 +432,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1006521063716953951972494eacc94f0c06da0f4d7f5e6a81d19&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652200521696003252f4c6d00621c5ee8590fc02168b854a13&to=${CustomerPhoneNumber}&message=${customerMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

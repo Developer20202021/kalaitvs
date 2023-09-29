@@ -38,6 +38,8 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
 
+  bool loading = false;
+
 
   
    void snackShow(context,bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeName, String BikeBillPay) async{
@@ -46,7 +48,11 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
         if (snackVisible == true) {
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          // await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
+          await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
+
+          setState(() {
+            loading = false;
+          });
 
       Navigator.push(context,
                         MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ));
@@ -58,6 +64,10 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
         }
 
         if (snackVisible == false) {
+
+          setState(() {
+            loading = false;
+          });
 
           ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
           
@@ -377,6 +387,11 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
         Future EditCustomerInformation(String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeDeliveryNo, String BikeSalePrice, String BikeBillPay) async{
 
+
+
+              setState(() {
+                loading = true;
+              });
 
               int BikeSalePriceInt = int.parse(BikeSalePrice);
               int BikeBillPayInt = int.parse(BikeBillPay);
@@ -777,7 +792,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1006521063716953951972494eacc94f0c06da0f4d7f5e6a81d19&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652200521696003252f4c6d00621c5ee8590fc02168b854a13&to=${CustomerPhoneNumber}&message=${customerMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

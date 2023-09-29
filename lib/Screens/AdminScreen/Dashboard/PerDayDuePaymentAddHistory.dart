@@ -77,8 +77,9 @@ class _PerDayDuePaymentAddHistoryState extends State<PerDayDuePaymentAddHistory>
     
   // Firebase All Customer Data Load
 
-List  AllData = [0];
+List  AllData = [];
     int moneyAdd = 0;
+    var DataLoad = "";
 
   CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('DuePaymentAddInfo');
@@ -97,7 +98,19 @@ Future<void> getData(String paymentDate) async {
 
      moneyAdd = 0;
 
-     for (var i = 0; i < AllData.length; i++) {
+
+     if (AllData.length == 0) {
+       setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+        DataLoad = "";
+      });
+
+      for (var i = 0; i < AllData.length; i++) {
 
        var money = AllData[i]["Amount"];
       int moneyInt = int.parse(money);
@@ -106,15 +119,18 @@ Future<void> getData(String paymentDate) async {
 
       setState(() {
         moneyAdd = moneyAdd + moneyInt;
+        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
       });
        
      }
 
      print(moneyAdd);
+       
+     }
 
-     setState(() {
-       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-     });
+     
+
+  
 
     print(AllData);
 }
@@ -191,7 +207,7 @@ Future<void> getData(String paymentDate) async {
       ],
         
       ),
-      body: ListView.separated(
+      body:DataLoad == "0"? Center(child: Text("No Data Available")): ListView.separated(
             itemCount: AllData.length,
             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15,),
             itemBuilder: (BuildContext context, int index) {

@@ -21,9 +21,14 @@ import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
+import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future main() async{
+
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -33,11 +38,27 @@ Future main() async{
 }
 
 class MyApp extends StatelessWidget {
+
+
+
+
   const MyApp({super.key});
+
+
+
+
+
+
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+
+    
+
+
+
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -60,9 +81,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  HomeScreen(),
+      home:  RegistrationScreen(),
     );
   }
+
+
+  
 }
 
 
@@ -99,6 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

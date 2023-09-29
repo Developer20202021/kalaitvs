@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:popover/popover.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
@@ -9,10 +11,18 @@ import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
+import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+
+  final userName;
+  final userEmail;
+  
+
+
+
+  const HomeScreen({super.key, required this.userName, required this.userEmail});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -157,6 +167,17 @@ Future<void> getData(String paymentDate) async {
     getDueCustomerData();
     getData(PaymentDate);
     super.initState();
+
+
+
+
+
+  
+    
+
+  FlutterNativeSplash.remove();
+  
+  
   }
 
 
@@ -186,7 +207,7 @@ Future<void> getData(String paymentDate) async {
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
-       
+       automaticallyImplyLeading: false,
         title: const Text("Dashboard", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
@@ -202,6 +223,45 @@ Future<void> getData(String paymentDate) async {
           },
           itemBuilder: (BuildContext context) {
             return  [
+
+
+               PopupMenuItem(
+                onTap: (){
+
+
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen()));
+
+
+
+
+                },
+                child: Center(
+                  child: Column(
+                    children: [
+                    Center(
+                      child:  CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(
+                          "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+                        ),
+                      ),
+                    ),
+
+
+                    Text("Name:${widget.userName}"),
+                    Text("Email:${widget.userEmail}"),
+
+
+
+
+                    ],
+                  ),
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
 
 
 
@@ -456,6 +516,52 @@ Future<void> getData(String paymentDate) async {
               ),
               
 
+
+
+
+
+           PopupMenuItem(
+                onTap: () async{
+
+                          FirebaseAuth.instance
+                            .authStateChanges()
+                            .listen((User? user) async{
+                              if (user == null) {
+                                
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LogInScreen()),
+                      );
+                                print('User is currently signed out!');
+                              } else {
+                                print('User is signed in!');
+                                await FirebaseAuth.instance.signOut();
+                                          
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LogInScreen()),
+                      );
+                              }
+                            });
+                  
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.logout),
+                    SizedBox(width: 5,),
+                    Text("LogOut"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+              
 
 
 

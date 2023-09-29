@@ -16,7 +16,9 @@ class AllCustomer extends StatefulWidget {
 
 class _AllCustomerState extends State<AllCustomer> {
 
+bool loading = false;
 
+var DataLoad = "";
 
  
 
@@ -24,7 +26,7 @@ class _AllCustomerState extends State<AllCustomer> {
 
 // Firebase All Customer Data Load
 
-List  AllData = [0];
+List  AllData = [];
 
 
   CollectionReference _collectionRef =
@@ -36,9 +38,20 @@ Future<void> getData() async {
 
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-     setState(() {
+     if (AllData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+      loading = false;
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      });
+       
+     }
+     
 
     print(AllData);
 }
@@ -50,6 +63,9 @@ Future<void> getData() async {
 @override
   void initState() {
     // TODO: implement initState
+    setState(() {
+      loading = true;
+    });
     getData();
     super.initState();
   }
@@ -85,7 +101,7 @@ Future<void> getData() async {
         centerTitle: true,
         
       ),
-      body: ListView.separated(
+      body: DataLoad == "0"? Center(child: Text("No Data Available")): ListView.separated(
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {
           return Slidable(

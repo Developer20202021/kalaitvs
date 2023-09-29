@@ -19,7 +19,7 @@ class _PerDayDueCustomerState extends State<PerDayDueCustomer> {
 
 
    // Firebase All Customer Data Load
-
+var DataLoad = "";
 List  AllData = [0];
 
 
@@ -37,9 +37,19 @@ Future<void> getData() async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-     setState(() {
+      if (AllData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+      
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      });
+       
+     }
 
     print(AllData);
 }
@@ -78,7 +88,7 @@ Future<void> getData() async {
         centerTitle: true,
         
       ),
-      body: ListView.separated(
+      body: DataLoad == "0"? Center(child: Text("No Data Available")):ListView.separated(
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {
           return Slidable(

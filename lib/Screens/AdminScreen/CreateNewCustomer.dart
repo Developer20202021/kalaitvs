@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
@@ -29,6 +30,12 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
   TextEditingController customerAddressController = TextEditingController();
   TextEditingController customerNIDController = TextEditingController();
 
+  bool loading = false;
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -52,7 +59,17 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
       ),
       body: SingleChildScrollView(
 
-              child: Padding(
+              child: loading?Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Center(
+                      child: LoadingAnimationWidget.discreteCircle(
+                        color: const Color(0xFF1A1A3F),
+                        secondRingColor: const Color(0xFFEA3799),
+                        thirdRingColor: Colors.white,
+                        size: 100,
+                      ),
+                    ),
+              ):Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +233,9 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                         Container(width: 150, child:TextButton(onPressed: (){
 
 
-
+                          setState(() {
+                            loading = true;
+                          });
                           
                     Future createCustomer(String CustomerName, CustomerNID, CustomerAddress, CustomerPhoneNumber) async{
 
@@ -282,7 +301,9 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-                      
+                      setState(() {
+                        loading = false;
+                      });
 
                   
 

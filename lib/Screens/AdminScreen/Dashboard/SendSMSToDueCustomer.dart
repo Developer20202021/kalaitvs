@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
 
@@ -26,6 +27,10 @@ class SendSMSToDueCustomer extends StatefulWidget {
 class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
   TextEditingController DueCustomerMsgController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
+
+  bool loading = false;
+
+  var msgSend = '';
 
 
 
@@ -66,7 +71,14 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
         centerTitle: true,
         
       ),
-      body: Container(
+      body: loading?Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+      ):Container(
 
         child:  CustomPaint(
           painter: CurvePainter(),
@@ -84,9 +96,72 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                     
                
             
+            msgSend == "success"?
             
-            
+                    Center(
+                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
                     
+                    
+                                      child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.check, color: Colors.green,),
+                          Text("Message Sent Successfull!!!"),
+                        ],
+                      ),
+                                      ),
+                       
+                                   decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                    
+                                    border: Border.all(
+                            width: 2,
+                            color: Colors.white
+
+                            
+                          ),
+                                    borderRadius: BorderRadius.circular(10)      
+                                   ),)),
+                    ):Text(""),
+
+
+
+
+                    msgSend == "fail"?
+            
+                    Center(
+                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                    
+                    
+                                      child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.close, color: Colors.red,),
+                          Text("Message Sent Fail!!!"),
+                        ],
+                      ),
+                                      ),
+                       
+                                   decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                    
+                                    border: Border.all(
+                            width: 2,
+                            color: Colors.white
+
+                            
+                          ),
+                                    borderRadius: BorderRadius.circular(10)      
+                                   ),)),
+                    ):Text(""),
+            
+            
             
             
             
@@ -127,7 +202,44 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(width: 150, child:TextButton(onPressed: (){
+                        Container(width: 150, child:TextButton(onPressed: () async{
+
+
+                            setState(() {
+                              loading = true;
+                            });
+
+
+                          Future SendSMSToCustomer(context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, String DueCustomerMsg) async {
+
+
+
+
+                            final response = await http
+                                .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652200521696003252f4c6d00621c5ee8590fc02168b854a13&to=${CustomerPhoneNumber}&message=${DueCustomerMsg}'));
+
+                                    Navigator.pop(context);
+
+                            if (response.statusCode == 200) {
+                              // If the server did return a 200 OK response,
+                              // then parse the JSON.
+                              print(jsonDecode(response.body));
+                              setState(() {
+                                msgSend = "success";
+                                loading = false;
+                              });
+                            
+                            } else {
+
+                               setState(() {
+                                msgSend = "fail";
+                                loading = false;
+                              });
+                              // If the server did not return a 200 OK response,
+                              // then throw an exception.
+                              throw Exception('Failed to load album');
+                            }
+                          }
 
 
                           SendSMSToCustomer(context, widget.CustomerNID, widget.CustomerPhoneNumber, widget.BikePaymentDue, DueCustomerMsgController.text);
@@ -193,24 +305,3 @@ class CurvePainter extends CustomPainter {
 
 
 
-Future SendSMSToCustomer(context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, String DueCustomerMsg) async {
-
-
-
-
-  final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1006521063716953951972494eacc94f0c06da0f4d7f5e6a81d19&to=${CustomerPhoneNumber}&message=${DueCustomerMsg}'));
-
-           Navigator.pop(context);
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    print(jsonDecode(response.body));
-   
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}

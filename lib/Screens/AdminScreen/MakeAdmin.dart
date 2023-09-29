@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
+import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 
 
 
@@ -16,6 +20,12 @@ class MakeAdmin extends StatefulWidget {
 class _MakeAdminState extends State<MakeAdmin> {
   TextEditingController myEmailController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
+
+
+
+  bool loading = false;
+
+  var ServerMsg = "";
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +46,17 @@ class _MakeAdminState extends State<MakeAdmin> {
         centerTitle: true,
         
       ),
-      body: Container(
+      body: loading?Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Center(
+                      child: LoadingAnimationWidget.discreteCircle(
+                        color: const Color(0xFF1A1A3F),
+                        secondRingColor: const Color(0xFFEA3799),
+                        thirdRingColor: Colors.white,
+                        size: 100,
+                      ),
+                    ),
+              ): Container(
 
         child:  CustomPaint(
           painter: CurvePainter(),
@@ -57,7 +77,7 @@ class _MakeAdminState extends State<MakeAdmin> {
             
             
                     TextField(
-                      focusNode: myFocusNode,
+                     
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Email',
@@ -86,46 +106,61 @@ class _MakeAdminState extends State<MakeAdmin> {
             
             
                     SizedBox(
-                      height: 20,
-                    ),
-            
-            
-            
-            
-            
-                    TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Phone Number',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Phone Number',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myPassController,
-                    ),
-            
-                    SizedBox(
                       height: 10,
                     ),
+            
+            
+            
+            
             
             
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(width: 150, child:TextButton(onPressed: (){}, child: Text("Set Admin", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                        Container(width: 150, child:TextButton(onPressed: (){
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                         final docUser = FirebaseFirestore.instance.collection("admin").doc(myEmailController.text.trim());
+
+
+                      var updateData ={
+
+
+                        "AdminApprove":"true"
+                      };
+
+
+
+                          docUser.update(updateData).then((value) =>      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AllAdmin()),
+                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+
+
+
+                      setState(() {
+                            loading = false;
+                          });
+
+
+
+
+                        }, child: Text("Set Admin", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
               ),),),

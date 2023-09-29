@@ -20,7 +20,8 @@ class _PaymentHistoryState extends State<PaymentHistory> {
 
   // Firebase All Customer Data Load
 
-List  AllData = [0];
+List  AllData = [];
+var DataLoad = "";
 
 
   CollectionReference _collectionRef =
@@ -37,9 +38,19 @@ Future<void> getData(String CustomerNID) async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-     setState(() {
+       if (AllData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+      
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      });
+       
+     }
 
     print(AllData);
 }
@@ -82,7 +93,7 @@ Future<void> getData(String CustomerNID) async {
         centerTitle: true,
         
       ),
-      body: ListView.separated(
+      body: DataLoad == "0"? Center(child: Text("No Data Available")): ListView.separated(
             itemCount: AllData.length,
             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 25,),
             itemBuilder: (BuildContext context, int index) {
