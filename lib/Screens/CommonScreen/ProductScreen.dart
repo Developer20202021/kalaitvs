@@ -234,9 +234,16 @@ Future<void> getData() async {
       
       
                ButtonBar(
-                  alignment: MainAxisAlignment.start,
+                  alignment: MainAxisAlignment.center,
                   children: [
                     
+            
+            
+            // BikeShowroomAvailableNumber
+            AllData[index]["BikeShowroomAvailableNumber"]=="0"?
+
+            Text(""):
+            
             TextButton(onPressed: () async{
       
       
@@ -276,34 +283,67 @@ Future<void> getData() async {
       
       
       
-                        TextButton(onPressed: () {
-      
-      
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByNID(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
-      
-      
-      
-      
-                  
-      
-                },
-                
-                 child: Text("Previous Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                
-                          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-                        ),),
-      
+                      
       
       
       
       
                     
                     TextButton(onPressed: () async{
+
+
+                     showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(child: Text('Warning Message')),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children : <Widget>[
+                Expanded(
+                  child: Text(
+                    "Are you sure?? You want to delete this product",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.red,
+
+                    ),
+                  ),
+                )
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              TextButton(
+                  child: Text('Ok'),
+                  onPressed: () {
+                   
+                      final collection = FirebaseFirestore.instance.collection('product');
+                    collection 
+                    .doc('${AllData[index]["BikeID"]}') // <-- Doc ID to be deleted. 
+                    .delete() // <-- Delete
+                    .then((_) =>  setState(() {
+      
+                              getData();
+                              Navigator.of(context).pop();
+
+                        }))
+                    .catchError((error) => print('Delete failed: $error'));
+                  })
+            ],
+          );
+        },
+      );
       
       
         
-      
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
+   
       
                 },
                 
@@ -319,7 +359,13 @@ Future<void> getData() async {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
       
-                    child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Text("Out of Stock"):Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
+                    child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Out of Stock"),
+                    ):Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
+                    ),
                        
                  decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 250, 230, 250),
