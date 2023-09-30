@@ -39,8 +39,9 @@ Future<void> getData() async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      setState(() {
-      loading = false;
+     
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      loading = false;
      });
 
     print(AllData);
@@ -55,6 +56,20 @@ Future<void> getData() async {
     // TODO: implement initState
     getData();
     super.initState();
+  }
+
+
+
+
+  Future refresh() async{
+
+
+    setState(() {
+      
+          getData();
+
+    });
+
   }
 
 
@@ -97,248 +112,251 @@ Future<void> getData() async {
           thirdRingColor: Colors.white,
           size: 100,
         ),
-      ): ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 35,),
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(Icons.arrow_drop_down_circle),
-                title:  Text('${AllData[index]["BikeName"]}'),
-                subtitle: Text(
-                  '${AllData[index]["BikeType"]}',
-                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  '${AllData[index]["BikeFeatures"]}',
-                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                ),
-              ),
-           
-       
-
-
-
-
-
-
-              CarouselSlider(
-              items: [
-                  
-                //1st Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                      fit: BoxFit.cover,
-                    ),
+      ): RefreshIndicator(
+        onRefresh: refresh,
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 35,),
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.arrow_drop_down_circle),
+                  title:  Text('${AllData[index]["BikeName"]}'),
+                  subtitle: Text(
+                    '${AllData[index]["BikeType"]}',
+                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
                   ),
                 ),
-                  
-                //2nd Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                      fit: BoxFit.cover,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    '${AllData[index]["BikeFeatures"]}',
+                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
                   ),
                 ),
-                  
-                //3rd Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                  
-                //4th Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                  
-                //5th Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-  
-          ],
-              
-            //Slider Container properties
-              options: CarouselOptions(
-                height: 180.0,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                viewportFraction: 0.8,
-              ),
-          ),
-
-
-
-
-
-
-
-
-
-
-
-
-             ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  
-          TextButton(onPressed: () async{
-
-
-                    
-
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
-
-                    }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                    
-                              backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-                            ),),
-
-
-
-
-               
-          TextButton(onPressed: () async{
-
-
-      
-
-               
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo(BikeID: "${AllData[index]["BikeID"]}")));
-
-              },
-              
-               child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-              
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-                      ),),
-
-
-
-
-
-
-
-
-
-                      TextButton(onPressed: () {
-
-
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByNID(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
-
-
-
-
-                
-
-              },
-              
-               child: Text("Previous Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-              
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-                      ),),
-
-
-
-
-
-                  
-                  TextButton(onPressed: () async{
-
-
-      
-
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
-
-              },
-              
-               child: Text("Delete", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-              
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
-                      ),),
-                ],
-              ),
-
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-
-                  child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Text("Out of Stock"):Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
-                     
-               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 250, 230, 250),
-
-                border: Border.all(
-                          width: 2,
-                          color: Colors.purple
-                        ),
-                borderRadius: BorderRadius.circular(10)      
-               ),))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
              
-
-            
-
+         
+      
+      
+      
+      
+      
+      
+                CarouselSlider(
+                items: [
+                    
+                  //1st Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                    
+                  //2nd Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                    
+                  //3rd Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                    
+                  //4th Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                    
+                  //5th Image of Slider
+                  Container(
+                    margin: EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+        
             ],
-          ),
-          );
-        },
-        itemCount: AllData.length,
+                
+              //Slider Container properties
+                options: CarouselOptions(
+                  height: 180.0,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  aspectRatio: 16 / 9,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  viewportFraction: 0.8,
+                ),
+            ),
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+               ButtonBar(
+                  alignment: MainAxisAlignment.start,
+                  children: [
+                    
+            TextButton(onPressed: () async{
+      
+      
+                      
+      
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
+      
+                      }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                      
+                                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                              ),),
+      
+      
+      
+      
+                 
+            TextButton(onPressed: () async{
+      
+      
+        
+      
+                 
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo(BikeID: "${AllData[index]["BikeID"]}")));
+      
+                },
+                
+                 child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                
+                          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                        ),),
+      
+      
+      
+      
+      
+      
+      
+      
+      
+                        TextButton(onPressed: () {
+      
+      
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchByNID(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
+      
+      
+      
+      
+                  
+      
+                },
+                
+                 child: Text("Previous Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                
+                          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                        ),),
+      
+      
+      
+      
+      
+                    
+                    TextButton(onPressed: () async{
+      
+      
+        
+      
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: " ", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "",)));
+      
+                },
+                
+                 child: Text("Delete", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                
+                          backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                        ),),
+                  ],
+                ),
+      
+      
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+      
+                    child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Text("Out of Stock"):Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
+                       
+                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 250, 230, 250),
+      
+                  border: Border.all(
+                            width: 2,
+                            color: Colors.purple
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),))
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+               
+      
+              
+      
+              ],
+            ),
+            );
+          },
+          itemCount: AllData.length,
+        ),
       ),
     );
   }

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/BlockAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
@@ -13,6 +15,84 @@ class AllAdmin extends StatefulWidget {
 }
 
 class _AllAdminState extends State<AllAdmin> {
+
+
+
+
+
+
+
+
+  bool loading = false;
+
+var DataLoad = "";
+
+ 
+
+
+
+// Firebase All Customer Data Load
+
+List  AllData = [];
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('admin');
+
+Future<void> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+     if (AllData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+     
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+       loading = false;
+     });
+       
+     }
+     
+
+    print(AllData);
+}
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    setState(() {
+      loading = true;
+    });
+    getData();
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +107,17 @@ class _AllAdminState extends State<AllAdmin> {
         centerTitle: true,
         
       ),
-      body: ListView.separated(
+      body: loading?Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Center(
+                      child: LoadingAnimationWidget.discreteCircle(
+                        color: const Color(0xFF1A1A3F),
+                        secondRingColor: const Color(0xFFEA3799),
+                        thirdRingColor: Colors.white,
+                        size: 100,
+                      ),
+                    ),
+              ):DataLoad == "0"? Center(child: Text("No Data Available")): ListView.separated(
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {
           return Slidable(
@@ -81,22 +171,29 @@ class _AllAdminState extends State<AllAdmin> {
 
             // The child of the Slidable is what the user sees when the
             // component is not dragged.
-            child: const ListTile(
+            child:  ListTile(
               
                  leading: CircleAvatar(
         backgroundColor: Colors.pink,
         child: Text("S"),
       ),
 
-      subtitle: Text('ID:89089'),
-      trailing: Text("blocked"),
+      subtitle: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('E: ${AllData[index]["userEmail"]}'),
+          Text('Phone: ${AllData[index]["userPhoneNumber"]}'),
+        ],
+      ),
+      trailing: Text("${AllData[index]["AdminApprove"]}"),
               
-              title: Text('Mahadi Hasan', style: TextStyle(
+              title: Text('Name: ${AllData[index]["userName"]}', style: TextStyle(
                 fontWeight: FontWeight.bold
               ),)),
           );
         },
-        itemCount: 25,
+        itemCount: AllData.length,
       ),
     );
   }

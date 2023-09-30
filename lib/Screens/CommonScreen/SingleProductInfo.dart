@@ -28,6 +28,8 @@ class _EditCustomerInfoState extends State<SingleProductInfo> {
 
 bool loading = true;
 
+var DataLoad = "";
+
 
 
 
@@ -35,7 +37,7 @@ bool loading = true;
 
    // Firebase Single Bike Data Load
 
-List  AllData = [0];
+List  AllData = [];
 
 
   CollectionReference _collectionRef =
@@ -52,14 +54,34 @@ Future<void> getData(String BikeID) async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-     setState(() {
-      loading = false;
+     
+     
+
       if (AllData.length==0) {
-        loading = true;
+        setState(() {
+          DataLoad = "0";
+          loading = false;
+        });
       }
       else{
-       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();}
-     });
+
+
+         setState(() {
+
+
+          AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+          loading = false;
+
+        });
+
+
+
+     
+       
+       
+       
+       }
+   
 
     print(AllData);
 }
@@ -181,7 +203,7 @@ Future<void> getBikeImageData(String BikeID) async {
           size: 100,
         ),
                     ),
-              ): Padding(
+              ): DataLoad == "0"? Center(child: Text("No Data Available")):Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

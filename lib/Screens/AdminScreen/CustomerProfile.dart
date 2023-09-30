@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
 
 
@@ -24,6 +26,7 @@ class CustomerProfile extends StatefulWidget {
 class _EditCustomerInfoState extends State<CustomerProfile> {
 
 
+bool loading = true;
 
 
 
@@ -33,7 +36,7 @@ class _EditCustomerInfoState extends State<CustomerProfile> {
 
    // Firebase All Customer Data Load
 
-List  AllData = [0];
+List  AllData = [];
 
 
   CollectionReference _collectionRef =
@@ -52,6 +55,8 @@ Future<void> getData(String CustomerNID) async {
 
      setState(() {
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+       loading = false;
      });
 
     print(AllData);
@@ -61,6 +66,7 @@ Future<void> getData(String CustomerNID) async {
 @override
   void initState() {
     // TODO: implement initState
+
     getData(widget.CustomerNID);
     super.initState();
   }
@@ -110,7 +116,14 @@ Future<void> getData(String CustomerNID) async {
       ),
       body: SingleChildScrollView(
 
-              child: Padding(
+              child: loading?Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+      ):Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +134,7 @@ Future<void> getData(String CustomerNID) async {
                       child:  CircleAvatar(
                         radius: 70,
                         backgroundImage: NetworkImage(
-                          "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+                          "${AllData[0]["CustomerImageUrl"]}",
                         ),
                       ),
                     ),
@@ -411,6 +424,24 @@ Future<void> getData(String CustomerNID) async {
         
         floatingActionButton: FloatingActionButton(
       onPressed: (){
+
+
+
+
+          Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EditPreviousCustomer(CustomerNID: AllData[0]["CustomerNID"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
+                      );
+
+
+
+
+
+
+
+
+
+
 
       },
         tooltip: 'Edit',

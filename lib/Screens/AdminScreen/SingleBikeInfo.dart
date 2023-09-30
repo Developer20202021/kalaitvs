@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,16 +51,18 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
 
-          setState(() {
-            loading = false;
-          });
+          await SendSMSToAdmin("01721915550", CustomerNID, Amount, BikeName, BikeBillPay);
+
+          
 
       Navigator.push(context,
                         MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ));
 
                   
 
-   
+                  setState(() {
+                            loading = false;
+                          });
           
         }
 
@@ -102,7 +105,14 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
+      body: loading?Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+      ):SingleChildScrollView(
 
         child:  Padding(
           padding: const EdgeInsets.all(20.0),
@@ -378,6 +388,9 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                   Container(width: 150, child:TextButton(onPressed: () async{
 
 
+                    setState(() {
+                          loading = true;
+                        });
 
 
 
@@ -389,9 +402,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
 
-              setState(() {
-                loading = true;
-              });
+           
 
               int BikeSalePriceInt = int.parse(BikeSalePrice);
               int BikeBillPayInt = int.parse(BikeBillPay);
@@ -454,16 +465,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
           // user Data Update and show snackbar
 
-            docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.green,
-                        content: const Text('Customer Information Setup Seccessful! and Message Sent'),
-                        action: SnackBarAction(
-                          label: 'Undo',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            docUser.update(UpadateData).then((value) => SendSMSToCustomer(widget.CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, widget.BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
                         content: const Text('Something Wrong!!! Try again'),
                         action: SnackBarAction(
@@ -571,7 +573,16 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                 };
 
 
-              await docUser.doc(CustomerNID).set(jsonData).then((value) => snackShow(context,true, widget.CustomerPhoneNumber, widget.BikeSalePrice, CustomerNID, BikeChassisNo, BikeEngineNo, BikeConditionMonthController.text, BikeName, BikeBillPay)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              await docUser.doc(CustomerNID).set(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.green,
+                        content: const Text('Successfull'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
                         content: const Text('Something Wrong!'),
                         action: SnackBarAction(
@@ -634,7 +645,8 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
      int BikeUpdateAvailableNumber = bikeAvailableNumberInt - 1;
 
      
-    BikequerySnapshot.docs[0].reference.update({"BikeShowroomAvailableNumber":BikeUpdateAvailableNumber.toString()}).then((value) => print("Done"));
+    BikequerySnapshot.docs[0].reference.update({"BikeShowroomAvailableNumber":BikeUpdateAvailableNumber.toString()}).then((value) => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) )));
 
 
 
@@ -663,24 +675,15 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
 
-                          Future.delayed(const Duration(milliseconds: 2500), () {
-
-                      // Here you can write your code
-
-                        setState(() {
-                                Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ),
-                      );
-                        });
-
-                      });
 
           
 
 
 
 
+                      setState(() {
+                        loading = false;
+                      });
 
 
 
@@ -785,14 +788,26 @@ class CurvePainter extends CustomPainter {
 
 
           
-Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String Amount,String BikeName, String BikeEngineNo,String BikeChassisNo, String BikeConditionMonth, String BikeBillPay) async {
+Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String amount,String BikeName, String BikeEngineNo,String BikeChassisNo, String BikeConditionMonth, String BikeBillPay) async {
 
-  var customerMsg = "Dear Customer আপনি TVS কালাই শুরুম থেকে ${Amount}৳ টাকায় ${BikeName} Bike ${BikeBillPay} টাকা পরিশোধ করে ক্রয় করেছেন।";
+  var customerMsg = "Dear Customer আপনি TVS কালাই শোরুম থেকে  ${BikeName} Bike ${BikeBillPay} টাকা পরিশোধ করে ক্রয় করেছেন।";
 
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652200521696003252f4c6d00621c5ee8590fc02168b854a13&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+   
+
+    var AdminMsg = "Dear Admin, আপনার TVS কালাই শোরুম থেকে ${BikeName} Bike ${BikeBillPay} টাকা পরিশোধ করে ক্রয় করেছেন। NID:${CustomerNID}";
+
+
+
+  final response = await http
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -805,4 +820,21 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
     // then throw an exception.
     throw Exception('Failed to load album');
   }
+    
+   
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+
+
+
+
+
+Future SendSMSToAdmin(String AdminPhoneNumber, String CustomerNID, String Amount,String BikeName, String BikeBillPay) async {
+
+  
 }

@@ -10,9 +10,11 @@ import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/Settings/ChangePassword.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
+import 'package:tvs_app/Screens/DeveloperInfo/DeveloperInfo.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -178,6 +180,33 @@ Future<void> getData(String paymentDate) async {
   FlutterNativeSplash.remove();
   
   
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+  Future refresh() async{
+
+
+    setState(() {
+      
+    getPaidCustomerData();
+    getDueCustomerData();
+    getData(PaymentDate);
+
+    });
+
+
+
+
   }
 
 
@@ -496,7 +525,7 @@ Future<void> getData(String paymentDate) async {
                 onTap: (){
 
 
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MakeAdmin()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePassword()));
 
 
 
@@ -504,9 +533,35 @@ Future<void> getData(String paymentDate) async {
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.settings),
+                    Icon(Icons.password),
                     SizedBox(width: 5,),
-                    Text("Settings"),
+                    Text("Change Password"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+              
+
+
+
+PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DeveloperInfo()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.developer_board),
+                    SizedBox(width: 5,),
+                    Text("Developer"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -589,160 +644,73 @@ Future<void> getData(String paymentDate) async {
                 ],
         
       ),
-      body: SingleChildScrollView(
-
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-
-                   Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                height: 160,
-                child: Center(
-                  child: Text("Total Paid Customers: ${AllPaidCustomerData.length.toString()}", style: TextStyle(
-
-                    fontSize: 20,
-                  ),),
-
-
-                ),
-                     
-               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 250, 230, 250),
-
-                border: Border.all(
-                          width: 2,
-                          color: Color.fromARGB(255, 250, 230, 250)
-                        ),
-                borderRadius: BorderRadius.circular(10)      
-               ),)),
-
-
-               SizedBox(
-                height: 10,
-               ),
-
-
-
-
-
-
-               
-                   Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                height: 160,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Column(
-                      children: [
-                        Text("Total Due Customers: ${AllDueCustomerData.length.toString()}", style: TextStyle(
-                  
-                          fontSize: 20,
-                          color: Colors.white
-                        ),),
-                  
-                  
-
-
-                  SizedBox(
-                height: 17,
-               ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Row(
-                                          
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            
-                            
-                            children: [
-                                          
-                                          
-                                        Container(width: 100, child:TextButton(onPressed: (){
-
-
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDueCustomer()));
-
-
-
-
-
-                                        }, child: Text("View", style: TextStyle(color: Colors.purple),), style: ButtonStyle(
-                             
-                                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
-                                      ),),),
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                            ],),
-                        )
-                      ],
-                    ),
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: SingleChildScrollView(
+      
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                
+                
+                     Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 200,
+                  child: Center(
+                    child: Text("Total Paid Customers: ${AllPaidCustomerData.length.toString()}", style: TextStyle(
+                
+                      fontSize: 20,
+                    ),),
+                
+                
                   ),
-
-
-                ),
-                     
-               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 170, 69, 247),
-
-                border: Border.all(
-                          width: 2,
-                          color: Color.fromARGB(255, 170, 69, 247)
-                        ),
-                borderRadius: BorderRadius.circular(10)      
-               ),)),
-
-
-               SizedBox(
-                height: 10,
-               ),
-
-
-
-
-
-               
-                   Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                height: 160,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Column(
-                      children: [
-                        Text("Today Due Payment Add: ${moneyAdd.toString()}৳", style: TextStyle(
-                  
-                          fontSize: 20,
-                          color:Colors.white
-                         
-                        ),),
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                           SizedBox(
-                                  height: 17,
-                                 ),
+                       
+                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 250, 230, 250),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 250, 230, 250)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+                
+                
+                 SizedBox(
+                  height: 10,
+                 ),
+                
+                
+                
+                
+                
+                
+                 
+                     Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 200,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Text("Total Due Customers: ${AllDueCustomerData.length.toString()}", style: TextStyle(
+                    
+                            fontSize: 20,
+                            color: Colors.white,
+                            overflow: TextOverflow.clip
+                          ),),
+                    
+                    
+                
+                
+                    SizedBox(
+                  height: 17,
+                 ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
                             child: Row(
@@ -755,18 +723,15 @@ Future<void> getData(String paymentDate) async {
                                             
                                             
                                           Container(width: 100, child:TextButton(onPressed: (){
-
-
-
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
-
-
-
-
-
-
-
-                                          }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
+                
+                
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDueCustomer()));
+                
+                
+                
+                
+                
+                                          }, child: Text("View", style: TextStyle(color: Colors.purple),), style: ButtonStyle(
                                
                                           backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
                                         ),),),
@@ -782,106 +747,164 @@ Future<void> getData(String paymentDate) async {
                                             
                               ],),
                           )
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-
-
-                ),
-                     
-               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 242,133,0),
-
-                border: Border.all(
-                          width: 2,
-                          color: Color.fromARGB(255, 242,133,0)
-                        ),
-                borderRadius: BorderRadius.circular(10)      
-               ),)),
-
-
-               SizedBox(
-                height: 10,
-               ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  ]))));
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class ListItems extends StatelessWidget {
-  const ListItems({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          children: [
-            InkWell(
-              onTap: () {
                 
-              },
-              child: Container(
-                height: 50,
-                color: Colors.amber[100],
-                child: const Center(child: Text('Entry A')),
-              ),
-            ),
-            const Divider(),
-            Container(
-              height: 50,
-              color: Colors.amber[200],
-              child: const Center(child: Text('Entry B')),
-            ),
-            const Divider(),
-            Container(
-              height: 50,
-              color: Colors.amber[300],
-              child: const Center(child: Text('Entry C')),
-            ),
-          ],
-        ),
-    );
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 170, 69, 247),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 170, 69, 247)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+                
+                
+                 SizedBox(
+                  height: 10,
+                 ),
+                
+                
+                
+                
+                
+                 
+                     Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 200,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Text("Today Due Payment Add:${moneyAdd.toString()}৳", style: TextStyle(
+                    // ${moneyAdd.toString()}
+                            fontSize: 20,
+                            color:Colors.white,
+                            overflow: TextOverflow.clip
+                           
+                          ),),
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                             SizedBox(
+                                    height: 17,
+                                   ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Row(
+                                              
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                
+                                
+                                children: [
+                                              
+                                              
+                                            Container(width: 100, child:TextButton(onPressed: (){
+                
+                
+                
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+                
+                
+                
+                
+                
+                
+                
+                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
+                                 
+                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                                          ),),),
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                ],),
+                            )
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        ],
+                      ),
+                    ),
+                
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 242,133,0),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 242,133,0)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+                
+                
+                 SizedBox(
+                  height: 10,
+                 ),
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    ]))),
+      ));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

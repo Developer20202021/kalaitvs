@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
-
+import 'package:http/http.dart' as http;
 
 
 
@@ -131,6 +134,75 @@ class _MakeAdminState extends State<MakeAdmin> {
 
                         "AdminApprove":"true"
                       };
+
+
+
+
+
+
+
+
+
+                       FirebaseAuth.instance
+                        .authStateChanges()
+                        .listen((User? user) async{
+                          if (user == null) {
+                            print('User is currently signed out!');
+                          } else {
+
+
+
+
+
+                 var AdminMsg = "Dear Admin, ${myEmailController.text.trim()} Admin কে ${user.email} Admin access ON করেছে।";
+
+
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
+
+                  if (response.statusCode == 200) {
+                    // If the server did return a 200 OK response,
+                    // then parse the JSON.
+                    print(jsonDecode(response.body));
+                    
+                  
+                  } else {
+                    // If the server did not return a 200 OK response,
+                    // then throw an exception.
+                    throw Exception('Failed to load album');
+                  }
+                
+
+
+
+
+                            
+
+
+
+
+
+
+
+                          }
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

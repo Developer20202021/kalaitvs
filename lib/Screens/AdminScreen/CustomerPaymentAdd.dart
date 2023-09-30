@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CustomerPaymentAdd extends StatefulWidget {
@@ -28,6 +30,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
   TextEditingController CustomerPhoneNumberController = TextEditingController();
   TextEditingController PaidAmountController = TextEditingController();
 
+
+    bool loading = false;
+
   
 
 
@@ -35,10 +40,15 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
    void snackShow(bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID) async{
 
 
+    setState(() {
+      loading = true;
+    });
+
+
         if (snackVisible == true) {
 
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          // await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount);
+          await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount);
 
           CustomerNIDController.clear();
           CustomerPhoneNumberController.clear();
@@ -122,7 +132,14 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
         elevation: 0.0,
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: loading?Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+      ):SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -247,7 +264,11 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
               Container(
                 width: 150,
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: () async{
+
+                    setState(() {
+                      loading = true;
+                    });
 
 
                     int LastBikeDuePayment = 0;
@@ -306,13 +327,12 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
 
+                  if (LastBikeDuePayment==0) {
 
 
 
 
-
-
-
+                    
                 final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNIDController.text);
 
             
@@ -320,7 +340,8 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
             final UpadateData ={
 
 
-              "BikePaymentDue":LastBikeDuePayment.toString()
+              "BikePaymentDue":LastBikeDuePayment.toString(),
+              "CustomerType":"Paid"
           
               
             
@@ -361,6 +382,148 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
         
 
                 
+
+
+
+
+
+
+
+                    
+                  }
+                  else{
+
+
+
+
+                      final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNIDController.text);
+
+            
+
+            final UpadateData ={
+
+
+              "BikePaymentDue":LastBikeDuePayment.toString(),
+              
+          
+              
+            
+
+          
+          
+          };
+
+
+
+
+
+          // user Data Update and show snackbar
+
+            docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.green,
+                        content: const Text('Customer Information Setup Seccessful! and Message Sent'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+                        content: const Text('Something Wrong!!! Try again'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      )));
+
+
+        
+
+
+
+
+
+
+
+                  }
+
+
+
+
+
+
+
+
+
+
+                  
+                       FirebaseAuth.instance
+                        .authStateChanges()
+                        .listen((User? user) async{
+                          if (user == null) {
+                            print('User is currently signed out!');
+                          } else {
+
+
+
+
+
+                 var AdminMsg = "Dear Admin, TVS কালাই শোরুমে NID:${widget.CustomerNID} ${PaidAmountController.text}৳ কিস্তি পরিশোধ করেছেন।${user.email} Admin টাকা জমা নিয়েছেন।";
+
+
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
+
+                  if (response.statusCode == 200) {
+                    // If the server did return a 200 OK response,
+                    // then parse the JSON.
+                    print(jsonDecode(response.body));
+
+
+                    setState(() {
+
+                      loading = false;
+                      
+                    });
+                    
+                  
+                  } else {
+                    // If the server did not return a 200 OK response,
+                    // then throw an exception.
+                    throw Exception('Failed to load album');
+                  }
+                
+
+
+
+
+                            
+
+
+
+
+
+
+
+                          }
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -427,12 +590,12 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
           
 Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String Amount) async {
 
-  var customerMsg = "Dear Customer আপনি TVS কালাই শুরুমে ${CustomerNID} Account No এ ${Amount}৳ কিস্তি পরিশোধ করেছেন। ধন্যবাদ ";
+  var customerMsg = "Dear Customer আপনি TVS কালাই শোরুমে ${CustomerNID} Account No এ ${Amount}৳ কিস্তি পরিশোধ করেছেন। ধন্যবাদ";
 
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652200521696003252f4c6d00621c5ee8590fc02168b854a13&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${CustomerPhoneNumber}&message=${customerMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

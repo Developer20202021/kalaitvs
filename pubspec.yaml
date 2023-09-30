@@ -53,12 +53,21 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   flutter_native_splash: ^2.3.2
   firebase_auth: ^4.10.0
+  flutter_launcher_icons: ^0.13.1
   
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: lib/images/tvs_app_logo.png
+
+
+
 flutter_native_splash:
   color: "#ffffff"
   image: lib/images/tvs_logo.png

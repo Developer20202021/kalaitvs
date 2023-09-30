@@ -1,70 +1,119 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tvs_app/Screens/AdminScreen/SingleCustomer.dart';
+import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
+
+
+
+
+class ChangePassword extends StatefulWidget {
 
 
 
 
 
-class SendSMSToDueCustomer extends StatefulWidget {
 
 
-  final CustomerNID;
-  final CustomerPhoneNumber;
-  final BikePaymentDue;
-  final BikeDuePaymentGivingDay;
-  
-  const SendSMSToDueCustomer({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue, required this.BikeDuePaymentGivingDay});
+
+  const ChangePassword({super.key});
 
   @override
-  State<SendSMSToDueCustomer> createState() => _SendSMSToDueCustomerState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
-  TextEditingController DueCustomerMsgController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+class _ChangePasswordState extends State<ChangePassword> {
+  TextEditingController AdminPasswordController = TextEditingController();
+ 
 
   bool loading = false;
 
-  var msgSend = '';
+  var PasswordChangeSuccess = "";
+
+
+  Future updateAdminPassword() async{
+
+
+    FirebaseAuth.instance
+  .authStateChanges()
+  .listen((User? user) async {
+    if (user == null) {
+      print('User is currently signed out!');
+      
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LogInScreen()));
+    } else {
+
+
+     await user.updatePassword(AdminPasswordController.text).then((value) => setState(()=>PasswordChangeSuccess="success")).onError((error, stackTrace) => setState(()=>PasswordChangeSuccess="fail"));
+
+     
+     
+      AdminPasswordController.clear();
+
+      setState(() {
+        loading = false;
+      });
+
+
+
+    }
+  });
 
 
 
 
 
-   
+
+  }
+
+
+
+  
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    // getData(widget.CustomerNID);
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
 
-    FocusNode myFocusNode = new FocusNode();
-
- 
-  DueCustomerMsgController.text = "Dear Customer, Tvs কালাই শোরুমে ${widget.CustomerNID} Ac No. এ ${widget.BikePaymentDue}৳ টাকা বকেয়া আছে। ${widget.BikeDuePaymentGivingDay}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()} তারিখের মধ্যে পরিশোধ করুন। ধন্যবাদ";
-
-   
-
-
-
-
-
-
-
-
-
+    
  
 
     return Scaffold(
+      
       backgroundColor: Colors.white,
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Send Message",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Change Password",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -88,17 +137,14 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
             
             
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-            
-                    
-               
-            
-            msgSend == "success"?
-            
-                    Center(
+
+
+
+                  PasswordChangeSuccess=="success"? Center(
                       child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -109,13 +155,13 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                       child: Row(
                         children: [
                           Icon(Icons.check, color: Colors.green,),
-                          Text("Message Sent Successfull!!!"),
+                          Text("Password Changed Successfully!!"),
                         ],
                       ),
                                       ),
                        
                                    decoration: BoxDecoration(
-                                    color: Colors.red[100],
+                                    color: Colors.green[100],
                     
                                     border: Border.all(
                             width: 2,
@@ -130,9 +176,12 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
 
 
 
-                    msgSend == "fail"?
-            
-                    Center(
+
+
+
+
+
+                     PasswordChangeSuccess=="fail"? Center(
                       child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -143,7 +192,7 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                       child: Row(
                         children: [
                           Icon(Icons.close, color: Colors.red,),
-                          Text("Message Sent Fail!!!"),
+                          Text("Password Changed Fail!!"),
                         ],
                       ),
                                       ),
@@ -160,44 +209,63 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                                     borderRadius: BorderRadius.circular(10)      
                                    ),)),
                     ):Text(""),
+
             
+
             
+                    
+                    // Center(
+                    //   child: Lottie.asset(
+                    //   'lib/images/animation_lk8fkoa8.json',
+                    //     fit: BoxFit.cover,
+                    //     width: 200,
+                    //     height: 200
+                    //   ),
+                    // ),
             
-            
-            
+            SizedBox(
+                      height: 5,
+                    ),
             
             
             
                     TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 5,
+                      
+                      keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Enter Message',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Message',
+                          labelText: 'Enter New Password',
+                
+                          hintText: 'Enter New Password',
+            
                           //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
+                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //     ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                              ),
                           
                           
                           ),
-                      controller: DueCustomerMsgController,
+                      controller: AdminPasswordController,
                     ),
+            
+            
+            
             
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
             
+            
+            
+            
+            
+                    
             
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,55 +273,27 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
                         Container(width: 150, child:TextButton(onPressed: () async{
 
 
-                            setState(() {
-                              loading = true;
-                            });
+                          setState(() {
+                            loading = true;
+                          });
+
+                         updateAdminPassword();
 
 
-                          Future SendSMSToCustomer(context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, String DueCustomerMsg) async {
-
-
-
-
-                            final response = await http
-                                .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${CustomerPhoneNumber}&message=${DueCustomerMsg}'));
-
-                                    Navigator.pop(context);
-
-                            if (response.statusCode == 200) {
-                              // If the server did return a 200 OK response,
-                              // then parse the JSON.
-                              print(jsonDecode(response.body));
-                              setState(() {
-                                msgSend = "success";
-                                loading = false;
-                              });
-                            
-                            } else {
-
-                               setState(() {
-                                msgSend = "fail";
-                                loading = false;
-                              });
-                              // If the server did not return a 200 OK response,
-                              // then throw an exception.
-                              throw Exception('Failed to load album');
-                            }
-                          }
-
-
-                          SendSMSToCustomer(context, widget.CustomerNID, widget.CustomerPhoneNumber, widget.BikePaymentDue, DueCustomerMsgController.text);
+                     
 
 
 
-                        }, child: Text("Send", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+
+
+                        }, child: Text("Change Password", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
               ),),),
 
 
 
-                    
+
 
 
 
@@ -301,7 +341,3 @@ class CurvePainter extends CustomPainter {
     return true;
   }
 }
-
-
-
-

@@ -23,20 +23,7 @@ class _StaffScreenState extends State<StaffScreen> {
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
-
-        child: Center(child: Text("এডমিন আপনাকে এখনোও Approve করে নাই।")),
-
-
-
-
-
-
-
-
-
-
-      ));
+      body: Center(child: Text("এডমিন আপনাকে এখনোও Approve করে নাই।")));
 
   }
 }

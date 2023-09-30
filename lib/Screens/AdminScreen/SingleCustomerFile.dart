@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFileView.dart';
 
 class SingleCustomerFile extends StatefulWidget {
@@ -19,9 +20,16 @@ class SingleCustomerFile extends StatefulWidget {
 class _SingleCustomerFileState extends State<SingleCustomerFile> {
 
 
+
+
+  bool loading = true;
+
+  var loadedData = "";
+
+
   // Firebase All Customer Data Load
 
-List  AllData = [0];
+List  AllData = [];
 
 
   CollectionReference _collectionRef =
@@ -38,10 +46,26 @@ Future<void> getData(String CustomerNID) async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-     setState(() {
+
+     if (AllData.length == 0) {
+
+      setState(() {
+        loading = false;
+        loadedData ="0";
+
+      });
+       
+     } else {
+
+      setState(() {
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+       loading = false;
      });
 
+       
+     }
+
+     
     print(AllData);
 }
 
@@ -83,7 +107,14 @@ Future<void> getData(String CustomerNID) async {
         centerTitle: true,
         
       ),
-      body: ListView.separated(
+      body: loading?Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: const Color(0xFF1A1A3F),
+          secondRingColor: const Color(0xFFEA3799),
+          thirdRingColor: Colors.white,
+          size: 100,
+        ),
+      ):loadedData == "0"? Center(child: Text("No Data Available")):ListView.separated(
             itemCount: AllData.length,
             separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 25,),
             itemBuilder: (BuildContext context, int index) {
