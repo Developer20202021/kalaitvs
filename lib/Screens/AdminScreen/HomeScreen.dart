@@ -11,6 +11,7 @@ import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/Settings/ChangePassword.dart';
+import 'package:tvs_app/Screens/AdminScreen/Sms/smsinfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
@@ -20,11 +21,12 @@ class HomeScreen extends StatefulWidget {
 
   final userName;
   final userEmail;
+  final indexNumber;
   
 
 
 
-  const HomeScreen({super.key, required this.userName, required this.userEmail});
+  const HomeScreen({super.key, required this.userName, required this.userEmail, required this.indexNumber});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -231,6 +233,114 @@ Future<void> getData(String paymentDate) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+      
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+
+
+           widget.indexNumber == "1"?
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.home_sharp,
+                  color: Colors.white,
+                  size: 55,
+                  fill: 1.0,
+                ),
+              ): IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.home_sharp,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2",)));
+
+
+                },
+                icon: const Icon(
+                  Icons.electric_bike_outlined,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3",)));
+
+
+
+                },
+                icon: const Icon(
+                  Icons.admin_panel_settings_outlined,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer(indexNumber: "4")));
+
+
+
+
+                },
+                icon: const Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+            ],
+          ),),
+      ),
+
+
+
+
+
+
+
       backgroundColor: Colors.white,
       
       
@@ -298,7 +408,7 @@ Future<void> getData(String paymentDate) async {
                 onTap: (){
 
 
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2",)));
 
 
 
@@ -325,7 +435,7 @@ Future<void> getData(String paymentDate) async {
                 onTap: (){
 
 
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer(indexNumber: "4")));
 
 
 
@@ -473,7 +583,7 @@ Future<void> getData(String paymentDate) async {
                 onTap: (){
 
 
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3",)));
 
 
 
@@ -543,6 +653,34 @@ Future<void> getData(String paymentDate) async {
                 
                 padding: EdgeInsets.all(18.0),
               ),
+
+
+
+
+
+                PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SMSInfo()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.sms_rounded),
+                    SizedBox(width: 5,),
+                    Text("SMS info"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+              
               
 
 

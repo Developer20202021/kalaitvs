@@ -170,6 +170,18 @@ Future<void> getData(String paymentDate) async {
  
 
 
+   Future refresh() async{
+
+
+    setState(() {
+      
+         getData(PaymentDate);
+
+    });
+
+  }
+
+
 
 
 
@@ -231,41 +243,44 @@ Future<void> getData(String paymentDate) async {
       ],
         
       ),
-      body:DataLoad == "0"? Center(child: Text("No Data Available")): ListView.separated(
-            itemCount: AllData.length,
-            separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15,),
-            itemBuilder: (BuildContext context, int index) {
-
-                  //  DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
-
-
-              return   Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                           shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5),
-                ), 
-                    
-                          title: Text("${AllData[index]["SalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                          trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
-                          subtitle: Column(
-
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                              Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
-
-                              Text("Date: ${AllData[index]["BikeSaleDate"]}"),
-                            ],
+      body:DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(
+        onRefresh: refresh,
+        child: ListView.separated(
+              itemCount: AllData.length,
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15,),
+              itemBuilder: (BuildContext context, int index) {
+      
+                    //  DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
+      
+      
+                return   Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                             shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.circular(5),
+                  ), 
+                      
+                            title: Text("${AllData[index]["SalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                            trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
+                            subtitle: Column(
+      
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+      
+                                Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
+      
+                                Text("Date: ${AllData[index]["BikeSaleDate"]}"),
+                              ],
+                            ),
+                      
+                      
+                      
                           ),
-                    
-                    
-                    
-                        ),
-              );
-            },
-          ));
+                );
+              },
+            ),
+      ));
   }
 }

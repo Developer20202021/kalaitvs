@@ -73,7 +73,16 @@ Future<void> getData(String CustomerNID) async {
 
 
 
+  Future refresh() async{
 
+
+    setState(() {
+      
+           getData(widget.CustomerNID);
+
+    });
+
+  }
 
 
 
@@ -103,6 +112,64 @@ Future<void> getData(String CustomerNID) async {
 
     return  Scaffold(
       backgroundColor: Colors.white,
+
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+      
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.home_outlined,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.electric_bike_outlined,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.admin_panel_settings_outlined,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+            ],
+          ),),
+      ),
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
@@ -114,313 +181,316 @@ Future<void> getData(String CustomerNID) async {
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
-
-              child: loading?Center(
-        child: LoadingAnimationWidget.discreteCircle(
-          color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
-          thirdRingColor: Colors.white,
-          size: 100,
-        ),
-      ):Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-            
-                    
-                    Center(
-                      child:  CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                          "${AllData[0]["CustomerImageUrl"]}",
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: SingleChildScrollView(
+      
+                child: loading?Center(
+          child: LoadingAnimationWidget.discreteCircle(
+            color: const Color(0xFF1A1A3F),
+            secondRingColor: const Color(0xFFEA3799),
+            thirdRingColor: Colors.white,
+            size: 100,
+          ),
+        ):Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+              
+                      
+                      Center(
+                        child:  CircleAvatar(
+                          radius: 70,
+                          backgroundImage: NetworkImage(
+                            "${AllData[0]["CustomerImageUrl"]}",
+                          ),
                         ),
                       ),
-                    ),
-            
-             SizedBox(
-                      height: 20,
-                    ),
-
-
-                Table(
-                     border: TableBorder(
-                     horizontalInside:
-                BorderSide(color: Colors.white, width: 10.0)),
-                    textBaseline: TextBaseline.ideographic,
-                      children: [
-
-                
-                
-
-                      TableRow(
-                        
-                        decoration: BoxDecoration(color: Colors.grey[200]),
+              
+               SizedBox(
+                        height: 20,
+                      ),
+      
+      
+                  Table(
+                       border: TableBorder(
+                       horizontalInside:
+                  BorderSide(color: Colors.white, width: 10.0)),
+                      textBaseline: TextBaseline.ideographic,
                         children: [
-                                Container(
-                                  
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                  )),
-                                
-                                
-                                Container(
-                                  
-                                  
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("${AllData[0]["CustomerName"]}", style: TextStyle(fontSize: 15.0),),
-                                  )),
-                              
-                              ]),
-
-
-
-
-                      TableRow(
-                        
-                        decoration: BoxDecoration(color: Colors.grey[200]),
-                        children: [
-                                Container(
-                                  
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                  )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerFatherName"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-
-
-
-
-                      TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Mother Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerMotherName"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-
-                      TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Email", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerEmail"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-
-
-                       TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Address", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerAddress"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        
-
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Phone Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerPhoneNumber"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-
-
-
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("NID", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerNID"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-
-                        
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor1 Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor1Name"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        
-                        TableRow(children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor1 Address", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor1Address"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor1 Phone Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor1PhoneNumber"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor2 Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor2Name"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor2 Address", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor2Address"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor2 Phone Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor2PhoneNumber"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Guarantor2 NID", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerGuarantor2NID"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                              
-
-                         TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Customer Type", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                )),
-                                Container(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("${AllData[0]["CustomerType"]}", style: TextStyle(fontSize: 15.0),),
-                                )),
-                              
-                              ]),
-                       
-                        
-
-
-                 
-
-                    
-
-                       
+      
                   
-                     
-                      ],
-                    ),
-
-
-
-
-
-
-
-
-                    SizedBox(height: 15,),
-
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-
-                        Container(width: 150, child:TextButton(onPressed: (){
-
-
-                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFile(CustomerNID: widget.CustomerNID)));
-
-
+                  
+      
+                        TableRow(
+                          
+                          decoration: BoxDecoration(color: Colors.grey[200]),
+                          children: [
+                                  Container(
+                                    
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text("Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                    )),
+                                  
+                                  
+                                  Container(
+                                    
+                                    
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text("${AllData[0]["CustomerName"]}", style: TextStyle(fontSize: 15.0),),
+                                    )),
+                                
+                                ]),
+      
+      
+      
+      
+                        TableRow(
+                          
+                          decoration: BoxDecoration(color: Colors.grey[200]),
+                          children: [
+                                  Container(
+                                    
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text("Father Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                    )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerFatherName"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+      
+      
+      
+      
+                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Mother Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerMotherName"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+      
+                        TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Email", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerEmail"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+      
+      
+                         TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Address", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerAddress"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          
+      
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Phone Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerPhoneNumber"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+      
+      
+      
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("NID", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerNID"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+      
+                          
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor1 Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor1Name"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          
+                          TableRow(children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor1 Address", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor1Address"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor1 Phone Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor1PhoneNumber"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor2 Name", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor2Name"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor2 Address", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor2Address"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor2 Phone Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor2PhoneNumber"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                          TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Guarantor2 NID", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerGuarantor2NID"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
+                                
+      
+                           TableRow(decoration: BoxDecoration(color: Colors.grey[200]),children: [
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Customer Type", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                  )),
+                                  Container(child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("${AllData[0]["CustomerType"]}", style: TextStyle(fontSize: 15.0),),
+                                  )),
+                                
+                                ]),
                          
-
-
-
-
-
-                        }, child: Text("All Files", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                         
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
-              ),),),
-                      ],
-                    )
-
-
-
-
+                          
+      
+      
                    
-
-
-
-            
-            
-            
-            
-            
-                  ],
+      
+                      
+      
+                         
+                    
+                       
+                        ],
+                      ),
+      
+      
+      
+      
+      
+      
+      
+      
+                      SizedBox(height: 15,),
+      
+      
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+      
+                          Container(width: 150, child:TextButton(onPressed: (){
+      
+      
+                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFile(CustomerNID: widget.CustomerNID)));
+      
+      
+                           
+      
+      
+      
+      
+      
+                          }, child: Text("All Files", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                           
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                ),),),
+                        ],
+                      )
+      
+      
+      
+      
+                     
+      
+      
+      
+              
+              
+              
+              
+              
+                    ],
+                  ),
                 ),
               ),
-            ),
+      ),
         
         floatingActionButton: FloatingActionButton(
       onPressed: (){

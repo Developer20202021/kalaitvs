@@ -14,7 +14,7 @@ class _DeveloperInfoState extends State<DeveloperInfo> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         
         title: const Text("Developer Information",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -250,11 +250,11 @@ class _DeveloperInfoState extends State<DeveloperInfo> {
                 ),
                      
                decoration: BoxDecoration(
-                color: Color.fromARGB(255, 170, 69, 247),
+                color: Theme.of(context).primaryColor,
 
                 border: Border.all(
                           width: 2,
-                          color: Color.fromARGB(255, 170, 69, 247)
+                          color: Theme.of(context).primaryColor
                         ),
                 borderRadius: BorderRadius.circular(10)      
                ),)),

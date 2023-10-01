@@ -42,7 +42,7 @@ class _LogInScreenState extends State<LogInScreen> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
         title: const Text("Log In",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -58,7 +58,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 child: Center(
                       child: LoadingAnimationWidget.discreteCircle(
                         color: const Color(0xFF1A1A3F),
-                        secondRingColor: const Color(0xFFEA3799),
+                        secondRingColor: Theme.of(context).primaryColor,
                         thirdRingColor: Colors.white,
                         size: 100,
                       ),
@@ -295,7 +295,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         });
 
 
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, userEmail: userEmail)),);
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, userEmail: userEmail, indexNumber: "1")),);
 
                     
                   }
@@ -405,7 +405,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
                   }, child: Text("Log in", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                    
-          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
         ),),),
 
 
@@ -423,7 +423,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
               }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                    
-          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
         ),),),
 
 
@@ -451,7 +451,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.purple;
+    paint.color = Color(0xff8f00ff);
     paint.style = PaintingStyle.fill;
 
     var path = Path();

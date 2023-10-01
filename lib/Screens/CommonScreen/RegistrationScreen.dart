@@ -30,12 +30,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
  bool loading = false;
 
 
+
+
+
+
+
+
+
+
+
   
   @override
   void initState() {
   
     super.initState();
     FlutterNativeSplash.remove();
+    
   }
 
 

@@ -296,7 +296,7 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
            Container(width: 150, child:TextButton(onPressed: (){
 
 
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2",)));
 
 
 

@@ -208,7 +208,7 @@ class _MakeAdminState extends State<MakeAdmin> {
 
                           docUser.update(updateData).then((value) =>      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AllAdmin()),
+                        MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3",)),
                       )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong'),

@@ -94,6 +94,67 @@ Future<void> getData() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+      
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.home_outlined,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.electric_bike_outlined,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.admin_panel_settings_outlined,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                  size: 35,
+                ),
+              ),
+            ],
+          ),),
+      ),
+
+
+
       backgroundColor: Colors.white,
       appBar:  AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
