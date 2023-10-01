@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -40,6 +41,16 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
   bool loading = false;
+
+  var adminEmail ="";
+  var adminName ="";
+
+
+
+
+
+
+
 
 
   
@@ -89,7 +100,10 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
     BikeNameController.text = widget.BikeName;
     BikeSalePriceController.text = widget.BikeSalePrice;
-    BikeColorController.text = widget.BikeColor;
+    // BikeColorController.text = widget.BikeColor;
+
+
+    
  
 
     return Scaffold(
@@ -501,6 +515,23 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
             Future CustomerBikeSaleInfo(String BikeName, String BikeColor, String BikeChassisNo, String BikeEngineNo,String BikeDeliveryNo,  String BikeSalePrice, String CustomerNID, String BikeBillPay) async{
 
 
+
+                FirebaseAuth.instance
+                  .authStateChanges()
+                  .listen((User? user) {
+                    if (user != null) {
+                      setState(() {
+                        adminEmail = user.email!;
+                        adminName = user.displayName!;
+                      });
+                    }
+                  });
+
+
+
+
+
+
                 int BikeSalePriceInt = int.parse(BikeSalePrice);
                 int BikeBillPayInt = int.parse(BikeBillPay);
                 int BikePaymentDueInt =  BikeSalePriceInt - BikeBillPayInt;
@@ -572,11 +603,13 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                   "CustomerGuarantor2PhoneNumber":CustomerData[0]["CustomerGuarantor2PhoneNumber"],
                   "DuePaymentGivingDay":CustomerData[0]["DuePaymentGivingDay"],
                   "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
+                  "adminEmail":adminEmail,
+                  "adminName":adminName
                   
                 };
 
 
-              await docUser.doc(CustomerNID).set(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              await docUser.add(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.green,
                         content: const Text('Successfull'),
                         action: SnackBarAction(
@@ -616,6 +649,9 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                         "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
                         "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                         "BikeSaleYear":"${DateTime.now().year}",
+                        "adminEmail":adminEmail,
+                        "adminName":adminName
+                  
 
 
                       };
@@ -701,7 +737,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
                   }, child: Text("Save", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                    
-          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
         ),),),
 
 

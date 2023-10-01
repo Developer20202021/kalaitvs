@@ -1292,6 +1292,39 @@ Future<void> getBikeImageData(String BikeID) async {
 
 
 
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Width", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["ColorAvailable"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+
+
+
+
+
 
 
 

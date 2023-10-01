@@ -6,9 +6,11 @@ import 'package:popover/popover.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/DueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthDuePaymentAddHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthNagadBillPay.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthSalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
@@ -460,6 +462,35 @@ Future<void> getData(String paymentDate) async {
 
 
 
+               PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DueCustomer()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.person_3_rounded),
+                    SizedBox(width: 5,),
+                    Text("Due Customers"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+
+
+
 
               
                PopupMenuItem(
@@ -594,7 +625,7 @@ Future<void> getData(String paymentDate) async {
                   children: [
                     Icon(Icons.sell_sharp),
                     SizedBox(width: 5,),
-                    Text("Per Month Sales"),
+                    Text("Monthly Sales"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -602,6 +633,35 @@ Future<void> getData(String paymentDate) async {
                 
                 padding: EdgeInsets.all(18.0),
               ),
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>PerMonthNagadBillPay()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.account_balance_rounded),
+                    SizedBox(width: 5,),
+                    Text("Monthly Cash"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
 
 
 
@@ -935,7 +995,7 @@ PopupMenuItem(
                 
                 
                 
-                                          }, child: Text("View", style: TextStyle(color: Colors.purple),), style: ButtonStyle(
+                                          }, child: Text("View", style: TextStyle(color: Theme.of(context).primaryColor),), style: ButtonStyle(
                                
                                           backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
                                         ),),),
@@ -959,11 +1019,11 @@ PopupMenuItem(
                   ),
                        
                  decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 170, 69, 247),
+                  color: Theme.of(context).primaryColor,
                 
                   border: Border.all(
                             width: 2,
-                            color: Color.fromARGB(255, 170, 69, 247)
+                            color: Theme.of(context).primaryColor
                           ),
                   borderRadius: BorderRadius.circular(10)      
                  ),)),

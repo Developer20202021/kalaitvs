@@ -290,12 +290,14 @@ class _LogInScreenState extends State<LogInScreen> {
 
                   if (AllData[0]["AdminApprove"] == "true") {
 
-                    setState(() {
-                          loading=false;
-                        });
+                    
 
 
                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, userEmail: userEmail, indexNumber: "1")),);
+
+                           setState(() {
+                          loading=false;
+                        });
 
                     
                   }

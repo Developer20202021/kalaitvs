@@ -7,6 +7,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PreviousBikeSell.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -239,7 +240,7 @@ Future<void> getData() async {
       body: loading?Center(
         child: LoadingAnimationWidget.discreteCircle(
           color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
+          secondRingColor: Theme.of(context).primaryColor,
           thirdRingColor: Colors.white,
           size: 100,
         ),
@@ -255,9 +256,24 @@ Future<void> getData() async {
                 ListTile(
                   leading: Icon(Icons.arrow_drop_down_circle),
                   title:  Text('${AllData[index]["BikeName"]}'),
-                  subtitle: Text(
-                    '${AllData[index]["BikeType"]}',
-                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                  subtitle: Column(
+                    children: [
+                      // BikeSalePrice
+                      Text(
+                        'Price: ${AllData[index]["BikeSalePrice"]}',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                     
+                      Text(
+                        '${AllData[index]["BikeType"]}',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+
+                       Text(
+                        'Color: ${AllData[index]["ColorAvailable"]}',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -403,8 +419,27 @@ Future<void> getData() async {
                 
                  child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                 
-                          backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
                         ),),
+
+
+                  
+                   TextButton(onPressed: () async{
+      
+      
+        // ${AllData[index]["BikeName"]}
+      
+                 
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreviousBikeSell(BikeName: "${AllData[index]["BikeName"]}")));
+      
+                },
+                
+                 child: Text("Previous sales", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                
+                          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                        ),),
+      
+      
       
       
       

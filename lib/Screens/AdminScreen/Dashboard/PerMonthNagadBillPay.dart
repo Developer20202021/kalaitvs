@@ -7,14 +7,14 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 
 
-class PerMonthSalesHistory extends StatefulWidget {
-  const PerMonthSalesHistory({super.key});
+class PerMonthNagadBillPay extends StatefulWidget {
+  const PerMonthNagadBillPay({super.key});
 
   @override
-  State<PerMonthSalesHistory> createState() => _PerMonthSalesHistoryState();
+  State<PerMonthNagadBillPay> createState() => _PerMonthNagadBillPayState();
 }
 
-class _PerMonthSalesHistoryState extends State<PerMonthSalesHistory> {
+class _PerMonthNagadBillPayState extends State<PerMonthNagadBillPay> {
 
 
   // এখানে Date দিয়ে Data fetch করতে হবে। 
@@ -89,7 +89,7 @@ List  AllData = [];
     int moneyAdd = 0;
 
   CollectionReference _collectionRef =
-    FirebaseFirestore.instance.collection('BikeSalePrice');
+    FirebaseFirestore.instance.collection('BikeSaleInfo');
 
 Future<void> getData(String paymentDate) async {
     // Get docs from collection reference
@@ -124,7 +124,7 @@ Future<void> getData(String paymentDate) async {
 
       for (var i = 0; i < AllData.length; i++) {
 
-       var money = AllData[i]["SalePrice"];
+       var money = AllData[i]["BikeBillPay"];
       int moneyInt = int.parse(money);
 
       
@@ -207,9 +207,9 @@ Future<void> getData(String paymentDate) async {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title:  Text("Per Day Sales History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
+        title:  Text("মাসিক নগদ উত্তোলিত টাকা", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -227,10 +227,10 @@ Future<void> getData(String paymentDate) async {
 
           Container(
             
-            color:Colors.purple,
+            color:Theme.of(context).primaryColor,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("${VisiblePaymentMonth} মাসে ${moneyAdd}৳ টাকা বিক্রয় হয়েছে।", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,),
+              child: Text("${VisiblePaymentMonth} মাসে ${moneyAdd}৳ টাকা নগদ গ্রহন করেছেন।", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,),
             ),),
 
 
@@ -241,7 +241,7 @@ Future<void> getData(String paymentDate) async {
                 child: SfDateRangePicker(
                   onSelectionChanged: _onSelectionChanged,
                   selectionMode: DateRangePickerSelectionMode.range,
-                  todayHighlightColor: Colors.purple,
+                  todayHighlightColor: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(
@@ -253,7 +253,7 @@ Future<void> getData(String paymentDate) async {
       );
     });
 
-        }, icon: Icon(Icons.date_range, color: Colors.purple,))
+        }, icon: Icon(Icons.date_range, color: Theme.of(context).primaryColor,))
 
       ],
         
@@ -261,7 +261,7 @@ Future<void> getData(String paymentDate) async {
       body:loading?Center(
         child: LoadingAnimationWidget.discreteCircle(
           color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
+          secondRingColor: Theme.of(context).primaryColor,
           thirdRingColor: Colors.white,
           size: 100,
         ),
@@ -279,11 +279,11 @@ Future<void> getData(String paymentDate) async {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                              shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.black, width: 1),
+                    side: BorderSide(color: Theme.of(context).primaryColor, width: 1),
                     borderRadius: BorderRadius.circular(5),
                   ), 
                       
-                            title: Text("${AllData[index]["SalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                            title: Text("${AllData[index]["BikeSalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                             trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
                             subtitle: Column(
       
@@ -294,6 +294,7 @@ Future<void> getData(String paymentDate) async {
                                 Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
       
                                 Text("Date: ${AllData[index]["BikeSaleDate"]}"),
+                                Text("Bill Pay: ${AllData[index]["BikeBillPay"]}"),
                                 Text("Seller Name: ${AllData[index]["adminName"]}"),
                                 Text("Seller Email: ${AllData[index]["adminEmail"]}"),
                               ],

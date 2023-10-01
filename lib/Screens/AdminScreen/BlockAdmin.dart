@@ -42,7 +42,7 @@ class _BlockAdminState extends State<BlockAdmin> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Set New Admin",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Block Admin",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

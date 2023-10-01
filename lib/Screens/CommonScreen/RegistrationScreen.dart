@@ -232,7 +232,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             
                    
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
 
 
@@ -271,7 +271,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             
             
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
             
             
@@ -303,7 +303,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
             
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
 
                     TextField(
@@ -332,7 +332,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             
 
             SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
 
 

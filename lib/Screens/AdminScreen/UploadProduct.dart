@@ -57,8 +57,9 @@ class _UploadProductState extends State<UploadProduct> {
   TextEditingController BikeBuyingPriceController = TextEditingController();
   TextEditingController BikeSalePriceController = TextEditingController();
   TextEditingController BikeNameController = TextEditingController();
+  TextEditingController ColorAvailableController = TextEditingController();
   
-  
+
   
 
 
@@ -1167,6 +1168,36 @@ class _UploadProductState extends State<UploadProduct> {
                 SizedBox(
                   height: 10,
                 ),
+
+
+
+                 TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Color Available',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              ),
+                      hintText: 'Color Available',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: ColorAvailableController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
       
       
       
@@ -1317,6 +1348,7 @@ class _UploadProductState extends State<UploadProduct> {
                         "BikeBrakeRear":BikeBrakeRearController.text,
                         "BikeBuyingPrice":BikeBuyingPriceController.text,
                         "BikeCoolingSystem":BikeCoolingSystemController.text,
+                        "ColorAvailable":ColorAvailableController.text,
                         "BikeEngineCapacity":BikeEngineCapacityController.text,
                         "BikeFeatures":BikeFeaturesController.text,
                         "BikeFrame":BikeFrameController.text,
