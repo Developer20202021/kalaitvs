@@ -7,6 +7,8 @@ import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/DueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistoryChart.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthDuePaymentAddHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthSalesHistory.dart';
 
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/SalesPage.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';

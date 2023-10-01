@@ -73,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
         title: const Text("Create Your Account", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -89,7 +89,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Center(
                       child: LoadingAnimationWidget.discreteCircle(
                         color: const Color(0xFF1A1A3F),
-                        secondRingColor: const Color(0xFFEA3799),
+                        secondRingColor: Theme.of(context).primaryColor,
                         thirdRingColor: Colors.white,
                         size: 100,
                       ),
@@ -202,7 +202,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           border: OutlineInputBorder(),
                           labelText: 'Enter Name',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Your Name',
             
@@ -210,7 +210,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -247,7 +247,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           border: OutlineInputBorder(),
                           labelText: 'Enter Phone Number',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Your Phone Number',
             
@@ -255,7 +255,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -290,7 +290,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -311,14 +311,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           border: OutlineInputBorder(),
                           labelText: 'Enter Password',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Your Password',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -505,7 +505,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       
                         }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 
@@ -526,7 +526,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     }, child: Text("Log In", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 

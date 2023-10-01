@@ -552,6 +552,9 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                   "BikeColor":BikeColorController.text,
                   "BikeSalePrice":BikeSalePriceController.text,
                   "BikeDeliveryDate":DateTime.now(),
+                  "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                  "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
+                  "BikeSaleYear":"${DateTime.now().year}",
                   "BikeBillPay":BikeBillPayController.text,
                   "BikePaymentDue":BikePaymentDueString,
                   "CustomerType":CustomerType,
@@ -610,7 +613,9 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                         "DuePrice":BikePaymentDueInt.toString(),
                         "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                         "CustomerNID":CustomerNID,
-                        "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"]
+                        "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
+                        "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
+                        "BikeSaleYear":"${DateTime.now().year}",
 
 
                       };

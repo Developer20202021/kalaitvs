@@ -172,7 +172,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     border: OutlineInputBorder(),
                     labelText: 'Enter Email',
                      labelStyle: TextStyle(
-        color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
             ),
                     hintText: 'Enter Your Email',
             
@@ -180,7 +180,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                     //     ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.purple),
+                          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -208,14 +208,14 @@ class _LogInScreenState extends State<LogInScreen> {
                     border: OutlineInputBorder(),
                     labelText: 'Enter Password',
                      labelStyle: TextStyle(
-        color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
             ),
                     hintText: 'Enter Your Password',
                     //  enabledBorder: OutlineInputBorder(
                     //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                     //   ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.purple),
+                        borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(

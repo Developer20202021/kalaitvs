@@ -8,6 +8,8 @@ import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthDuePaymentAddHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthSalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/Settings/ChangePassword.dart';
@@ -345,7 +347,7 @@ Future<void> getData(String paymentDate) async {
       
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
         title: const Text("Dashboard", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -472,7 +474,7 @@ Future<void> getData(String paymentDate) async {
                   children: [
                     Icon(Icons.payment),
                     SizedBox(width: 5,),
-                    Text("Due Add History"),
+                    Text("Today Due Add"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -480,6 +482,38 @@ Future<void> getData(String paymentDate) async {
                 
                 padding: EdgeInsets.all(18.0),
               ),
+
+
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerMonthDuePaymentAddHistory()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.payments_rounded),
+                    SizedBox(width: 5,),
+                    Text("Monthly Due Add"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
 
 
 
@@ -515,6 +549,11 @@ Future<void> getData(String paymentDate) async {
 
 
 
+
+               
+
+
+
               
                  PopupMenuItem(
                 onTap: (){
@@ -530,7 +569,7 @@ Future<void> getData(String paymentDate) async {
                   children: [
                     Icon(Icons.sell),
                     SizedBox(width: 5,),
-                    Text("Today Sales History"),
+                    Text("Today Sales"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -538,6 +577,33 @@ Future<void> getData(String paymentDate) async {
                 
                 padding: EdgeInsets.all(18.0),
               ),
+
+
+
+               PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerMonthSalesHistory()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.sell_sharp),
+                    SizedBox(width: 5,),
+                    Text("Per Month Sales"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
 
 
 

@@ -84,6 +84,10 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
     var PaymentDate = "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
 
+    var PaymentMonth = "${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
+
+    var PaymentYear = "${DateTime.now().year.toString()}";
+
 
 
 
@@ -296,7 +300,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                         "CustomerPhoneNumber":CustomerPhoneNumber,
                         "Amount": Amount,
                         "PaymentDateTime":paymentDateTime,
-                        "PaymentDate":PaymentDate
+                        "PaymentDate":PaymentDate,
+                        "PaymentMonth":PaymentMonth,
+                        "PaymentYear":PaymentYear
 
                         
                       };
