@@ -254,34 +254,30 @@ Future<void> getData() async {
             child: Column(
               children: [
                 ListTile(
-                  leading: Icon(Icons.arrow_drop_down_circle),
-                  title:  Text('${AllData[index]["BikeName"]}'),
+                  leading: Icon(Icons.electric_bike_rounded),
+                  title:  Text('${AllData[index]["BikeName"]}',style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,)),
                   subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // BikeSalePrice
-                      Text(
-                        'Price: ${AllData[index]["BikeSalePrice"]}',
-                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                      ),
+                    
                      
                       Text(
-                        '${AllData[index]["BikeType"]}',
-                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        '${AllData[index]["BikeType"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)
+                      
                       ),
 
                        Text(
-                        'Color: ${AllData[index]["ColorAvailable"]}',
-                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        'Color: ${AllData[index]["ColorAvailable"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)
+                       
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    '${AllData[index]["BikeFeatures"]}',
-                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                  ),
+                Text(
+                  '${AllData[index]["BikeFeatures"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
+                  
                 ),
              
          
@@ -521,27 +517,63 @@ Future<void> getData() async {
                 ),
       
       
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-      
-                    child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Padding(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Out of Stock"),
-                    ):Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
-                    ),
-                       
-                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 250, 230, 250),
+                      child: Container(
       
-                  border: Border.all(
-                            width: 2,
-                            color: Theme.of(context).primaryColor
-                          ),
-                  borderRadius: BorderRadius.circular(10)      
-                 ),))
+                        child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Out of Stock"),
+                        ):Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
+                        ),
+                           
+                     decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 255, 255, 255),
+      
+                      border: Border.all(
+                                width: 2,
+                                color: Theme.of(context).primaryColor
+                              ),
+                      borderRadius: BorderRadius.circular(10)      
+                     ),)),
+
+
+
+
+
+                     Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+      
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Price: ${AllData[index]["BikeSalePrice"]}৳"),
+                        ),
+                           
+                     decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 255, 255, 255),
+      
+                      border: Border.all(
+                                width: 2,
+                                color: Theme.of(context).primaryColor
+                              ),
+                      borderRadius: BorderRadius.circular(10)      
+                     ),)),
+
+
+
+
+
+
+
+
+                  ],
+                )
       
       
       

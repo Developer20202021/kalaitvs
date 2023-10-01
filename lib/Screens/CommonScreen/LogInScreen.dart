@@ -63,122 +63,160 @@ class _LogInScreenState extends State<LogInScreen> {
                         size: 100,
                       ),
                     ),
-              ): Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-
-
-
-
-               createUserErrorCode=="wrong-password"? Center(
+              ): AutofillGroup(
                 child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
               
               
-                                child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.close, color: Colors.red,),
-                    Text("Wrong password provided for that user."),
-                  ],
-                ),
-                                ),
-                 
-                             decoration: BoxDecoration(
-                              color: Colors.red[100],
-              
-                              border: Border.all(
-                      width: 2,
-                      color: Colors.white
-
-                      
-                    ),
-                              borderRadius: BorderRadius.circular(10)      
-                             ),)),
-              ):Text(""),
-
-
-
-
-
-
-
-              createUserErrorCode=="user-not-found"? Center(
-                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
               
               
-                                child: Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 8),
-                child: Row(
-                  children: [
-                    Icon(Icons.close, color: Colors.red,),
-                    Text("No user found for that email.", overflow: TextOverflow.clip,),
-                  ],
-                ),
-                                ),
-                 
-                             decoration: BoxDecoration(
-                              color: Colors.red[100],
               
-                              border: Border.all(
-                      width: 2,
-                      color: Colors.white
-
-                      
-                    ),
-                              borderRadius: BorderRadius.circular(10)      
-                             ),)),
-              ):Text(""),
-
-
-
-
-
-
-
-
-              
-
-
-
-
-            
-              
-              // Center(
-              //   child: Lottie.asset(
-              //   'lib/images/animation_lk8fkoa8.json',
-              //     fit: BoxFit.cover,
-              //     width: 200,
-              //     height: 200
-              //   ),
-              // ),
-            
-            // SizedBox(
-            //           height: 20,
-            //         ),
-            
-            
-            
-              TextField(
+                 createUserErrorCode=="wrong-password"? Center(
+                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
                 
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter Email',
-                     labelStyle: TextStyle(
-        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-            ),
-                    hintText: 'Enter Your Email',
-            
-                    //  enabledBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                    //     ),
+                
+                                  child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.close, color: Colors.red,),
+                      Text("Wrong password provided for that user."),
+                    ],
+                  ),
+                                  ),
+                   
+                               decoration: BoxDecoration(
+                                color: Colors.red[100],
+                
+                                border: Border.all(
+                        width: 2,
+                        color: Colors.white
+              
+                        
+                      ),
+                                borderRadius: BorderRadius.circular(10)      
+                               ),)),
+                ):Text(""),
+              
+              
+              
+              
+              
+              
+              
+                createUserErrorCode=="user-not-found"? Center(
+                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                
+                
+                                  child: Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: Row(
+                    children: [
+                      Icon(Icons.close, color: Colors.red,),
+                      Text("No user found for that email.", overflow: TextOverflow.clip,),
+                    ],
+                  ),
+                                  ),
+                   
+                               decoration: BoxDecoration(
+                                color: Colors.red[100],
+                
+                                border: Border.all(
+                        width: 2,
+                        color: Colors.white
+              
+                        
+                      ),
+                                borderRadius: BorderRadius.circular(10)      
+                               ),)),
+                ):Text(""),
+              
+              
+              
+              
+              
+              
+              
+              
+                
+              
+              
+              
+              
+                          
+                
+                // Center(
+                //   child: Lottie.asset(
+                //   'lib/images/animation_lk8fkoa8.json',
+                //     fit: BoxFit.cover,
+                //     width: 200,
+                //     height: 200
+                //   ),
+                // ),
+                          
+                          // SizedBox(
+                          //           height: 20,
+                          //         ),
+                          
+                          
+                          
+                TextField(
+                  autofillHints: [AutofillHints.email],
+                  
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Enter Email',
+                       labelStyle: TextStyle(
+                      color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                          ),
+                      hintText: 'Enter Your Email',
+                          
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                          ),
+                      
+                      
+                      ),
+                  controller: myEmailController,
+                ),
+                          
+                          
+                          
+                          
+                SizedBox(
+                  height: 20,
+                ),
+                          
+                          
+                          
+                          
+                          
+                TextField(
+                   autofillHints: [AutofillHints.password],
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Enter Password',
+                       labelStyle: TextStyle(
+                      color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                          ),
+                      hintText: 'Enter Your Password',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                         ),
@@ -186,260 +224,226 @@ class _LogInScreenState extends State<LogInScreen> {
                           borderSide: BorderSide(
                               width: 3, color: Color.fromARGB(255, 66, 125, 145)),
                         ),
-                    
-                    
-                    ),
-                controller: myEmailController,
-              ),
-            
-            
-            
-            
-              SizedBox(
-                height: 20,
-              ),
-            
-            
-            
-            
-            
-              TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter Password',
-                     labelStyle: TextStyle(
-        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-            ),
-                    hintText: 'Enter Your Password',
-                    //  enabledBorder: OutlineInputBorder(
-                    //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                    //   ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                      ),
-                    
-                    
-                    ),
-                controller: myPassController,
-              ),
-            
-              SizedBox(
-                height: 10,
-              ),
-            
-            
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(width: 150, child:TextButton(onPressed: () async{
-
-
-                    setState(() {
-                      loading = true;
-                    });
-
-                    try {
-                      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: myEmailController.text.trim(),
-                        password: myPassController.text.trim()
-                      );
-
-                      var userName = credential.user!.displayName;
-                      var userEmail = credential.user!.email;
-                      var userVerified = credential.user!.emailVerified;
-
-
-                      if (userVerified) {
-
-
-                        List  AllData = [];
-
-
-                    CollectionReference _collectionRef =
-                      FirebaseFirestore.instance.collection('admin');
-
-                      Query query = _collectionRef.where("userEmail", isEqualTo: myEmailController.text);
-                    QuerySnapshot querySnapshot = await query.get();
-
-                
-                      // Get docs from collection reference
-                     
-
-                      // Get data from docs and convert map to List
-                      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-                      setState(() {
-                        
-                        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-                      });
-
-
-
-
-
-                      print(AllData);
-            
-
-
-               
-
-
-
-                  if (AllData[0]["AdminApprove"] == "true") {
-
-                    
-
-
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, userEmail: userEmail, indexNumber: "1")),);
-
-                           setState(() {
-                          loading=false;
-                        });
-
-                    
-                  }
-
-                  else{
-
-                    setState(() {
-                          loading=false;
-                        });
-
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => StaffScreen()),);
-
-
-                  }
-
-
-
-                        
-
-
-
-
-
-
-
-
-
-
-
-                       
-
-
-
-
-
-
-
-
-
-                        
-
-                        
-                      }
-                      else{
-
-
-                          await credential.user?.delete();
-
-                             CollectionReference _collectionRef =
-                      FirebaseFirestore.instance.collection('admin');
-                          _collectionRef.doc(userEmail).delete().then(
-      (doc) => print("Document deleted"),
-      onError: (e) => print("Error updating document $e"),
-    );
-
-                            setState(() {
-                          loading=false;
-                        });
-                        
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()),);
-
-
-                      }
-
-
-
-
-                
-
-
-
                       
+                      
+                      ),
+                  controller: myPassController,
+                ),
+                          
+                SizedBox(
+                  height: 10,
+                ),
+                          
+                          
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(width: 150, child:TextButton(onPressed: () async{
+              
+              
+                      setState(() {
+                        loading = true;
+                      });
+              
+                      try {
+                        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: myEmailController.text.trim(),
+                          password: myPassController.text.trim()
+                        );
+              
+                        var userName = credential.user!.displayName;
+                        var userEmail = credential.user!.email;
+                        var userVerified = credential.user!.emailVerified;
+              
+              
+                        if (userVerified) {
+              
+              
+                          List  AllData = [];
+              
+              
+                      CollectionReference _collectionRef =
+                        FirebaseFirestore.instance.collection('admin');
+              
+                        Query query = _collectionRef.where("userEmail", isEqualTo: myEmailController.text);
+                      QuerySnapshot querySnapshot = await query.get();
+              
                   
-
-
-
-
-
-
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-
+                        // Get docs from collection reference
+                       
+              
+                        // Get data from docs and convert map to List
+                        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
                         setState(() {
-                          loading=false;
-                          createUserErrorCode = "user-not-found";
                           
+                          AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
                         });
-                        print('No user found for that email.');
-                      } else if (e.code == 'wrong-password') {
-
-
-                        setState(() {
-                          loading=false;
-                          createUserErrorCode = "wrong-password";
+              
+              
+              
+              
+              
+                        print(AllData);
                           
-                        });
-                        print('Wrong password provided for that user.');
-                      }
+              
+              
+                 
+              
+              
+              
+                    if (AllData[0]["AdminApprove"] == "true") {
+              
+                      
+              
+              
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(userName: userName, userEmail: userEmail, indexNumber: "1")),);
+              
+                             setState(() {
+                            loading=false;
+                          });
+              
+                      
                     }
-
-
-
-
-
-
-
-                  }, child: Text("Log in", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                   
-          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-        ),),),
-
-
-
-              Container(width: 150, child:TextButton(onPressed: (){
-
-                     Navigator.push(
-                  context,
-
-             MaterialPageRoute(builder: (context) => const RegistrationScreen()),
-                );
-
-
-
-
-              }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                   
-          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-        ),),),
-
-
-
-
-
-                ],
-              )
-            
-            
-            
-            ],
-          ),
-        ),
+              
+                    else{
+              
+                      setState(() {
+                            loading=false;
+                          });
+              
+              
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => StaffScreen()),);
+              
+              
+                    }
+              
+              
+              
+                          
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                         
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                          
+              
+                          
+                        }
+                        else{
+              
+              
+                            await credential.user?.delete();
+              
+                               CollectionReference _collectionRef =
+                        FirebaseFirestore.instance.collection('admin');
+                            _collectionRef.doc(userEmail).delete().then(
+                    (doc) => print("Document deleted"),
+                    onError: (e) => print("Error updating document $e"),
+                  );
+              
+                              setState(() {
+                            loading=false;
+                          });
+                          
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()),);
+              
+              
+                        }
+              
+              
+              
+              
+                  
+              
+              
+              
+                        
+                    
+              
+              
+              
+              
+              
+              
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+              
+                          setState(() {
+                            loading=false;
+                            createUserErrorCode = "user-not-found";
+                            
+                          });
+                          print('No user found for that email.');
+                        } else if (e.code == 'wrong-password') {
+              
+              
+                          setState(() {
+                            loading=false;
+                            createUserErrorCode = "wrong-password";
+                            
+                          });
+                          print('Wrong password provided for that user.');
+                        }
+                      }
+              
+              
+              
+              
+              
+              
+              
+                    }, child: Text("Log in", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                     
+                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                      ),),),
+              
+              
+              
+                Container(width: 150, child:TextButton(onPressed: (){
+              
+                       Navigator.push(
+                    context,
+              
+                           MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+                  );
+              
+              
+              
+              
+                }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                     
+                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                      ),),),
+              
+              
+              
+              
+              
+                  ],
+                )
+                          
+                          
+                          
+                          ],
+                        ),
+                      ),
+              ),
         ),
       
       

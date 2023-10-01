@@ -234,7 +234,7 @@ Future<void> getData() async {
 
 
       appBar:  AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
         title: const Text("Admins", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -248,7 +248,7 @@ Future<void> getData() async {
                 child: Center(
                       child: LoadingAnimationWidget.discreteCircle(
                         color: const Color(0xFF1A1A3F),
-                        secondRingColor: const Color(0xFFEA3799),
+                        secondRingColor: Theme.of(context).primaryColor,
                         thirdRingColor: Colors.white,
                         size: 100,
                       ),
@@ -268,7 +268,7 @@ Future<void> getData() async {
                 motion: const ScrollMotion(),
               
                 // A pane can dismiss the Slidable.
-                dismissible: DismissiblePane(onDismissed: () {}),
+             
               
                 // All actions are defined in the children parameter.
                 children: const [
@@ -312,8 +312,8 @@ Future<void> getData() async {
                           child:  ListTile(
                 
                    leading: CircleAvatar(
-                      backgroundColor: Colors.pink,
-                      child: Text("S"),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: Text("${AllData[index]["userName"][0]}",style: TextStyle(color: Colors.white)),
                     ),
               
                     subtitle: Column(

@@ -174,7 +174,7 @@ Future<void> getData(String paymentDate) async {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title:  Text("বকেয়া টাকা উত্তোলন History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -194,7 +194,7 @@ Future<void> getData(String paymentDate) async {
 
           Container(
             
-            color:Colors.purple,
+            color:Theme.of(context).primaryColor,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("${VisiblePaymentDate} তারিখে ${moneyAdd}৳ টাকা উত্তোলিত হয়েছে।", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
@@ -208,7 +208,7 @@ Future<void> getData(String paymentDate) async {
                 child: SfDateRangePicker(
                   onSelectionChanged: _onSelectionChanged,
                   selectionMode: DateRangePickerSelectionMode.range,
-                  todayHighlightColor: Colors.purple,
+                  todayHighlightColor: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(
@@ -220,7 +220,7 @@ Future<void> getData(String paymentDate) async {
       );
     });
 
-        }, icon: Icon(Icons.date_range, color: Colors.purple,))
+        }, icon: Icon(Icons.date_range, color: Theme.of(context).primaryColor,))
 
       ],
         

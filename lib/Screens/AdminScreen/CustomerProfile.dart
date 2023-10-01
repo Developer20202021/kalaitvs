@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
+import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
+import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
 
 
@@ -133,7 +138,25 @@ Future<void> getData(String CustomerNID) async {
             children: [
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () async{
+
+
+
+                   FirebaseAuth.instance
+                  .authStateChanges()
+                  .listen((User? user) {
+                    if (user == null) {
+                      print('User is currently signed out!');
+                    } else {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
+                    }
+                  });
+
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.home_outlined,
                   color: Colors.white,
@@ -142,7 +165,12 @@ Future<void> getData(String CustomerNID) async {
               ),
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2",)));
+
+
+                },
                 icon: const Icon(
                   Icons.electric_bike_outlined,
                   color: Colors.white,
@@ -151,7 +179,15 @@ Future<void> getData(String CustomerNID) async {
               ),
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3",)));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.admin_panel_settings_outlined,
                   color: Colors.white,
@@ -160,7 +196,15 @@ Future<void> getData(String CustomerNID) async {
               ),
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer(indexNumber: "4")));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.person_outline,
                   color: Colors.white,
@@ -172,7 +216,7 @@ Future<void> getData(String CustomerNID) async {
       ),
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Customer Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -188,7 +232,7 @@ Future<void> getData(String CustomerNID) async {
                 child: loading?Center(
           child: LoadingAnimationWidget.discreteCircle(
             color: const Color(0xFF1A1A3F),
-            secondRingColor: const Color(0xFFEA3799),
+            secondRingColor: Theme.of(context).primaryColor,
             thirdRingColor: Colors.white,
             size: 100,
           ),
@@ -469,7 +513,7 @@ Future<void> getData(String CustomerNID) async {
       
                           }, child: Text("All Files", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                            
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
                 ),),),
                         ],
                       )

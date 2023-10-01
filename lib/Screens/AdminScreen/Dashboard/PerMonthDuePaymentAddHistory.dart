@@ -187,7 +187,7 @@ Future<void> getData(String paymentDate) async {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title:  Text("মাসিক বকেয়া টাকা উত্তোলন", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
@@ -207,7 +207,7 @@ Future<void> getData(String paymentDate) async {
 
           Container(
             
-            color:Colors.purple,
+            color:Theme.of(context).primaryColor,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("${VisiblePaymentDate} মাসে ${moneyAdd}৳ টাকা উত্তোলিত হয়েছে।", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,),
@@ -221,7 +221,7 @@ Future<void> getData(String paymentDate) async {
                 child: SfDateRangePicker(
                   onSelectionChanged: _onSelectionChanged,
                   selectionMode: DateRangePickerSelectionMode.range,
-                  todayHighlightColor: Colors.purple,
+                  todayHighlightColor: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(
@@ -233,7 +233,7 @@ Future<void> getData(String paymentDate) async {
       );
     });
 
-        }, icon: Icon(Icons.date_range, color: Colors.purple,))
+        }, icon: Icon(Icons.date_range, color: Theme.of(context).primaryColor,))
 
       ],
         
@@ -241,7 +241,7 @@ Future<void> getData(String paymentDate) async {
       body:loading?Center(
         child: LoadingAnimationWidget.discreteCircle(
           color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
+          secondRingColor: Theme.of(context).primaryColor,
           thirdRingColor: Colors.white,
           size: 100,
         ),
@@ -259,7 +259,7 @@ Future<void> getData(String paymentDate) async {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                              shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.black, width: 1),
+                    side: BorderSide(color: Theme.of(context).primaryColor, width: 1),
                     borderRadius: BorderRadius.circular(5),
                   ), 
                       

@@ -199,7 +199,7 @@ Future<void> getData() async {
                 motion: const ScrollMotion(),
       
                 // A pane can dismiss the Slidable.
-                dismissible: DismissiblePane(onDismissed: () {}),
+                
       
                 // All actions are defined in the children parameter.
                 children:  [
@@ -244,7 +244,7 @@ Future<void> getData() async {
                 
                    leading: CircleAvatar(
           backgroundColor: Theme.of(context).primaryColor,
-          child: Text("S",style: TextStyle(color: Colors.white),),
+          child: Text("${AllData[index]["CustomerName"][0]}",style: TextStyle(color: Colors.white),),
         ),
       
         subtitle: Column(

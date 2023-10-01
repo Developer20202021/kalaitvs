@@ -230,7 +230,7 @@ Future<void> getData() async {
 
       backgroundColor: Colors.white,
       appBar:  AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
         title: const Text("Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -254,7 +254,7 @@ Future<void> getData() async {
                 motion: const ScrollMotion(),
       
                 // A pane can dismiss the Slidable.
-                dismissible: DismissiblePane(onDismissed: () {}),
+               
       
                 // All actions are defined in the children parameter.
                 children:  [
@@ -304,8 +304,8 @@ Future<void> getData() async {
               child:  ListTile(
                 
                    leading: CircleAvatar(
-          backgroundColor: Colors.pink,
-          child: Text("S"),
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Text("${AllData[index]["CustomerName"][0]}",style: TextStyle(color: Colors.white),),
         ),
       
         subtitle:  Text('NID:${AllData[index]["CustomerNID"]}'),

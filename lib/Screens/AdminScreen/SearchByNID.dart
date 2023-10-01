@@ -121,7 +121,7 @@ Future<void> getData(context) async {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Search Customer",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -206,7 +206,7 @@ Future<void> getData(context) async {
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -240,7 +240,7 @@ Future<void> getData(context) async {
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -275,7 +275,7 @@ Future<void> getData(context) async {
 
                         }, child: Text("Search", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 
@@ -307,7 +307,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.purple;
+    paint.color = Color(0xf08f00ff);
     paint.style = PaintingStyle.fill;
 
     var path = Path();

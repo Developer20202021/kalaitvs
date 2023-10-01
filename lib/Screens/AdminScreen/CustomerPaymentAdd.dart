@@ -121,7 +121,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context, true);
@@ -139,7 +139,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
       body: loading?Center(
         child: LoadingAnimationWidget.discreteCircle(
           color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
+          secondRingColor: Theme.of(context).primaryColor,
           thirdRingColor: Colors.white,
           size: 100,
         ),
@@ -163,13 +163,13 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                   border: OutlineInputBorder(),
                   labelText: 'Customer NID',
                   labelStyle: TextStyle(
-                      color: myFocusNode.hasFocus ? Colors.purple : Colors.black),
+                      color: myFocusNode.hasFocus ? Theme.of(context).primaryColor : Colors.black),
                   hintText: 'Customer NID',
                   //  enabledBorder: OutlineInputBorder(
                   //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                   //   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 3, color: Colors.purple),
+                    borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -189,13 +189,13 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                   border: OutlineInputBorder(),
                   labelText: 'Amount',
                   labelStyle: TextStyle(
-                      color: myFocusNode.hasFocus ? Colors.purple : Colors.black),
+                      color: myFocusNode.hasFocus ? Theme.of(context).primaryColor : Colors.black),
                   hintText: 'Amount',
                   //  enabledBorder: OutlineInputBorder(
                   //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                   //   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 3, color: Colors.purple),
+                    borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -215,13 +215,13 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                   border: OutlineInputBorder(),
                   labelText: 'Customer Phone Number',
                   labelStyle: TextStyle(
-                      color: myFocusNode.hasFocus ? Colors.purple : Colors.black),
+                      color: myFocusNode.hasFocus ? Theme.of(context).primaryColor : Colors.black),
                   hintText: 'Customer Phone Number',
                   //  enabledBorder: OutlineInputBorder(
                   //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                   //   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 3, color: Colors.purple),
+                    borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -270,9 +270,32 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                 child: TextButton(
                   onPressed: () async{
 
+
+
                     setState(() {
                       loading = true;
                     });
+
+
+                    var adminEmail ="";
+                    var adminName = "";
+
+                    FirebaseAuth.instance
+                          .authStateChanges()
+                          .listen((User? user) {
+                            if (user != null) {
+
+
+                              setState(() {
+                                adminEmail = user.email!;
+                                adminName = user.displayName!;
+                              });
+                              
+
+
+
+                            }
+                          });
 
 
                     int LastBikeDuePayment = 0;
@@ -302,7 +325,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                         "PaymentDateTime":paymentDateTime,
                         "PaymentDate":PaymentDate,
                         "PaymentMonth":PaymentMonth,
-                        "PaymentYear":PaymentYear
+                        "PaymentYear":PaymentYear,
+                        "adminEmail":adminEmail,
+                        "adminName":adminName
 
                         
                       };
@@ -553,7 +578,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                   ),
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStatePropertyAll<Color>(Colors.purple),
+                        MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
                   ),
                 ),
               )

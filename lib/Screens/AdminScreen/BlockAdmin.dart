@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,14 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:http/http.dart' as http;
+
+
+
+
+
+
+
+
 
 
 
@@ -40,7 +47,7 @@ class _BlockAdminState extends State<BlockAdmin> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Block Admin",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -54,7 +61,7 @@ class _BlockAdminState extends State<BlockAdmin> {
                 child: Center(
                       child: LoadingAnimationWidget.discreteCircle(
                         color: const Color(0xFF1A1A3F),
-                        secondRingColor: const Color(0xFFEA3799),
+                        secondRingColor: Theme.of(context).primaryColor,
                         thirdRingColor: Colors.white,
                         size: 100,
                       ),
@@ -85,7 +92,7 @@ class _BlockAdminState extends State<BlockAdmin> {
                           border: OutlineInputBorder(),
                           labelText: 'Enter Email',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Your Email',
             
@@ -93,7 +100,7 @@ class _BlockAdminState extends State<BlockAdmin> {
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -232,7 +239,7 @@ class _BlockAdminState extends State<BlockAdmin> {
 
                         }, child: Text("Block Admin", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 
@@ -264,7 +271,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.purple;
+    paint.color = Color(0xf08f00ff);
     paint.style = PaintingStyle.fill;
 
     var path = Path();

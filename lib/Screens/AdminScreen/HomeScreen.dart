@@ -925,19 +925,21 @@ PopupMenuItem(
                   height: 200,
                   child: Center(
                     child: Text("Total Paid Customers: ${AllPaidCustomerData.length.toString()}", style: TextStyle(
-                
-                      fontSize: 20,
-                    ),),
+                    
+                            fontSize: 20,
+                            color: Colors.white,
+                            overflow: TextOverflow.clip
+                          ),),
                 
                 
                   ),
                        
                  decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 250, 230, 250),
+                  color: Color(0xF0B75CFF),
                 
                   border: Border.all(
                             width: 2,
-                            color: Color.fromARGB(255, 250, 230, 250)
+                            color: Color(0xF0B75CFF)
                           ),
                   borderRadius: BorderRadius.circular(10)      
                  ),)),

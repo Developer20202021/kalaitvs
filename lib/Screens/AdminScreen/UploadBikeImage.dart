@@ -1,5 +1,4 @@
 
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -214,7 +213,7 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title:  Text("Upload Bike Image ${count}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -237,7 +236,7 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
 
           Container(
 
-            color: Colors.purple,
+            color: Theme.of(context).primaryColor,
             
             
             child: Padding(
@@ -263,7 +262,7 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
               },
               child: CircleAvatar(
                 radius: 155,
-                backgroundColor: Colors.purple,
+                backgroundColor: Theme.of(context).primaryColor,
                 child: _photo != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(5),
@@ -304,7 +303,7 @@ class _UploadBikeImageState extends State<UploadBikeImage> {
 
                         }, child: Text("Done", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 

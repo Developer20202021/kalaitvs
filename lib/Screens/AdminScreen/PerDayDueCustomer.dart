@@ -157,7 +157,7 @@ Future<void> getData() async {
 
       backgroundColor: Colors.white,
       appBar:  AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Per Day Due Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -169,7 +169,7 @@ Future<void> getData() async {
       body: loading?Center(
         child: LoadingAnimationWidget.discreteCircle(
           color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
+          secondRingColor: Theme.of(context).primaryColor,
           thirdRingColor: Colors.white,
           size: 100,
         ),
@@ -188,7 +188,7 @@ Future<void> getData() async {
                 motion: const ScrollMotion(),
       
                 // A pane can dismiss the Slidable.
-                dismissible: DismissiblePane(onDismissed: () {}),
+         
       
                 // All actions are defined in the children parameter.
                 children:  [
@@ -232,8 +232,8 @@ Future<void> getData() async {
               child:  ListTile(
                 
                    leading: CircleAvatar(
-          backgroundColor: Colors.pink,
-          child: Text("S"),
+          backgroundColor:  Theme.of(context).primaryColor,
+          child: Text("${AllData[index]["CustomerName"][0]}",style: TextStyle(color: Colors.white)),
         ),
       
         subtitle: Column(
@@ -259,7 +259,7 @@ Future<void> getData() async {
       
         }, child: Text("Send Message", style: TextStyle(color: Colors.white),), style: ButtonStyle(
          
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
                 ),),
                 
                 title: Text('${AllData[index]["CustomerName"]}', style: TextStyle(

@@ -40,7 +40,7 @@ class _MakeAdminState extends State<MakeAdmin> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Set New Admin",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -54,7 +54,7 @@ class _MakeAdminState extends State<MakeAdmin> {
                 child: Center(
                       child: LoadingAnimationWidget.discreteCircle(
                         color: const Color(0xFF1A1A3F),
-                        secondRingColor: const Color(0xFFEA3799),
+                        secondRingColor: Theme.of(context).primaryColor,
                         thirdRingColor: Colors.white,
                         size: 100,
                       ),
@@ -85,7 +85,7 @@ class _MakeAdminState extends State<MakeAdmin> {
                           border: OutlineInputBorder(),
                           labelText: 'Enter Email',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Your Email',
             
@@ -93,7 +93,7 @@ class _MakeAdminState extends State<MakeAdmin> {
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -234,7 +234,7 @@ class _MakeAdminState extends State<MakeAdmin> {
 
                         }, child: Text("Set Admin", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 
@@ -266,7 +266,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.purple;
+    paint.color = Color(0xf08f00ff);
     paint.style = PaintingStyle.fill;
 
     var path = Path();

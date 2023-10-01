@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/EditProductInfo.dart';
 
 
 
@@ -182,9 +183,9 @@ Future<void> getBikeImageData(String BikeID) async {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Product Info", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Bike Info", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -198,7 +199,7 @@ Future<void> getBikeImageData(String BikeID) async {
                 child: Center(
                       child: LoadingAnimationWidget.discreteCircle(
           color: const Color(0xFF1A1A3F),
-          secondRingColor: const Color(0xFFEA3799),
+          secondRingColor: Theme.of(context).primaryColor,
           thirdRingColor: Colors.white,
           size: 100,
         ),
@@ -1441,8 +1442,27 @@ Future<void> getBikeImageData(String BikeID) async {
               ),
             ),
         
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: DataLoad == "0"?FloatingActionButton(onPressed: (){
+
+
+        
+      }):FloatingActionButton(
       onPressed: (){
+
+
+        
+
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  EditProduct(BikeID: "${AllData[0]["BikeID"]}")),
+                      );
+
+
+
+
+
+
+
 
       },
         tooltip: 'Edit',
