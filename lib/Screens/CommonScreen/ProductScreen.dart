@@ -392,7 +392,7 @@ Future<void> getData() async {
       
                       
       
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: " ", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
       
                       }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                       

@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:http/http.dart' as http;
+import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
+import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
 
 
@@ -108,6 +113,118 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+      
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                enableFeedback: false,
+                onPressed: () async{
+
+
+                  FirebaseAuth.instance
+                  .authStateChanges()
+                  .listen((User? user) {
+                    if (user == null) {
+                      print('User is currently signed out!');
+                    } else {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
+                    }
+                  });
+
+                  
+                   
+
+
+
+                },
+                icon: const Icon(
+                  Icons.home_outlined,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2")));
+
+
+
+                },
+                icon: const Icon(
+                  Icons.electric_bike_outlined,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3")));
+
+
+
+                },
+                icon: const Icon(
+                  Icons.admin_panel_settings_outlined,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+         IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                  
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer(indexNumber: "4")));
+
+
+
+
+                },
+                icon: const Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+            ],
+          ),),
+      ),
+
+
+
+
+
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
@@ -687,7 +804,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
      
     BikequerySnapshot.docs[0].reference.update({"BikeShowroomAvailableNumber":BikeUpdateAvailableNumber.toString()}).then((value) => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) )));
+                        MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: CustomerData[0]["CustomerName"], CustomerNID: widget.CustomerNID, CustomerPhoneNumber: CustomerData[0]["CustomerPhoneNumber"], CustomerFileNo: BikeDeliveryNoController.text, CustomerAddress: CustomerData[0]["CustomerAddress"], BikeName: widget.BikeName, BikeEngineNo: BikeEngineNoController.text, BikeChassisNo: BikeChassisNoController.text, BikeSalePrice: BikeSalePrice, BikeCashInAmount: BikeBillPay, BikePaymentDue: BikePaymentDueString, BikeColor: widget.BikeColor, BikeCondition: BikeConditionMonthController.text) )));
 
 
 
@@ -848,7 +965,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
