@@ -275,10 +275,7 @@ Future<void> getData() async {
                     ],
                   ),
                 ),
-                Text(
-                  '${AllData[index]["BikeFeatures"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
-                  
-                ),
+            
              
          
       

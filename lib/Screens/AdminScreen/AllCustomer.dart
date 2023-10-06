@@ -26,6 +26,10 @@ class AllCustomer extends StatefulWidget {
 
 class _AllCustomerState extends State<AllCustomer> {
 
+TextEditingController customerPhoneNumberController = TextEditingController();
+
+var searchField ="";
+
 bool loading = false;
 
 var DataLoad = "";
@@ -71,6 +75,55 @@ Future<void> getData() async {
 
 
 
+
+
+
+
+
+
+// Firebase All Customer Data Load
+
+List  AllSearchData = [];
+
+
+Future<void> getSearchData(String phoneNumber) async {
+    // Get docs from collection reference
+     CollectionReference _SearchCollectionRef =
+    FirebaseFirestore.instance.collection('customer');
+
+     Query _SearchCollectionRefQuery = _SearchCollectionRef.where("CustomerPhoneNumber", isEqualTo: phoneNumber);
+
+
+    QuerySnapshot SearchCollectionQuerySnapshot = await _SearchCollectionRefQuery.get();
+
+    // Get data from docs and convert map to List
+     AllSearchData = SearchCollectionQuerySnapshot.docs.map((doc) => doc.data()).toList();
+     if (AllSearchData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+     
+       AllData = SearchCollectionQuerySnapshot.docs.map((doc) => doc.data()).toList();
+      loading = false;
+     });
+       
+     }
+     
+
+    print(AllData);
+}
+
+
+
+
+
+
+
+
 @override
   void initState() {
     // TODO: implement initState
@@ -109,7 +162,7 @@ Future<void> getData() async {
   @override
   Widget build(BuildContext context) {
 
-
+ FocusNode myFocusNode = new FocusNode();
 
 
    
@@ -231,13 +284,148 @@ Future<void> getData() async {
 
       backgroundColor: Colors.white,
       appBar:  AppBar(
+
+        toolbarHeight: searchField=="search"?100:56,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
-        title: const Text("Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  searchField=="search"?ListTile(
+
+          leading: IconButton(onPressed: (){
+
+
+            setState(() {
+              loading = true;
+              searchField = "";
+            });
+
+
+
+            getSearchData(customerPhoneNumberController.text);
+
+
+            print("___________________________________________________________________________________________${customerPhoneNumberController.text}_____________________");
+
+
+            // comming soon 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }, icon: Icon(Icons.search, color: Theme.of(context).primaryColor,)),
+          title: TextField(
+
+                      keyboardType: TextInputType.phone,
+                      
+                      decoration: InputDecoration(
+                        
+                          border: OutlineInputBorder(),
+                          labelText: 'Customer Phone No',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'Customer Phone No',
+            
+                           enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                              ),
+                          
+                          
+                          ),
+
+                        controller: customerPhoneNumberController,
+                  
+                    ),
+            
+            
+
+
+
+        ):Text("Customers", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+        actions: [
+
+
+          searchField == "search"?IconButton(onPressed: (){
+
+
+            // showSearch(context: context, delegate: MySearchDelegate());
+
+            
+
+
+                      setState(() {
+                              
+                              searchField = "";
+                              customerPhoneNumberController.text ="";
+                            });
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+          }, icon: Icon(Icons.close)):IconButton(onPressed: (){
+
+
+            setState(() {
+              
+              searchField = "search";
+            });
+
+
+          
+
+            
+
+
+
+
+
+
+
+
+          
+
+          }, icon: Icon(Icons.search))
+
+
+
+
+
+
+
+        ],
         
       ),
       body: DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(
@@ -309,7 +497,14 @@ Future<void> getData() async {
           child: Text("${AllData[index]["CustomerName"][0].toString().capitalize()}",style: TextStyle(color: Colors.white),),
         ),
       
-        subtitle:  Text('NID:${AllData[index]["CustomerNID"]}'),
+        subtitle:  Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('NID:${AllData[index]["CustomerNID"]}'),
+            Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
+          ],
+        ),
         trailing: Text("${AllData[index]["CustomerType"]}"),
                 
                 title: Text("${AllData[index]["CustomerName"].toString().capitalize()}", style: TextStyle(
@@ -348,3 +543,52 @@ void EveryPaymentHistory(BuildContext context, String CustomerNID, String Custom
 
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue,)));
 }
+
+
+
+
+
+
+// class MySearchDelegate extends SearchDelegate {
+
+
+//   @override
+//   Widget? buildLeading(BuildContext context)=>IconButton(onPressed:()=>close(context, null), icon: Icon(Icons.arrow_back));
+
+
+
+//   @override
+//   List<Widget>? buildActions(BuildContext context)=>[IconButton(onPressed:(){
+
+
+//     if (query.isEmpty) {
+
+
+//       close(context, null);
+      
+//     } else {
+
+//       query ="";
+      
+//     }
+
+
+
+//   }, icon: Icon(Icons.clear))];
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+//   @override
+//   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+// }
