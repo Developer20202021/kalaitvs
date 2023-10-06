@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:popover/popover.dart';
+import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesScreen.dart';
+import 'package:tvs_app/Screens/AdminScreen/Accessories/PerMonthAccessoriesSalesHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Accessories/UploadAccessories.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
@@ -668,6 +671,41 @@ Future<void> getData(String paymentDate) async {
 
 
 
+               PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>AccessoriesScreen()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.preview_outlined),
+                    SizedBox(width: 5,),
+                    Text("Accessories"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                   PopupMenuItem(
                 onTap: (){
@@ -691,6 +729,63 @@ Future<void> getData(String paymentDate) async {
                 
                 padding: EdgeInsets.all(18.0),
               ),
+
+
+
+
+               PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => UploadAccessories()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.upload_file),
+                    SizedBox(width: 5,),
+                    Text("Upload Accessories"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+              
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerMonthAccessoriesSalesHistory()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.history),
+                    SizedBox(width: 5,),
+                    Text("Accessories Sales"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+              
+
+
+
               
 
               

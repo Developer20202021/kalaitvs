@@ -263,7 +263,7 @@ bool loading = false;
                     loading?Center(
         child: LoadingAnimationWidget.twistingDots(
           leftDotColor: const Color(0xFF1A1A3F),
-          rightDotColor: Colors.purple,
+          rightDotColor: Theme.of(context).primaryColor,
           size: 50,
         ),
       ):
@@ -287,7 +287,7 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Name',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Customer Name',
             
@@ -295,7 +295,7 @@ bool loading = false;
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -326,14 +326,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Father Name',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Customer Father Name',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -364,14 +364,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Mother Name',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
                   ),
                           hintText: 'Enter Customer Mother Name',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(

@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesScreen.dart';
+import 'package:tvs_app/Screens/AdminScreen/Accessories/UploadAccessories.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
@@ -83,7 +85,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  RegistrationScreen(),
+      home:  LogInScreen(),
     );
   }
 

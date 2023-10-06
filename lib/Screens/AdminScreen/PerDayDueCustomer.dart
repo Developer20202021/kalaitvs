@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/SendSMSToDueCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
+import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
 
 class PerDayDueCustomer extends StatefulWidget {
@@ -96,7 +101,7 @@ Future<void> getData() async {
     return Scaffold(
 
 
-      bottomNavigationBar: Padding(
+       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
         child: Container(
           height: 60,
@@ -115,7 +120,25 @@ Future<void> getData() async {
             children: [
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () async{
+
+
+
+                   FirebaseAuth.instance
+                  .authStateChanges()
+                  .listen((User? user) {
+                    if (user == null) {
+                      print('User is currently signed out!');
+                    } else {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
+                    }
+                  });
+
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.home_outlined,
                   color: Colors.white,
@@ -124,7 +147,12 @@ Future<void> getData() async {
               ),
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2",)));
+
+
+                },
                 icon: const Icon(
                   Icons.electric_bike_outlined,
                   color: Colors.white,
@@ -133,7 +161,15 @@ Future<void> getData() async {
               ),
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3",)));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.admin_panel_settings_outlined,
                   color: Colors.white,
@@ -142,7 +178,15 @@ Future<void> getData() async {
               ),
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer(indexNumber: "4")));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.person_outline,
                   color: Colors.white,
@@ -152,8 +196,6 @@ Future<void> getData() async {
             ],
           ),),
       ),
-
-
 
       backgroundColor: Colors.white,
       appBar:  AppBar(

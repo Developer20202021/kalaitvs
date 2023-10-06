@@ -44,7 +44,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void initState() {
   
     super.initState();
-    FlutterNativeSplash.remove();
+    // FlutterNativeSplash.remove();
     
   }
 

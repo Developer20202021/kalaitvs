@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
@@ -29,6 +30,14 @@ class _LogInScreenState extends State<LogInScreen> {
    var createUserErrorCode = "";
 
    bool loading = false;
+
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    FlutterNativeSplash.remove();
+    super.initState();
+  }
 
 
 
