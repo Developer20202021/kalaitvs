@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:tvs_app/Screens/AdminScreen/PaymentAddInvoice.dart';
 
 class CustomerPaymentAdd extends StatefulWidget {
 
@@ -37,43 +38,101 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
 
-   void snackShow(bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID) async{
+  //  void snackShow(bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID) async{
 
 
-    setState(() {
-      loading = true;
-    });
+  //   setState(() {
+  //     loading = true;
+  //   });
 
 
-        if (snackVisible == true) {
+  //       if (snackVisible == true) {
 
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount);
+  //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-          CustomerNIDController.clear();
-          CustomerPhoneNumberController.clear();
-          PaidAmountController.clear();
+
+
+  //                   FirebaseAuth.instance
+  //                       .authStateChanges()
+  //                       .listen((User? user) async{
+  //                         if (user == null) {
+  //                           print('User is currently signed out!');
+  //                         } else {
+
+
+
+
+
+  //                var AdminMsg = "Dear Admin, TVS কালাই শোরুমে NID:${widget.CustomerNID} ${PaidAmountController.text}৳ কিস্তি পরিশোধ করেছেন।${user.email} Admin টাকা জমা নিয়েছেন।";
+
+
+
+  //                 final response = await http
+  //                     .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
+
+  //                 if (response.statusCode == 200) {
+  //                   // If the server did return a 200 OK response,
+  //                   // then parse the JSON.
+  //                   print(jsonDecode(response.body));
+
+
+  //                   setState(() {
+
+  //                     loading = false;
+                      
+  //                   });
+                    
+                  
+  //                 } else {
+  //                   // If the server did not return a 200 OK response,
+  //                   // then throw an exception.
+  //                   throw Exception('Failed to load album');
+  //                 }
+                
+
+
+
+
+                            
+
+
+
+
+
+
+
+  //                         }
+  //                       });
+
+
+
+
+  //         await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, Amount);
+
+  //         // CustomerNIDController.clear();
+  //         // CustomerPhoneNumberController.clear();
+  //         // PaidAmountController.clear();
           
 
          
           
-        }
+  //       }
 
 
         
 
-        // if (snackVisible == false) {
+  //       // if (snackVisible == false) {
 
-        //   ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
+  //       //   ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
           
-        // }
+  //       // }
 
 
         
 
         
 
-      }
+  //     }
   
 
   @override
@@ -319,9 +378,9 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                       final jsonData ={
 
                         
-                        "CustomerNID":CustomerNID,
-                        "CustomerPhoneNumber":CustomerPhoneNumber,
-                        "Amount": Amount,
+                        "CustomerNID":CustomerNID.trim(),
+                        "CustomerPhoneNumber":CustomerPhoneNumber.trim(),
+                        "Amount": Amount.trim(),
                         "PaymentDateTime":paymentDateTime,
                         "PaymentDate":PaymentDate,
                         "PaymentMonth":PaymentMonth,
@@ -333,7 +392,98 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
                       };
 
 
-                    await docUser.add(jsonData).then((value) => snackShow(true, CustomerPhoneNumber, Amount, CustomerNID)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    await docUser.add(jsonData).then((value) =>  setState(() async{
+
+
+
+
+
+
+
+
+
+                        var customerMsg = "Dear Customer আপনি TVS কালাই শোরুমে ${CustomerNID} Account No এ ${Amount}৳ কিস্তি পরিশোধ করেছেন। ধন্যবাদ";
+
+
+
+                        final CustomerSmsResponse = await http
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+
+                        if (CustomerSmsResponse.statusCode == 200) {
+                          // If the server did return a 200 OK response,
+                          // then parse the JSON.
+                          
+                          print(jsonDecode(CustomerSmsResponse.body));
+                        
+                        } else {
+                          // If the server did not return a 200 OK response,
+                          // then throw an exception.
+                          throw Exception('Failed to load album');
+                        }
+
+
+
+
+                      
+                    FirebaseAuth.instance
+                        .authStateChanges()
+                        .listen((User? user) async{
+                          if (user == null) {
+                            print('User is currently signed out!');
+                          } else {
+
+
+
+
+
+                 var AdminMsg = "Dear Admin, TVS কালাই শোরুমে NID:${widget.CustomerNID} ${PaidAmountController.text}৳ কিস্তি পরিশোধ করেছেন।${user.email} Admin টাকা জমা নিয়েছেন।";
+
+
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
+
+                  if (response.statusCode == 200) {
+                    // If the server did return a 200 OK response,
+                    // then parse the JSON.
+                    print(jsonDecode(response.body));
+
+
+                 
+                    
+                  
+                  } else {
+                    // If the server did not return a 200 OK response,
+                    // then throw an exception.
+                    throw Exception('Failed to load album');
+                  }
+                
+
+
+
+
+                            
+
+
+
+
+
+
+
+                          }
+                        });
+
+
+
+
+       
+    
+
+
+
+
+
+  })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                content: const Text('Customer Payment Add Successful!!!'),
             backgroundColor: (Colors.green),
                               action: SnackBarAction(
@@ -450,16 +600,29 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
           // user Data Update and show snackbar
 
-            docUser.update(UpadateData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.green,
-                        content: const Text('Customer Information Setup Seccessful! and Message Sent'),
-                        action: SnackBarAction(
-                          label: 'Undo',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      ))).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            docUser.update(UpadateData).then((value) =>  setState((){
+
+
+              
+              setState(() {
+                loading = false;
+              });
+
+
+
+
+
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentAddPreviewPdf(CustomerNID: widget.CustomerNID, CustomerPhoneNumber: widget.CustomerPhoneNumber, BikeCashInAmount: PaidAmountController.text, BikePaymentDue: LastBikeDuePayment.toString())));
+
+
+
+
+
+
+
+
+
+            })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
                         content: const Text('Something Wrong!!! Try again'),
                         action: SnackBarAction(
@@ -491,57 +654,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
                   
-                       FirebaseAuth.instance
-                        .authStateChanges()
-                        .listen((User? user) async{
-                          if (user == null) {
-                            print('User is currently signed out!');
-                          } else {
-
-
-
-
-
-                 var AdminMsg = "Dear Admin, TVS কালাই শোরুমে NID:${widget.CustomerNID} ${PaidAmountController.text}৳ কিস্তি পরিশোধ করেছেন।${user.email} Admin টাকা জমা নিয়েছেন।";
-
-
-
-                  final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
-
-                  if (response.statusCode == 200) {
-                    // If the server did return a 200 OK response,
-                    // then parse the JSON.
-                    print(jsonDecode(response.body));
-
-
-                    setState(() {
-
-                      loading = false;
-                      
-                    });
-                    
-                  
-                  } else {
-                    // If the server did not return a 200 OK response,
-                    // then throw an exception.
-                    throw Exception('Failed to load album');
-                  }
-                
-
-
-
-
-                            
-
-
-
-
-
-
-
-                          }
-                        });
+             
 
 
 

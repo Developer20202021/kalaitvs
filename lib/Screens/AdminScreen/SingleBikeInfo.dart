@@ -59,42 +59,42 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
   
-   void snackShow(context,bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeName, String BikeBillPay) async{
+  //  void snackShow(context,bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeName, String BikeBillPay) async{
 
 
-        if (snackVisible == true) {
+  //       if (snackVisible == true) {
 
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
+  //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //         await SendSMSToCustomer(CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
 
-          await SendSMSToAdmin("01721915550", CustomerNID, Amount, BikeName, BikeBillPay);
+  //         await SendSMSToAdmin("01721915550", CustomerNID, Amount, BikeName, BikeBillPay);
 
           
 
-      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ));
+  //     Navigator.push(context,
+  //                       MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: widget.CustomerNID) ));
 
                   
 
-                  setState(() {
-                            loading = false;
-                          });
+  //                 setState(() {
+  //                           loading = false;
+  //                         });
           
-        }
+  //       }
 
-        if (snackVisible == false) {
+  //       if (snackVisible == false) {
 
-          setState(() {
-            loading = false;
-          });
+  //         setState(() {
+  //           loading = false;
+  //         });
 
-          ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
+  //         ScaffoldMessenger.of(context).showSnackBar(wrongSnackBar);
           
-        }
+  //       }
 
         
 
-      }
+  //     }
   
 
 
@@ -596,7 +596,28 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
           // user Data Update and show snackbar
 
-            docUser.update(UpadateData).then((value) => SendSMSToCustomer(widget.CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, widget.BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay)).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            docUser.update(UpadateData).then((value) => setState(() async{
+
+
+
+
+
+
+
+
+              await SendSMSToCustomer(widget.CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, widget.BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
+
+              await SendSMSToAdmin("", CustomerNID, widget.BikeName, BikeBillPay);
+
+
+
+
+
+
+
+
+
+            })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
                         content: const Text('Something Wrong!!! Try again'),
                         action: SnackBarAction(
@@ -803,8 +824,31 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
      int BikeUpdateAvailableNumber = bikeAvailableNumberInt - 1;
 
      
-    BikequerySnapshot.docs[0].reference.update({"BikeShowroomAvailableNumber":BikeUpdateAvailableNumber.toString()}).then((value) => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: CustomerData[0]["CustomerName"], CustomerNID: widget.CustomerNID, CustomerPhoneNumber: CustomerData[0]["CustomerPhoneNumber"], CustomerFileNo: BikeDeliveryNoController.text, CustomerAddress: CustomerData[0]["CustomerAddress"], BikeName: widget.BikeName, BikeEngineNo: BikeEngineNoController.text, BikeChassisNo: BikeChassisNoController.text, BikeSalePrice: BikeSalePrice, BikeCashInAmount: BikeBillPay, BikePaymentDue: BikePaymentDueString, BikeColor: widget.BikeColor, BikeCondition: BikeConditionMonthController.text) )));
+    BikequerySnapshot.docs[0].reference.update({"BikeShowroomAvailableNumber":BikeUpdateAvailableNumber.toString()}).then((value) => setState(() {
+
+                setState(() {
+                        loading = false;
+                      });
+
+
+
+
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: CustomerData[0]["CustomerName"], CustomerNID: widget.CustomerNID, CustomerPhoneNumber: CustomerData[0]["CustomerPhoneNumber"], CustomerFileNo: BikeDeliveryNoController.text, CustomerAddress: CustomerData[0]["CustomerAddress"], BikeName: widget.BikeName, BikeEngineNo: BikeEngineNoController.text, BikeChassisNo: BikeChassisNoController.text, BikeSalePrice: BikeSalePrice, BikeCashInAmount: BikeBillPay, BikePaymentDue: BikePaymentDueString, BikeColor: widget.BikeColor, BikeCondition: BikeConditionMonthController.text) ));
+      
+
+
+
+
+
+
+
+
+
+
+
+
+    },));
 
 
 
@@ -839,9 +883,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
 
-                      setState(() {
-                        loading = false;
-                      });
+                   
 
 
 
@@ -960,24 +1002,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
     // then parse the JSON.
    
 
-    var AdminMsg = "Dear Admin, আপনার TVS কালাই শোরুম থেকে ${BikeName} Bike ${BikeBillPay} টাকা পরিশোধ করে ক্রয় করেছেন। NID:${CustomerNID}";
-
-
-
-  final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    print(jsonDecode(response.body));
     
-   
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
     
    
   } else {
@@ -992,7 +1017,27 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
 
 
 
-Future SendSMSToAdmin(String AdminPhoneNumber, String CustomerNID, String Amount,String BikeName, String BikeBillPay) async {
+Future SendSMSToAdmin(String AdminPhoneNumber, String CustomerNID, String BikeName, String BikeBillPay) async {
+
+
+  var AdminMsg = "Dear Admin, আপনার TVS কালাই শোরুম থেকে ${BikeName} Bike ${BikeBillPay} টাকা পরিশোধ করে ক্রয় করেছেন। NID:${CustomerNID}";
+
+
+
+  final response = await http
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    print(jsonDecode(response.body));
+    
+   
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
 
   
 }

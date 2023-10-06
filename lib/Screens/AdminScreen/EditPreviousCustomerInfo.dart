@@ -951,6 +951,8 @@ String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-tran
                   final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
 
                   final UpadateData ={
+                  "CustomerName":CustomerNameController.text.trim().toLowerCase(),
+                  "CustomerPhoneNumber":CustomerPhoneNumberController.text.trim(),
                   "CustomerFatherName":CustomerFatherNameController.text,
                   "CustomerMotherName":CustomerMotherNameController.text,
                   "CustomerEmail":CustomerEmailController.text,

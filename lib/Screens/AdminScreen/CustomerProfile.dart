@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
@@ -61,18 +63,92 @@ Future<void> getData(String CustomerNID) async {
      setState(() {
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-       loading = false;
+      //  loading = false;
+        getSaleData();
      });
 
     print(AllData);
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+  // Firebase All Customer Data Load
+
+List  AllSaleData = [];
+var BikeSaleDataLoad = "";
+
+
+
+Future<void> getSaleData() async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+  // setState(() {
+  //   loading = true;
+  // });
+
+
+  CollectionReference _collectionBikeSaleRef =
+    FirebaseFirestore.instance.collection('BikeSaleInfo');
+
+    Query BikeSaleDataQuery = _collectionBikeSaleRef.where("CustomerNID", isEqualTo: widget.CustomerNID);
+    QuerySnapshot BikeSaleDataQuerySnapshot = await BikeSaleDataQuery.get();
+
+    // Get data from docs and convert map to List
+     AllSaleData = BikeSaleDataQuerySnapshot.docs.map((doc) => doc.data()).toList();
+
+       if (AllSaleData.length == 0) {
+      setState(() {
+        BikeSaleDataLoad = "0";
+      });
+       
+     } else {
+
+      setState(() {
+      
+       AllSaleData = BikeSaleDataQuerySnapshot.docs.map((doc) => doc.data()).toList();
+       loading = false;
+     });
+       
+     }
+
+    print(AllSaleData);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @override
   void initState() {
     // TODO: implement initState
-
+    
     getData(widget.CustomerNID);
+
+    // getSaleData();
     super.initState();
   }
 
@@ -82,8 +158,10 @@ Future<void> getData(String CustomerNID) async {
 
 
     setState(() {
-      
+            loading = true;
+            
            getData(widget.CustomerNID);
+          //  getSaleData();
 
     });
 
@@ -284,7 +362,7 @@ Future<void> getData(String CustomerNID) async {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["CustomerName"]}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["CustomerName"].toString().capitalize()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
@@ -483,6 +561,89 @@ Future<void> getData(String CustomerNID) async {
                        
                         ],
                       ),
+
+
+                    SizedBox(height: 15,),
+
+
+
+
+                    for(int i = 0; i<AllSaleData.length; i++)
+
+                     BikeSaleDataLoad == "0" ?Text("No Data Available"):Padding(
+                  padding:  EdgeInsets.all(8.0),
+                  child: Container(
+                       
+                 decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 250, 230, 250),
+      
+                  border: Border.all(
+                            width: 2,
+                            color: Theme.of(context).primaryColor
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),
+      
+                    
+                    child: ListTile(
+                      
+                   
+                        
+                              title: Text("${AllSaleData[i]["BikeName"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                              trailing: TextButton(onPressed: (){
+      
+      
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: AllData[0]["CustomerName"].toString().capitalize(), CustomerNID: AllData[0]["CustomerNID"], CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"], CustomerFileNo: AllSaleData[i]["BikeDeliveryNo"], CustomerAddress: AllData[0]["CustomerAddress"], BikeName: AllSaleData[i]["BikeName"], BikeEngineNo: AllSaleData[i]["BikeEngineNo"], BikeChassisNo: AllSaleData[i]["BikeChassisNo"], BikeSalePrice: AllSaleData[i]["BikeSalePrice"], BikeCashInAmount: AllSaleData[i]["BikeBillPay"], BikePaymentDue: AllSaleData[i]["BikePaymentDue"], BikeColor: AllSaleData[i]["BikeColor"], BikeCondition: AllSaleData[i]["BikeConditionMonth"])));
+      
+      
+                               
+      
+      
+      
+      
+      
+                              }, child: Text("Print", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
+                               
+                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                ),)
+      
+      ,
+                              subtitle: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("NID:${AllSaleData[i]["CustomerNID"]}"),
+                                  Text("Name:${AllSaleData[i]["CustomerName"]}"),
+                                  Text("Phone Number:${AllSaleData[i]["CustomerPhoneNumber"]}"),
+                  
+                                  Text("Date: ${AllSaleData[i]["BikeSaleDate"]}"),
+
+                                   Text("Eng No: ${AllSaleData[i]["BikeEngineNo"]}"),
+                                   Text("Chassis No: ${AllSaleData[i]["BikeChassisNo"]}"),
+
+                                   Text("DeliveryNo: ${AllSaleData[i]["BikeDeliveryNo"]}"),
+
+                                   Text("Sale Price: ${AllSaleData[i]["BikeSalePrice"]}"),
+                                  //  BikeConditionMonth
+// BikeDeliveryNo
+                                   Text("Condition: ${AllSaleData[i]["BikeConditionMonth"]} month"),
+
+                                   Text("Color: ${AllSaleData[i]["BikeColor"]}"),
+
+
+                                   Text("Cash In: ${AllSaleData[i]["BikeBillPay"]} "),
+                                ],
+                              ),
+                        
+                        
+                        
+                            ),
+                  ),
+                ),
+
+
+
+
       
       
       

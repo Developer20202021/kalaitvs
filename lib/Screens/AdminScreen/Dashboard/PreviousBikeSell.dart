@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 
 class PreviousBikeSell extends StatefulWidget {
 
   final BikeName;
+  final BikeColor;
 
 
 
 
 
-  const PreviousBikeSell({super.key, required this.BikeName});
+  const PreviousBikeSell({super.key, required this.BikeName, required this.BikeColor});
 
   @override
   State<PreviousBikeSell> createState() => _PreviousBikeSellState();
@@ -22,6 +24,8 @@ class _PreviousBikeSellState extends State<PreviousBikeSell> {
 
 List  AllData = [];
 var DataLoad = "";
+
+
 
 
   CollectionReference _collectionRef =
@@ -157,8 +161,8 @@ Future<void> getData(String BikeName) async {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                   
-                                  Text("Name:${AllData[index]["CustomerName"]}"),
-                                  Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
+                                  Text("Name:${AllData[index]["CustomerName"].toString().capitalize()}"),
+                                  Text("Phone Number:${AllData[index]["CustomerPhoneNumber"]}"),
                   
                                   Text("Date: ${AllData[index]["BikeSaleDate"]}"),
 
@@ -171,6 +175,7 @@ Future<void> getData(String BikeName) async {
                                   //  BikeConditionMonth
 // BikeDeliveryNo
                                    Text("Condition: ${AllData[index]["BikeConditionMonth"]} month"),
+                                   Text("Color: ${AllData[index]["BikeColor"]}"),
 
 
                                    Text("Cash In: ${AllData[index]["BikeBillPay"]} "),

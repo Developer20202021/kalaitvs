@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
@@ -281,7 +282,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-                  createCustomer(customerNameController.text, customerNIDController.text, customerAddressController.text, customerPhoneNumberController.text);
+                  createCustomer(customerNameController.text.trim().toLowerCase(), customerNIDController.text.trim(), customerAddressController.text, customerPhoneNumberController.text.trim());
 
 
 

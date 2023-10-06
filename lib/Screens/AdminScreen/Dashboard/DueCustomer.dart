@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
@@ -244,14 +245,17 @@ Future<void> getData() async {
                 
                    leading: CircleAvatar(
           backgroundColor: Theme.of(context).primaryColor,
-          child: Text("${AllData[index]["CustomerName"][0]}",style: TextStyle(color: Colors.white),),
+          child: Text("${AllData[index]["CustomerName"][0].toString().toUpperCase()}",style: TextStyle(color: Colors.white),),
         ),
       
         subtitle: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+        
             Text('NID:${AllData[index]["CustomerNID"]}'),
+            Text('Due: ${AllData[index]["BikePaymentDue"]} tk'),
+            Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
             Text('${AllData[index]["CustomerType"]}'),
           ],
         ),
@@ -269,7 +273,7 @@ Future<void> getData() async {
                   backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
                 ),),
                 
-                title: Text('${AllData[index]["CustomerName"]}', style: TextStyle(
+                title: Text('${AllData[index]["CustomerName"].toString().capitalize()}', style: TextStyle(
                   fontWeight: FontWeight.bold
                 ),)),
             );

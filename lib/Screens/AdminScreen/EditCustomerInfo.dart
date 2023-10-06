@@ -917,6 +917,8 @@ bool loading = false;
                   final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
 
                   final UpadateData ={
+                  "CustomerName":CustomerNameController.text.trim().toLowerCase(),
+                  "CustomerPhoneNumber":CustomerPhoneNumberController.text.trim(),
                   "CustomerFatherName":CustomerFatherName,
                   "CustomerMotherName":CustomerMotherName,
                   "CustomerEmail":CustomerEmail,

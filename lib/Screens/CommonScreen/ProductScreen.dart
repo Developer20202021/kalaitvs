@@ -426,7 +426,7 @@ Future<void> getData() async {
         // ${AllData[index]["BikeName"]}
       
                  
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreviousBikeSell(BikeName: "${AllData[index]["BikeName"]}")));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreviousBikeSell(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}",)));
       
                 },
                 
