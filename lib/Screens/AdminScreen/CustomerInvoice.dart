@@ -79,11 +79,14 @@ class _PdfPreviewPageState extends State<PdfPreviewPage> {
 
 Future<Uint8List> makePdf(CustomerName, CustomerNID, CustomerPhoneNumber, CustomerFileNo, CustomerAddress, BikeName, BikeEngineNo, BikeChassisNo, BikeSalePrice, BikeCashInAmount, BikePaymentDue, BikeColor, BikeCondition) async {
 
+final netImage = await networkImage('https://i.ibb.co/NWJfGks/Adobe-Scan-12-Oct-2023-2-1.jpg');
+
 
 final pdf = pw.Document();
 
 
 pdf.addPage(pw.Page(
+  theme: pw.ThemeData.withFont(base: pw.Font.ttf(await rootBundle.load("lib/fonts/JosefinSans-BoldItalic.ttf")),),
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {
         return pw.Center(
@@ -91,7 +94,31 @@ pdf.addPage(pw.Page(
 
 
              pw.SizedBox(
-                      height: 100,
+                      height: 120,
+                      
+                
+              ),
+
+
+
+              pw.Center(child: pw.Container(
+
+                 decoration: pw.BoxDecoration(
+                        borderRadius: pw.BorderRadius.only(
+                            topRight: pw.Radius.circular(10.0),
+                            topLeft: pw.Radius.circular(10.0),
+                            bottomLeft: pw.Radius.circular(10.0),
+                            bottomRight: pw.Radius.circular(10.0)),
+                        color: PdfColors.blue600,
+                      ),
+                
+                
+                
+                child: pw.Padding(padding: pw.EdgeInsets.all(13), child: pw.Text("DELIVERY CHALAN", style: pw.TextStyle(fontSize: 19, color: PdfColors.white))))),
+
+
+               pw.SizedBox(
+                      height: 10,
                       
                 
               ),
@@ -110,30 +137,36 @@ pdf.addPage(pw.Page(
 
                           pw.Column(
                               children: [
-                                pw.Text("Customer Name:${CustomerName}", style: const pw.TextStyle(fontSize: 13)),
+
+
+                
+
+
+
+                                pw.Text("Delivery To: ${CustomerName}", style: const pw.TextStyle(fontSize: 18, )),
                                     pw.SizedBox(
                                             height: 5,
                                            
                                     ),
-                                pw.Text("Customer NID:${CustomerNID}", style: const pw.TextStyle(fontSize: 13)),
+                                pw.Text("NID: ${CustomerNID}", style: const pw.TextStyle(fontSize: 12)),
 
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
-                                pw.Text("Customer File No:${CustomerFileNo}", style: const pw.TextStyle(fontSize: 13)),
+                                pw.Text("File No: ${CustomerFileNo}", style: const pw.TextStyle(fontSize: 12)),
 
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
-                                pw.Text("Customer Phone No:${CustomerPhoneNumber}", style: const pw.TextStyle(fontSize: 13)),
+                                pw.Text("Phone No: ${CustomerPhoneNumber}", style: const pw.TextStyle(fontSize: 12)),
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
                                 
-                                pw.Text("Customer Address:${CustomerAddress}", style: const pw.TextStyle(fontSize: 13)),
+                                pw.Text("Address: ${CustomerAddress}", style: const pw.TextStyle(fontSize: 12)),
                                   pw.SizedBox(
                                             height: 5,
                                            
@@ -159,38 +192,38 @@ pdf.addPage(pw.Page(
                              
 
 
-                                  pw.Text("Model:${BikeName}", style: const pw.TextStyle(fontSize: 13)),
+                                  pw.Text("Model: ${BikeName}", style: const pw.TextStyle(fontSize: 12)),
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
 
-                                  pw.Text("Made In:___________", style: const pw.TextStyle(fontSize: 13)),
+                                  pw.Text("Made In India", style: const pw.TextStyle(fontSize: 12)),
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
 
-                                  pw.Text("Eng No:${BikeEngineNo}", style: const pw.TextStyle(fontSize: 13)),
+                                  pw.Text("ENGINE NO: ${BikeEngineNo}", style: const pw.TextStyle(fontSize: 13)),
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
 
-                                  pw.Text("Chassis No:${BikeChassisNo}", style: const pw.TextStyle(fontSize: 13)),
+                                  pw.Text("CHASSIS NO: ${BikeChassisNo}", style: const pw.TextStyle(fontSize: 13)),
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
                                   
-                                  pw.Text("Color:${BikeColor}", style: const pw.TextStyle(fontSize: 13)),
+                                  pw.Text("Color: ${BikeColor}", style: const pw.TextStyle(fontSize: 12)),
                                   pw.SizedBox(
                                             height: 5,
                                            
                                     ),
 
                                
-                                pw.Text("Date:${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}", style: const pw.TextStyle(fontSize: 13)),
+                                // pw.Text("Delivery Date: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}", style: const pw.TextStyle(fontSize: 13)),
                                 
                               ],
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -210,7 +243,7 @@ pdf.addPage(pw.Page(
               
               
              pw.SizedBox(
-                      height: 5,
+                      height: 10,
                       
                 
               ),
@@ -222,26 +255,29 @@ pdf.addPage(pw.Page(
             
 
                 pw.Table(
-                      border: pw.TableBorder.all(color: PdfColors.black),
+                      border: pw.TableBorder.all(color: PdfColors.blue200),
                       children: [
 
 
                       // The first row just contains a phrase 'INVOICE FOR PAYMENT'
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              child: pw.Text(
-                                'MONEY RECEIPT',
-                                style: pw.Theme.of(context).header4,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                              padding: pw.EdgeInsets.all(20),
-                            ),
-                          ],
-                        ),
+                        // pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          
+                        //   children: [
+                        //     pw.Padding(
+                        //       child: pw.Text(
+                        //         'MONEY RECEIPT',
+                        //         style: pw.Theme.of(context).header4,
+                        //         textAlign: pw.TextAlign.center,
+                        //       ),
+                        //       padding: pw.EdgeInsets.all(7),
+                        //     ),
+                        //   ],
+                        // ),
 
 
                       pw.TableRow(
+                        decoration: pw.BoxDecoration(color: PdfColors.blue100),
                           children: [
                             pw.Padding(
                               child: pw.Text(
@@ -249,7 +285,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -259,7 +295,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
                           ],
@@ -268,6 +304,7 @@ pdf.addPage(pw.Page(
 
 
                       pw.TableRow(
+                        decoration: pw.BoxDecoration(color: PdfColors.grey100),
                           children: [
                             pw.Padding(
                               child: pw.Text(
@@ -275,7 +312,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -285,7 +322,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -297,6 +334,7 @@ pdf.addPage(pw.Page(
 
 
                         pw.TableRow(
+                          decoration: pw.BoxDecoration(color: PdfColors.blue100),
                           children: [
                             pw.Padding(
                               child: pw.Text(
@@ -304,7 +342,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -314,7 +352,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -329,6 +367,9 @@ pdf.addPage(pw.Page(
 
 
                          pw.TableRow(
+
+                          decoration: pw.BoxDecoration(color: PdfColors.grey100),
+
                           children: [
                             pw.Padding(
                               child: pw.Text(
@@ -336,7 +377,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -346,7 +387,39 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+
+
+                          ],
+                        ),
+
+
+
+                               pw.TableRow(
+
+                          decoration: pw.BoxDecoration(color: PdfColors.blue100),
+
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                'Delivery Date',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -372,8 +445,21 @@ pdf.addPage(pw.Page(
 
 
 
-              pw.SizedBox(
-                      height: 100,
+                 pw.SizedBox(
+                      height: 10,
+                      
+                
+              ),
+
+
+
+
+           pw.Image(netImage, height: 330, width: 510),
+
+
+
+            pw.SizedBox(
+                      height: 70,
                       
                 
               ),
@@ -395,6 +481,17 @@ pdf.addPage(pw.Page(
                     pw.Text("Customer Signature"),
 
 
+                  ]),
+
+
+
+                        pw.Column(children: [
+
+                    pw.Text("For and on behalf of",style: pw.TextStyle(fontSize: 12, color: PdfColors.black)),
+
+                    pw.Text("M/S KALAI TVS CENTER",style: pw.TextStyle(fontSize: 19, color: PdfColors.blue700, )),
+
+
                   ])
 
 
@@ -409,6 +506,7 @@ pdf.addPage(pw.Page(
 
         ])); // Center
       }));
+
 
 
 return pdf.save();

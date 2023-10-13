@@ -50,7 +50,7 @@ Future<void> getData(context) async {
     // QuerySnapshot querySnapshot = await _collectionRef.get();
 
 
-    Query query = _collectionRef.where("CustomerNID", isEqualTo: CustomerNIDController.text);
+    Query query = _collectionRef.where("CustomerPhoneNumber", isEqualTo: CustomerNIDController.text);
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -67,7 +67,7 @@ Future<void> getData(context) async {
         print("No Customer Found");
 
         CustomerNIDController.clear();
-        CustomerPhoneNumberController.clear();
+        // CustomerPhoneNumberController.clear();
         SystemChannels.textInput.invokeMethod('TextInput.hide');
       });
        
@@ -194,13 +194,13 @@ Future<void> getData(context) async {
             
             
                     TextField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.phone,
                       
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Enter NID',
+                          labelText: 'Customer Phone Number',
                 
-                          hintText: 'Enter Your NID',
+                          hintText: 'Customer Phone Number',
             
                           //  enabledBorder: OutlineInputBorder(
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
@@ -229,32 +229,7 @@ Future<void> getData(context) async {
             
             
             
-                    TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Phone Number',
-                         
-                          hintText: 'Enter Your Phone Number',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: CustomerPhoneNumberController,
-                    ),
-            
-                    SizedBox(
-                      height: 5,
-                    ),
+                  
             
             
                     Row(

@@ -160,6 +160,8 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             
             
                     TextField(
+
+                      keyboardType: TextInputType.phone,
                       
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -197,6 +199,8 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             
             
                     TextField(
+
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer NID',

@@ -283,7 +283,7 @@ Future<void> getData(String paymentDate) async {
                     borderRadius: BorderRadius.circular(5),
                   ), 
                       
-                            title: Text("${AllData[index]["BikeSalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                            title: Text("Sale Price:${AllData[index]["BikeSalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                             trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
                             subtitle: Column(
       
@@ -294,7 +294,7 @@ Future<void> getData(String paymentDate) async {
                                 Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
       
                                 Text("Date: ${AllData[index]["BikeSaleDate"]}"),
-                                Text("Bill Pay: ${AllData[index]["BikeBillPay"]}"),
+                                Text("Bill Pay: ${AllData[index]["BikeBillPay"]}", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
                                 Text("Seller Name: ${AllData[index]["adminName"]}"),
                                 Text("Seller Email: ${AllData[index]["adminEmail"]}"),
                               ],

@@ -177,14 +177,14 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
     IconButton(
       icon: Icon(
         Icons.save_as_outlined,
-        color: Colors.purple,
+        color: Theme.of(context).primaryColor,
       ),
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleBikeInfo(BikeName: widget.BikeName, BikeColor: widget.BikeColor, BikeSalePrice: widget.BikeSalePrice, CustomerNID: widget.CustomerNID, CustomerPhoneNumber: widget.CustomerPhoneNumber,)));
       },
     )
   ],
-        iconTheme: IconThemeData(color: Colors.purple),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Upload Customer File", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
@@ -204,7 +204,7 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
 
                       Container(
 
-            color: Colors.purple,
+            color: Theme.of(context).primaryColor,
             
             
             child: Padding(
@@ -231,7 +231,7 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
               },
               child: CircleAvatar(
                 radius: 155,
-                backgroundColor: Colors.purple,
+                backgroundColor: Theme.of(context).primaryColor,
                 child: _photo != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(5),
@@ -298,7 +298,7 @@ class _UploadCustomerInfoState extends State<UploadCustomerInfo> {
 
                         }, child: Text("Save", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.purple),
+                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
 
 

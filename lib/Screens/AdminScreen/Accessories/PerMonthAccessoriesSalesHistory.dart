@@ -408,6 +408,11 @@ Future<void> getData(String paymentDate) async {
                                   Text("Date: ${AllData[index]["SaleDate"]}"),
 
                                    Text("CustomerID: ${AllData[index]["CustomerID"]}"),
+
+
+                                  Text("Seller E: ${AllData[index]["adminEmail"]}"),
+
+                                  Text("Seller N: ${AllData[index]["adminName"]}"),
                                   
                                 ],
                               ),

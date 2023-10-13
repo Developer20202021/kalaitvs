@@ -46,6 +46,9 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
 
   bool loading = false;
 
+  var adminEmail = "";
+  var adminName = "";
+
 
 
 
@@ -56,6 +59,18 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
   @override
   void initState() {
     // TODO: implement initState
+
+  
+      FirebaseAuth.instance
+                  .authStateChanges()
+                  .listen((User? user) {
+                    if (user != null) {
+                      setState(() {
+                        adminEmail = user.email!;
+                        adminName = user.displayName!;
+                      });
+                    }
+                  });
 
     super.initState();
   }
@@ -184,7 +199,14 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
                       loading = true;
                     });
 
-                    final docUser = await FirebaseFirestore.instance.collection("AccessoriesCustomerInfo");
+
+
+
+
+
+
+
+                    final docUser =  FirebaseFirestore.instance.collection("AccessoriesCustomerInfo");
 
 
                 var AccessoriesData ={
@@ -198,7 +220,9 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
                   "SaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "SaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                   "SaleYear":"${DateTime.now().year}",
-                  "CustomerID":CustomerID.toString()
+                  "CustomerID":CustomerID.toString(),
+                  "adminEmail":adminEmail,
+                  "adminName":adminName
 
 
                
@@ -231,7 +255,7 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
 
 
 
-                            final docUser = await FirebaseFirestore.instance.collection("accessoriesinfo").doc(widget.AccessoriesID);
+                            final docUser =  FirebaseFirestore.instance.collection("accessoriesinfo").doc(widget.AccessoriesID);
 
                   final UpadateData ={
                               "AccessoriesAvailableNumber":AccessoriesUpdateAvailableNumber.toString(),
@@ -247,12 +271,32 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
 
                   docUser.update(UpadateData).then((value) =>    
                   setState(() {
-                  loading = false;
+
+
+
+                     SendSMSToCustomer(CustomerPhoneNumberController.text.toString().trim(), widget.AccessoriesSalePrice);
+
+
+
+
+           
+
+
+
+
+                     loading = false;
 
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PerMonthAccessoriesSalesHistory()),
                 );
+
+
+
+
+
+
+            
              
                   })).onError((error, stackTrace) => print(error));
 
@@ -342,4 +386,57 @@ class CurvePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
+}
+
+
+
+
+
+Future SendSMSToCustomer(String CustomerPhoneNumber, String AccessoriesSalePrice)async{
+
+
+
+try {
+
+   var CustomerMsg = "Dear Customer,Kalai Tvs Center থেকে ${AccessoriesSalePrice}৳ Product ক্রয় করেছেন। ধন্যবাদ";
+
+
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${CustomerPhoneNumber}&message=${CustomerMsg}'));
+
+                  if (response.statusCode == 200) {
+                    // If the server did return a 200 OK response,
+                    // then parse the JSON.
+                    print(jsonDecode(response.body));
+
+              
+                    
+                  
+                  } else {
+                    // If the server did not return a 200 OK response,
+                    // then throw an exception.
+                    throw Exception('Failed to load album');
+                  }
+
+
+
+
+
+
+
+
+  
+} catch (e) {
+
+
+  print(e);
+  
+}
+
+
+
+  
+
+
 }

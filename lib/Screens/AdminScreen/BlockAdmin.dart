@@ -154,7 +154,7 @@ class _BlockAdminState extends State<BlockAdmin> {
 
 
 
-                               var AdminMsg = "Dear Admin, ${myEmailController.text.trim()} Admin কে ${user.email} Admin access off করেছে।";
+                               var AdminMsg = "Dear Admin, ${myEmailController.text.trim()} Admin ${user.email} Admin এর access off করেছে।";
 
 
 

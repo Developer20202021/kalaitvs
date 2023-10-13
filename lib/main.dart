@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/UploadAccessories.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
@@ -28,6 +30,7 @@ import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'firebase_options.dart';
 
 Future main() async{
 
@@ -35,7 +38,7 @@ Future main() async{
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
 
 
   runApp(const MyApp());
@@ -67,6 +70,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: GoogleFonts.ubuntu().fontFamily,
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see

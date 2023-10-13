@@ -154,7 +154,7 @@ class _MakeAdminState extends State<MakeAdmin> {
 
 
 
-                 var AdminMsg = "Dear Admin, ${myEmailController.text.trim()} Admin কে ${user.email} Admin access ON করেছে।";
+                 var AdminMsg = "Dear Admin, ${myEmailController.text.trim()} Admin ${user.email} এর access ON করেছে।";
 
 
 

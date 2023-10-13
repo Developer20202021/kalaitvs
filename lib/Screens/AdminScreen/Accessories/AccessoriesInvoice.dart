@@ -79,6 +79,7 @@ final pdf = pw.Document();
 
 
 pdf.addPage(pw.Page(
+  theme: pw.ThemeData.withFont(base: pw.Font.ttf(await rootBundle.load("lib/fonts/JosefinSans-BoldItalic.ttf")),),
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {
         return pw.Center(
@@ -86,7 +87,31 @@ pdf.addPage(pw.Page(
 
 
              pw.SizedBox(
-                      height: 100,
+                      height: 120,
+                      
+                
+              ),
+
+
+
+              pw.Center(child: pw.Container(
+
+                 decoration: pw.BoxDecoration(
+                        borderRadius: pw.BorderRadius.only(
+                            topRight: pw.Radius.circular(10.0),
+                            topLeft: pw.Radius.circular(10.0),
+                            bottomLeft: pw.Radius.circular(10.0),
+                            bottomRight: pw.Radius.circular(10.0)),
+                        color: PdfColors.blue600,
+                      ),
+                
+                
+                
+                child: pw.Padding(padding: pw.EdgeInsets.all(13), child: pw.Text("MONEY RECEIPT", style: pw.TextStyle(fontSize: 19, color: PdfColors.white))))),
+
+
+               pw.SizedBox(
+                      height: 10,
                       
                 
               ),
@@ -96,71 +121,11 @@ pdf.addPage(pw.Page(
 
 
 
-                  pw.Row(
-                    
-                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-
-
-
-                          pw.Column(
-                              children: [
-                              
-                                pw.Text("Customer ID:${CustomerID}", style: const pw.TextStyle(fontSize: 13)),
-
-                                  pw.SizedBox(
-                                            height: 5,
-                                           
-                                    ),
-                            
-                                pw.Text("Customer Phone No:${CustomerPhoneNumber}", style: const pw.TextStyle(fontSize: 13)),
-                                  pw.SizedBox(
-                                            height: 5,
-                                           
-                                    ),
-                                
-                              
-
-
-                                 
-                                
-                              ],
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            ),
-
-
-
-
-
-
-
-
-
-                             pw.Column(
-                              children: [
-                             
-
-                                pw.Text("Date:${SaleDate}", style: const pw.TextStyle(fontSize: 13)),
-                                
-                              ],
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            ),
-
-
-                    
-                        
-                        
-                        
-                        ]
-                  
-                  
-                  ),
-
 
               
               
              pw.SizedBox(
-                      height: 5,
+                      height: 10,
                       
                 
               ),
@@ -172,30 +137,62 @@ pdf.addPage(pw.Page(
             
 
                 pw.Table(
-                      border: pw.TableBorder.all(color: PdfColors.black),
+                      border: pw.TableBorder.all(color: PdfColors.blue200),
                       children: [
 
 
                       // The first row just contains a phrase 'INVOICE FOR PAYMENT'
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              child: pw.Text(
-                                'MONEY RECEIPT',
-                                style: pw.Theme.of(context).header4,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                              padding: pw.EdgeInsets.all(20),
-                            ),
-                          ],
-                        ),
+                        // pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          
+                        //   children: [
+                        //     pw.Padding(
+                        //       child: pw.Text(
+                        //         'MONEY RECEIPT',
+                        //         style: pw.Theme.of(context).header4,
+                        //         textAlign: pw.TextAlign.center,
+                        //       ),
+                        //       padding: pw.EdgeInsets.all(7),
+                        //     ),
+                        //   ],
+                        // ),
 
 
-                    
 
 
 
                       pw.TableRow(
+                        decoration: pw.BoxDecoration(color: PdfColors.grey100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                'Customer Phone No',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                '${CustomerPhoneNumber}',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+
+
+                          ],
+                        ),
+
+
+
+                        pw.TableRow(
+                          decoration: pw.BoxDecoration(color: PdfColors.blue100),
                           children: [
                             pw.Padding(
                               child: pw.Text(
@@ -203,7 +200,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -213,7 +210,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -224,41 +221,13 @@ pdf.addPage(pw.Page(
 
 
 
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              child: pw.Text(
-                                'Accessories ID',
-                                style: pw.Theme.of(context).header4,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                              padding: pw.EdgeInsets.all(20),
-                            ),
-
-
-                              pw.Padding(
-                              child: pw.Text(
-                                '${AccessoriesID}',
-                                style: pw.Theme.of(context).header4,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                              padding: pw.EdgeInsets.all(20),
-                            ),
-
-
-
-
-                          ],
-                        ),
-
-
-
-
-
-
+                      
 
 
                          pw.TableRow(
+
+                          decoration: pw.BoxDecoration(color: PdfColors.grey100),
+
                           children: [
                             pw.Padding(
                               child: pw.Text(
@@ -266,7 +235,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -276,7 +245,7 @@ pdf.addPage(pw.Page(
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),
-                              padding: pw.EdgeInsets.all(20),
+                              padding: pw.EdgeInsets.all(4),
                             ),
 
 
@@ -287,17 +256,35 @@ pdf.addPage(pw.Page(
 
 
 
-                      
+                               pw.TableRow(
+
+                          decoration: pw.BoxDecoration(color: PdfColors.blue100),
+
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                'Date',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                '${SaleDate}',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
 
 
 
 
-
-
-
-                      
-
-
+                          ],
+                        ),
 
 
 
@@ -339,6 +326,17 @@ pdf.addPage(pw.Page(
                     pw.Text("Customer Signature"),
 
 
+                  ]),
+
+
+
+                        pw.Column(children: [
+
+                    pw.Text("For and on behalf of",style: pw.TextStyle(fontSize: 12, color: PdfColors.black)),
+
+                    pw.Text("M/S KALAI TVS CENTER",style: pw.TextStyle(fontSize: 19, color: PdfColors.blue700, )),
+
+
                   ])
 
 
@@ -353,6 +351,7 @@ pdf.addPage(pw.Page(
 
         ])); // Center
       }));
+
 
 
 return pdf.save();

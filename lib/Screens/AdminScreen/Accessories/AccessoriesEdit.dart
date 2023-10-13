@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +15,26 @@ import 'package:uuid/uuid.dart';
 
 
 
-class UploadAccessories extends StatefulWidget {
-  const UploadAccessories({super.key});
+class EditAccessories extends StatefulWidget {
+
+  final AcceessoriesID;
+  final AccessoriesSalePrice;
+  final AccessoriesName;
+  final AccessoriesAvailableNumber;
+  final ImageLink;
+
+
+
+
+  const EditAccessories({super.key, required this.AcceessoriesID, required this.AccessoriesAvailableNumber, required this.AccessoriesName, required this.AccessoriesSalePrice, required this.ImageLink});
 
   @override
-  State<UploadAccessories> createState() => _UploadAccessoriesState();
+  State<EditAccessories> createState() => _EditAccessoriesState();
 }
 
-class _UploadAccessoriesState extends State<UploadAccessories> {
+class _EditAccessoriesState extends State<EditAccessories> {
 
-    var uuid = Uuid();
+    // var uuid = Uuid();
  
   TextEditingController AccessoriesSalePriceController = TextEditingController();
   TextEditingController AccessoriesNameController = TextEditingController();
@@ -36,8 +45,6 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
 
 
   bool loading = false;
-
-  bool buttonVisible = false;
 
 
 
@@ -55,7 +62,21 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
 
   @override
   Widget build(BuildContext context) {
-      var AccessoriesID = uuid.v4();
+      // var AccessoriesID = uuid.v4();
+
+
+      AccessoriesSalePriceController.text = widget.AccessoriesSalePrice;
+      AccessoriesNameController.text = widget.AccessoriesName;
+      AccessoriesAvailableNumberController.text = widget.AccessoriesAvailableNumber;
+      ImageLinkController.text = widget.ImageLink;
+
+
+
+
+
+
+
+
 
     FocusNode myFocusNode = new FocusNode();
  
@@ -189,37 +210,6 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
 
               TextField(
                keyboardType: TextInputType.url,
-
-               onChanged: (value) {
-
-
-                if (value.isEmpty || value == null) {
-
-                  setState(() {
-                    buttonVisible = false;
-                  });
-                  
-                }
-
-                else{
-
-
-                   setState(() {
-                    buttonVisible = true;
-                  });
-
-
-
-                }
-                
-
-
-
-                 print(value);
-               },
-
-               
-               
                
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -266,13 +256,13 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(width: 150, child:buttonVisible? TextButton(onPressed: (){
+                  Container(width: 150, child:TextButton(onPressed: (){
 
                     setState(() {
                       loading = true;
                     });
 
-                    final docUser = FirebaseFirestore.instance.collection("accessoriesinfo");
+                    final docUser = FirebaseFirestore.instance.collection("accessoriesinfo").doc(widget.AcceessoriesID);
 
 
                 var AccessoriesData ={
@@ -281,7 +271,7 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
                   "AccessoriesSalePrice":AccessoriesSalePriceController.text.trim(),
                   "AccessoriesAvailableNumber":AccessoriesAvailableNumberController.text.trim(),
                   "ImageLink":ImageLinkController.text.trim(),
-                  "AccessoriesID":AccessoriesID.toString()
+                  "AccessoriesID":widget.AcceessoriesID.toString()
 
 
                
@@ -308,7 +298,7 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
 
 
 
-                    docUser.doc(AccessoriesID).set(AccessoriesData).then((value) =>setState((){
+                    docUser.update(AccessoriesData).then((value) =>setState((){
 
 
 
@@ -346,10 +336,10 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
 
 
 
-                  }, child: Text("Upload", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                  }, child: Text("Edit", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                    
           backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-        ),):Text(""),),
+        ),),),
 
 
 

@@ -1303,7 +1303,7 @@ Future<void> getBikeImageData(String BikeID) async {
                             
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Bike Width", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                              child: Text("Bike Color", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
                             )),
 
 
