@@ -15,11 +15,12 @@ class CustomerPaymentAdd extends StatefulWidget {
   final CustomerNID;
   final CustomerPhoneNumber;
   final BikePaymentDue;
+  final CustomerName;
 
 
 
 
-  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue});
+  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue, required this.CustomerName});
 
   @override
   State<CustomerPaymentAdd> createState() => _CustomerPaymentAddState();
@@ -612,7 +613,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
 
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentAddPreviewPdf(CustomerNID: widget.CustomerNID, CustomerPhoneNumber: widget.CustomerPhoneNumber, BikeCashInAmount: PaidAmountController.text, BikePaymentDue: LastBikeDuePayment.toString())));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentAddPreviewPdf(CustomerNID: widget.CustomerNID, CustomerPhoneNumber: widget.CustomerPhoneNumber, BikeCashInAmount: PaidAmountController.text, BikePaymentDue: LastBikeDuePayment.toString(), CustomerName: widget.CustomerName,)));
 
 
 

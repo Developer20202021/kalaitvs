@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
@@ -12,6 +13,7 @@ import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
+import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 
 
@@ -38,6 +40,8 @@ bool loading = true;
 
 List  AllData = [0];
 
+List AllBikeNamePopUpList=[]; 
+
 
   CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('product');
@@ -49,13 +53,58 @@ Future<void> getData() async {
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
      setState(() {
+      AllBikeNamePopUpList = querySnapshot.docs.map((doc) => doc.data()).toList();
      
-       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
       loading = false;
      });
 
     print(AllData);
 }
+
+
+
+
+
+
+
+List  SingleBikeData = [];
+
+
+
+
+Future<void> getSingleBikeData(String BikeID) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+    setState(() {
+      loading = true;
+    });
+  CollectionReference _SingleBikeDataRef =
+    FirebaseFirestore.instance.collection("product");
+
+    Query SingleBikeDataquery = _SingleBikeDataRef.where("BikeID", isEqualTo: BikeID);
+    QuerySnapshot BikeImagequerySnapshot = await SingleBikeDataquery.get();
+
+    // Get data from docs and convert map to List
+     AllData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+
+     setState(() {
+       AllData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+     });
+
+     setState(() {
+      loading = false;
+    });
+
+    print(AllData);
+}
+
+
+
+
+
+
+
 
 
 
@@ -228,6 +277,11 @@ Future<void> getData() async {
     
       backgroundColor: Colors.white,
       appBar:  AppBar(
+
+      systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: ColorName().appColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
         title: const Text("Bikes", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
@@ -235,6 +289,47 @@ Future<void> getData() async {
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+
+
+      actions: [
+
+
+         PopupMenuButton(onSelected: (value) {
+            // your logic
+            setState(() {
+              // selectedItem = value.toString();
+              print(value);
+            });
+      
+          }, itemBuilder: (BuildContext bc) {
+            return  [
+
+
+              for(int i = 0; i<AllBikeNamePopUpList.length; i++)
+
+                PopupMenuItem(
+                child: Text("${AllBikeNamePopUpList[i]["BikeName"]}(${AllBikeNamePopUpList[i]["BikeShowroomAvailableNumber"]})", overflow: TextOverflow.visible,style: TextStyle(fontWeight: FontWeight.bold),),
+                onTap: () async{
+
+                  getSingleBikeData(AllBikeNamePopUpList[i]["BikeID"]);
+                  
+                },
+              ),
+
+
+
+
+
+            ];
+          })
+
+
+
+        ],
+
+
+
+
         
       ),
       body: loading?Center(

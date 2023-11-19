@@ -17,6 +17,7 @@ class PaymentAddPreviewPdf extends StatefulWidget {
   final CustomerPhoneNumber;
   final BikePaymentDue;
   final BikeCashInAmount;
+  final CustomerName;
   
 
 
@@ -27,7 +28,7 @@ class PaymentAddPreviewPdf extends StatefulWidget {
 
 
  
-  const PaymentAddPreviewPdf({Key? key,  required this.CustomerNID, required this.CustomerPhoneNumber,  required this.BikeCashInAmount, required this.BikePaymentDue, }) : super(key: key);
+  const PaymentAddPreviewPdf({Key? key,  required this.CustomerNID, required this.CustomerPhoneNumber,  required this.BikeCashInAmount, required this.BikePaymentDue,required this.CustomerName }) : super(key: key);
 
   @override
   State<PaymentAddPreviewPdf> createState() => _PaymentAddPreviewPdfState();
@@ -50,7 +51,7 @@ class _PaymentAddPreviewPdfState extends State<PaymentAddPreviewPdf> {
         
       ),
       body: PdfPreview(
-        build: (context) => makePdf( widget.CustomerNID, widget.CustomerPhoneNumber, widget.BikeCashInAmount, widget.BikePaymentDue),
+        build: (context) => makePdf( widget.CustomerNID, widget.CustomerPhoneNumber, widget.BikeCashInAmount, widget.BikePaymentDue, widget.CustomerName),
       ),
     );
   }
@@ -69,7 +70,7 @@ class _PaymentAddPreviewPdfState extends State<PaymentAddPreviewPdf> {
 
 
 
-Future<Uint8List> makePdf( CustomerNID, CustomerPhoneNumber, BikeCashInAmount, BikePaymentDue,) async {
+Future<Uint8List> makePdf( CustomerNID, CustomerPhoneNumber, BikeCashInAmount, BikePaymentDue,CustomerName) async {
 
 
 final pdf = pw.Document();
@@ -158,6 +159,103 @@ pdf.addPage(pw.Page(
 
 
 
+                    
+                    
+
+
+                        pw.TableRow(
+                          decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                'Customer Name',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                '${CustomerName}',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+
+
+                          ],
+                        ),
+
+
+
+                        
+
+
+                        pw.TableRow(
+                          decoration: pw.BoxDecoration(color: PdfColors.grey100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                'Customer Phone No',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                '${CustomerPhoneNumber}',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+
+
+                          ],
+                        ),
+
+
+                         pw.TableRow(
+                        decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                'Customer NID',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                '${CustomerNID}',
+                                style: pw.Theme.of(context).header4,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+
+
+                          ],
+                        ),
+
+
+
+
 
                       pw.TableRow(
                         decoration: pw.BoxDecoration(color: PdfColors.grey100),
@@ -227,7 +325,7 @@ pdf.addPage(pw.Page(
 
                                pw.TableRow(
 
-                          decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          decoration: pw.BoxDecoration(color: PdfColors.grey100),
 
                           children: [
                             pw.Padding(

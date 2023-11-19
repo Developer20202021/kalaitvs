@@ -25,6 +25,37 @@ class _AllProductState extends State<AllProduct> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+        actions: [
+
+
+         PopupMenuButton(onSelected: (value) {
+            // your logic
+            setState(() {
+              // selectedItem = value.toString();
+              print(value);
+            });
+            print(value);
+            Navigator.pushNamed(context, value.toString());
+          }, itemBuilder: (BuildContext bc) {
+            return const [
+              PopupMenuItem(
+                child: Text("Hello"),
+                value: '/hello',
+              ),
+              PopupMenuItem(
+                child: Text("About"),
+                value: '/about',
+              ),
+              PopupMenuItem(
+                child: Text("Contact"),
+                value: '/contact',
+              )
+            ];
+          })
+
+
+
+        ],
         
       ),
       body: ListView.separated(
