@@ -111,6 +111,8 @@ Future<void> getSaleData() async {
        if (AllSaleData.length == 0) {
       setState(() {
         BikeSaleDataLoad = "0";
+        // AllSaleData.insert(AllSaleData.length,0);
+        loading = false;
       });
        
      } else {

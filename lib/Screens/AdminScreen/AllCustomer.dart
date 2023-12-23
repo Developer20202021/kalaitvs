@@ -496,26 +496,34 @@ Future<void> getSearchData(String phoneNumber) async {
       
               // The child of the Slidable is what the user sees when the
               // component is not dragged.
-              child:  ListTile(
-                
-                   leading: CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Text("${AllData[index]["CustomerName"][0].toString().capitalize()}",style: TextStyle(color: Colors.white),),
-        ),
-      
-        subtitle:  Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('NID:${AllData[index]["CustomerNID"]}'),
-            Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
-          ],
-        ),
-        trailing: Text("${AllData[index]["CustomerType"]}"),
-                
-                title: Text("${AllData[index]["CustomerName"].toString().capitalize()}", style: TextStyle(
-                  fontWeight: FontWeight.bold
-                ),)),
+              child:  InkWell(
+                onTap: () {
+
+
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: AllData[index]["CustomerNID"])));
+                  
+                },
+                child: ListTile(
+                  
+                     leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Text("${AllData[index]["CustomerName"][0].toString().capitalize()}",style: TextStyle(color: Colors.white),),
+                      ),
+                    
+                      subtitle:  Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('NID:${AllData[index]["CustomerNID"]}'),
+                          Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
+                        ],
+                      ),
+                      trailing: Text("${AllData[index]["CustomerType"]}"),
+                  
+                  title: Text("${AllData[index]["CustomerName"].toString().capitalize()}", style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),)),
+              ),
             );
           },
           itemCount: AllData.length,
