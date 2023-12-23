@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
@@ -15,6 +19,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
 import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io';
 
 
 class ProductScreen extends StatefulWidget {
@@ -102,8 +108,35 @@ Future<void> getSingleBikeData(String BikeID) async {
 
 
 
+Future getConnection() async{
 
-
+  final connectivityResult = await (Connectivity().checkConnectivity());
+if (connectivityResult == ConnectivityResult.mobile) {
+  print("mobile");
+} else if (connectivityResult == ConnectivityResult.wifi) {
+   print("wifi");
+  // I am connected to a wifi network.
+} else if (connectivityResult == ConnectivityResult.ethernet) {
+   print("Ethernet");
+  // I am connected to a ethernet network.
+} else if (connectivityResult == ConnectivityResult.vpn) {
+   print("vpn");
+  // I am connected to a vpn network.
+  // Note for iOS and macOS:
+  // There is no separate network interface type for [vpn].
+  // It returns [other] on any device (also simulator)
+} else if (connectivityResult == ConnectivityResult.bluetooth) {
+   print("bluetooth");
+  // I am connected to a bluetooth.
+} else if (connectivityResult == ConnectivityResult.other) {
+   print("other");
+  // I am connected to a network which is not in the above mentioned networks.
+} else if (connectivityResult == ConnectivityResult.none) {
+   print("none");
+   
+  // I am not connected to any network.
+}
+}
 
 
 
@@ -112,6 +145,27 @@ Future<void> getSingleBikeData(String BikeID) async {
 
 @override
   void initState() {
+
+
+  // var x = 0;
+    var period = const Duration(seconds:1);
+    Timer.periodic(period,(arg) {
+                  getConnection();
+    });
+
+
+
+//      subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+//     // Got a new connectivity status!
+//     print(result);
+//   });
+// }
+
+// // Be sure to cancel subscription after you are done
+// @override
+// dispose() {
+//   subscription.cancel();
+//   super.dispose();
     // TODO: implement initState
     getData();
     super.initState();
@@ -152,10 +206,22 @@ Future<void> getSingleBikeData(String BikeID) async {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+        // getting the size of the window
+   var height = MediaQuery.of(context).size.height; 
+    var width = MediaQuery.of(context).size.width; 
+  
+
+
+
+
+
     return Scaffold(
 
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        padding:  EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5, bottom: 9),
         child: Container(
           height: 60,
           decoration: BoxDecoration(
@@ -344,305 +410,308 @@ Future<void> getSingleBikeData(String BikeID) async {
         child: ListView.separated(
           separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 35,),
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.electric_bike_rounded),
-                  title:  Text('${AllData[index]["BikeName"]}',style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,)),
-                  subtitle: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // BikeSalePrice
-                    
-                     
-                      Text(
-                        '${AllData[index]["BikeType"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)
+            return Padding(
+              padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
+              child: Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.electric_bike_rounded),
+                    title:  Text('${AllData[index]["BikeName"]}',style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,)),
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // BikeSalePrice
                       
-                      ),
-
-                       Text(
-                        'Color: ${AllData[index]["ColorAvailable"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)
                        
-                      ),
-                    ],
-                  ),
-                ),
+                        Text(
+                          '${AllData[index]["BikeType"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)
+                        
+                        ),
             
-             
-         
-      
-      
-      
-      
-      
-      
-                CarouselSlider(
-                items: [
-                    
-                    for(int i=0; i<AllData[index]["AllBikeImage"].length; i++)
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(5),
-                                                    child: Image.network(
-                                                      "${AllData[index]["AllBikeImage"][i]}",
-                                                      // width: 150,
-                                                      // height: 50,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                              ),
-        
-            ],
-                
-              //Slider Container properties
-                options: CarouselOptions(
-                  height: 180.0,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  aspectRatio: 16 / 9,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enableInfiniteScroll: true,
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  viewportFraction: 0.8,
-                ),
-            ),
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-               ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: [
-                    
-            
-            
-            // BikeShowroomAvailableNumber
-            AllData[index]["BikeShowroomAvailableNumber"]=="0"?
-
-            Text(""):
-            
-            TextButton(onPressed: () async{
-      
-      
-                      
-      
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
-      
-                      }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                      
-                                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-                              ),),
-      
-      
-      
-      
-                 
-            TextButton(onPressed: () async{
-      
-      
-        
-      
-                 
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo(BikeID: "${AllData[index]["BikeID"]}")));
-      
-                },
-                
-                 child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                
-                          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-                        ),),
-
-
-                  
-                   TextButton(onPressed: () async{
-      
-      
-        // ${AllData[index]["BikeName"]}
-      
-                 
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreviousBikeSell(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}",)));
-      
-                },
-                
-                 child: Text("Previous sales", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                
-                          backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-                        ),),
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-                      
-      
-      
-      
-      
-                    
-                    TextButton(onPressed: () async{
-
-
-                     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Center(child: Text('Warning Message')),
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children : <Widget>[
-                Expanded(
-                  child: Text(
-                    "Are you sure?? You want to delete this product",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-
+                         Text(
+                          'Color: ${AllData[index]["ColorAvailable"]}',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)
+                         
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-              TextButton(
-                  child: Text('Ok'),
-                  onPressed: () {
-                   
-                      final collection = FirebaseFirestore.instance.collection('product');
-                    collection 
-                    .doc('${AllData[index]["BikeID"]}') // <-- Doc ID to be deleted. 
-                    .delete() // <-- Delete
-                    .then((_) =>  setState(() {
-      
-                              getData();
-                              Navigator.of(context).pop();
-
-                        }))
-                    .catchError((error) => print('Delete failed: $error'));
-                  })
-            ],
-          );
-        },
-      );
-      
-      
-        
-   
-      
-                },
-                
-                 child: Text("Delete", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                
-                          backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
-                        ),),
-                  ],
-                ),
-      
-      
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-      
-                        child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Out of Stock"),
-                        ):Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
-                        ),
-                           
-                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
-      
-                      border: Border.all(
-                                width: 2,
-                                color: Theme.of(context).primaryColor
-                              ),
-                      borderRadius: BorderRadius.circular(10)      
-                     ),)),
-
-
-
-
-
-                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-      
-                        child:Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Price: ${AllData[index]["BikeSalePrice"]}৳"),
-                        ),
-                           
-                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
-      
-                      border: Border.all(
-                                width: 2,
-                                color: Theme.of(context).primaryColor
-                              ),
-                      borderRadius: BorderRadius.circular(10)      
-                     ),)),
-
-
-
-
-
-
-
-
-                  ],
-                )
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-               
-      
               
-      
+               
+                     
+                  
+                  
+                  
+                  
+                  
+                  
+                  CarouselSlider(
+                  items: [
+                      
+                      for(int i=0; i<AllData[index]["AllBikeImage"].length; i++)
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      child: Image.network(
+                                                        "${AllData[index]["AllBikeImage"][i]}",
+                                                        // width: 150,
+                                                        // height: 50,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                ),
+                    
               ],
-            ),
+                  
+                //Slider Container properties
+                  options: CarouselOptions(
+                    height: 180.0,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    viewportFraction: 0.8,
+                  ),
+              ),
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      
+              
+              
+              // BikeShowroomAvailableNumber
+              AllData[index]["BikeShowroomAvailableNumber"]=="0"?
+            
+              Text(""):
+              
+              TextButton(onPressed: () async{
+                  
+                  
+                        
+                  
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
+                  
+                        }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                        
+                                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                                ),),
+                  
+                  
+                  
+                  
+                   
+              TextButton(onPressed: () async{
+                  
+                  
+                    
+                  
+                   
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleProductInfo(BikeID: "${AllData[index]["BikeID"]}")));
+                  
+                  },
+                  
+                   child: Text("View", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                  
+                            backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                          ),),
+            
+            
+                    
+                     TextButton(onPressed: () async{
+                  
+                  
+                    // ${AllData[index]["BikeName"]}
+                  
+                   
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreviousBikeSell(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}",)));
+                  
+                  },
+                  
+                   child: Text("Previous sales", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                  
+                            backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                          ),),
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                        
+                  
+                  
+                  
+                  
+                      
+                      TextButton(onPressed: () async{
+            
+            
+                       showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+              title: Center(child: Text('Warning Message')),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children : <Widget>[
+                  Expanded(
+                    child: Text(
+                      "Are you sure?? You want to delete this product",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+            
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                TextButton(
+                    child: Text('Ok'),
+                    onPressed: () {
+                     
+                        final collection = FirebaseFirestore.instance.collection('product');
+                      collection 
+                      .doc('${AllData[index]["BikeID"]}') // <-- Doc ID to be deleted. 
+                      .delete() // <-- Delete
+                      .then((_) =>  setState(() {
+                  
+                                getData();
+                                Navigator.of(context).pop();
+            
+                          }))
+                      .catchError((error) => print('Delete failed: $error'));
+                    })
+              ],
+                      );
+                    },
+                  );
+                  
+                  
+                    
+               
+                  
+                  },
+                  
+                   child: Text("Delete", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                  
+                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                          ),),
+                    ],
+                  ),
+                  
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                  
+                          child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Out of Stock"),
+                          ):Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("${AllData[index]["BikeShowroomAvailableNumber"]}  available"),
+                          ),
+                             
+                       decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                  
+                        border: Border.all(
+                                  width: 2,
+                                  color: Theme.of(context).primaryColor
+                                ),
+                        borderRadius: BorderRadius.circular(10)      
+                       ),)),
+            
+            
+            
+            
+            
+                       Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                  
+                          child:Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Price: ${AllData[index]["BikeSalePrice"]}৳"),
+                          ),
+                             
+                       decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                  
+                        border: Border.all(
+                                  width: 2,
+                                  color: Theme.of(context).primaryColor
+                                ),
+                        borderRadius: BorderRadius.circular(10)      
+                       ),)),
+            
+            
+            
+            
+            
+            
+            
+            
+                    ],
+                  )
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                 
+                  
+                
+                  
+                ],
+              ),
+              ),
             );
           },
           itemCount: AllData.length,

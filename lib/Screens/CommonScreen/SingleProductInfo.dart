@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditProductInfo.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 class SingleProductInfo extends StatefulWidget {
@@ -211,47 +211,43 @@ Future<void> getBikeImageData(String BikeID) async {
         ),
                     ),
               ): DataLoad == "0"? Center(child: Text("No Data Available")):Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
             
                     
-                   CarouselSlider(
-              items: [
+            CarouselSlider(
+                  items: [
+                      
+                      for(int x=0; x<AllData[0]["AllBikeImage"].length; x++)
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      child: Image.network(
+                                                        "${AllData[0]["AllBikeImage"][x]}",
+                                                        // width: 150,
+                                                        // height: 50,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                ),
+                    
+              ],
                   
-                //1st Image of Slider
-
-            for(int i = 0; i<AllBikeImageData.length; i++ )
-
-
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage("${AllBikeImageData[i]["BikeImageUrl"]}"),
-                      fit: BoxFit.cover,
-                    ),
+                //Slider Container properties
+                  options: CarouselOptions(
+                    height: 180.0,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    viewportFraction: 0.8,
                   ),
-                ),
-                  
-          
-  
-          ],
-              
-            //Slider Container properties
-              options: CarouselOptions(
-                height: 180.0,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                viewportFraction: 0.8,
               ),
-          ),
 
 
             
@@ -474,30 +470,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
 
                                        
-                         TableRow(
-
-                  decoration: BoxDecoration(color: Colors.grey[200]),
-                  children: [
-
-                          Container(
-                            
-                           
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("Bike Buying Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
-                            )),
-
-
-                              Container(
-                            
-                           
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("${AllData[0]["BikeBuyingPrice"]}",overflow: TextOverflow.clip),
-                            )),
-                      
                         
-                        ]),
 
 
 
@@ -1064,6 +1037,34 @@ Future<void> getBikeImageData(String BikeID) async {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["BikeSaddleHeight"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                    
+                     TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Buying Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBuyingPrice"]}",overflow: TextOverflow.clip),
                             )),
                       
                         
