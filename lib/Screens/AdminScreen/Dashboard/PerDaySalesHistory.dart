@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 
@@ -192,6 +193,10 @@ Future<void> getData(String paymentDate) async {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title:  Text("Per Day Sales History", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),

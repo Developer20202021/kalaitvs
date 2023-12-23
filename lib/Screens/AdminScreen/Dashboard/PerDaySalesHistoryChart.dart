@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -40,6 +41,11 @@ class PerDaySalesHistoryChartState extends State<PerDaySalesHistoryChart> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar:  AppBar(
+
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),

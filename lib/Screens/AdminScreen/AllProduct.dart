@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
@@ -18,6 +19,10 @@ class _AllProductState extends State<AllProduct> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:  AppBar(
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Bikes", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),

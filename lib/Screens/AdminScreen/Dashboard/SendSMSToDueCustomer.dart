@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
@@ -62,6 +63,10 @@ class _SendSMSToDueCustomerState extends State<SendSMSToDueCustomer> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Send Message",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),

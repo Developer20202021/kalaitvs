@@ -490,7 +490,7 @@ bool _passVisibility = true;
               
                 }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                      
-                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.pink.shade400),
                       ),),),
               
               

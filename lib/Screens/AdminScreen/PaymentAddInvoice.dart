@@ -41,6 +41,10 @@ class _PaymentAddPreviewPdfState extends State<PaymentAddPreviewPdf> {
        backgroundColor: Colors.white,
       
       appBar: AppBar(
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Invoice", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),

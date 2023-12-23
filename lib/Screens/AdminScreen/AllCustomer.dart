@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
@@ -284,6 +285,11 @@ Future<void> getSearchData(String phoneNumber) async {
 
       backgroundColor: Colors.white,
       appBar:  AppBar(
+
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
 
         toolbarHeight: searchField=="search"?100:56,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),

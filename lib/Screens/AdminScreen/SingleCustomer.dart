@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 
 class SingleCustomer extends StatefulWidget {
@@ -30,6 +31,10 @@ class _SingleCustomerState extends State<SingleCustomer> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+           systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Previous Customer", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
