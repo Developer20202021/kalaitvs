@@ -12,8 +12,8 @@ import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
-
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class CustomerProfile extends StatefulWidget {
 
@@ -595,7 +595,17 @@ Future<void> getSaleData() async {
                    
                         
                               title: Text("${AllSaleData[i]["BikeName"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                              trailing: TextButton(onPressed: (){
+                              trailing: 
+                                  PopupMenuButton(
+                                    onSelected: (value) {
+                                      // your logic
+                                    },
+                                    itemBuilder: (BuildContext bc) {
+                                      return  [
+                                        PopupMenuItem(
+                                          onTap: () {
+
+                                       
       
       
                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: AllData[0]["CustomerName"].toString().capitalize(), CustomerNID: AllData[0]["CustomerNID"], CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"], CustomerFileNo: AllSaleData[i]["BikeDeliveryNo"], CustomerAddress: AllData[0]["CustomerAddress"], BikeName: AllSaleData[i]["BikeName"], BikeEngineNo: AllSaleData[i]["BikeEngineNo"], BikeChassisNo: AllSaleData[i]["BikeChassisNo"], BikeSalePrice: AllSaleData[i]["BikeSalePrice"], BikeCashInAmount: AllSaleData[i]["BikeBillPay"], BikePaymentDue: AllSaleData[i]["BikePaymentDue"], BikeColor: AllSaleData[i]["BikeColor"], BikeCondition: AllSaleData[i]["BikeConditionMonth"])));
@@ -607,12 +617,69 @@ Future<void> getSaleData() async {
       
       
       
-                              }, child: Text("Print", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
-                               
-                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-                ),)
       
-      ,
+                                            
+                                          },
+                                          child: Text("Print"),
+                                          value: '/hello',
+                                        ),
+                                        PopupMenuItem(
+                                          onTap: ()async {
+
+                                      try {
+
+                                              CollectionReference _collectionRef =
+                                                FirebaseFirestore.instance.collection('BikeSaleInfo');
+                                                    _collectionRef.doc(AllSaleData[i]["SaleID"]).delete().then(
+                                            (doc) => setState((){
+
+
+                                          AwesomeDialog(
+                                            showCloseIcon: true,
+
+                                            btnOkOnPress: () {
+                                              Navigator.pop(context);
+                                            },
+                                        
+                                            context: context,
+                                            dialogType: DialogType.success,
+                                            animType: AnimType.rightSlide,
+                                            body: SingleChildScrollView(
+                                              child: Text("Delete Successfull"))).show();
+
+
+
+
+                                            }),
+                                            onError: (e) => print("Error updating document $e"),
+                                          );
+                                        
+                                      } catch (e) {
+
+
+                                        AwesomeDialog(
+                                            showCloseIcon: true,
+
+                                            btnOkOnPress: () {
+                                              Navigator.pop(context);
+                                            },
+                                        
+                                            context: context,
+                                            dialogType: DialogType.success,
+                                            animType: AnimType.rightSlide,
+                                            body: SingleChildScrollView(
+                                              child: Text("${e}"))).show();
+                                        
+                                      }
+                                            
+                                          },
+                                          child: Text("Delete"),
+                                          value: '/about',
+                                        ),
+                                     
+                                      ];
+                                    },
+                                  ),
                               subtitle: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,

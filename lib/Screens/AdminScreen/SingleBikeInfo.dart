@@ -13,6 +13,7 @@ import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:http/http.dart' as http;
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
+import 'package:uuid/uuid.dart';
 
 
 
@@ -55,7 +56,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
 
 
 
-
+var uuid = Uuid();
 
 
 
@@ -121,6 +122,8 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+    var SaleID = uuid.v4();
 
     BikeNameController.text = widget.BikeName;
     BikeSalePriceController.text = widget.BikeSalePrice;
@@ -726,7 +729,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                 final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo");
 
                 final jsonData ={
-                  
+                  "SaleID":SaleID,
                   "CustomerNID": widget.CustomerNID,
                   "BikeChassisNo":BikeChassisNoController.text,
                   "BikeEngineNo":BikeEngineNoController.text,
@@ -761,7 +764,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
                 };
 
 
-              await docUser.add(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              await docUser.doc(SaleID).set(jsonData).then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.green,
                         content: const Text('Successfull'),
                         action: SnackBarAction(
