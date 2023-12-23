@@ -3,12 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
+import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/StaffScreen.dart';
 
@@ -25,7 +27,9 @@ class _LogInScreenState extends State<LogInScreen> {
   TextEditingController myEmailController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
 
+bool _passVisibility = true;
 
+    String errorTxt = "";
 
    var createUserErrorCode = "";
 
@@ -51,6 +55,11 @@ class _LogInScreenState extends State<LogInScreen> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+        
+     systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
         title: const Text("Log In",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
@@ -65,12 +74,7 @@ class _LogInScreenState extends State<LogInScreen> {
         child: loading?Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: Center(
-                      child: LoadingAnimationWidget.discreteCircle(
-                        color: const Color(0xFF1A1A3F),
-                        secondRingColor: Theme.of(context).primaryColor,
-                        thirdRingColor: Colors.white,
-                        size: 100,
-                      ),
+                      child: CircularProgressIndicator(),
                     ),
               ): AutofillGroup(
                 child: Padding(
@@ -78,101 +82,121 @@ class _LogInScreenState extends State<LogInScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+
+
+                
+
+                                  
+                   errorTxt.isNotEmpty?  Center(
+                     child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                
+                           color: Colors.red.shade400,
+                           
+                           
+                           child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
+                           )),
+                                ),
+                   ):Text(""),
+
               
               
               
               
               
-                 createUserErrorCode=="wrong-password"? Center(
-                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
+                //  createUserErrorCode=="wrong-password"? Center(
+                //   child: Padding(
+                //                 padding: const EdgeInsets.all(8.0),
+                //                 child: Container(
                 
                 
-                                  child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.close, color: Colors.red,),
-                      Text("Wrong password provided for that user."),
-                    ],
-                  ),
-                                  ),
-                   
-                               decoration: BoxDecoration(
-                                color: Colors.red[100],
-                
-                                border: Border.all(
-                        width: 2,
-                        color: Colors.white
-              
-                        
-                      ),
-                                borderRadius: BorderRadius.circular(10)      
-                               ),)),
-                ):Text(""),
-              
-              
-              
-              
-              
-              
-              
-                createUserErrorCode=="user-not-found"? Center(
-                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                
-                
-                                  child: Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: Row(
-                    children: [
-                      Icon(Icons.close, color: Colors.red,),
-                      Text("No user found for that email.", overflow: TextOverflow.clip,),
-                    ],
-                  ),
-                                  ),
-                   
-                               decoration: BoxDecoration(
-                                color: Colors.red[100],
-                
-                                border: Border.all(
-                        width: 2,
-                        color: Colors.white
-              
-                        
-                      ),
-                                borderRadius: BorderRadius.circular(10)      
-                               ),)),
-                ):Text(""),
-              
-              
-              
-              
-              
-              
-              
-              
-                
-              
-              
-              
-              
-                          
-                
-                // Center(
-                //   child: Lottie.asset(
-                //   'lib/images/animation_lk8fkoa8.json',
-                //     fit: BoxFit.cover,
-                //     width: 200,
-                //     height: 200
+                //                   child: Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Row(
+                //     children: [
+                //       Icon(Icons.close, color: Colors.red,),
+                //       Text("Wrong password provided for that user."),
+                //     ],
                 //   ),
-                // ),
+                //                   ),
+                   
+                //                decoration: BoxDecoration(
+                //                 color: Colors.red[100],
+                
+                //                 border: Border.all(
+                //         width: 2,
+                //         color: Colors.white
+              
+                        
+                //       ),
+                //                 borderRadius: BorderRadius.circular(10)      
+                //                ),)),
+                // ):Text(""),
+              
+              
+              
+              
+              
+              
+              
+                // createUserErrorCode=="user-not-found"? Center(
+                //   child: Padding(
+                //                 padding: const EdgeInsets.all(8.0),
+                //                 child: Container(
+                
+                
+                //                   child: Padding(
+                //   padding: const EdgeInsets.only(top: 8, bottom: 8),
+                //   child: Row(
+                //     children: [
+                //       Icon(Icons.close, color: Colors.red,),
+                //       Text("No user found for that email.", overflow: TextOverflow.clip,),
+                //     ],
+                //   ),
+                //                   ),
+                   
+                //                decoration: BoxDecoration(
+                //                 color: Colors.red[100],
+                
+                //                 border: Border.all(
+                //         width: 2,
+                //         color: Colors.white
+              
+                        
+                //       ),
+                //                 borderRadius: BorderRadius.circular(10)      
+                //                ),)),
+                // ):Text(""),
+              
+              
+              
+              
+              
+              
+              
+              
+                
+              
+              
+              
+              
                           
-                          // SizedBox(
-                          //           height: 20,
-                          //         ),
+                
+                Center(
+                  child: Lottie.asset(
+                  'lib/images/Animation - 1703302209974.json',
+                    fit: BoxFit.cover,
+                    width: 200,
+                    height: 200
+                  ),
+                ),
+                          
+                          SizedBox(
+                                    height: 20,
+                                  ),
                           
                           
                           
@@ -180,6 +204,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   autofillHints: [AutofillHints.email],
                   
                   decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.email, color: Theme.of(context).primaryColor,),
                       border: OutlineInputBorder(),
                       labelText: 'Enter Email',
                        labelStyle: TextStyle(
@@ -216,7 +241,25 @@ class _LogInScreenState extends State<LogInScreen> {
                           
                 TextField(
                    autofillHints: [AutofillHints.password],
+
+                    keyboardType: TextInputType.visiblePassword,
+                  obscureText: _passVisibility,
+                  obscuringCharacter:"*",
+
+
                   decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock, color: Theme.of(context).primaryColor,),
+
+                        suffixIcon: IconButton(
+                      icon: _passVisibility
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
+                      onPressed: () {
+                        _passVisibility = !_passVisibility;
+
+                        setState(() {});
+                      },
+                    ),
                       border: OutlineInputBorder(),
                       labelText: 'Enter Password',
                        labelStyle: TextStyle(
@@ -391,24 +434,34 @@ class _LogInScreenState extends State<LogInScreen> {
               
               
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
+
+                        setState(() {
+                          errorTxt = e.code.toString();
+
+                          loading = false;
+                        });
+
+
+
+
+                        // if (e.code == 'user-not-found') {
               
-                          setState(() {
-                            loading=false;
-                            createUserErrorCode = "user-not-found";
+                        //   setState(() {
+                        //     loading=false;
+                        //     createUserErrorCode = "user-not-found";
                             
-                          });
-                          print('No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
+                        //   });
+                        //   print('No user found for that email.');
+                        // } else if (e.code == 'wrong-password') {
               
               
-                          setState(() {
-                            loading=false;
-                            createUserErrorCode = "wrong-password";
+                        //   setState(() {
+                        //     loading=false;
+                        //     createUserErrorCode = "wrong-password";
                             
-                          });
-                          print('Wrong password provided for that user.');
-                        }
+                        //   });
+                        //   print('Wrong password provided for that user.');
+                        // }
                       }
               
               
