@@ -382,65 +382,19 @@ Future<void> getSingleBikeData(String BikeID) async {
                 CarouselSlider(
                 items: [
                     
-                  //1st Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                    
-                  //2nd Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                    
-                  //3rd Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                    
-                  //4th Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                    
-                  //5th Image of Slider
-                  Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage("${AllData[index]["BikeImageUrl"]}"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                    for(int i=0; i<AllData[index]["AllBikeImage"].length; i++)
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    child: Image.network(
+                                                      "${AllData[index]["AllBikeImage"][i]}",
+                                                      // width: 150,
+                                                      // height: 50,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                              ),
         
             ],
                 

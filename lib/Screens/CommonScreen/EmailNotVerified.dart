@@ -20,7 +20,7 @@ class _EmailNotVerifiedState extends State<EmailNotVerified> {
       appBar: AppBar(
     systemOverlayStyle: SystemUiOverlayStyle(
       // Navigation bar
-      statusBarColor: ColorName().appColor, // Status bar
+      statusBarColor: Theme.of(context).primaryColor, // Status bar
     ),
         iconTheme: IconThemeData(color: ColorName().appColor),
         automaticallyImplyLeading: false,
@@ -31,7 +31,10 @@ class _EmailNotVerifiedState extends State<EmailNotVerified> {
         centerTitle: true,
         
       ),
-      body: Center(child: Text("আপনার Email টি Verify করেননি। তাই আপনার Registration বাতিল করা হয়েছে। নতুনভাবে Registration করুন।এবং আপনার Email টি Verify করুন।")));
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(child: Text("আপনার Email টি Verify করেননি। তাই আপনার Registration বাতিল করা হয়েছে। নতুনভাবে Registration করুন।এবং আপনার Email টি Verify করুন।")),
+      ));
 
   }
 }
