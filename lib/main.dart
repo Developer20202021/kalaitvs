@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'M/S ORTHEE BAJAJ MART',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.ubuntu().fontFamily,
