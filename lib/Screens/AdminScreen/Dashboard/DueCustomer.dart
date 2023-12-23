@@ -278,7 +278,7 @@ Future<void> getData() async {
                   backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
                 ),),
                 
-                title: Text('${AllData[index]["CustomerName"].toString().capitalize()}', style: TextStyle(
+                title: Text('${AllData[index]["CustomerName"].toString()}', style: TextStyle(
                   fontWeight: FontWeight.bold
                 ),)),
             );

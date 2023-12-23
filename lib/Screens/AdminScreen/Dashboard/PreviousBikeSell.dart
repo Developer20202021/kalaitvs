@@ -166,7 +166,7 @@ Future<void> getData(String BikeName) async {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                   
-                                  Text("Name:${AllData[index]["CustomerName"].toString().capitalize()}"),
+                                  Text("Name:${AllData[index]["CustomerName"].toString()}"),
                                   Text("Phone Number:${AllData[index]["CustomerPhoneNumber"]}"),
                   
                                   Text("Date: ${AllData[index]["BikeSaleDate"]}"),

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "906341423350",
-    "project_id": "tvsapp-ac523",
-    "storage_bucket": "tvsapp-ac523.appspot.com"
+    "project_number": "1092346361632",
+    "project_id": "ortheebajaj",
+    "storage_bucket": "ortheebajaj.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:906341423350:android:187cfb35749c4c551bf4d7",
+        "mobilesdk_app_id": "1:1092346361632:android:28bf6a1c762eda3dda8945",
         "android_client_info": {
-          "package_name": "com.example.tvs_app"
+          "package_name": "com.inansoft.ortheebajaj"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAhIzls4mKC9qKhl9xR-NKFFprmiruDEQI"
+          "current_key": "AIzaSyBmXm4c5IVk9-7g2_ynWv74AwiJiot3NZY"
         }
       ],
       "services": {

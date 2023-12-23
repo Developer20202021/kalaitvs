@@ -9,7 +9,7 @@
 
 
     <application
-        android:label="tvs_app"
+        android:label="Ortheebajaj"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

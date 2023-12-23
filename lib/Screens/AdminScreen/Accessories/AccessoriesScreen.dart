@@ -315,7 +315,7 @@ Future<void> getData() async {
 
                         Padding(
                           padding: const EdgeInsets.only(left: 18,top: 2, right: 3),
-                          child: Text("${AllData[index]["AccessoriesName"].toString().capitalize()}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold), overflow: TextOverflow.clip,),
+                          child: Text("${AllData[index]["AccessoriesName"].toString()}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold), overflow: TextOverflow.clip,),
                         ),
 
                         

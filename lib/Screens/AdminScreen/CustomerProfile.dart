@@ -369,7 +369,7 @@ Future<void> getSaleData() async {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["CustomerName"].toString().capitalize()}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["CustomerName"].toString()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
@@ -610,7 +610,7 @@ Future<void> getSaleData() async {
                                        
       
       
-                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: AllData[0]["CustomerName"].toString().capitalize(), CustomerNID: AllData[0]["CustomerNID"], CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"], CustomerFileNo: AllSaleData[i]["BikeDeliveryNo"], CustomerAddress: AllData[0]["CustomerAddress"], BikeName: AllSaleData[i]["BikeName"], BikeEngineNo: AllSaleData[i]["BikeEngineNo"], BikeChassisNo: AllSaleData[i]["BikeChassisNo"], BikeSalePrice: AllSaleData[i]["BikeSalePrice"], BikeCashInAmount: AllSaleData[i]["BikeBillPay"], BikePaymentDue: AllSaleData[i]["BikePaymentDue"], BikeColor: AllSaleData[i]["BikeColor"], BikeCondition: AllSaleData[i]["BikeConditionMonth"])));
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: AllData[0]["CustomerName"].toString(), CustomerNID: AllData[0]["CustomerNID"], CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"], CustomerFileNo: AllSaleData[i]["BikeDeliveryNo"], CustomerAddress: AllData[0]["CustomerAddress"], BikeName: AllSaleData[i]["BikeName"], BikeEngineNo: AllSaleData[i]["BikeEngineNo"], BikeChassisNo: AllSaleData[i]["BikeChassisNo"], BikeSalePrice: AllSaleData[i]["BikeSalePrice"], BikeCashInAmount: AllSaleData[i]["BikeBillPay"], BikePaymentDue: AllSaleData[i]["BikePaymentDue"], BikeColor: AllSaleData[i]["BikeColor"], BikeCondition: AllSaleData[i]["BikeConditionMonth"])));
       
       
                                

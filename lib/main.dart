@@ -30,7 +30,7 @@ import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'firebase_options.dart';
+
 
 Future main() async{
 
@@ -38,7 +38,8 @@ Future main() async{
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyBmXm4c5IVk9-7g2_ynWv74AwiJiot3NZY", appId: "1:1092346361632:android:28bf6a1c762eda3dda8945", messagingSenderId: "1092346361632", projectId: "ortheebajaj")
+    ,);
 
 
   runApp(const MyApp());
@@ -70,23 +71,9 @@ class MyApp extends StatelessWidget {
       title: 'M/S ORTHEE BAJAJ MART',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: GoogleFonts.ubuntu().fontFamily,
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: GoogleFonts.aleo().fontFamily,
+
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
       home:  LogInScreen(),

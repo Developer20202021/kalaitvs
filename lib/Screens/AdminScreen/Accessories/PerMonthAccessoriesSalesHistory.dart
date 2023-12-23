@@ -383,11 +383,11 @@ Future<void> getData(String paymentDate) async {
                       
                    
                         
-                              title: Text("${AllData[index]["AccessoriesName"].toString().capitalize()}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                              title: Text("${AllData[index]["AccessoriesName"].toString()}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                               trailing: TextButton(onPressed: (){
       
       
-                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AccessoriesInvoice(CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"] , AccessoriesID: AllData[index]["AccessoriesID"], AccessoriesName:AllData[index]["AccessoriesName"].toString().capitalize() , AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], CustomerID:AllData[index]["CustomerID"] , SaleDate:AllData[index]["SaleDate"] )));
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AccessoriesInvoice(CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"] , AccessoriesID: AllData[index]["AccessoriesID"], AccessoriesName:AllData[index]["AccessoriesName"].toString(), AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], CustomerID:AllData[index]["CustomerID"] , SaleDate:AllData[index]["SaleDate"] )));
       
       
                                

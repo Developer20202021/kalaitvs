@@ -478,7 +478,7 @@ Future<void> getSearchData(String phoneNumber) async {
                   SlidableAction(
                     // An action can be bigger than the others.
                     flex: 2,
-                    onPressed: (context) => AllData[index]["CustomerType"]=="Paid"?(Context) => EveryPaymentHistory(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"] ): CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"], AllData[index]["CustomerName"].toString().capitalize()),
+                    onPressed: (context) => AllData[index]["CustomerType"]=="Paid"?(Context) => EveryPaymentHistory(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"] ): CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"], AllData[index]["CustomerName"].toString()),
                     backgroundColor: Color(0xFF7BC043),
                     foregroundColor: Colors.white,
                     icon: Icons.payment,
@@ -507,7 +507,7 @@ Future<void> getSearchData(String phoneNumber) async {
                   
                      leading: CircleAvatar(
                         backgroundColor: Theme.of(context).primaryColor,
-                        child: Text("${AllData[index]["CustomerName"][0].toString().capitalize()}",style: TextStyle(color: Colors.white),),
+                        child: Text("${AllData[index]["CustomerName"][0].toString()}",style: TextStyle(color: Colors.white),),
                       ),
                     
                       subtitle:  Column(
@@ -520,7 +520,7 @@ Future<void> getSearchData(String phoneNumber) async {
                       ),
                       trailing: Text("${AllData[index]["CustomerType"]}"),
                   
-                  title: Text("${AllData[index]["CustomerName"].toString().capitalize()}", style: TextStyle(
+                  title: Text("${AllData[index]["CustomerName"].toString()}", style: TextStyle(
                     fontWeight: FontWeight.bold
                   ),)),
               ),

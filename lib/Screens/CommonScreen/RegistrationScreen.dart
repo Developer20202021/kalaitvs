@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
  bool loading = false;
 
+  bool _passVisibility = true;
 
+    String errorTxt = "";
 
 
 
@@ -89,17 +92,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
       body: SingleChildScrollView(
 
-              child:  loading?Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: Center(
-                      child: LoadingAnimationWidget.discreteCircle(
-                        color: const Color(0xFF1A1A3F),
-                        secondRingColor: Theme.of(context).primaryColor,
-                        thirdRingColor: Colors.white,
-                        size: 100,
-                      ),
-                    ),
-              ):Padding(
+              child:  loading?LinearProgressIndicator(color: Theme.of(context).primaryColor,):Padding(
                 padding: const EdgeInsets.all(8.0),
                 child:Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,73 +101,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
 
 
-                    createUserErrorCode=="weak-password"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                    
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The password provided is too weak."),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
-
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
-
-
-
-
-
-
-
-                    createUserErrorCode=="email-already-in-use"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                    
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The account already exists for that email.", overflow: TextOverflow.clip,),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
-
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
-
-
-
-
+                       errorTxt.isNotEmpty?  Center(
+                     child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                
+                           color: Colors.red.shade400,
+                           
+                           
+                           child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
+                           )),
+                                ),
+                   ):Text(""),
 
 
 
@@ -396,7 +336,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
 
                   if (response.statusCode == 200) {
                     // If the server did return a 200 OK response,
@@ -417,19 +357,52 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
 
 
-                    await docUser.doc(myEmailController.text).set(jsonData).then((value) =>   Navigator.push(
+                    await docUser.doc(myEmailController.text).set(jsonData).then((value) =>setState((){
+
+
+                                      AwesomeDialog(
+                                            showCloseIcon: true,
+
+                                            btnOkOnPress: () {
+                                             
+                  Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const LogInScreen()),
-                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                              content: const Text('Something Wrong!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            )));
+                      );
+                                            },
+                                        
+                                            context: context,
+                                            dialogType: DialogType.success,
+                                            animType: AnimType.rightSlide,
+                                            body: SingleChildScrollView(
+                                              child: Text("রেজিস্ট্রেশন সম্পন্ন হয়েছে। আপনাকে একটি Email পাঠানো হয়েছে। Email টি Verify করুন।", style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    fontFamily: "Josefin Sans"),))).show();
+
+
+
+                    })).onError((error, stackTrace) => setState((){
+
+                                    AwesomeDialog(
+                                            showCloseIcon: true,
+
+                                            btnOkOnPress: () {
+                                             Navigator.pop(context);
+                                            },
+                                        
+                                            context: context,
+                                            dialogType: DialogType.error,
+                                            animType: AnimType.rightSlide,
+                                            body: SingleChildScrollView(
+                                              child: Text("Something Wrong!!! Try again later"))).show();
+
+
+
+
+
+                      }));
 
 
 
@@ -476,25 +449,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         // print(credential.user!.email.toString());
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
 
-                          setState(() {
-                            loading = false;
-                            createUserErrorCode = "weak-password";
-                          });
-                          print('The password provided is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
+                        setState(() {
+                        errorTxt = e.code.toString();
 
-                          setState(() {
-                            loading = false;
-                            createUserErrorCode = "email-already-in-use";
-                          });
-                          print('The account already exists for that email.');
-                        }
-                      } catch (e) {
-                        loading = false;
-                        print(e);
-                      }
+                          loading = false;
+                        });
+               
+                      } 
 
 
 
@@ -531,7 +493,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     }, child: Text("Log In", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.pink.shade400),
               ),),),
 
 

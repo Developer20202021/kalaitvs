@@ -11,6 +11,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dart';
+import 'package:tvs_app/Screens/CommonScreen/EmailNotVerified.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/StaffScreen.dart';
 
@@ -368,52 +369,56 @@ bool _passVisibility = true;
               
               
                     }
-              
-              
-              
-                          
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-                         
-              
-              
-              
-              
-              
-              
-              
-              
-              
-                          
-              
-                          
+
                         }
                         else{
               
               
-                            await credential.user?.delete();
-              
-                               CollectionReference _collectionRef =
-                        FirebaseFirestore.instance.collection('admin');
-                            _collectionRef.doc(userEmail).delete().then(
-                    (doc) => print("Document deleted"),
-                    onError: (e) => print("Error updating document $e"),
-                  );
+                      try {
+
+                                await credential.user?.sendEmailVerification().then((value) => setState((){
+
+                                setState(() {
+                                 loading = false;
+                                
+                               });
+
+
+
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => EmailNotVerified()));
+
+                                  print("Done");
+                               
+                                })).onError((error, stackTrace) => setState((){
+
+
+                                setState(() {
+                                 loading = false;
+                             
+                               });
+
+
+
+
+                                  
+
+
+
+                          
+
+                                  print("________________________$error");
+                                }));
+                                
+                              } catch (e) {
+                                print(e);
+                                
+                              }
               
                               setState(() {
                             loading=false;
-                          });
+                                 });
                           
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()),);
+                            //  Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()),);
               
               
                         }
