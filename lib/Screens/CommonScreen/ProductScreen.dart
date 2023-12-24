@@ -41,6 +41,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
 bool loading = true;
 
+bool online = true;
+
 
   // Firebase All Customer Data Load
 
@@ -108,31 +110,56 @@ Future<void> getSingleBikeData(String BikeID) async {
 
 
 
+// internet 
+
 Future getConnection() async{
 
   final connectivityResult = await (Connectivity().checkConnectivity());
 if (connectivityResult == ConnectivityResult.mobile) {
   print("mobile");
+  setState(() {
+    online = true;
+  });
 } else if (connectivityResult == ConnectivityResult.wifi) {
    print("wifi");
+     setState(() {
+    online = true;
+  });
   // I am connected to a wifi network.
 } else if (connectivityResult == ConnectivityResult.ethernet) {
    print("Ethernet");
+     setState(() {
+    online = true;
+  });
   // I am connected to a ethernet network.
 } else if (connectivityResult == ConnectivityResult.vpn) {
    print("vpn");
+
+  setState(() {
+    online = true;
+  });
   // I am connected to a vpn network.
   // Note for iOS and macOS:
   // There is no separate network interface type for [vpn].
   // It returns [other] on any device (also simulator)
 } else if (connectivityResult == ConnectivityResult.bluetooth) {
    print("bluetooth");
+  setState(() {
+    online = true;
+  });
   // I am connected to a bluetooth.
 } else if (connectivityResult == ConnectivityResult.other) {
    print("other");
+  setState(() {
+    online = true;
+  });
   // I am connected to a network which is not in the above mentioned networks.
 } else if (connectivityResult == ConnectivityResult.none) {
    print("none");
+
+    setState(() {
+    online = false;
+  });
    
   // I am not connected to any network.
 }
@@ -405,7 +432,7 @@ if (connectivityResult == ConnectivityResult.mobile) {
           thirdRingColor: Colors.white,
           size: 100,
         ),
-      ): RefreshIndicator(
+      ):online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)): RefreshIndicator(
         onRefresh: refresh,
         child: ListView.separated(
           separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 35,),
