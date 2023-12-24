@@ -16,7 +16,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 
-class EditCustomerInfo extends StatefulWidget {
+class ProductSaleEditCustomer extends StatefulWidget {
 
   
 
@@ -28,16 +28,21 @@ class EditCustomerInfo extends StatefulWidget {
   final String BikeColor;
   final String BikeModelName;
   final String BikeSalePrice;
+  final String BikeId;
+  final String BikeBuyingPrice;
+  final String CustomerID;
+  final List AllData;
+  final bool AllDataEmpty;
   
 
 
-  const EditCustomerInfo({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber, required this.BikeColor, required this.BikeModelName, required this.BikeName, required this.BikeSalePrice});
+  const ProductSaleEditCustomer({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber, required this.BikeColor, required this.BikeModelName, required this.BikeName, required this.BikeSalePrice, required this.BikeBuyingPrice, required this.BikeId, required this.CustomerID, required this.AllData, required this.AllDataEmpty});
 
   @override
-  State<EditCustomerInfo> createState() => _EditCustomerInfoState();
+  State<ProductSaleEditCustomer> createState() => _ProductSaleEditCustomerState();
 }
 
-class _EditCustomerInfoState extends State<EditCustomerInfo> {
+class _ProductSaleEditCustomerState extends State<ProductSaleEditCustomer> {
   TextEditingController CustomerNameController = TextEditingController();
   TextEditingController CustomerFatherNameController = TextEditingController();
   TextEditingController CustomerMotherNameController = TextEditingController();
@@ -98,7 +103,7 @@ bool loading = false;
 
      //Update Firebase Collection Customer Data 
 
-              Future EditCustomerInformation(String CustomerImageUrl) async{
+              Future ProductSaleEditCustomerrmation(String CustomerImageUrl) async{
 
 
                   final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerNID);
@@ -133,7 +138,7 @@ bool loading = false;
 
 
 
-                          EditCustomerInformation(CustomerImageUrl);
+                          ProductSaleEditCustomerrmation(CustomerImageUrl);
 
 
 
@@ -220,11 +225,8 @@ bool loading = false;
     CustomerAddressController.text = widget.CustomerAddress;
     CustomerPhoneNumberController.text = widget.CustomerPhoneNumber;
     CustomerNIDController.text = widget.CustomerNID;
-
-
-
-
-
+   CustomerFatherNameController.text = widget.AllDataEmpty?"":widget.AllData[0]["CustomerFatherName"];
+   CustomerMotherNameController = widget.AllDataEmpty?"":widget.AllData[0]["CustomerMotherName"];
 
 
 
@@ -402,14 +404,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Address',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Customer Address',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -439,7 +441,7 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Phone Number',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Customer Phone Number',
             
@@ -447,7 +449,7 @@ bool loading = false;
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Colors.purple),
+                                borderSide: BorderSide(width: 3, color: Colors.green),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -475,14 +477,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Email',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Customer Email',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -510,14 +512,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer NID',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Customer NID',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -559,14 +561,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor1 Name',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor1 Name',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -604,14 +606,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor1 Phone Number',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor1 Phone Number',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -650,14 +652,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor1 NID',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor1 NID',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -697,14 +699,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor1 Address',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor1 Address',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -735,14 +737,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor2 Name',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor2 Name',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -771,14 +773,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor2 Phone Number',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor2 Phone Number',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -817,14 +819,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor2 NID',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor1 NID',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -864,14 +866,14 @@ bool loading = false;
                           border: OutlineInputBorder(),
                           labelText: 'Enter Guarantor2 Address',
                            labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
+              color: myFocusNode.hasFocus ? Colors.green: Colors.black
                   ),
                           hintText: 'Enter Guarantor1 Address',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                              borderSide: BorderSide(width: 3, color: Colors.green),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -917,10 +919,10 @@ bool loading = false;
 
           //Update Firebase Collection Customer Data 
 
-              Future EditCustomerInformation(String CustomerFatherName, String CustomerMotherName, String CustomerAddress, String CustomerEmail, String CustomerGuarantor1Name, String CustomerGuarantor1PhoneNumber, String CustomerGuarantor1NID, String CustomerGuarantor1Address, String CustomerGuarantor2Name, String CustomerGuarantor2PhoneNumber, String CustomerGuarantor2NID, String CustomerGuarantor2Address, String CustomerNID) async{
+              Future ProductSaleEditCustomerrmation(String CustomerFatherName, String CustomerMotherName, String CustomerAddress, String CustomerEmail, String CustomerGuarantor1Name, String CustomerGuarantor1PhoneNumber, String CustomerGuarantor1NID, String CustomerGuarantor1Address, String CustomerGuarantor2Name, String CustomerGuarantor2PhoneNumber, String CustomerGuarantor2NID, String CustomerGuarantor2Address, String CustomerNID) async{
 
 
-                  final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
+                  final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerID);
 
                   final UpadateData ={
                   "CustomerName":CustomerNameController.text.trim().toLowerCase(),
@@ -973,7 +975,7 @@ bool loading = false;
 
 
 
-                          EditCustomerInformation(CustomerFatherNameController.text, CustomerMotherNameController.text, CustomerAddressController.text, CustomerEmailController.text, CustomerGuarantor1NameController.text, CustomerGuarantor1PhoneNumberController.text, CustomerGuarantor1NIDController.text, CustomerGuarantor1AddressController.text, CustomerGuarantor2NameController.text, CustomerGuarantor2PhoneNumberController.text, CustomerGuarantor2NIDController.text, CustomerGuarantor2AddressController.text, widget.CustomerNID);
+                          ProductSaleEditCustomerrmation(CustomerFatherNameController.text, CustomerMotherNameController.text, CustomerAddressController.text, CustomerEmailController.text, CustomerGuarantor1NameController.text, CustomerGuarantor1PhoneNumberController.text, CustomerGuarantor1NIDController.text, CustomerGuarantor1AddressController.text, CustomerGuarantor2NameController.text, CustomerGuarantor2PhoneNumberController.text, CustomerGuarantor2NIDController.text, CustomerGuarantor2AddressController.text, widget.CustomerNID);
 
                           
 
@@ -1105,7 +1107,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.purple;
+    paint.color = Colors.green;
     paint.style = PaintingStyle.fill;
 
     var path = Path();

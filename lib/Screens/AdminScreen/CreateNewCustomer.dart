@@ -7,9 +7,11 @@ import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
+import 'package:tvs_app/Screens/AdminScreen/ProductSaleEditCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 class CreateNewCustomer extends StatefulWidget {
@@ -18,10 +20,14 @@ class CreateNewCustomer extends StatefulWidget {
   final String BikeModelName;
   final String BikeColor;
   final String BikeSalePrice;
+  final String BikeId;
+  final String BikeBuyingPrice;
+  final String CustomerNID;
 
 
 
-  const CreateNewCustomer({super.key, required this.BikeName, required this.BikeColor, required this.BikeModelName, required this.BikeSalePrice});
+
+  const CreateNewCustomer({super.key, required this.BikeName, required this.BikeColor, required this.BikeModelName, required this.BikeSalePrice, required this.BikeId, required this.BikeBuyingPrice, required this.CustomerNID});
 
   @override
   State<CreateNewCustomer> createState() => _CreateNewCustomerState();
@@ -39,10 +45,166 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
+
+
+
+
+
+  List  AllData = [];
+
+
+
+Future<void> getData() async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    setState(() {
+      loading = true;
+    });
+
+
+
+CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('customer');
+
+    Query query = _collectionRef.where("CustomerNID", isEqualTo: widget.CustomerNID);
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     if (AllData.isEmpty) {
+
+      setState(() {
+        
+        loading = false;
+      });
+       
+     } else {
+
+      
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+       loading = false;
+  
+     });
+       
+     }
+
+
+    print(AllData);
+}
+
+
+bool CustomerNameFieldEmpty = true;
+
+void CheckCustomerNameField(){
+
+  if (customerNameController.text.isEmpty) {
+
+    setState(() {
+      CustomerNameFieldEmpty = true;
+    });
+    
+  } else {
+
+     setState(() {
+      CustomerNameFieldEmpty = false;
+    });
+    
+  }
+}
+
+
+
+
+bool CustomerPhoneNoFieldEmpty = true;
+
+void CheckCustomerPhoneNoField(){
+
+  if (customerPhoneNumberController.text.isEmpty) {
+
+    setState(() {
+      CustomerPhoneNoFieldEmpty = true;
+    });
+    
+  } else {
+
+     setState(() {
+      CustomerPhoneNoFieldEmpty = false;
+    });
+    
+  }
+}
+
+
+
+
+
+bool CustomerAddressFieldEmpty = true;
+
+void CheckCustomerAddressField(){
+
+  if (customerAddressController.text.isEmpty) {
+
+    setState(() {
+      CustomerAddressFieldEmpty = true;
+    });
+    
+  } else {
+
+     setState(() {
+      CustomerAddressFieldEmpty = false;
+    });
+    
+  }
+
+
+}
+
+
+
+
+
+
+
+@override
+  void initState() {
+
+    getData();
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+    var CustomerID = uuid.v4();
+
+
+    customerNameController.text = AllData.isEmpty?"":AllData[0]["CustomerName"];
+
+    customerPhoneNumberController.text = AllData.isEmpty?"":AllData[0]["CustomerPhoneNumber"];
+
+    customerAddressController.text = AllData.isEmpty?"":AllData[0]["CustomerAddress"];
+
+    customerNIDController.text = widget.CustomerNID;
+
+
+
 
 
  
@@ -64,20 +226,15 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
-
-              child: loading?Padding(
+      body:loading?Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: Center(
-                      child: LoadingAnimationWidget.discreteCircle(
-                        color: const Color(0xFF1A1A3F),
-                        secondRingColor: Theme.of(context).primaryColor,
-                        thirdRingColor: Colors.white,
-                        size: 100,
-                      ),
+                      child: CircularProgressIndicator()
                     ),
-              ):Padding(
-                padding: const EdgeInsets.all(20.0),
+              ): SingleChildScrollView(
+
+              child: Padding(
+              padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -93,6 +250,11 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             // enter your email 
             
                     TextField(
+
+                       onChanged: (value) {
+             
+                        
+                      },
                       
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -130,6 +292,12 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             
             
                     TextField(
+
+                       onChanged: (value) {
+
+              
+                        
+                      },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Address',
@@ -159,13 +327,16 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-                    SizedBox(
-                      height: 20,
-                    ),
             
             
             
                     TextField(
+
+                       onChanged: (value) {
+                   
+                   
+                        
+                      },
 
                       keyboardType: TextInputType.phone,
                       
@@ -205,6 +376,9 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
             
             
                     TextField(
+                      onChanged: (value) {
+                        
+                      },
 
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -237,8 +411,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                    
 
 
-            
-                    Row(
+          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: (){
@@ -253,6 +426,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                       final docUser = FirebaseFirestore.instance.collection("customer");
 
                       final jsonData ={
+                        "CustomerID":CustomerID,
                         "CustomerName":CustomerName,
                         "CustomerNID":CustomerNID,
                         "CustomerAddress":CustomerAddress,
@@ -264,9 +438,11 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                       };
 
 
-                    await docUser.doc(CustomerNID).set(jsonData).then((value) =>               Navigator.push(
+                      if (AllData.isEmpty) {
+
+                            await docUser.doc(CustomerID).set(jsonData).then((value) =>     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  EditCustomerInfo(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice,)),
+                        MaterialPageRoute(builder: (context) =>  ProductSaleEditCustomer(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice, BikeBuyingPrice: widget.BikeBuyingPrice, BikeId: widget.BikeId, CustomerID: CustomerID, AllData: AllData, AllDataEmpty: AllData.isEmpty,)),
                       )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong!'),
@@ -277,9 +453,28 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
                                 },
                               ),
                             )));
+                        
+                      } else {
 
 
+                            await docUser.doc(CustomerID).update(jsonData).then((value) =>     Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  ProductSaleEditCustomer(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice, BikeBuyingPrice: widget.BikeBuyingPrice, BikeId: widget.BikeId, CustomerID: CustomerID, AllData: AllData, AllDataEmpty: AllData.isEmpty,)),
+                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+                        
+                      }
 
+
+                
                     }
 
 

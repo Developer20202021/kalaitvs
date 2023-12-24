@@ -37,7 +37,7 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
 
-
+  TextEditingController customerNIDController = TextEditingController();
 
 bool loading = true;
 
@@ -516,11 +516,83 @@ if (connectivityResult == ConnectivityResult.mobile) {
               Text(""):
               
               TextButton(onPressed: () async{
+
+
+                showDialog(
+                      context: context,
+                      builder: (context) {
+
+
+                        String ChangeSelected = "";
+
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                    title: Text('Enter Customer NID'),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        children: [
+
+                      TextField(
+                        onChanged: (value) {
+                          setState((){
+                            ChangeSelected = value;
+                          });
+                        },
+
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Customer NID',
+                          hintText: 'Enter Customer NID',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: customerNIDController,
+                    ),
+
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      ElevatedButton(
+                       
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('CANCEL'),
+                      ),
+                    ChangeSelected.isEmpty?Text(""):ElevatedButton(
+                        
+                        onPressed: () {
+
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}", BikeModelName: "${AllData[index]["BikeName"]}", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}", BikeId: '${AllData[index]["BikeID"]}', BikeBuyingPrice: '${AllData[index]["BikeBuyingPrice"]}', CustomerNID: customerNIDController.text.trim(),)));
+
+
+                        },
+                        child: Text('Sale'),
+                      ),
+                    ],
+                  );});});
+
+
+
+
                   
                   
                         
                   
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateNewCustomer(BikeName: "${AllData[index]["BikeName"]}", BikeColor: "${AllData[index]["ColorAvailable"]}", BikeModelName: " ", BikeSalePrice: "${AllData[index]["BikeSalePrice"]}",)));
+                         
                   
                         }, child: Text("Sale", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                         
