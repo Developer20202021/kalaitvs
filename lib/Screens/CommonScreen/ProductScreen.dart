@@ -173,8 +173,6 @@ if (connectivityResult == ConnectivityResult.mobile) {
 @override
   void initState() {
 
-
-  // var x = 0;
     var period = const Duration(seconds:1);
     Timer.periodic(period,(arg) {
                   getConnection();
@@ -182,17 +180,6 @@ if (connectivityResult == ConnectivityResult.mobile) {
 
 
 
-//      subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-//     // Got a new connectivity status!
-//     print(result);
-//   });
-// }
-
-// // Be sure to cancel subscription after you are done
-// @override
-// dispose() {
-//   subscription.cancel();
-//   super.dispose();
     // TODO: implement initState
     getData();
     super.initState();

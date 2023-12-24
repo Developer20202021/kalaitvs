@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -13,7 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:tvs_app/Screens/AdminScreen/UploadBikeImage.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 
@@ -67,6 +69,8 @@ class _UploadProductState extends State<UploadProduct> {
   TextEditingController BikeSalePriceController = TextEditingController();
   TextEditingController BikeNameController = TextEditingController();
   TextEditingController ColorAvailableController = TextEditingController();
+  TextEditingController YearOfManufactureController = TextEditingController();
+  TextEditingController SeatingCapacityController = TextEditingController();
   
 
   File? _photo;
@@ -256,9 +260,317 @@ List AllUploadImageUrl =[];
 
 
 
+bool SalePriceFieldEmpty = true;
+
+void CheckSalePriceField(){
+
+  if (BikeSalePriceController.text.isEmpty) {
+
+    setState(() {
+      SalePriceFieldEmpty = true;
+    });
+    
+  } else {
+
+     setState(() {
+      SalePriceFieldEmpty = false;
+    });
+    
+  }
+
+}
 
 
 
+
+bool BuyingPriceFieldEmpty = true;
+
+void CheckBuyingPriceField(){
+
+  if (BikeBuyingPriceController.text.isEmpty) {
+
+    setState(() {
+      BuyingPriceFieldEmpty = true;
+    });
+    
+  } else {
+
+     setState(() {
+      BuyingPriceFieldEmpty = false;
+    });
+    
+  }
+
+}
+
+
+
+bool StockNumberEmpty = true;
+
+void CheckStockNumberField(){
+
+  if (BikeShowroomAvailableNumberController.text.isEmpty) {
+
+    setState(() {
+      StockNumberEmpty = true;
+    });
+    
+  } else {
+
+    setState(() {
+      StockNumberEmpty = false;
+    });
+    
+  }
+
+}
+
+bool bikeNameFieldEmpty = true;
+
+void CheckBikeNameField(){
+
+  if (BikeNameController.text.isEmpty) {
+    setState(() {
+      bikeNameFieldEmpty = true;
+    });
+    
+  } else {
+
+    setState(() {
+      bikeNameFieldEmpty = false;
+    });
+    
+  }
+
+}
+
+
+
+
+bool BikeColorFieldEmpty = true;
+
+void CheckBikeColor(){
+
+  if (ColorAvailableController.text.isEmpty) {
+
+    setState(() {
+      BikeColorFieldEmpty = true;
+    });
+    
+  } else {
+    
+    setState(() {
+      BikeColorFieldEmpty = false;
+    });
+    
+  }
+
+}
+
+
+
+
+
+// Internet Connection Checker 
+bool online = true;
+
+// internet 
+
+Future getConnection() async{
+
+  final connectivityResult = await (Connectivity().checkConnectivity());
+if (connectivityResult == ConnectivityResult.mobile) {
+  print("mobile");
+  if (this.mounted) {
+
+    setState(() {
+    online = true;
+  });
+    
+  }
+} else if (connectivityResult == ConnectivityResult.wifi) {
+   print("wifi");
+
+  if (this.mounted) {
+    setState(() {
+    online = true;
+  });
+    
+  }
+  // I am connected to a wifi network.
+} else if (connectivityResult == ConnectivityResult.ethernet) {
+   print("Ethernet");
+ if (this.mounted) {
+
+  setState(() {
+    online = true;
+  });
+   
+ }
+  // I am connected to a ethernet network.
+} else if (connectivityResult == ConnectivityResult.vpn) {
+   print("vpn");
+
+if (this.mounted) {
+
+    setState(() {
+    online = true;
+  });
+  
+}
+  // I am connected to a vpn network.
+  // Note for iOS and macOS:
+  // There is no separate network interface type for [vpn].
+  // It returns [other] on any device (also simulator)
+} else if (connectivityResult == ConnectivityResult.bluetooth) {
+   print("bluetooth");
+ 
+  if (this.mounted) {
+
+     setState(() {
+    online = true;
+  });
+    
+  }
+  // I am connected to a bluetooth.
+} else if (connectivityResult == ConnectivityResult.other) {
+   print("other");
+
+   if (this.mounted) {
+
+  setState(() {
+    online = true;
+  });
+     
+   }
+
+
+  // I am connected to a network which is not in the above mentioned networks.
+} else if (connectivityResult == ConnectivityResult.none) {
+   print("none");
+
+if (this.mounted) {
+
+   setState(() {
+    online = false;
+  });
+  
+}
+   
+  // I am not connected to any network.
+}
+}
+
+
+
+// String Speed = " ";
+
+
+
+// Future getInternetSpeed() async{
+
+
+//      final url = 
+//       'https://drive.google.com/file/d/1lEn1DtJQW6-nTcoS_FG7-EB3Kamy0147/view?usp=sharing'; 
+//     final stopwatch = Stopwatch()..start(); 
+  
+//     try { 
+//       final response = await http.get(Uri.parse(url)); 
+  
+//       if (response.statusCode == 200) { 
+//         final elapsed = stopwatch.elapsedMilliseconds; 
+//         final speedInKbps = 
+//             ((response.bodyBytes.length / 1024) / (elapsed / 1000)) * 
+//                 8; // Calculate download speed in Kbps 
+  
+
+//         setState(() {
+//           Speed = "Download speed: ${speedInKbps.toStringAsFixed(2)} Kbps";
+//         });
+//         print(Speed);
+//         // Show download speed in an AlertDialog 
+//         // showDialog( 
+//         //   context: context, 
+//         //   builder: (BuildContext context) { 
+//         //     return AlertDialog( 
+//         //       title: Text('Network Speed'), // Set the dialog title 
+//         //       content: Text( 
+//         //           // Display download speed 
+//         //           'Download speed: ${speedInKbps.toStringAsFixed(2)} Kbps'),  
+//         //       actions: <Widget>[ 
+//         //         TextButton( 
+//         //           onPressed: () { 
+//         //             Navigator.of(context).pop(); 
+//         //           }, 
+//         //           child: Text('OK'), // Button to close the dialog 
+//         //         ), 
+//         //       ], 
+//         //     ); 
+//         //   }, 
+//         // ); 
+//       } else { 
+//         // Show an error dialog if the download failed 
+//         // showDialog( 
+//         //   context: context, 
+//         //   builder: (BuildContext context) { 
+//         //     return AlertDialog( 
+//         //       title: Text('Error'), // Set the error dialog title 
+//         //       content: Text( 
+//         //           // Display error message 
+//         //           'Failed to download the file. Status code: ${response.statusCode}'),  
+//         //       actions: <Widget>[ 
+//         //         TextButton( 
+//         //           onPressed: () { 
+//         //             Navigator.of(context).pop(); 
+//         //           }, 
+//         //           child: Text('OK'), // Button to close the dialog 
+//         //         ), 
+//         //       ], 
+//         //     ); 
+//         //   }, 
+//         // ); 
+//       } 
+//     } catch (e) { 
+//       // Show an error dialog in case of an exception 
+//       // showDialog( 
+//       //   context: context, 
+//       //   builder: (BuildContext context) { 
+//       //     return AlertDialog( 
+//       //       title: Text('Error'), // Set the exception dialog title 
+//       //       content: Text('Error: $e'), // Display the exception message 
+//       //       actions: <Widget>[ 
+//       //         TextButton( 
+//       //           onPressed: () { 
+//       //             Navigator.of(context).pop(); 
+//       //           }, 
+//       //           child: Text('OK'), // Button to close the dialog 
+//       //         ), 
+//       //       ], 
+//       //     ); 
+//       //   }, 
+//       // ); 
+//     } 
+  
+  
+
+
+
+
+// }
+
+
+
+@override
+  void initState() {
+
+    var period = const Duration(seconds:1);
+    Timer.periodic(period,(arg) {
+                  getConnection();
+                  
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
 
 
@@ -281,18 +593,18 @@ List AllUploadImageUrl =[];
     ),
         iconTheme: IconThemeData(color: Colors.green),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Upload Bike",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Upload Bike Information",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
+      body:online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)): SingleChildScrollView(
         child: Container(
       
           child:  Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -371,8 +683,17 @@ List AllUploadImageUrl =[];
 
 
                 TextField(
+                  onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
                  
                   decoration: InputDecoration(
+                    helperStyle: TextStyle(color: Colors.red),
+                    helperText: bikeNameFieldEmpty?'*Required Enter Bike Name':"",
                       border: OutlineInputBorder(),
                       labelText: 'Bike Name',
                        labelStyle: TextStyle(
@@ -450,13 +771,21 @@ List AllUploadImageUrl =[];
               
               
                 TextField(
+
+                  onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Engine Capacity',
+                      labelText: 'Engine Capacity or CC',
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.green: Colors.black
               ),
-                      hintText: 'Engine Capacity',
+                      hintText: 'Engine Capacity or CC',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -482,11 +811,11 @@ List AllUploadImageUrl =[];
                   TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Maximum Power',
+                      labelText: 'Maximum Power or Horse Power',
                        labelStyle: TextStyle(
           color: myFocusNode.hasFocus ? Colors.green: Colors.black
               ),
-                      hintText: 'Maximum Power',
+                      hintText: 'Maximum Power or Horse Power',
                       //  enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                       //   ),
@@ -1440,7 +1769,16 @@ List AllUploadImageUrl =[];
 
 
                  TextField(
+                  onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
                   decoration: InputDecoration(
+                    helperStyle: TextStyle(color: Colors.red),
+                    helperText: BikeColorFieldEmpty?'*Required Enter Bike Color':"",
                       border: OutlineInputBorder(),
                       labelText: 'Color Available',
                        labelStyle: TextStyle(
@@ -1466,6 +1804,85 @@ List AllUploadImageUrl =[];
                 SizedBox(
                   height: 10,
                 ),
+
+
+
+                 TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Seating Capacity',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'Seating Capacity',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: SeatingCapacityController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+
+
+                TextField(
+                    onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Year of Manufacture',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'Year of Manufacture',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: YearOfManufactureController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+
+
+
+                
+
+
+
+              
+              
       
       
       
@@ -1475,12 +1892,30 @@ List AllUploadImageUrl =[];
                 ),
               
            
-              Text("How many bike add in this time?", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+             Text(
+                     "কত গুলো বাইক স্টক করতে চান তা নিচে যুক্ত করুন এবং বাইকের ক্রয় ও বিক্রয় মূল্য যুক্ত করুন",
+                   style: const TextStyle(
+                       fontSize: 14,
+                       fontWeight:
+                           FontWeight.bold,
+                       fontFamily:
+                           "Josefin Sans",
+                       color: Colors.white)),
       
             
                  TextField(
+                    onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
+                  
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
+                      helperStyle: TextStyle(color: Colors.red),
+                      helperText: StockNumberEmpty?'*Required Enter Bike Stock No':"",
                       border: OutlineInputBorder(),
                       labelText: 'Number',
                        labelStyle: TextStyle(
@@ -1510,8 +1945,17 @@ List AllUploadImageUrl =[];
 
 
                    TextField(
+                 onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
                     keyboardType: TextInputType.number,
                   decoration: InputDecoration(
+                    helperStyle: TextStyle(color: Colors.red),
+                    helperText: BuyingPriceFieldEmpty?'*Required Enter Bike Price':"",
                       border: OutlineInputBorder(),
                       labelText: 'Per Bike Buying Price',
                        labelStyle: TextStyle(
@@ -1540,8 +1984,17 @@ List AllUploadImageUrl =[];
 
 
                  TextField(
+                    onChanged: (value) {
+                    CheckBikeNameField();
+                    CheckStockNumberField();
+                    CheckBikeColor();
+                    CheckSalePriceField();
+                    CheckBuyingPriceField();
+                  },
                     keyboardType: TextInputType.number,
                   decoration: InputDecoration(
+                    helperStyle: TextStyle(color: Colors.red),
+                    helperText: SalePriceFieldEmpty?'*Required Enter Bike Sale Price':"",
                       border: OutlineInputBorder(),
                       labelText: 'Per Bike Sale price',
                        labelStyle: TextStyle(
@@ -1588,10 +2041,10 @@ List AllUploadImageUrl =[];
       
               
               
-                Row(
+          bikeNameFieldEmpty||BikeColorFieldEmpty||StockNumberEmpty||BuyingPriceFieldEmpty||SalePriceFieldEmpty? Text(""):Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(width: 150, child:TextButton(onPressed: (){
+                    Container(width: 150, child:ElevatedButton(onPressed: (){
 
 
 
@@ -1607,51 +2060,53 @@ List AllUploadImageUrl =[];
                       print("___________________________________________________________________________________________________${bikeid}");
 
                       final jsonData ={
-                        "BikeName":BikeNameController.text,
-                        "BikeType":BikeTypeController.text,
-                        "BikeABS":BikeABSController.text,
-                        "BikeBatteryRating":BikeBatteryRatingController.text,
-                        "BikeBrakeFluid":BikeBrakeFluidController.text,
-                        "BikeBrakeFront":BikeBrakeFrontController.text,
-                        "BikeBrakeRear":BikeBrakeRearController.text,
-                        "BikeBuyingPrice":BikeBuyingPriceController.text,
-                        "BikeCoolingSystem":BikeCoolingSystemController.text,
-                        "ColorAvailable":ColorAvailableController.text,
-                        "BikeEngineCapacity":BikeEngineCapacityController.text,
-                        "BikeFeatures":BikeFeaturesController.text,
-                        "BikeFrame":BikeFrameController.text,
-                        "BikeFrontSuspension":BikeFrontSuspensionController.text,
-                        "BikeFuelSupplySystem":BikeFuelSupplySystemController.text,
-                        "BikeFuelTankCapacity":BikeFuelTankCapacityController.text,
-                        "BikeFuelsupplysystem":BikeFuelSupplySystemController.text,
-                        "BikeGearBox":BikeGearBoxController.text,
-                        "BikeGroundClearance":BikeGroundClearanceController.text,
-                        "BikeHeadlamp":BikeHeadlampController.text,
-                        "BikeHeight":BikeHeightController.text,
-                        "BikeKerbWeight":BikeKerbWeightController.text,
-                        "BikeLength":BikeLengthController.text,
-                        "BikeMaxSpeed":BikeMaxSpeedController.text,
-                        "BikeMaximumPower":BikeMaximumPowerController.text,
-                        "BikeMaximumTorque":BikeMaximumTorqueController.text,
-                        "BikeMuffler":BikeMufflerController.text,
-                        "BikePowertoWeightRation":BikePowertoWeightRationController.text,
+                        "BikeName":BikeNameController.text.trim(),
+                        "BikeType":BikeTypeController.text.trim(),
+                        "BikeABS":BikeABSController.text.trim(),
+                        "BikeBatteryRating":BikeBatteryRatingController.text.trim(),
+                        "BikeBrakeFluid":BikeBrakeFluidController.text.trim(),
+                        "BikeBrakeFront":BikeBrakeFrontController.text.trim(),
+                        "BikeBrakeRear":BikeBrakeRearController.text.trim(),
+                        "BikeBuyingPrice":BikeBuyingPriceController.text.trim(),
+                        "BikeCoolingSystem":BikeCoolingSystemController.text.trim(),
+                        "ColorAvailable":ColorAvailableController.text.trim(),
+                        "BikeEngineCapacity":BikeEngineCapacityController.text.trim(),
+                        "BikeFeatures":BikeFeaturesController.text.trim(),
+                        "BikeFrame":BikeFrameController.text.trim(),
+                        "BikeFrontSuspension":BikeFrontSuspensionController.text.trim(),
+                        "BikeFuelSupplySystem":BikeFuelSupplySystemController.text.trim(),
+                        "BikeFuelTankCapacity":BikeFuelTankCapacityController.text.trim(),
+                        "BikeFuelsupplysystem":BikeFuelSupplySystemController.text.trim(),
+                        "BikeGearBox":BikeGearBoxController.text.trim(),
+                        "BikeGroundClearance":BikeGroundClearanceController.text.trim(),
+                        "BikeHeadlamp":BikeHeadlampController.text.trim(),
+                        "BikeHeight":BikeHeightController.text.trim(),
+                        "BikeKerbWeight":BikeKerbWeightController.text.trim(),
+                        "BikeLength":BikeLengthController.text.trim(),
+                        "BikeMaxSpeed":BikeMaxSpeedController.text.trim(),
+                        "BikeMaximumPower":BikeMaximumPowerController.text.trim(),
+                        "BikeMaximumTorque":BikeMaximumTorqueController.text.trim(),
+                        "BikeMuffler":BikeMufflerController.text.trim(),
+                        "BikePowertoWeightRation":BikePowertoWeightRationController.text.trim(),
 
 
                         //
 
                         
-                        "BikeRearSuspension":BikeRearSuspensionController.text,
-                        "BikeSaddleHeight":BikeSaddleHeightController.text,
-                        "BikeSalePrice":BikeSalePriceController.text,
-                        "BikeShowroomAvailableNumber":BikeShowroomAvailableNumberController.text,
-                        "BikeTailLamp":BikeTailLampController.text,
-                        "BikeTyreFront":BikeTyreFrontController.text,
-                        "BikeTyreRear":BikeTyreRearController.text,
-                        "BikeValvePerCylinder":BikeValvePerCylinderController.text,
-                        "BikeWheelBase":BikeWheelBaseController.text,
-                        "BikeWidth":BikeWidthController.text,
+                        "BikeRearSuspension":BikeRearSuspensionController.text.trim(),
+                        "BikeSaddleHeight":BikeSaddleHeightController.text.trim(),
+                        "BikeSalePrice":BikeSalePriceController.text.trim(),
+                        "BikeShowroomAvailableNumber":BikeShowroomAvailableNumberController.text.trim(),
+                        "BikeTailLamp":BikeTailLampController.text.trim(),
+                        "BikeTyreFront":BikeTyreFrontController.text.trim(),
+                        "BikeTyreRear":BikeTyreRearController.text.trim(),
+                        "BikeValvePerCylinder":BikeValvePerCylinderController.text.trim(),
+                        "BikeWheelBase":BikeWheelBaseController.text.trim(),
+                        "BikeWidth":BikeWidthController.text.trim(),
                         "BikeID":bikeid,
-                        "AllBikeImage":AllUploadImageUrl
+                        "AllBikeImage":AllUploadImageUrl,
+                        "SeatingCapacity":SeatingCapacityController.text.trim(),
+                        "YearOfManufacture":YearOfManufactureController.text.trim()
 
                   
                       };
@@ -1749,7 +2204,10 @@ List AllUploadImageUrl =[];
       
       
                   ],
-                )
+                ),
+
+
+                SizedBox(height: 20,),
               
               
               

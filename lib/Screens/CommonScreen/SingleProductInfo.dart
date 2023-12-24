@@ -1045,84 +1045,7 @@ Future<void> getBikeImageData(String BikeID) async {
 
 
                     
-                     TableRow(
-
-                  decoration: BoxDecoration(color: Colors.grey[200]),
-                  children: [
-
-                          Container(
-                            
-                           
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("Bike Buying Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
-                            )),
-
-
-                              Container(
-                            
-                           
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("${AllData[0]["BikeBuyingPrice"]}",overflow: TextOverflow.clip),
-                            )),
-                      
-                        
-                        ]),
-
-
-
-
-                                TableRow(
-
-                  decoration: BoxDecoration(color: Colors.grey[200]),
-                  children: [
-
-                          Container(
-                            
-                            
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("Bike Sale Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
-                            )),
-
-
-                              Container(
-                            
-                           
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("${AllData[0]["BikeSalePrice"]}", overflow: TextOverflow.clip,),
-                            )),
-                      
-                        
-                        ]),
-
-
-                                    TableRow(
-
-                  decoration: BoxDecoration(color: Colors.grey[200]),
-                  children: [
-
-                          Container(
-                            
-                            
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("Bike Showroom Available Number", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
-                            )),
-
-
-                              Container(
-                            
-                           
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("${AllData[0]["BikeShowroomAvailableNumber"]}", overflow: TextOverflow.clip,),
-                            )),
-                      
-                        
-                        ]),
+                    
 
 
 
@@ -1320,6 +1243,87 @@ Future<void> getBikeImageData(String BikeID) async {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${AllData[0]["ColorAvailable"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                         TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Buying Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeBuyingPrice"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
+                                TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Sale Price", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeSalePrice"]}", overflow: TextOverflow.clip,),
+                            )),
+                      
+                        
+                        ]),
+
+
+                                    TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                            
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Bike Stock", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["BikeShowroomAvailableNumber"]}", overflow: TextOverflow.clip,),
                             )),
                       
                         

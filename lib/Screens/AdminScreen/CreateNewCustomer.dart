@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
+import 'package:uuid/uuid.dart';
 
 
 class CreateNewCustomer extends StatefulWidget {
@@ -34,7 +35,7 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
   bool loading = false;
 
-
+  var uuid = Uuid();
 
 
 
