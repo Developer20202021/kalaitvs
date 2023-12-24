@@ -1,12 +1,15 @@
 
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
@@ -14,6 +17,9 @@ import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dar
 import 'package:tvs_app/Screens/CommonScreen/EmailNotVerified.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/StaffScreen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
+
 
 
 
@@ -37,8 +43,105 @@ bool _passVisibility = true;
    bool loading = false;
 
 
+
+
+   
+// internet Connection Checker
+
+
+// Future getConnection() async{
+
+//   final connectivityResult = await (Connectivity().checkConnectivity());
+// if (connectivityResult == ConnectivityResult.mobile) {
+//   print("mobile");
+//   setState(() {
+//     online = true;
+//   });
+// } else if (connectivityResult == ConnectivityResult.wifi) {
+//    print("wifi");
+//      setState(() {
+//     online = true;
+//   });
+//   // I am connected to a wifi network.
+// } else if (connectivityResult == ConnectivityResult.ethernet) {
+//    print("Ethernet");
+//      setState(() {
+//     online = true;
+//   });
+//   // I am connected to a ethernet network.
+// } else if (connectivityResult == ConnectivityResult.vpn) {
+//    print("vpn");
+
+//   setState(() {
+//     online = true;
+//   });
+//   // I am connected to a vpn network.
+//   // Note for iOS and macOS:
+//   // There is no separate network interface type for [vpn].
+//   // It returns [other] on any device (also simulator)
+// } else if (connectivityResult == ConnectivityResult.bluetooth) {
+//    print("bluetooth");
+//   setState(() {
+//     online = true;
+//   });
+//   // I am connected to a bluetooth.
+// } else if (connectivityResult == ConnectivityResult.other) {
+//    print("other");
+//   setState(() {
+//     online = true;
+//   });
+//   // I am connected to a network which is not in the above mentioned networks.
+// } else if (connectivityResult == ConnectivityResult.none) {
+//    print("none");
+
+//     setState(() {
+//     online = false;
+//   });
+   
+//   // I am not connected to any network.
+// }
+// }
+
+
+// internet Connection Checker
+
+bool online = true;
+Future getInternetValue() async{
+
+bool onlineData =await getInternetConnectionChecker().getInternetConnection() ;
+
+setState(() {
+  online = onlineData;
+  
+});
+
+
+}
+
+
+
+
+
+
    @override
   void initState() {
+
+
+var period = const Duration(seconds:1);
+    Timer.periodic(period,(arg) {
+                 getInternetValue();
+    });
+
+
+
+
+
+
+
+
+
+
+
     // TODO: implement initState
     FlutterNativeSplash.remove();
     super.initState();
@@ -70,16 +173,16 @@ bool _passVisibility = true;
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
-
-        child: loading?Padding(
+      body:loading?Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: Center(
                       child: CircularProgressIndicator(),
                     ),
-              ): AutofillGroup(
+              ):online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)):SingleChildScrollView(
+
+        child: AutofillGroup(
                 child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                       padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

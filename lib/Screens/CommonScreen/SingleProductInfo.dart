@@ -1221,6 +1221,61 @@ Future<void> getBikeImageData(String BikeID) async {
 
 
 
+                        TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Seating Capacity", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["SeatingCapacity"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+                        TableRow(
+
+                  decoration: BoxDecoration(color: Colors.grey[200]),
+                  children: [
+
+                          Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Year Of Manufacture", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                            )),
+
+
+                              Container(
+                            
+                           
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${AllData[0]["YearOfManufacture"]}",overflow: TextOverflow.clip),
+                            )),
+                      
+                        
+                        ]),
+
+
+
+
 
 
                          TableRow(
