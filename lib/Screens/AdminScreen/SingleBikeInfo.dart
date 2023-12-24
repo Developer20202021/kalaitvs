@@ -25,10 +25,12 @@ class SingleBikeInfo extends StatefulWidget {
   final String BikeSalePrice;
   final String CustomerNID;
   final String CustomerPhoneNumber;
+  final String CustomerID;
+  final String BikeID;
 
 
 
-  const SingleBikeInfo({super.key, required this.BikeName, required this.BikeColor, required this.BikeSalePrice, required this.CustomerNID, required this.CustomerPhoneNumber});
+  const SingleBikeInfo({super.key, required this.BikeName, required this.BikeColor, required this.BikeSalePrice, required this.CustomerNID, required this.CustomerPhoneNumber, required this.CustomerID, required this.BikeID});
 
   @override
   State<SingleBikeInfo> createState() => _SingleBikeInfoState();
@@ -127,7 +129,7 @@ var uuid = Uuid();
 
     BikeNameController.text = widget.BikeName;
     BikeSalePriceController.text = widget.BikeSalePrice;
-    // BikeColorController.text = widget.BikeColor;
+    BikeColorController.text = widget.BikeColor;
 
 
     
@@ -263,12 +265,7 @@ var uuid = Uuid();
         
       ),
       body: loading?Center(
-        child: LoadingAnimationWidget.discreteCircle(
-          color: const Color(0xFF1A1A3F),
-          secondRingColor: Theme.of(context).primaryColor,
-          thirdRingColor: Colors.white,
-          size: 100,
-        ),
+        child:CircularProgressIndicator(),
       ):SingleChildScrollView(
 
         child:  Padding(
@@ -706,6 +703,19 @@ var uuid = Uuid();
               }
                 var BikePaymentDueString = BikePaymentDueInt.toString();
 
+          
+      List GetBikeData =[];
+
+      CollectionReference _GetBikecollectionDataRef =
+    FirebaseFirestore.instance.collection('product');
+
+    
+    Query GetBikequeryData = _GetBikecollectionDataRef.where("BikeID", isEqualTo: widget.BikeID);
+    QuerySnapshot GetBikequerySnapshot = await GetBikequeryData.get();
+
+    // Get data from docs and convert map to List
+     GetBikeData = GetBikequerySnapshot.docs.map((doc) => doc.data()).toList();
+
 
 
 
@@ -716,7 +726,7 @@ var uuid = Uuid();
     FirebaseFirestore.instance.collection('customer');
 
     
-    Query queryData = _collectionDataRef.where("CustomerNID", isEqualTo: CustomerNID);
+    Query queryData = _collectionDataRef.where("CustomerID", isEqualTo: widget.CustomerID);
     QuerySnapshot querySnapshot = await queryData.get();
 
     // Get data from docs and convert map to List
@@ -729,14 +739,26 @@ var uuid = Uuid();
                 final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo");
 
                 final jsonData ={
+                  "ClassOfVehicle":"MOTOR CYCLE",
+                  "BikeBuyingPrice":GetBikeData[0]["BikeBuyingPrice"],
+                  "YearOfManufacture":GetBikeData[0]["YearOfManufacture"],
+                  "SeatingCapacity":GetBikeData[0]["SeatingCapacity"],
+                  "BikeValvePerCylinder":GetBikeData[0]["BikeValvePerCylinder"],
+                  "MakersName":"Bajaj Auto LTD/INDIA",
+                  "BikeMaximumPower":GetBikeData[0]["BikeMaximumPower"],
+                  "BikeWheelBase":GetBikeData[0]["BikeWheelBase"],
+                  "BikeTyreFront":GetBikeData[0]["BikeTyreFront"],
+                  "BikeTyreRear":GetBikeData[0]["BikeTyreRear"],
                   "SaleID":SaleID,
+                  "BikeID":widget.BikeID,
+                  "CustomerID":widget.CustomerID,
                   "CustomerNID": widget.CustomerNID,
                   "BikeChassisNo":BikeChassisNoController.text,
                   "BikeEngineNo":BikeEngineNoController.text,
                   "BikeDeliveryNo":BikeDeliveryNoController.text,
                   "BikeName":BikeNameController.text,
-                  "BikeColor":BikeColorController.text,
-                  "BikeSalePrice":BikeSalePriceController.text,
+                  "BikeColor":widget.BikeColor,
+                  "BikeSalePrice":widget.BikeSalePrice,
                   "BikeDeliveryDate":DateTime.now(),
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
@@ -746,7 +768,7 @@ var uuid = Uuid();
                   "CustomerType":CustomerType,
                   "CustomerName":CustomerData[0]["CustomerName"],
                   "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
-                  "BikeConditionMonth":CustomerData[0]["BikeConditionMonth"],
+                  "BikeConditionMonth":BikeConditionMonthController.text.trim(),
                   "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
                   "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
                   "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
@@ -759,7 +781,8 @@ var uuid = Uuid();
                   "DuePaymentGivingDay":CustomerData[0]["DuePaymentGivingDay"],
                   "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
                   "adminEmail":adminEmail,
-                  "adminName":adminName
+                  "adminName":adminName,
+                
                   
                 };
 
@@ -796,16 +819,54 @@ var uuid = Uuid();
                       final salePrice = FirebaseFirestore.instance.collection("BikeSalePrice");
 
                       final saleData ={
+                  "ClassOfVehicle":"MOTOR CYCLE",
+                  "BikeBuyingPrice":GetBikeData[0]["BikeBuyingPrice"],
+                  "YearOfManufacture":GetBikeData[0]["YearOfManufacture"],
+                  "SeatingCapacity":GetBikeData[0]["SeatingCapacity"],
+                  "BikeValvePerCylinder":GetBikeData[0]["BikeValvePerCylinder"],
+                  "MakersName":"Bajaj Auto LTD/INDIA",
+                  "BikeMaximumPower":GetBikeData[0]["BikeMaximumPower"],
+                  "BikeWheelBase":GetBikeData[0]["BikeWheelBase"],
+                  "BikeTyreFront":GetBikeData[0]["BikeTyreFront"],
+                  "BikeTyreRear":GetBikeData[0]["BikeTyreRear"],
+                  "SaleID":SaleID,
+                  "BikeID":widget.BikeID,
+                  "CustomerID":widget.CustomerID,
+                  "CustomerNID": widget.CustomerNID,
+                  "BikeChassisNo":BikeChassisNoController.text,
+                  "BikeEngineNo":BikeEngineNoController.text,
+                  "BikeDeliveryNo":BikeDeliveryNoController.text,
+                  "BikeName":BikeNameController.text,
+                  "BikeConditionMonth":BikeConditionMonthController.text.trim(),
+                  "BikeColor":widget.BikeColor,
+                  "BikeSalePrice":widget.BikeSalePrice,
+                  "BikeDeliveryDate":DateTime.now(),
+                  "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                  "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
+                  "BikeSaleYear":"${DateTime.now().year}",
+                  "BikeBillPay":BikeBillPayController.text,
+                  "BikePaymentDue":BikePaymentDueString,
+                  "CustomerType":CustomerType,
+                  "CustomerName":CustomerData[0]["CustomerName"],
+                  "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
+                
+                  "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
+                  "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
+                  "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
+                  "CustomerGuarantor1Name":CustomerData[0]["CustomerGuarantor1Name"],
+                  "CustomerGuarantor1PhoneNumber":CustomerData[0]["CustomerGuarantor1PhoneNumber"],
+                  "CustomerGuarantor2Address":CustomerData[0]["CustomerGuarantor2Address"],
+                  "CustomerGuarantor2NID":CustomerData[0]["CustomerGuarantor2NID"],
+                  "CustomerGuarantor2Name":CustomerData[0]["CustomerGuarantor2Name"],
+                  "CustomerGuarantor2PhoneNumber":CustomerData[0]["CustomerGuarantor2PhoneNumber"],
+                  "DuePaymentGivingDay":CustomerData[0]["DuePaymentGivingDay"],
+                  "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
+                  "adminEmail":adminEmail,
+                  "adminName":adminName,
+                  "SalePrice":BikeSalePrice,
+                  "DuePrice":BikePaymentDueInt.toString(),
 
-                        "SalePrice":BikeSalePrice,
-                        "DuePrice":BikePaymentDueInt.toString(),
-                        "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                        "CustomerNID":CustomerNID,
-                        "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
-                        "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
-                        "BikeSaleYear":"${DateTime.now().year}",
-                        "adminEmail":adminEmail,
-                        "adminName":adminName
+
                   
 
 
@@ -828,7 +889,7 @@ var uuid = Uuid();
     FirebaseFirestore.instance.collection('product');
 
     
-    Query BikequeryData = _BikecollectionDataRef.where("BikeName", isEqualTo: BikeName);
+    Query BikequeryData = _BikecollectionDataRef.where("BikeID", isEqualTo: widget.BikeID);
     QuerySnapshot BikequerySnapshot = await BikequeryData.get();
 
     // Get data from docs and convert map to List
@@ -1064,7 +1125,7 @@ Future SendSMSToAdmin(String AdminPhoneNumber, String CustomerPhoneNumber, Strin
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

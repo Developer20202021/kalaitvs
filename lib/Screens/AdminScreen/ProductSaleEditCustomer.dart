@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -11,8 +15,9 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
 
 
 
@@ -64,101 +69,188 @@ class _ProductSaleEditCustomerState extends State<ProductSaleEditCustomer> {
 
 String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png";
 
-bool loading = false;
-
-
-
-
-   firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
-
-  int count = 0;
-
   File? _photo;
+
+  String image64 = "";
+
+  String UploadImageURl = "";
+  
+ bool ImageLoading = false;
+
+ bool loading = false;
+
+List AllUploadImageUrl =[];
+
+
+ 
+
   final ImagePicker _picker = ImagePicker();
 
+  Future imgFromGallery(BuildContext context) async {
+    //old
+    // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-  Future uploadFile(Context) async {
-    if (_photo == null) return;
-    final fileName = basename(_photo!.path);
-    final destination = 'files/$fileName';
 
-  // image loading sign
+     var pickedFile = await FilePicker.platform.pickFiles();
+
+        if (pickedFile != null) {
+          print(pickedFile.files.first.name);
+        }
+
+    //old
     setState(() {
-      loading = true;
+      if (pickedFile != null) {
+
+
+        final bytes = Uint8List.fromList(pickedFile.files.first.bytes as List<int>);
+
+
+        setState(() {
+          image64 = base64Encode(bytes);
+        });
+
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
     });
 
+
+
+
+  }
+
+
+
+
+
+
+  
+  Future imgFromCamera(BuildContext context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        setState(() {
+        loading = true;
+      });
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+
+  
+  Future uploadFile(BuildContext context) async {
+
+    setState(() {
+                    loading = true;
+                  });
+
+
     try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!).then((p0) =>setState(() {
-        count++;
-
-        print(p0);
-      }));
-
-
-      String CustomerImageUrl = (await ref.getDownloadURL()).toString();
-
-     //Update Firebase Collection Customer Data 
-
-              Future ProductSaleEditCustomerrmation(String CustomerImageUrl) async{
-
-
-                  final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerNID);
-
-                  final UpadateData ={
-                  "CustomerImageUrl":CustomerImageUrl,
-               
-                
-                };
-
-
-
-
-
-                // user Data Update and show snackbar
-
-                  docUser.update(UpadateData).then((value) =>    
-                  setState(() {
-                    loading = false;
-              LastUpdatedCustomerImageUrl = CustomerImageUrl; 
-                  })).onError((error, stackTrace) => print(error));
-
-
-
-
-              }
-
-
-
-
-
-
-
-
-                          ProductSaleEditCustomerrmation(CustomerImageUrl);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
       
+
+
+
+   var request = await http.post(Uri.parse("https://api.imgbb.com/1/upload?key=9a7a4a69d9a602061819c9ee2740be89"),  body: {
+          'image':'$image64',
+        } ).then((value) => setState(() {
+
+
+          print(jsonDecode(value.body));
+
+
+
+          var serverData = jsonDecode(value.body);
+
+          var serverImageUrl = serverData["data"]["url"];
+
+          setState(() {
+            UploadImageURl = serverImageUrl;
+            AllUploadImageUrl.insert(AllUploadImageUrl.length, serverImageUrl);
+          });
+
+          print(serverImageUrl);
+
+          // updateData(serverImageUrl,context);
+
+
+            setState(() {
+                    loading = false;
+                  });
+
+        
+             final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Your Image Upload Successfull',
+                      message:
+                          'Your Image Upload Successfull',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+        })).onError((error, stackTrace) => setState((){
+
+
+      setState(() {
+        loading = false;
+      });
+
+
+
+
+           final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Something Wrong!!!',
+                      message:
+                          'Try again later',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+
+
+
+        }));
+
+
+
+
     } catch (e) {
-      print('error occured');
+      print(e);
     }
   }
 
@@ -166,39 +258,39 @@ bool loading = false;
 
 
 
-  Future imgFromGallery(Context) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile(context);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+// Internet Connection Checker
 
-  Future imgFromCamera(Context) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+bool online = true;
+Future getInternetValue() async{
 
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile(context);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+bool onlineData =await getInternetConnectionChecker().getInternetConnection() ;
 
-
-
-
+setState(() {
+  online = onlineData;
   
+});
+
+
+}
 
 
 
+
+
+
+@override
+  void initState() {
+
+
+  // var period = const Duration(seconds:1);
+  //   Timer.periodic(period,(arg) {
+  //                getInternetValue();
+  //   });
+
+    // TODO: implement initState
+    super.initState();
+  }
 
 
 
@@ -226,7 +318,7 @@ bool loading = false;
     CustomerPhoneNumberController.text = widget.CustomerPhoneNumber;
     CustomerNIDController.text = widget.CustomerNID;
    CustomerFatherNameController.text = widget.AllDataEmpty?"":widget.AllData[0]["CustomerFatherName"];
-   CustomerMotherNameController = widget.AllDataEmpty?"":widget.AllData[0]["CustomerMotherName"];
+   CustomerMotherNameController.text = widget.AllDataEmpty?"":widget.AllData[0]["CustomerMotherName"];
 
 
 
@@ -259,30 +351,55 @@ bool loading = false;
         centerTitle: true,
         
       ),
-      body: SingleChildScrollView(
+      body:loading?Center(
+        child: CircularProgressIndicator(),
+      ):online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)):SingleChildScrollView(
 
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
             
                     
-                    loading?Center(
-        child: LoadingAnimationWidget.twistingDots(
-          leftDotColor: const Color(0xFF1A1A3F),
-          rightDotColor: Theme.of(context).primaryColor,
-          size: 50,
-        ),
-      ):
-                    Center(
-                      child:  CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                          "${LastUpdatedCustomerImageUrl}",
-                        ),
-                      ),
-                    ),
+                    
+                                  Center(
+                                        child: GestureDetector(
+                                                    onTap: () {
+                                                      _showPicker(context);
+                                                    },
+                                                    child: CircleAvatar(
+                                                      radius: 100,
+                                                      backgroundColor: Theme.of(context).primaryColor,
+                                                      child: UploadImageURl.isNotEmpty
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(5),
+                                        child: Image.network(
+                                          "${UploadImageURl}",
+                                          width: 200,
+                                          height: 200,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(5)),
+                                        width: 200,
+                                        height: 200,
+                                        child: Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                                    ),
+                                        ),
+                                      ),
+
+
+              
+
+                     const SizedBox(height: 10,),
             
              SizedBox(
                       height: 20,
@@ -290,13 +407,11 @@ bool loading = false;
             
             
                     TextField(
-                      focusNode: myFocusNode,
+                    
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Name',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
+           
                           hintText: 'Enter Customer Name',
             
                           //  enabledBorder: OutlineInputBorder(
@@ -436,13 +551,11 @@ bool loading = false;
             
             
                     TextField(
-                      focusNode: myFocusNode,
+                   
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Phone Number',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.green: Colors.black
-                  ),
+      
                           hintText: 'Enter Customer Phone Number',
             
                           //  enabledBorder: OutlineInputBorder(
@@ -938,7 +1051,8 @@ bool loading = false;
                   "CustomerGuarantor2Name":CustomerGuarantor2Name,
                   "CustomerGuarantor2NID":CustomerGuarantor2NID,
                   "CustomerGuarantor2Address":CustomerGuarantor2Address,
-                  "CustomerGuarantor2PhoneNumber":CustomerGuarantor2PhoneNumber
+                  "CustomerGuarantor2PhoneNumber":CustomerGuarantor2PhoneNumber,
+                  "CustomerImageUrl":UploadImageURl
                 
                 };
 
@@ -951,7 +1065,7 @@ bool loading = false;
                   docUser.update(UpadateData).then((value) =>    
                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber,)),
+                        MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber, BikeID: widget.BikeId, CustomerID: widget.CustomerID,)),
                       )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong'),

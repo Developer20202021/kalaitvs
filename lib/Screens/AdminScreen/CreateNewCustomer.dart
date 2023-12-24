@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +12,7 @@ import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/ProductSaleEditCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
+import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -45,7 +48,9 @@ class _CreateNewCustomerState extends State<CreateNewCustomer> {
 
 
 
-
+  String CustomerName ="";
+  String CustomerAddress ="";
+  String CustomerPhoneNumber ="";
 
 
 
@@ -76,6 +81,10 @@ CollectionReference _collectionRef =
      if (AllData.isEmpty) {
 
       setState(() {
+
+      CustomerName ="";
+      CustomerAddress ="";
+      CustomerPhoneNumber ="";
         
         loading = false;
       });
@@ -85,6 +94,10 @@ CollectionReference _collectionRef =
       
      setState(() {
        AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      CustomerName = AllData[0]["CustomerName"];
+      CustomerAddress = AllData[0]["CustomerAddress"];
+      CustomerPhoneNumber = AllData[0]["CustomerPhoneNumber"];
 
        loading = false;
   
@@ -164,6 +177,20 @@ void CheckCustomerAddressField(){
 }
 
 
+// Internet Connection Checker
+
+bool online = true;
+Future getInternetValue() async{
+
+bool onlineData =await getInternetConnectionChecker().getInternetConnection() ;
+
+setState(() {
+  online = onlineData;
+  
+});
+
+
+}
 
 
 
@@ -173,6 +200,11 @@ void CheckCustomerAddressField(){
   void initState() {
 
     getData();
+
+    // var period = const Duration(seconds:1);
+    // Timer.periodic(period,(arg) {
+    //              getInternetValue();
+    // });
     // TODO: implement initState
     super.initState();
   }
@@ -195,11 +227,11 @@ void CheckCustomerAddressField(){
     var CustomerID = uuid.v4();
 
 
-    customerNameController.text = AllData.isEmpty?"":AllData[0]["CustomerName"];
+    customerNameController.text = CustomerName;
 
-    customerPhoneNumberController.text = AllData.isEmpty?"":AllData[0]["CustomerPhoneNumber"];
+    customerPhoneNumberController.text = CustomerPhoneNumber;
 
-    customerAddressController.text = AllData.isEmpty?"":AllData[0]["CustomerAddress"];
+    customerAddressController.text = CustomerAddress;
 
     customerNIDController.text = widget.CustomerNID;
 
@@ -231,7 +263,7 @@ void CheckCustomerAddressField(){
                 child: Center(
                       child: CircularProgressIndicator()
                     ),
-              ): SingleChildScrollView(
+              ):online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)):SingleChildScrollView(
 
               child: Padding(
               padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
@@ -251,10 +283,7 @@ void CheckCustomerAddressField(){
             
                     TextField(
 
-                       onChanged: (value) {
-             
-                        
-                      },
+                
                       
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -293,11 +322,7 @@ void CheckCustomerAddressField(){
             
                     TextField(
 
-                       onChanged: (value) {
-
-              
-                        
-                      },
+                   
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter Customer Address',
@@ -332,11 +357,7 @@ void CheckCustomerAddressField(){
             
                     TextField(
 
-                       onChanged: (value) {
-                   
-                   
-                        
-                      },
+                  
 
                       keyboardType: TextInputType.phone,
                       
@@ -376,9 +397,7 @@ void CheckCustomerAddressField(){
             
             
                     TextField(
-                      onChanged: (value) {
-                        
-                      },
+                 
 
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -417,13 +436,20 @@ void CheckCustomerAddressField(){
                         Container(width: 150, child:TextButton(onPressed: (){
 
 
-                          setState(() {
-                            loading = true;
-                          });
+                          // setState(() {
+                          //   loading = true;
+                          // });
+
+                    //  getInternetValue();
                           
                     Future createCustomer(String CustomerName, CustomerNID, CustomerAddress, CustomerPhoneNumber) async{
 
                       final docUser = FirebaseFirestore.instance.collection("customer");
+
+            
+
+
+                      if (AllData.isEmpty) {
 
                       final jsonData ={
                         "CustomerID":CustomerID,
@@ -437,12 +463,9 @@ void CheckCustomerAddressField(){
                         "BikeSalePrice":widget.BikeSalePrice
                       };
 
-
-                      if (AllData.isEmpty) {
-
                             await docUser.doc(CustomerID).set(jsonData).then((value) =>     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  ProductSaleEditCustomer(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice, BikeBuyingPrice: widget.BikeBuyingPrice, BikeId: widget.BikeId, CustomerID: CustomerID, AllData: AllData, AllDataEmpty: AllData.isEmpty,)),
+                        MaterialPageRoute(builder: (context) =>  ProductSaleEditCustomer(CustomerNID: customerNIDController.text.trim().toString(), CustomerAddress: customerAddressController.text.trim().toString(), CustomerName: customerNameController.text.trim().toString(), CustomerPhoneNumber: customerPhoneNumberController.text.trim().toString(), BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice, BikeBuyingPrice: widget.BikeBuyingPrice, BikeId: widget.BikeId, CustomerID: CustomerID, AllData: AllData, AllDataEmpty: AllData.isEmpty,)),
                       )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong!'),
@@ -455,6 +478,19 @@ void CheckCustomerAddressField(){
                             )));
                         
                       } else {
+
+
+                    final jsonData ={
+                       
+                        "CustomerName":CustomerName,
+                        "CustomerNID":CustomerNID,
+                        "CustomerAddress":CustomerAddress,
+                        "CustomerPhoneNumber":CustomerPhoneNumber,
+                        "BikeName":widget.BikeName,
+                        "BikeColor":widget.BikeColor,
+                        "BikeModelName":widget.BikeModelName,
+                        "BikeSalePrice":widget.BikeSalePrice
+                      };
 
 
                             await docUser.doc(CustomerID).update(jsonData).then((value) =>     Navigator.push(
@@ -482,12 +518,16 @@ void CheckCustomerAddressField(){
 
 
 
+                  
 
+                      createCustomer(customerNameController.text.trim().toLowerCase(), customerNIDController.text.trim(), customerAddressController.text, customerPhoneNumberController.text.trim());
+                      
+             
                   
 
 
 
-                  createCustomer(customerNameController.text.trim().toLowerCase(), customerNIDController.text.trim(), customerAddressController.text, customerPhoneNumberController.text.trim());
+                  
 
 
 
@@ -507,9 +547,9 @@ void CheckCustomerAddressField(){
 
 
 
-                      setState(() {
-                        loading = false;
-                      });
+                      // setState(() {
+                      //   loading = false;
+                      // });
 
                   
 
