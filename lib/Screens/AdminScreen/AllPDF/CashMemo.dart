@@ -33,7 +33,7 @@ class _CashMemoPDFViewState extends State<CashMemoPDFView> {
 
 @override
   void initState() {
-    FlutterNativeSplash.remove();
+    // FlutterNativeSplash.remove();
     // TODO: implement initState
     super.initState();
   }
