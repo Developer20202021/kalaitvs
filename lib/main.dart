@@ -6,6 +6,8 @@ import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/UploadAccessories.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/CashMemo.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/DeliveryChallan.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficeDeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
@@ -78,7 +80,41 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home:  LogInScreen(),
+      home:  OfficeDeliveryChallanPDFPreview(SalesData: [{              "ClassOfVehicle":"MOTOR CYCLE",
+                  "BikeBuyingPrice":"3455",
+                  "YearOfManufacture":" ",
+                  "SeatingCapacity":"",
+                  "BikeValvePerCylinder":"",
+                  "MakersName":"Bajaj Auto LTD/INDIA",
+                  "BikeMaximumPower":"",
+                  "BikeWheelBase":"",
+                  "BikeTyreFront":"",
+                  "BikeTyreRear":"",
+                  "SaleID":"",
+                  "CustomerAddress":"Joypurhat Sadar, Joypurhat",
+                  "BikeID":"",
+                  "CustomerID":"",
+                  "CustomerNID": "",
+                  "BikeChassisNo":"dfsdfds342",
+                  "BikeEngineNo":"dffew4525",
+                  "BikeDeliveryNo":"B-125",
+                  "BikeName":"BAJAJ DISCOVER 125 DISC",
+                  "BikeColor":"Black",
+                  "BikeSalePrice":"66448",
+                  "DiscountWithBikeSalePrice":"234234",
+                  "BikeDeliveryDate":DateTime.now(),
+                  "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                  "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
+                  "BikeSaleYear":"${DateTime.now().year}",
+                  "BikeBillPay":"24344",
+                  "BikePaymentDue":"344",
+                  "CustomerType":"",
+                  "CustomerName":"Mahadi Hasan",
+                  "CustomerPhoneNumber":"01721915550",
+                  "BikeConditionMonth":"0",
+                  "CustomerFatherName":"Mosta Hasan",
+                  "CustomerGuarantor1Address":"",
+                    }]),
     );
   }
 

@@ -13,18 +13,18 @@ import 'package:printing/printing.dart';
 
 
 
-class CashMemoPDFView extends StatefulWidget {
+class DeliveryChallanPDFPreview extends StatefulWidget {
 
 
 final List SalesData;
 
- const CashMemoPDFView({super.key,  required this.SalesData});
+ const DeliveryChallanPDFPreview({super.key,  required this.SalesData});
 
   @override
-  State<CashMemoPDFView> createState() => _CashMemoPDFViewState();
+  State<DeliveryChallanPDFPreview> createState() => _DeliveryChallanPDFPreviewState();
 }
 
-class _CashMemoPDFViewState extends State<CashMemoPDFView> {
+class _DeliveryChallanPDFPreviewState extends State<DeliveryChallanPDFPreview> {
 
 
 
@@ -56,7 +56,7 @@ class _CashMemoPDFViewState extends State<CashMemoPDFView> {
        
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Money Receipt", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
+        title: const Text("Delivery Challan", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -311,7 +311,7 @@ pdf.addPage(pw.Page(
                 
                 
                 
-                child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("SALES INVOICE", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
+                child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("DELIVERY CHALLAN", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
 
 
            
