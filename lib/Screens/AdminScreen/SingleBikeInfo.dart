@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
@@ -14,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 
@@ -46,8 +47,10 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
   TextEditingController BikeDeliveryNoController = TextEditingController();
   TextEditingController BikeConditionMonthController = TextEditingController();
   TextEditingController BikeBillPayController = TextEditingController();
+  TextEditingController DiscountAmountController = TextEditingController();
 
-
+  bool DiscountAvailable = false;
+  bool ConditionAvailable = false;
 
   bool loading = false;
 
@@ -101,9 +104,65 @@ var uuid = Uuid();
   //     }
 
 
+  bool EngineNoTextFieldEmpty = true;
+
+  void CheckEngineNoTextField(){
+
+    if (BikeEngineNoController.text.isEmpty) {
+
+      setState(() {
+        EngineNoTextFieldEmpty = true;
+      });
+      
+    } else {
+
+       setState(() {
+        EngineNoTextFieldEmpty = false;
+      });
+      
+    }
+
+  }
+
+
+
+
+
+  bool ChessisNoTextFieldEmpty = true;
+
+  void ChessisNoTextField(){
+
+    if (BikeChassisNoController.text.isEmpty) {
+
+      setState(() {
+        ChessisNoTextFieldEmpty = true;
+      });
+      
+    } else {
+
+       setState(() {
+        ChessisNoTextFieldEmpty = false;
+      });
+      
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   void initState() {
+
+       FlutterNativeSplash.remove();
     // TODO: implement initState
         FirebaseAuth.instance
                   .authStateChanges()
@@ -140,7 +199,7 @@ var uuid = Uuid();
 
 
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,bottom: 5),
         child: Container(
           height: 60,
           decoration: BoxDecoration(
@@ -269,7 +328,7 @@ var uuid = Uuid();
       ):SingleChildScrollView(
 
         child:  Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -280,7 +339,13 @@ var uuid = Uuid();
             
             
               TextField(
-                focusNode: myFocusNode,
+                onChanged: (value) {
+
+                  CheckEngineNoTextField();
+                  ChessisNoTextField();
+                  
+                },
+          
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Bike Name',
@@ -317,8 +382,15 @@ var uuid = Uuid();
             
             
               TextField(
-                
+                      onChanged: (value) {
+
+                  CheckEngineNoTextField();
+                  ChessisNoTextField();
+                  
+                },
                 decoration: InputDecoration(
+                   helperStyle: TextStyle(color: Colors.red),
+                      helperText: ChessisNoTextFieldEmpty?'*Required Enter Bike Chassis No':"",
                     border: OutlineInputBorder(),
                     labelText: 'Enter Chassis No',
                      labelStyle: TextStyle(
@@ -348,8 +420,16 @@ var uuid = Uuid();
 
 
               TextField(
+                onChanged: (value) {
+
+                  CheckEngineNoTextField();
+                  ChessisNoTextField();
+                  
+                },
                 
                 decoration: InputDecoration(
+                   helperStyle: TextStyle(color: Colors.red),
+                      helperText: EngineNoTextFieldEmpty?'*Required Enter Bike Engine No':"",
                     border: OutlineInputBorder(),
                     labelText: 'Enter Engine No',
                      labelStyle: TextStyle(
@@ -378,6 +458,12 @@ var uuid = Uuid();
 
 
               TextField(
+                   onChanged: (value) {
+
+                  CheckEngineNoTextField();
+                  ChessisNoTextField();
+                  
+                },
                
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -407,14 +493,19 @@ var uuid = Uuid();
               ),
 
               TextField(
-                
+                   onChanged: (value) {
+
+                  CheckEngineNoTextField();
+                  ChessisNoTextField();
+                  
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Enter Delivery No',
+                    labelText: 'Enter Delivery No or File No',
                      labelStyle: TextStyle(
         color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
             ),
-                    hintText: 'Enter Delivery No',
+                    hintText: 'Enter Delivery No or File No',
                     //  enabledBorder: OutlineInputBorder(
                     //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                     //   ),
@@ -465,6 +556,12 @@ var uuid = Uuid();
               ),
 
                TextField(
+                onChanged: (value) {
+
+                  CheckEngineNoTextField();
+                  ChessisNoTextField();
+                  
+                },
               keyboardType: TextInputType.number,
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -495,10 +592,31 @@ var uuid = Uuid();
           ),
 
 
-          Text("আপনি কত মাসের কিস্তিতে দিতে চান?", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                           CheckboxListTile(
+                                      title: Text(
+                                          "Condition Available?"
+                                              ,
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Josefin Sans")),
+                                      value: ConditionAvailable,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          ConditionAvailable = newValue!;
+                                        });
+                                      },
+                                      controlAffinity: ListTileControlAffinity
+                                          .leading, //  <-- leading Checkbox
+                                    ),
+                                    
+                                    
+                              const SizedBox(
+                                      height: 20,
+                                    ),
 
 
-           TextField(
+          ConditionAvailable? TextField(
               keyboardType: TextInputType.number,
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -521,7 +639,7 @@ var uuid = Uuid();
                 
                 ),
             controller: BikeConditionMonthController,
-          ),
+          ):Text(""),
         
           SizedBox(
             height: 10,
@@ -529,17 +647,68 @@ var uuid = Uuid();
 
 
 
+                         CheckboxListTile(
+                                      title: Text(
+                                          "Discount Available?"
+                                              ,
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Josefin Sans")),
+                                      value: DiscountAvailable,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          DiscountAvailable = newValue!;
+                                        });
+                                      },
+                                      controlAffinity: ListTileControlAffinity
+                                          .leading, //  <-- leading Checkbox
+                                    ),
+                                    
+                                    
+                              const SizedBox(
+                                      height: 20,
+                                    ),
 
 
+                
 
 
+             DiscountAvailable?   TextField(
+              keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Discount Amount',
+                 labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+        ),
+                hintText: 'Discount Amount',
+                //  enabledBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                //   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                  ),
+                
+                
+                ),
+            controller: DiscountAmountController,
+          ):Text(""),
+        
+          SizedBox(
+            height: 10,
+          ),
 
-            
-            
-              Row(
+
+  
+            ChessisNoTextFieldEmpty||EngineNoTextFieldEmpty?Text(""):Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(width: 150, child:TextButton(onPressed: () async{
+                  Container(width: 150, child:ElevatedButton(onPressed: () async{
 
 
                     setState(() {
@@ -594,50 +763,28 @@ var uuid = Uuid();
             
 
             final UpadateData ={
-              "BikeName":BikeNameController.text,
-              "BikeColor":BikeColorController.text,
-              "BikeChassisNo":BikeChassisNoController.text,
-              "BikeEngineNo":BikeEngineNoController.text,
-              "BikeConditionMonth":BikeConditionMonthController.text,
-              "BikeDeliveryNo":BikeDeliveryNoController.text,
-              "BikeSalePrice":BikeSalePriceController.text,
-              "BikeDeliveryDate":DateTime.now(),
+              "BikeName":BikeNameController.text.trim(),
+              "BikeColor":BikeColorController.text.trim(),
+              "BikeChassisNo":BikeChassisNoController.text.trim(),
+              "BikeEngineNo":BikeEngineNoController.text.trim(),
+              "BikeConditionMonth":ConditionAvailable?BikeConditionMonthController.text.trim().toString():"0",
+              "BikeDeliveryNo":BikeDeliveryNoController.text.trim(),
+              "BikeSalePrice":BikeSalePriceController.text.trim(),
+              "BikeDeliveryDate":DateTime.now().toIso8601String(),
               "BikeBillPay":BikeBillPay,
               "BikePaymentDue":BikePaymentDueString,
               "CustomerType":CustomerType,
-              "DuePaymentGivingDay":DuePaymentGivingDayInt.toString()
-              
-            
-
-          
-          
+              "DuePaymentGivingDay":DuePaymentGivingDayInt.toString()        
           };
-
-
-
 
 
           // user Data Update and show snackbar
 
             docUser.update(UpadateData).then((value) => setState(() async{
 
-
-
-
-
-
-
-
               await SendSMSToCustomer(widget.CustomerPhoneNumber, CustomerNID, BikeSalePriceController.text, widget.BikeName, BikeEngineNo, BikeChassisNo, BikeConditionMonth, BikeBillPay);
 
               await SendSMSToAdmin("", widget.CustomerPhoneNumber, widget.BikeName, BikeBillPay);
-
-
-
-
-
-
-
 
 
             })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -656,32 +803,11 @@ var uuid = Uuid();
 
         }
 
-
-
-
-
-
-
-
                     EditCustomerInformation(widget.CustomerNID, BikeChassisNoController.text, BikeEngineNoController.text, BikeConditionMonthController.text, BikeDeliveryNoController.text, BikeSalePriceController.text, BikeBillPayController.text);
 
-                    
-
-                   
-
-
-
-
+                  
 
             Future CustomerBikeSaleInfo(String BikeName, String BikeColor, String BikeChassisNo, String BikeEngineNo,String BikeDeliveryNo,  String BikeSalePrice, String CustomerNID, String BikeBillPay) async{
-
-
-
-            
-
-
-
-
 
 
                 int BikeSalePriceInt = int.parse(BikeSalePrice);
@@ -750,6 +876,7 @@ var uuid = Uuid();
                   "BikeTyreFront":GetBikeData[0]["BikeTyreFront"],
                   "BikeTyreRear":GetBikeData[0]["BikeTyreRear"],
                   "SaleID":SaleID,
+                  
                   "BikeID":widget.BikeID,
                   "CustomerID":widget.CustomerID,
                   "CustomerNID": widget.CustomerNID,
@@ -759,6 +886,8 @@ var uuid = Uuid();
                   "BikeName":BikeNameController.text,
                   "BikeColor":widget.BikeColor,
                   "BikeSalePrice":widget.BikeSalePrice,
+                  "DiscountWithBikeSalePrice":(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())),
+                  "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():0,
                   "BikeDeliveryDate":DateTime.now(),
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
@@ -768,7 +897,7 @@ var uuid = Uuid();
                   "CustomerType":CustomerType,
                   "CustomerName":CustomerData[0]["CustomerName"],
                   "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
-                  "BikeConditionMonth":BikeConditionMonthController.text.trim(),
+                  "BikeConditionMonth":ConditionAvailable?BikeConditionMonthController.text.trim().toString():"0",
                   "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
                   "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
                   "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
@@ -808,14 +937,6 @@ var uuid = Uuid();
                       )));
 
 
-
-
-
-
-
-
-
-
                       final salePrice = FirebaseFirestore.instance.collection("BikeSalePrice");
 
                       final saleData ={
@@ -837,9 +958,11 @@ var uuid = Uuid();
                   "BikeEngineNo":BikeEngineNoController.text,
                   "BikeDeliveryNo":BikeDeliveryNoController.text,
                   "BikeName":BikeNameController.text,
-                  "BikeConditionMonth":BikeConditionMonthController.text.trim(),
+                  "BikeConditionMonth":ConditionAvailable?BikeConditionMonthController.text.trim().toString():"0",
                   "BikeColor":widget.BikeColor,
                   "BikeSalePrice":widget.BikeSalePrice,
+                  "DiscountWithBikeSalePrice":(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())),
+                  "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():0,
                   "BikeDeliveryDate":DateTime.now(),
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
@@ -866,21 +989,9 @@ var uuid = Uuid();
                   "SalePrice":BikeSalePrice,
                   "DuePrice":BikePaymentDueInt.toString(),
 
-
-                  
-
-
                       };
 
                     await salePrice.add(saleData).then((value) => print(""));
-
-
-
-
-
-
-
-
 
                     List BikeData = [0];
 
@@ -917,21 +1028,7 @@ var uuid = Uuid();
 
 
 
-
-
-
-
-
-
-
-
-
     },));
-
-
-
-
-
 
 
                         
@@ -939,36 +1036,7 @@ var uuid = Uuid();
 
 
 
-
-
-
-
-            
-
-
-
             CustomerBikeSaleInfo(widget.BikeName, widget.BikeColor, widget.BikeColor, BikeEngineNoController.text, BikeDeliveryNoController.text, BikeSalePriceController.text, widget.CustomerNID, BikeBillPayController.text);
-
-
-
-
-
-
-
-
-          
-
-
-
-
-                   
-
-
-
-                    // fetchAlbum();
-
-                    
-        
 
 
 
@@ -979,13 +1047,15 @@ var uuid = Uuid();
 
 
 
-              
-
-
-
-
                 ],
-              )
+              ),
+
+
+
+              
+         SizedBox(
+            height: 30,
+          ),
             
             
             

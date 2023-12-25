@@ -21,6 +21,7 @@ import 'package:tvs_app/Screens/AdminScreen/MakeAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/PaymentHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/PerDayDueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/SearchByNID.dart';
+import 'package:tvs_app/Screens/AdminScreen/SingleBikeInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFileView.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadBikeImage.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home:  LogInScreen(),
+      home:  SingleBikeInfo(BikeName: "Bajaj City 100cc", BikeColor: "red", BikeSalePrice: "120000", CustomerNID: "1231344", CustomerPhoneNumber: "01721915550", CustomerID: "wedfwfwerwer", BikeID: "erwerfd"),
     );
   }
 
