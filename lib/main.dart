@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/UploadAccessories.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/CashMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
@@ -77,7 +78,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home:  SingleBikeInfo(BikeName: "Bajaj City 100cc", BikeColor: "red", BikeSalePrice: "120000", CustomerNID: "1231344", CustomerPhoneNumber: "01721915550", CustomerID: "wedfwfwerwer", BikeID: "erwerfd"),
+      home:  CashMemoPDFView(SalesData: [{}]),
     );
   }
 

@@ -7,6 +7,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:number_to_words_english/number_to_words_english.dart';
+import 'package:tvs_app/Screens/AdminScreen/AfterSaleBike.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
@@ -48,6 +50,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
   TextEditingController BikeConditionMonthController = TextEditingController();
   TextEditingController BikeBillPayController = TextEditingController();
   TextEditingController DiscountAmountController = TextEditingController();
+  TextEditingController QtyController = TextEditingController();
 
   bool DiscountAvailable = false;
   bool ConditionAvailable = false;
@@ -162,7 +165,9 @@ var uuid = Uuid();
   @override
   void initState() {
 
-       FlutterNativeSplash.remove();
+    print("${NumberToWordsEnglish.convert(100140020)}");
+
+      //  FlutterNativeSplash.remove();
     // TODO: implement initState
         FirebaseAuth.instance
                   .authStateChanges()
@@ -592,6 +597,12 @@ var uuid = Uuid();
           ),
 
 
+
+        
+        
+       
+
+
                            CheckboxListTile(
                                       title: Text(
                                           "Condition Available?"
@@ -758,7 +769,7 @@ var uuid = Uuid();
               }
 
 
-            final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
+            final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerID);
 
             
 
@@ -876,7 +887,7 @@ var uuid = Uuid();
                   "BikeTyreFront":GetBikeData[0]["BikeTyreFront"],
                   "BikeTyreRear":GetBikeData[0]["BikeTyreRear"],
                   "SaleID":SaleID,
-                  
+                  "CustomerAddress":CustomerData[0]["CustomerAddress"],
                   "BikeID":widget.BikeID,
                   "CustomerID":widget.CustomerID,
                   "CustomerNID": widget.CustomerNID,
@@ -967,12 +978,13 @@ var uuid = Uuid();
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleYear":"${DateTime.now().year}",
-                  "BikeBillPay":BikeBillPayController.text,
+                  "BikeBillPay":BikeBillPayController.text.trim().toString(),
+                  "BikeBillPayToWord":NumberToWordsEnglish.convert(int.parse(BikeBillPayController.text.trim().toString())),
                   "BikePaymentDue":BikePaymentDueString,
                   "CustomerType":CustomerType,
                   "CustomerName":CustomerData[0]["CustomerName"],
                   "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
-                
+                  "CustomerAddress":CustomerData[0]["CustomerAddress"],
                   "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
                   "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
                   "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
@@ -1023,7 +1035,13 @@ var uuid = Uuid();
 
 
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: CustomerData[0]["CustomerName"], CustomerNID: widget.CustomerNID, CustomerPhoneNumber: CustomerData[0]["CustomerPhoneNumber"], CustomerFileNo: BikeDeliveryNoController.text, CustomerAddress: CustomerData[0]["CustomerAddress"], BikeName: widget.BikeName, BikeEngineNo: BikeEngineNoController.text, BikeChassisNo: BikeChassisNoController.text, BikeSalePrice: BikeSalePrice, BikeCashInAmount: BikeBillPay, BikePaymentDue: BikePaymentDueString, BikeColor: widget.BikeColor, BikeCondition: BikeConditionMonthController.text) ));
+                        MaterialPageRoute(builder: (context) =>  AfterSaleBike(SalesData: [saleData])));
+
+
+
+
+
+                        // PdfPreviewPage(CustomerName: CustomerData[0]["CustomerName"], CustomerNID: widget.CustomerNID, CustomerPhoneNumber: CustomerData[0]["CustomerPhoneNumber"], CustomerFileNo: BikeDeliveryNoController.text, CustomerAddress: CustomerData[0]["CustomerAddress"], BikeName: widget.BikeName, BikeEngineNo: BikeEngineNoController.text, BikeChassisNo: BikeChassisNoController.text, BikeSalePrice: BikeSalePrice, BikeCashInAmount: BikeBillPay, BikePaymentDue: BikePaymentDueString, BikeColor: widget.BikeColor, BikeCondition: BikeConditionMonthController.text)
       
 
 
