@@ -140,7 +140,7 @@ Future<void> getData() async {
                           trailing: Container(width: 150, child:TextButton(onPressed: (){
 
 
-                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFileView(FileUrl: AllData[index]["CustomerFileUrl"])));
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFileView(FileUrl: AllData[index]["FileUrl"])));
 
 
                          

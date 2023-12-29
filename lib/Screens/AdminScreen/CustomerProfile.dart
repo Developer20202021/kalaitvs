@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/AfterSaleBike.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
@@ -351,9 +352,8 @@ setState(() {
               
                       
                       Center(
-                        child:  CircleAvatar(
-                          radius: 70,
-                          backgroundImage: NetworkImage(
+                        child:  ClipOval(
+                          child: Image.network(
                             "${AllData[0]["CustomerImageUrl"]}",
                           ),
                         ),
@@ -632,7 +632,7 @@ setState(() {
                                        
       
       
-                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PdfPreviewPage(CustomerName: AllData[0]["CustomerName"].toString(), CustomerNID: AllData[0]["CustomerNID"], CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"], CustomerFileNo: AllSaleData[i]["BikeDeliveryNo"], CustomerAddress: AllData[0]["CustomerAddress"], BikeName: AllSaleData[i]["BikeName"], BikeEngineNo: AllSaleData[i]["BikeEngineNo"], BikeChassisNo: AllSaleData[i]["BikeChassisNo"], BikeSalePrice: AllSaleData[i]["BikeSalePrice"], BikeCashInAmount: AllSaleData[i]["BikeBillPay"], BikePaymentDue: AllSaleData[i]["BikePaymentDue"], BikeColor: AllSaleData[i]["BikeColor"], BikeCondition: AllSaleData[i]["BikeConditionMonth"])));
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AfterSaleBike(SalesData: [AllSaleData[i]])));
       
       
                                
