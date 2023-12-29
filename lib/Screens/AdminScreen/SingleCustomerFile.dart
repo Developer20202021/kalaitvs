@@ -6,13 +6,13 @@ import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFileView.dart';
 
 class SingleCustomerFile extends StatefulWidget {
 
-  final CustomerNID;
+  final CustomerID;
   
 
 
 
 
-  const SingleCustomerFile({super.key, required this.CustomerNID});
+  const SingleCustomerFile({super.key, required this.CustomerID});
 
   @override
   State<SingleCustomerFile> createState() => _SingleCustomerFileState();
@@ -36,12 +36,12 @@ List  AllData = [];
   CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('CustomerFileInfo');
 
-Future<void> getData(String CustomerNID) async {
+Future<void> getData() async {
     // Get docs from collection reference
     // QuerySnapshot querySnapshot = await _collectionRef.get();
 
 
-    Query query = _collectionRef.where("CustomerNID", isEqualTo: CustomerNID);
+    Query query = _collectionRef.where("CustomerID", isEqualTo: widget.CustomerID);
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -74,7 +74,7 @@ Future<void> getData(String CustomerNID) async {
 @override
   void initState() {
     // TODO: implement initState
-    getData(widget.CustomerNID);
+    getData();
     super.initState();
   }
 
@@ -105,7 +105,7 @@ Future<void> getData(String CustomerNID) async {
     ),
         iconTheme: IconThemeData(color: Colors.purple),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title:  Text("${widget.CustomerNID} File Info", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text(" File Info", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -158,11 +158,11 @@ Future<void> getData(String CustomerNID) async {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
 
-                              Text("${AllData[index]["BikeName"]}"),
+                              Text("${AllData[index]["FileName"]}"),
 
                               Text("NID:${AllData[index]["CustomerNID"]}"),
 
-                              Text("Date: ${AllData[index]["FileUploadDateTime"]}"),
+                              Text("Date: ${AllData[index]["Date"]}"),
                             ],
                           ),
                     

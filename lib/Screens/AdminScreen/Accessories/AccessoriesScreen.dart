@@ -437,8 +437,8 @@ void doNothing(BuildContext context) {}
 
 
 
-void AccessoriesScreenPageToCustomerProfile(BuildContext context, String CustomerNID){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
+void AccessoriesScreenPageToCustomerProfile(BuildContext context, String CustomerID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: CustomerID)));
 }
 
 

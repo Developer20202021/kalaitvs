@@ -242,7 +242,7 @@ Future<void> getData() async {
                   // A SlidableAction can have an icon and/or a label.
                
                   SlidableAction(
-                    onPressed: (context) => PerDayDueCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
+                    onPressed: (context) => PerDayDueCustomerPageToCustomerProfile(context,AllData[index]["CustomerID"]),
                     backgroundColor: Color(0xFF21B7CA),
                     foregroundColor: Colors.white,
                     icon: Icons.info,
@@ -333,8 +333,8 @@ void doNothing(BuildContext context) {}
 
 
 
-void PerDayDueCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
+void PerDayDueCustomerPageToCustomerProfile(BuildContext context, String CustomerID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: CustomerID)));
 }
 
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +16,24 @@ import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+
+
+
 
 class CustomerProfile extends StatefulWidget {
 
 
-  final String CustomerNID;
+  final String CustomerID;
   
 
 
 
 
 
-  const CustomerProfile({super.key, required this.CustomerNID});
+  const CustomerProfile({super.key, required this.CustomerID});
 
   @override
   State<CustomerProfile> createState() => _EditCustomerInfoState();
@@ -50,12 +58,12 @@ List  AllData = [];
   CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('customer');
 
-Future<void> getData(String CustomerNID) async {
+Future<void> getData() async {
     // Get docs from collection reference
     // QuerySnapshot querySnapshot = await _collectionRef.get();
 
 
-    Query query = _collectionRef.where("CustomerNID", isEqualTo: CustomerNID);
+    Query query = _collectionRef.where("CustomerID", isEqualTo: widget.CustomerID);
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -102,7 +110,7 @@ Future<void> getSaleData() async {
   CollectionReference _collectionBikeSaleRef =
     FirebaseFirestore.instance.collection('BikeSaleInfo');
 
-    Query BikeSaleDataQuery = _collectionBikeSaleRef.where("CustomerNID", isEqualTo: widget.CustomerNID);
+    Query BikeSaleDataQuery = _collectionBikeSaleRef.where("CustomerID", isEqualTo: widget.CustomerID);
     QuerySnapshot BikeSaleDataQuerySnapshot = await BikeSaleDataQuery.get();
 
     // Get data from docs and convert map to List
@@ -136,6 +144,18 @@ Future<void> getSaleData() async {
 
 
 
+bool online = true;
+Future getInternetValue() async{
+
+bool onlineData =await getInternetConnectionChecker().getInternetConnection() ;
+
+setState(() {
+  online = onlineData;
+  
+});
+
+
+}
 
 
 
@@ -147,9 +167,17 @@ Future<void> getSaleData() async {
 
 @override
   void initState() {
+
+
+
+
+  var period = const Duration(seconds:1);
+    Timer.periodic(period,(arg) {
+                  getInternetValue();
+    });
     // TODO: implement initState
     
-    getData(widget.CustomerNID);
+    getData();
 
     // getSaleData();
     super.initState();
@@ -163,7 +191,7 @@ Future<void> getSaleData() async {
     setState(() {
             loading = true;
             
-           getData(widget.CustomerNID);
+           getData();
           //  getSaleData();
 
     });
@@ -312,17 +340,11 @@ Future<void> getSaleData() async {
       ),
       body: RefreshIndicator(
         onRefresh: refresh,
-        child: SingleChildScrollView(
+        child:loading?LinearProgressIndicator()
+        : online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)):SingleChildScrollView(
       
-                child: loading?Center(
-          child: LoadingAnimationWidget.discreteCircle(
-            color: const Color(0xFF1A1A3F),
-            secondRingColor: Theme.of(context).primaryColor,
-            thirdRingColor: Colors.white,
-            size: 100,
-          ),
-        ):Padding(
-                  padding: const EdgeInsets.all(20.0),
+                child: Padding(
+                  padding:  EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5, bottom: 9),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -697,7 +719,15 @@ Future<void> getSaleData() async {
 
                                    Text("DeliveryNo: ${AllSaleData[i]["BikeDeliveryNo"]}"),
 
-                                   Text("Sale Price: ${AllSaleData[i]["BikeSalePrice"]}"),
+                                   Text("Sale Price: ${AllSaleData[i]["BikeSalePrice"]}", style: TextStyle(color: Colors.redAccent, fontSize: 14, fontWeight: FontWeight.bold),),
+
+                                   Text("Buying Price: ${AllSaleData[i]["BikeBuyingPrice"]}", style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),),
+
+
+                                   Text("Profit: ${(double.parse(AllSaleData[i]["BikeSalePrice"].toString())-double.parse(AllSaleData[i]["BikeBuyingPrice"].toString()))}", style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),),
+
+
+
                                   //  BikeConditionMonth
 // BikeDeliveryNo
                                    Text("Condition: ${AllSaleData[i]["BikeConditionMonth"]} month"),
@@ -737,7 +767,7 @@ Future<void> getSaleData() async {
                           Container(width: 150, child:TextButton(onPressed: (){
       
       
-                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFile(CustomerNID: widget.CustomerNID)));
+                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => SingleCustomerFile( CustomerID: widget.CustomerID,)));
       
       
                            
@@ -779,7 +809,7 @@ Future<void> getSaleData() async {
 
           Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EditPreviousCustomer(CustomerNID: AllData[0]["CustomerNID"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
+                        MaterialPageRoute(builder: (context) => EditPreviousCustomer(CustomerNID: AllData[0]["CustomerNID"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"], CustomerID: AllData[0]["CustomerID"],)),
                       );
 
 

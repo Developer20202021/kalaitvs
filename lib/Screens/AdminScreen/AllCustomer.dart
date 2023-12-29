@@ -455,14 +455,14 @@ Future<void> getSearchData(String phoneNumber) async {
                 children:  [
                   // A SlidableAction can have an icon and/or a label.
                   SlidableAction(
-                    onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"] ),
+                    onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerID"] ),
                     backgroundColor: Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
                     icon: Icons.delete,
                     label: 'Delete',
                   ),
                   SlidableAction(
-                    onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
+                    onPressed: (context) => AllCustomerPageToCustomerProfile(context,AllData[index]["CustomerID"]),
                     backgroundColor: Color(0xFF21B7CA),
                     foregroundColor: Colors.white,
                     icon: Icons.info,
@@ -500,7 +500,7 @@ Future<void> getSearchData(String phoneNumber) async {
                 onTap: () {
 
 
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: AllData[index]["CustomerNID"])));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: AllData[index]["CustomerID"])));
                   
                 },
                 child: ListTile(
@@ -533,8 +533,8 @@ Future<void> getSearchData(String phoneNumber) async {
   }
 }
 
-void AllCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
+void AllCustomerPageToCustomerProfile(BuildContext context, String CustomerID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: CustomerID)));
 }
 
 

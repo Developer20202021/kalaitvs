@@ -22,6 +22,7 @@ class EditPreviousCustomer extends StatefulWidget {
   
 
   final  CustomerNID;
+  final CustomerID;
   final  CustomerName;
   final  CustomerAddress;
   final  CustomerPhoneNumber;
@@ -40,7 +41,7 @@ class EditPreviousCustomer extends StatefulWidget {
   
 
 
-  const EditPreviousCustomer({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber,required this.CustomerEmail, required this.CustomerFatherName, required this.CustomerMotherName, required this.CustomerGuarantor1Name, required this.CustomerGuarantor1PhoneNumber, required this.CustomerGuarantor1Address, required this.CustomerGuarantor2Name, required this.CustomerGuarantor2PhoneNumber, required this.CustomerGuarantor2NID, required this.CustomerGuarantor2Address, required this.CustomerGuarantor1NID});
+  const EditPreviousCustomer({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber,required this.CustomerEmail, required this.CustomerFatherName, required this.CustomerMotherName, required this.CustomerGuarantor1Name, required this.CustomerGuarantor1PhoneNumber, required this.CustomerGuarantor1Address, required this.CustomerGuarantor2Name, required this.CustomerGuarantor2PhoneNumber, required this.CustomerGuarantor2NID, required this.CustomerGuarantor2Address, required this.CustomerGuarantor1NID, required this.CustomerID});
 
   @override
   State<EditPreviousCustomer> createState() => _EditPreviousCustomerState();
@@ -950,10 +951,10 @@ String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-tran
 
           //Update Firebase Collection Customer Data 
 
-              Future EditPreviousCustomerrmation(String CustomerFatherName, String CustomerMotherName, String CustomerAddress, String CustomerEmail, String CustomerGuarantor1Name, String CustomerGuarantor1PhoneNumber, String CustomerGuarantor1NID, String CustomerGuarantor1Address, String CustomerGuarantor2Name, String CustomerGuarantor2PhoneNumber, String CustomerGuarantor2NID, String CustomerGuarantor2Address, String CustomerNID) async{
+              Future EditPreviousCustomerrmation(String CustomerFatherName, String CustomerMotherName, String CustomerAddress, String CustomerEmail, String CustomerGuarantor1Name, String CustomerGuarantor1PhoneNumber, String CustomerGuarantor1NID, String CustomerGuarantor1Address, String CustomerGuarantor2Name, String CustomerGuarantor2PhoneNumber, String CustomerGuarantor2NID, String CustomerGuarantor2Address, String CustomerID) async{
 
 
-                  final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
+                  final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerID);
 
                   final UpadateData ={
                   "CustomerName":CustomerNameController.text.trim().toLowerCase(),
@@ -982,7 +983,7 @@ String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-tran
                   docUser.update(UpadateData).then((value) =>    
                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)),
+                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: CustomerID)),
                       )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong'),
@@ -1009,7 +1010,7 @@ String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-tran
 
 
 
-                          EditPreviousCustomerrmation(CustomerFatherNameController.text, CustomerMotherNameController.text, CustomerAddressController.text, CustomerEmailController.text, CustomerGuarantor1NameController.text, CustomerGuarantor1PhoneNumberController.text, CustomerGuarantor1NIDController.text, CustomerGuarantor1AddressController.text, CustomerGuarantor2NameController.text, CustomerGuarantor2PhoneNumberController.text, CustomerGuarantor2NIDController.text, CustomerGuarantor2AddressController.text, widget.CustomerNID);
+                          EditPreviousCustomerrmation(CustomerFatherNameController.text, CustomerMotherNameController.text, CustomerAddressController.text, CustomerEmailController.text, CustomerGuarantor1NameController.text, CustomerGuarantor1PhoneNumberController.text, CustomerGuarantor1NIDController.text, CustomerGuarantor1AddressController.text, CustomerGuarantor2NameController.text, CustomerGuarantor2PhoneNumberController.text, CustomerGuarantor2NIDController.text, CustomerGuarantor2AddressController.text, widget.CustomerID);
 
                           
 

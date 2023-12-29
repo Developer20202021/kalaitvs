@@ -212,7 +212,7 @@ Future<void> getData() async {
                   // A SlidableAction can have an icon and/or a label.
                
                   SlidableAction(
-                    onPressed: (context) => DueCustomerPageToCustomerProfile(context,AllData[index]["CustomerNID"]),
+                    onPressed: (context) => DueCustomerPageToCustomerProfile(context,AllData[index]["CustomerID"]),
                     backgroundColor: Color(0xFF21B7CA),
                     foregroundColor: Colors.white,
                     icon: Icons.info,
@@ -246,41 +246,48 @@ Future<void> getData() async {
       
               // The child of the Slidable is what the user sees when the
               // component is not dragged.
-              child:  ListTile(
-                
-                   leading: CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Text("${AllData[index]["CustomerName"][0].toString().toUpperCase()}",style: TextStyle(color: Colors.white),),
-        ),
-      
-        subtitle: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-        
-            Text('NID:${AllData[index]["CustomerNID"]}'),
-            Text('Due: ${AllData[index]["BikePaymentDue"]} tk'),
-            Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
-            Text('${AllData[index]["CustomerType"]}'),
-          ],
-        ),
-        trailing: TextButton(onPressed: () {
-      
-      
-        
-      
-           Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendSMSToDueCustomer(CustomerNID: AllData[index]["CustomerNID"], CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"], BikePaymentDue: AllData[index]["BikePaymentDue"],BikeDuePaymentGivingDay: AllData[index]["DuePaymentGivingDay"],)));
-      
-      
-      
-        }, child: Text("Send Message", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-         
-                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-                ),),
-                
-                title: Text('${AllData[index]["CustomerName"].toString()}', style: TextStyle(
-                  fontWeight: FontWeight.bold
-                ),)),
+              child:  InkWell(
+                onTap: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: AllData[index]["CustomerID"])));
+                  
+                },
+                child: ListTile(
+                  
+                     leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Text("${AllData[index]["CustomerName"][0].toString().toUpperCase()}",style: TextStyle(color: Colors.white),),
+                      ),
+                    
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      
+                          Text('NID:${AllData[index]["CustomerNID"]}'),
+                          Text('Due: ${AllData[index]["BikePaymentDue"]} tk'),
+                          Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
+                          Text('${AllData[index]["CustomerType"]}'),
+                        ],
+                      ),
+                      trailing: TextButton(onPressed: () {
+                    
+                    
+                      
+                    
+                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendSMSToDueCustomer(CustomerNID: AllData[index]["CustomerNID"], CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"], BikePaymentDue: AllData[index]["BikePaymentDue"],BikeDuePaymentGivingDay: AllData[index]["DuePaymentGivingDay"],)));
+                    
+                    
+                    
+                      }, child: Text("Send Message", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                       
+                    backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                  ),),
+                  
+                  title: Text('${AllData[index]["CustomerName"].toString()}', style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),)),
+              ),
             );
           },
           itemCount: AllData.length,
@@ -302,8 +309,8 @@ void doNothing(BuildContext context) {}
 
 
 
-void DueCustomerPageToCustomerProfile(BuildContext context, String CustomerNID){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerNID: CustomerNID)));
+void DueCustomerPageToCustomerProfile(BuildContext context, String CustomerID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: CustomerID)));
 }
 
 
