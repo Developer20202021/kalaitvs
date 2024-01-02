@@ -14,6 +14,7 @@ class CustomerPaymentAdd extends StatefulWidget {
 
 
   final CustomerNID;
+  final CustomerID;
   final CustomerPhoneNumber;
   final BikePaymentDue;
   final CustomerName;
@@ -21,7 +22,7 @@ class CustomerPaymentAdd extends StatefulWidget {
 
 
 
-  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue, required this.CustomerName});
+  const CustomerPaymentAdd({super.key, required this.CustomerNID, required this.CustomerPhoneNumber, required this.BikePaymentDue, required this.CustomerName, required this.CustomerID});
 
   @override
   State<CustomerPaymentAdd> createState() => _CustomerPaymentAddState();
@@ -385,6 +386,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
                         
                         "CustomerNID":CustomerNID.trim(),
+                        "CustomerID":widget.CustomerID,
                         "CustomerPhoneNumber":CustomerPhoneNumber.trim(),
                         "Amount": Amount.trim(),
                         "PaymentDateTime":paymentDateTime,
@@ -447,7 +449,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
 
                   if (response.statusCode == 200) {
                     // If the server did return a 200 OK response,
@@ -520,7 +522,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
                     
-                final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNIDController.text);
+                final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerID);
 
             
 

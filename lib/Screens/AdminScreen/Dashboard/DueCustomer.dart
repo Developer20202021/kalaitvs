@@ -21,7 +21,7 @@ class _DueCustomerState extends State<DueCustomer> {
 bool loading = false;
 
 var DataLoad = "";
-int moneyAdd =0;
+int moneyAdd = 0;
 var totalDueCustomer = "";
 
    // Firebase All Customer Data Load
@@ -228,7 +228,7 @@ Future<void> getData() async {
                   SlidableAction(
                     // An action can be bigger than the others.
                     flex: 2,
-                    onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"], AllData[index]["CustomerName"] ),
+                    onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"], AllData[index]["CustomerName"], AllData[index]["CustomerID"]),
                     backgroundColor: Color(0xFF7BC043),
                     foregroundColor: Colors.white,
                     icon: Icons.payment,
@@ -317,8 +317,8 @@ void DueCustomerPageToCustomerProfile(BuildContext context, String CustomerID){
 
 
 
-void EveryPaymentHistory(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
+void EveryPaymentHistory(BuildContext context, String CustomerID, String CustomerPhoneNumber){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory(CustomerID: CustomerID, CustomerPhoneNumber: CustomerPhoneNumber)));
 }
 
 
@@ -328,8 +328,8 @@ void EveryPaymentHistory(BuildContext context, String CustomerNID, String Custom
 
 
 
- void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, CustomerName){
+ void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, CustomerName, String CustomerID){
 
 
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue, CustomerName: CustomerName,)));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue, CustomerName: CustomerName, CustomerID: CustomerID,)));
 }

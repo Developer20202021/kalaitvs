@@ -258,14 +258,14 @@ Future<void> getData() async {
                   SlidableAction(
                     // An action can be bigger than the others.
                     flex: 2,
-                    onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"],AllData[index]["CustomerName"]),
+                    onPressed: (context) => CustomerAddPayment(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["BikePaymentDue"],AllData[index]["CustomerName"], AllData[index]["CustomerID"]),
                     backgroundColor: Color(0xFF7BC043),
                     foregroundColor: Colors.white,
                     icon: Icons.payment,
                     label: 'Add Payment',
                   ),
                   SlidableAction(
-                    onPressed: (Context) => EveryPaymentHistory(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"] ),
+                    onPressed: (Context) => EveryPaymentHistory(context,AllData[index]["CustomerNID"] ,AllData[index]["CustomerPhoneNumber"], AllData[index]["CustomerID"] ),
                     backgroundColor: Color(0xFF0392CF),
                     foregroundColor: Colors.white,
                     icon: Icons.save,
@@ -341,8 +341,8 @@ void PerDayDueCustomerPageToCustomerProfile(BuildContext context, String Custome
 
 
 
-void EveryPaymentHistory(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
+void EveryPaymentHistory(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String CustomerID){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory( CustomerPhoneNumber: CustomerPhoneNumber, CustomerID: CustomerID,)));
 }
 
 
@@ -352,8 +352,8 @@ void EveryPaymentHistory(BuildContext context, String CustomerNID, String Custom
 
 
 
- void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, String CustomerName){
+ void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, String CustomerName, String CustomerID){
 
 
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue,CustomerName: CustomerName,)));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue,CustomerName: CustomerName, CustomerID: CustomerID,)));
 }

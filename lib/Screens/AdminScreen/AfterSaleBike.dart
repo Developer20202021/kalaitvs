@@ -55,9 +55,6 @@ setState(() {
     Timer.periodic(period,(arg) {
                   getInternetValue();
     });
-
-
-
     // TODO: implement initState
 
     super.initState();

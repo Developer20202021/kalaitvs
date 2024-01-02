@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,12 @@ import 'package:tvs_app/Screens/AdminScreen/Sms/smsinfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadProduct.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
+import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
 import 'package:tvs_app/Screens/DeveloperInfo/DeveloperInfo.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+
+
 
 class HomeScreen extends StatefulWidget {
 
@@ -172,8 +179,44 @@ Future<void> getData(String paymentDate) async {
 }
 
 
+
+
+
+// internet Connection Checker
+
+bool online = true;
+Future getInternetValue() async{
+
+bool onlineData =await getInternetConnectionChecker().getInternetConnection() ;
+
+setState(() {
+  online = onlineData;
+  
+});
+
+
+}
+
+
+
+
+
+
+
+
 @override
   void initState() {
+
+
+    var period = const Duration(seconds:1);
+    Timer.periodic(period,(arg) {
+                 getInternetValue();
+    });
+
+
+
+
+
     // TODO: implement initState
     getPaidCustomerData();
     getDueCustomerData();
@@ -1010,10 +1053,10 @@ PopupMenuItem(
       ),
       body: RefreshIndicator(
         onRefresh: refresh,
-        child: SingleChildScrollView(
+        child: online==false?Center(child: Text("No Internet Connection", style: TextStyle(fontSize: 24, color: Colors.red),)):SingleChildScrollView(
       
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.only(left:kIsWeb?205:5, right: kIsWeb?205:5,),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

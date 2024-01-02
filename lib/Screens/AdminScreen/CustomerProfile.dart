@@ -11,6 +11,7 @@ import 'package:tvs_app/Screens/AdminScreen/AfterSaleBike.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
+import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
@@ -354,7 +355,7 @@ setState(() {
                       Center(
                         child:  ClipOval(
                           child: Image.network(
-                            "${AllData[0]["CustomerImageUrl"]}",
+                            AllData[0]["CustomerImageUrl"]==""?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoocHKiIUok-RD7VaxEivcDEwGLdbsMO5JL66hM1Z12x9t6kEvwqKoUNvDeRBc6H9dh4g&usqp=CAU":"${AllData[0]["CustomerImageUrl"]}",
                           ),
                         ),
                       ),
@@ -629,22 +630,36 @@ setState(() {
                                         PopupMenuItem(
                                           onTap: () {
 
-                                       
-      
-      
                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => AfterSaleBike(SalesData: [AllSaleData[i]])));
       
-      
-                               
-      
-      
-      
-      
-      
-      
-                                            
                                           },
-                                          child: Text("Print"),
+                                          child: Text("Print All Invoice"),
+                                          value: '/hello',
+                                        ),
+
+                                        AllSaleData[i]["BikePaymentDue"]=="0"?
+                                        PopupMenuItem(
+                                          onTap: () {
+
+
+                                    
+                               
+                                  
+      
+                                          },
+                                          child: Text("Paid"),
+                                          value: '/hello',
+                                        ):
+                                        PopupMenuItem(
+                                          onTap: () {
+
+
+                                    
+                               
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AfterSaleBike(SalesData: [AllSaleData[i]])));
+      
+                                          },
+                                          child: Text("Payment Add"),
                                           value: '/hello',
                                         ),
                                         PopupMenuItem(
@@ -809,7 +824,7 @@ setState(() {
 
           Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EditPreviousCustomer(CustomerNID: AllData[0]["CustomerNID"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"], CustomerID: AllData[0]["CustomerID"],)),
+                        MaterialPageRoute(builder: (context) => EditCustomerInfo(CustomerNID: AllData[0]["CustomerNID"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"], CustomerID: AllData[0]["CustomerID"], CustomerImageUrl: AllData[0]["CustomerImageUrl"],)),
                       );
 
 

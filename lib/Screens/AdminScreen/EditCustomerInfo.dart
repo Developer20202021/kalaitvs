@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadCustomerInfo.dart';
 import 'package:tvs_app/Screens/CommonScreen/LogInScreen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,14 +29,23 @@ class EditCustomerInfo extends StatefulWidget {
   final String CustomerName;
   final String CustomerAddress;
   final String CustomerPhoneNumber;
-  final String BikeName;
-  final String BikeColor;
-  final String BikeModelName;
-  final String BikeSalePrice;
+  final String CustomerID;
+  final String CustomerGuarantor1NID;
+  final String CustomerGuarantor2Address;
+  final CustomerGuarantor2NID;
+  final CustomerGuarantor2PhoneNumber;
+  final CustomerGuarantor2Name;
+  final CustomerGuarantor1Address;
+  final CustomerGuarantor1PhoneNumber;
+  final CustomerGuarantor1Name;
+  final CustomerEmail;
+  final CustomerFatherName;
+  final CustomerMotherName;
+  final CustomerImageUrl;
   
 
 
-  const EditCustomerInfo({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber, required this.BikeColor, required this.BikeModelName, required this.BikeName, required this.BikeSalePrice});
+  const EditCustomerInfo({super.key,  required this.CustomerNID, required this.CustomerAddress, required this.CustomerName, required this.CustomerPhoneNumber, required this.CustomerID, required this.CustomerEmail, required this.CustomerGuarantor1Address, required this.CustomerGuarantor1NID, required this.CustomerGuarantor1Name, required this.CustomerGuarantor1PhoneNumber, required this.CustomerGuarantor2Address, required this.CustomerGuarantor2NID, required this.CustomerGuarantor2Name, required this.CustomerGuarantor2PhoneNumber, required this.CustomerFatherName, required this.CustomerMotherName, required this.CustomerImageUrl});
 
   @override
   State<EditCustomerInfo> createState() => _EditCustomerInfoState();
@@ -56,150 +70,193 @@ class _EditCustomerInfoState extends State<EditCustomerInfo> {
   TextEditingController CustomerGuarantor2NIDController = TextEditingController();
 
 
-
 String LastUpdatedCustomerImageUrl ="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png";
 
-bool loading = false;
-
-
-
-
-   firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
-
-  int count = 0;
-
   File? _photo;
+
+  String image64 = "";
+
+  String UploadImageURl = "";
+  
+ bool ImageLoading = false;
+
+ bool loading = false;
+
+List AllUploadImageUrl =[];
+
+
+ 
+
   final ImagePicker _picker = ImagePicker();
 
-
-  Future uploadFile(Context) async {
-    if (_photo == null) return;
-    final fileName = basename(_photo!.path);
-    final destination = 'files/$fileName';
-
-  // image loading sign
-    setState(() {
-      loading = true;
-    });
-
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!).then((p0) =>setState(() {
-        count++;
-
-        print(p0);
-      }));
+  Future imgFromGallery(BuildContext context) async {
+    //old
+    // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
 
-      String CustomerImageUrl = (await ref.getDownloadURL()).toString();
+     var pickedFile = await FilePicker.platform.pickFiles();
 
-     //Update Firebase Collection Customer Data 
+        if (pickedFile != null) {
+          print(pickedFile.files.first.name);
+        }
 
-              Future EditCustomerInformation(String CustomerImageUrl) async{
-
-
-                  final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerNID);
-
-                  final UpadateData ={
-                  "CustomerImageUrl":CustomerImageUrl,
-               
-                
-                };
-
-
-
-
-
-                // user Data Update and show snackbar
-
-                  docUser.update(UpadateData).then((value) =>    
-                  setState(() {
-                    loading = false;
-              LastUpdatedCustomerImageUrl = CustomerImageUrl; 
-                  })).onError((error, stackTrace) => print(error));
-
-
-
-
-              }
-
-
-
-
-
-
-
-
-                          EditCustomerInformation(CustomerImageUrl);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-    } catch (e) {
-      print('error occured');
-    }
-  }
-
-
-
-
-
-  Future imgFromGallery(Context) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
+    //old
     setState(() {
       if (pickedFile != null) {
-        _photo = File(pickedFile.path);
+
+
+        final bytes = Uint8List.fromList(pickedFile.files.first.bytes as List<int>);
+
+
+        setState(() {
+          image64 = base64Encode(bytes);
+        });
+
         uploadFile(context);
       } else {
         print('No image selected.');
       }
     });
+
+
+
+
   }
 
-  Future imgFromCamera(Context) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile(context);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
 
 
 
   
+  Future imgFromCamera(BuildContext context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        setState(() {
+        loading = true;
+      });
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+
+  
+  Future uploadFile(BuildContext context) async {
+
+    setState(() {
+                    loading = true;
+                  });
+
+
+    try {
+
+
+      
+
+
+
+   var request = await http.post(Uri.parse("https://api.imgbb.com/1/upload?key=9a7a4a69d9a602061819c9ee2740be89"),  body: {
+          'image':'$image64',
+        } ).then((value) => setState(() {
+
+
+          print(jsonDecode(value.body));
+
+
+
+          var serverData = jsonDecode(value.body);
+
+          var serverImageUrl = serverData["data"]["url"];
+
+          setState(() {
+            UploadImageURl = serverImageUrl;
+            AllUploadImageUrl.insert(AllUploadImageUrl.length, serverImageUrl);
+          });
+
+          print(serverImageUrl);
+
+          // updateData(serverImageUrl,context);
+
+
+            setState(() {
+                    loading = false;
+                  });
+
+        
+             final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Your Image Upload Successfull',
+                      message:
+                          'Your Image Upload Successfull',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+        })).onError((error, stackTrace) => setState((){
+
+
+      setState(() {
+        loading = false;
+      });
+
+
+
+
+           final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Something Wrong!!!',
+                      message:
+                          'Try again later',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
 
 
 
 
 
 
+        }));
 
 
- 
+
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
   
 
 
@@ -220,6 +277,20 @@ bool loading = false;
     CustomerAddressController.text = widget.CustomerAddress;
     CustomerPhoneNumberController.text = widget.CustomerPhoneNumber;
     CustomerNIDController.text = widget.CustomerNID;
+
+
+
+  CustomerEmailController.text = widget.CustomerEmail;
+  CustomerNIDController.text = widget.CustomerNID;
+  CustomerGuarantor1NameController.text = widget.CustomerGuarantor1Name;
+  CustomerGuarantor1NIDController.text = widget.CustomerGuarantor1NID;
+  CustomerGuarantor1PhoneNumberController.text = widget.CustomerGuarantor1PhoneNumber;
+  CustomerGuarantor1AddressController.text = widget.CustomerGuarantor1Address;
+
+  CustomerGuarantor2NameController.text = widget.CustomerGuarantor2Name;
+  CustomerGuarantor2PhoneNumberController.text = widget.CustomerGuarantor2PhoneNumber;
+  CustomerGuarantor2AddressController.text = widget.CustomerGuarantor2Address;
+  CustomerGuarantor2NIDController.text = widget.CustomerGuarantor2NID;
 
 
 
@@ -273,14 +344,13 @@ bool loading = false;
           size: 50,
         ),
       ):
-                    Center(
-                      child:  CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                          "${LastUpdatedCustomerImageUrl}",
+                   Center(
+                        child:  ClipOval(
+                          child: Image.network(
+                            widget.CustomerImageUrl==""?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoocHKiIUok-RD7VaxEivcDEwGLdbsMO5JL66hM1Z12x9t6kEvwqKoUNvDeRBc6H9dh4g&usqp=CAU":widget.CustomerImageUrl,
+                          ),
                         ),
                       ),
-                    ),
             
              SizedBox(
                       height: 20,
@@ -920,9 +990,10 @@ bool loading = false;
               Future EditCustomerInformation(String CustomerFatherName, String CustomerMotherName, String CustomerAddress, String CustomerEmail, String CustomerGuarantor1Name, String CustomerGuarantor1PhoneNumber, String CustomerGuarantor1NID, String CustomerGuarantor1Address, String CustomerGuarantor2Name, String CustomerGuarantor2PhoneNumber, String CustomerGuarantor2NID, String CustomerGuarantor2Address, String CustomerNID) async{
 
 
-                  final docUser = FirebaseFirestore.instance.collection("customer").doc(CustomerNID);
+                  final docUser = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerID);
 
                   final UpadateData ={
+                  "CustomerImageUrl":UploadImageURl,
                   "CustomerName":CustomerNameController.text.trim().toLowerCase(),
                   "CustomerPhoneNumber":CustomerPhoneNumberController.text.trim(),
                   "CustomerFatherName":CustomerFatherName,
@@ -949,11 +1020,13 @@ bool loading = false;
                   docUser.update(UpadateData).then((value) =>    
                    setState((){
 
+                    // Navigator.pop(context);
 
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => UploadCustomerInfo(CustomerNID: widget.CustomerNID, BikeColor: widget.BikeColor, BikeName: widget.BikeName, BikeSalePrice: widget.BikeSalePrice, CustomerPhoneNumber: widget.CustomerPhoneNumber,)),
-                      // );
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CustomerProfile(CustomerID: widget.CustomerID)),
+                      );
 
 
                    })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(

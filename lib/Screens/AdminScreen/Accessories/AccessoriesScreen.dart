@@ -445,8 +445,8 @@ void AccessoriesScreenPageToCustomerProfile(BuildContext context, String Custome
 
 
 
-void EveryPaymentHistory(BuildContext context, String CustomerNID, String CustomerPhoneNumber){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber)));
+void EveryPaymentHistory(BuildContext context, String CustomerID, String CustomerPhoneNumber){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentHistory( CustomerPhoneNumber: CustomerPhoneNumber, CustomerID:CustomerID,)));
 }
 
 
@@ -456,8 +456,8 @@ void EveryPaymentHistory(BuildContext context, String CustomerNID, String Custom
 
 
 
- void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, CustomerName){
+ void CustomerAddPayment(BuildContext context, String CustomerNID, String CustomerPhoneNumber, String BikePaymentDue, CustomerName, String CustomerID,){
 
 
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue, CustomerName: CustomerName,)));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPaymentAdd(CustomerNID: CustomerNID, CustomerPhoneNumber: CustomerPhoneNumber, BikePaymentDue: BikePaymentDue, CustomerName: CustomerName, CustomerID: CustomerID,)));
 }

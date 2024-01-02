@@ -565,10 +565,10 @@ setState(() {
 
                  Container(width: 150, child:TextButton(onPressed: (){
 
-                            Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>  SearchByNID(BikeName: widget.BikeName, BikeColor:widget.BikeColor, BikeModelName: widget.BikeModelName, BikeSalePrice: widget.BikeSalePrice)),
-                      );
+                      //       Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) =>  SearchByNID(BikeName: widget.BikeName, BikeColor:widget.BikeColor, BikeModelName: widget.BikeModelName, BikeSalePrice: widget.BikeSalePrice)),
+                      // );
 
 
 

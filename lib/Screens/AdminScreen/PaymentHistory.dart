@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 
 class PaymentHistory extends StatefulWidget {
 
-  final CustomerNID;
+  final CustomerID;
   final CustomerPhoneNumber;
 
 
 
 
-  const PaymentHistory({super.key, required this.CustomerNID, required this.CustomerPhoneNumber});
+  const PaymentHistory({super.key, required this.CustomerID, required this.CustomerPhoneNumber,});
 
   @override
   State<PaymentHistory> createState() => _PaymentHistoryState();
@@ -33,7 +33,7 @@ Future<void> getData(String CustomerNID) async {
     // QuerySnapshot querySnapshot = await _collectionRef.get();
 
 
-    Query query = _collectionRef.where("CustomerNID", isEqualTo: CustomerNID);
+    Query query = _collectionRef.where("CustomerID", isEqualTo: widget.CustomerID);
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -60,7 +60,7 @@ Future<void> getData(String CustomerNID) async {
 @override
   void initState() {
     // TODO: implement initState
-    getData(widget.CustomerNID);
+    getData(widget.CustomerID);
     super.initState();
   }
 
@@ -72,7 +72,7 @@ Future<void> getData(String CustomerNID) async {
 
     setState(() {
       
-        getData(widget.CustomerNID);
+        getData(widget.CustomerID);
 
     });
 
