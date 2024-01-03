@@ -98,11 +98,11 @@ List AllUploadImageUrl =[];
         }
 
     //old
-    setState(() {
+    setState(() async{
       if (pickedFile != null) {
 
 
-        final bytes = Uint8List.fromList(pickedFile.files.first.bytes as List<int>);
+        final bytes = await Uint8List.fromList(pickedFile.files.first.bytes as List<int>);
 
 
         setState(() {

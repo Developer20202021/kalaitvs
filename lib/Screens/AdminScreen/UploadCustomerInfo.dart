@@ -72,11 +72,11 @@ List AllUploadImageUrl =[];
         }
 
     //old
-    setState(() {
+    setState(() async{
       if (pickedFile != null) {
 
 
-        final bytes = Uint8List.fromList(pickedFile.files.first.bytes as List<int>);
+        final bytes = await Uint8List.fromList(pickedFile.files.first.bytes as List<int>);
 
 
         setState(() {
@@ -125,6 +125,7 @@ List AllUploadImageUrl =[];
 
     setState(() {
                     loading = true;
+                    ImageLoading = true;
                   });
 
 
@@ -160,6 +161,7 @@ List AllUploadImageUrl =[];
 
             setState(() {
                     loading = false;
+                     ImageLoading = true;
                   });
 
         
@@ -460,7 +462,7 @@ Future<void> getData() async {
 
 
 
-                  Center(
+                                   Center(
                                         child: GestureDetector(
                                                     onTap: () {
                                                       _showPicker(context);
@@ -469,7 +471,7 @@ Future<void> getData() async {
                                                       radius: 100,
                                                       backgroundColor: Theme.of(context).primaryColor,
                                                       child: UploadImageURl.isNotEmpty
-                                    ? ClipRRect(
+                                    ?ImageLoading?CircularProgressIndicator():ClipRRect(
                                         borderRadius: BorderRadius.circular(5),
                                         child: Image.network(
                                           "${UploadImageURl}",
