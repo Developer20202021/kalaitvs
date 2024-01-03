@@ -389,7 +389,7 @@ if (connectivityResult == ConnectivityResult.mobile) {
     
   }
 } else if (connectivityResult == ConnectivityResult.wifi) {
-   print("wifi");
+  // print("wifi");
 
   if (this.mounted) {
     setState(() {

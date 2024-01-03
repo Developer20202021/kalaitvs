@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,12 @@ class CustomerProfile extends StatefulWidget {
 }
 
 class _EditCustomerInfoState extends State<CustomerProfile> {
+
+
+TextEditingController DueAmountController = TextEditingController();
+
+
+
 
 
 bool loading = true;
@@ -160,6 +167,7 @@ setState(() {
 }
 
 
+late var timer;
 
 
 
@@ -170,13 +178,13 @@ setState(() {
 @override
   void initState() {
 
-
-
-
-  var period = const Duration(seconds:1);
-    Timer.periodic(period,(arg) {
+ if (mounted) {
+   var period = const Duration(seconds:1);
+   timer = Timer.periodic(period,(arg) {
                   getInternetValue();
     });
+   
+ }
     // TODO: implement initState
     
     getData();
@@ -184,6 +192,14 @@ setState(() {
     // getSaleData();
     super.initState();
   }
+
+
+
+  @override
+void dispose() {
+  timer.cancel();
+  super.dispose();
+}
 
 
 
@@ -651,12 +667,428 @@ setState(() {
                                           value: '/hello',
                                         ):
                                         PopupMenuItem(
-                                          onTap: () {
+                                          onTap: () async{
+
+
+
+                                           
+                                
+
+                           showDialog(
+                      context: context,
+                      builder: (context) {
+                       
+                        bool payLoading = false;
+
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                            title: Text('Pay Now'),
+                            content:payLoading==true?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
+                              child: Column(
+                                children: [
+
+                                  Center(
+                                    child: Row(children: [
+
+                                      Image.asset('lib/images/payment-method.png', fit: BoxFit.cover, width: 50,height: 50,),
+
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+
+                                      Text("Pay Now Due:${AllSaleData[i]["BikePaymentDue"]}৳")
+                                  
+                                    ],),
+                                  ),
+
+
+                                  SizedBox(
+                                    height: 14,
+                                  ),
+
+                    
+                    
+
+
+                      
+
+                      SizedBox(
+                                    height: 14,
+                                  ),
+
+                    
+                    
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Name: ${AllSaleData[i]["CustomerName"]}',
+            
+                          hintText: 'Name: ${AllSaleData[i]["CustomerName"]}',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                    
+                    ),
+
+
+
+                     SizedBox(
+                                    height: 14,
+                                  ),
+
+                    
+                    
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Phone No: ${AllSaleData[i]["CustomerPhoneNumber"]}',
+            
+                          hintText: 'Phone No: ${AllSaleData[i]["CustomerPhoneNumber"]}',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                    
+                    ),
+
+
+
+                    SizedBox(
+                                    height: 14,
+                                  ),
+
+                    
+                    
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Total Due: ${AllSaleData[i]["BikePaymentDue"]}৳',
+            
+                          hintText: 'Total Due: ${AllSaleData[i]["BikePaymentDue"]} ৳',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                    
+                    ),
+
+
+                    
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Amount',
+            
+                          hintText: 'Amount',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: DueAmountController,
+                    ),
+
+
+
+                      SizedBox(
+                            height: 14,
+                            ),
+
+
+
+
+
+                                ],
+                              ),
+
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                
+                                onPressed: () {
+
+                                  Navigator.pop(context);
+                                },
+                                child: Text('CANCEL'),
+                              ),
+                              ElevatedButton(
+                                
+                                onPressed: () async{
+
+                                  setState((){
+
+                                    payLoading = true;
+
+                                  });
+
+                            final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo").doc(AllSaleData[i]["SaleID"]);
+
+                              final UpadateData ={
+
+                                "BikePaymentDue":(double.parse(AllSaleData[i]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString())).toString(),
+                                "TotalCashIn":(double.parse(AllSaleData[i]["TotalCashIn"].toString()) + double.parse(DueAmountController.text.trim().toString())).toString(),
+
+                                "CustomerType":(double.parse(AllSaleData[i]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString()))<=0?"Paid":"Due",
+                         
+                                
+                                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) =>    
+                   setState(() async{
+
+
+
+                    final docCustomerInfo = FirebaseFirestore.instance.collection("customer").doc(widget.CustomerID);
+
+
+                    final UpadateCustomerData ={
+
+                          
+
+                                "CustomerType":(double.parse(AllData[0]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString()))<=0?"Paid":"Due",
+                         
+                                
+                                };
+
+
+                  
+
+
+                   await docCustomerInfo.update(UpadateCustomerData).then((value) =>  setState(() async{
+
+
+
+
+
+
+                    
+
+                    // Navigator.pop(context);
+
+                    var adminEmail ="";
+                    var adminName = "";
+
+                    FirebaseAuth.instance
+                          .authStateChanges()
+                          .listen((User? user) {
+                            if (user != null) {
+
+
+                              setState(() {
+                                adminEmail = user.email!;
+                                adminName = user.displayName!;
+                              });
+                              
+
+
+
+                            }
+                          });
+
+
+
+
+
+            final docUser = FirebaseFirestore.instance.collection("DuePaymentAddInfo");
+
+
+
+
+                      final jsonData ={
+                        "CustomerNID":AllSaleData[i]["CustomerNID"],
+                        "CustomerID":widget.CustomerID,
+                        "CustomerPhoneNumber":AllSaleData[i]["CustomerPhoneNumber"],
+                        "Amount": DueAmountController.text.trim().toString(),
+                        "PaymentDateTime": DateTime.now().toIso8601String(),
+                        "PaymentDate":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentMonth":"${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentYear":"${DateTime.now().year.toString()}",
+                        "adminEmail":adminEmail,
+                        "adminName":adminName
+
+                        
+                      };
+
+
+                    await docUser.add(jsonData).then((value) =>  setState(() async{
+
+
+
+
+
+
+
+
+
+                        var customerMsg = "Dear Customer From Orthee Bajaj Showroom ${AllSaleData[i]["CustomerNID"]} Account No এ ${DueAmountController.text.trim()}৳ কিস্তি পরিশোধ করেছেন। ধন্যবাদ";
+
+
+
+                        final CustomerSmsResponse = await http
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
+
+                       try {
+
+                         if (CustomerSmsResponse.statusCode == 200) {
+                          // If the server did return a 200 OK response,
+                          // then parse the JSON.
+                          
+                          print(jsonDecode(CustomerSmsResponse.body));
+                        
+                        } else {
+                          // If the server did not return a 200 OK response,
+                          // then throw an exception.
+                          throw Exception('Failed to load album');
+                        }
+                         
+                       } catch (e) {
+                         
+                       }
+
+
+
+                        
+                 var AdminMsg = "Orthee Bajaj Showroom NID:${AllSaleData[i]["CustomerNID"]} ${DueAmountController.text.trim().toString()}৳ কিস্তি পরিশোধ করেছেন।${adminEmail} Admin টাকা জমা নিয়েছেন।";
+
+
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01721915550&message=${AdminMsg}'));
+
+                            try {
+                                if (response.statusCode == 200) {
+                                  // If the server did return a 200 OK response,
+                                  // then parse the JSON.
+                                  print(jsonDecode(response.body));
+              
+                                
+                                } else {
+                                  // If the server did not return a 200 OK response,
+                                  // then throw an exception.
+                                  throw Exception('Failed to load album');
+                                }
+                              
+                            } catch (e) {
+                              
+                            }
+
+
+
+                  setState((){
+                    payLoading = false;
+                  });
+
+                  Navigator.pop(context);
+
+
+  })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: const Text('Customer Payment Add Successful!!!'),
+            backgroundColor: (Colors.green),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+
+
+
+
+  })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: const Text('Customer Payment Add Successful!!!'),
+            backgroundColor: (Colors.green),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+
+
+
+
+                   })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.red,
+                              content: const Text('Something Wrong'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+                                },
+                                child: Text('Save'),
+                              ),
+                            ],
+                          );});});
+
+
+
+                          // Alert End 
 
 
                                     
                                
-                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AfterSaleBike(SalesData: [AllSaleData[i]])));
+                                      //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AfterSaleBike(SalesData: [AllSaleData[i]])));
       
                                           },
                                           child: Text("Payment Add"),
@@ -751,6 +1183,8 @@ setState(() {
 
 
                                    Text("Cash In: ${AllSaleData[i]["BikeBillPay"]} "),
+
+                                   Text("Total CashIn: ${AllSaleData[i]["TotalCashIn"].toString()}",style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),),
                                 ],
                               ),
                         

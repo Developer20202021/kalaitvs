@@ -68,6 +68,38 @@ var uuid = Uuid();
 
 
 
+
+
+
+List  AllData = [];
+
+
+
+
+Future<void> getData() async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('customer');
+
+    Query query = _collectionRef.where("CustomerID", isEqualTo: widget.CustomerID);
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     setState(() {
+       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      //  loading = false;
+       
+     });
+
+    print(AllData);
+}
+
+
+
   
   //  void snackShow(context,bool snackVisible, String CustomerPhoneNumber, String Amount, String CustomerNID, String BikeChassisNo, String BikeEngineNo, String BikeConditionMonth, String BikeName, String BikeBillPay) async{
 
@@ -783,7 +815,7 @@ var uuid = Uuid();
               "BikeSalePrice":BikeSalePriceController.text.trim(),
               "BikeDeliveryDate":DateTime.now().toIso8601String(),
               "BikeBillPay":BikeBillPay,
-              "BikePaymentDue":BikePaymentDueString,
+              "BikePaymentDue": AllData.isNotEmpty?(double.parse(AllData[0]["BikePaymentDue"])+double.parse(BikePaymentDueString)).toString():BikePaymentDueString,
               "CustomerType":CustomerType,
               "DuePaymentGivingDay":DuePaymentGivingDayInt.toString()        
           };
@@ -903,7 +935,7 @@ var uuid = Uuid();
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleYear":"${DateTime.now().year}",
-                  "BikeBillPay":BikeBillPayController.text,
+                  "BikeBillPay":BikeBillPayController.text.trim(),
                   "BikePaymentDue":BikePaymentDueString,
                   "CustomerType":CustomerType,
                   "CustomerName":CustomerData[0]["CustomerName"],
@@ -922,6 +954,7 @@ var uuid = Uuid();
                   "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
                   "adminEmail":adminEmail,
                   "adminName":adminName,
+                  "TotalCashIn":BikeBillPayController.text.trim(),
                 
                   
                 };
@@ -1000,6 +1033,7 @@ var uuid = Uuid();
                   "adminName":adminName,
                   "SalePrice":BikeSalePrice,
                   "DuePrice":BikePaymentDueInt.toString(),
+                   "TotalCashIn":BikeBillPayController.text.trim(),
 
                       };
 

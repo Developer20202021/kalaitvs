@@ -121,7 +121,7 @@ if (connectivityResult == ConnectivityResult.mobile) {
     online = true;
   });
 } else if (connectivityResult == ConnectivityResult.wifi) {
-   print("wifi");
+   //print("wifi");
      setState(() {
     online = true;
   });

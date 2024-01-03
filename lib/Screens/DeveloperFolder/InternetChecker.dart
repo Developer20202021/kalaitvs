@@ -8,22 +8,22 @@ Future<bool> getInternetConnection() async{
 
 final connectivityResult = await (Connectivity().checkConnectivity());
 if (connectivityResult == ConnectivityResult.mobile) {
-  print("mobile");
+  // print("mobile");
 
   return true;
 
 } else if (connectivityResult == ConnectivityResult.wifi) {
-   print("wifi");
+   //print("wifi");
 
   return true;
   // I am connected to a wifi network.
 } else if (connectivityResult == ConnectivityResult.ethernet) {
-   print("Ethernet");
+  //  print("Ethernet");
 
   return true;
   // I am connected to a ethernet network.
 } else if (connectivityResult == ConnectivityResult.vpn) {
-   print("vpn");
+  //  print("vpn");
 
 
   return true;
@@ -32,13 +32,13 @@ if (connectivityResult == ConnectivityResult.mobile) {
   // There is no separate network interface type for [vpn].
   // It returns [other] on any device (also simulator)
 } else if (connectivityResult == ConnectivityResult.bluetooth) {
-   print("bluetooth");
+  //  print("bluetooth");
  
 
   return true;
   // I am connected to a bluetooth.
 } else if (connectivityResult == ConnectivityResult.other) {
-   print("other");
+  //  print("other");
 
 
   return true;

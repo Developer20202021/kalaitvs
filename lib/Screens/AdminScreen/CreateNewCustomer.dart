@@ -563,21 +563,21 @@ setState(() {
               SizedBox(width: 10,),
 
 
-                 Container(width: 150, child:TextButton(onPressed: (){
+              //    Container(width: 150, child:TextButton(onPressed: (){
 
-                      //       Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) =>  SearchByNID(BikeName: widget.BikeName, BikeColor:widget.BikeColor, BikeModelName: widget.BikeModelName, BikeSalePrice: widget.BikeSalePrice)),
-                      // );
-
-
+              //         //       Navigator.push(
+              //         //   context,
+              //         //   MaterialPageRoute(builder: (context) =>  SearchByNID(BikeName: widget.BikeName, BikeColor:widget.BikeColor, BikeModelName: widget.BikeModelName, BikeSalePrice: widget.BikeSalePrice)),
+              //         // );
 
 
 
-                        }, child: Text("Previous Customer", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+
+
+              //           }, child: Text("Previous Customer", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
-                backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-              ),),),
+              //   backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+              // ),),),
 
 
 

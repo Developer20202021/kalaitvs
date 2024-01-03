@@ -121,31 +121,34 @@ setState(() {
 
 
 
-
+late var timer;
 
    @override
   void initState() {
 
 
-var period = const Duration(seconds:1);
-    Timer.periodic(period,(arg) {
-                 getInternetValue();
+ if (mounted) {
+   var period = const Duration(seconds:1);
+   timer = Timer.periodic(period,(arg) {
+                  getInternetValue();
     });
-
-
-
-
-
-
-
-
-
+   
+ }
 
 
     // TODO: implement initState
     FlutterNativeSplash.remove();
     super.initState();
   }
+
+
+
+
+    @override
+void dispose() {
+  timer.cancel();
+  super.dispose();
+}
 
 
 
