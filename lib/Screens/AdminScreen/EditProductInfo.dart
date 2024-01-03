@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/UploadBikeImage.dart';
+import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
 
 
@@ -86,7 +87,52 @@ var DataLoad = "";
 
 // Firebase All Customer Data Load
 
-List  AllData = [];
+List  AllData = [{
+                       "BikeName":" ",
+                        "BikeType":" ",
+                        "BikeABS":" ",
+                        "BikeBatteryRating":" ",
+                        "BikeBrakeFluid":" ",
+                        "BikeBrakeFront":" ",
+                        "BikeBrakeRear":" ",
+                        "BikeBuyingPrice":" ",
+                        "BikeCoolingSystem":" ",
+                        "ColorAvailable":" ",
+                        "BikeEngineCapacity":" ",
+                        "BikeFeatures":" ",
+                        "BikeFrame":" ",
+                        "BikeFrontSuspension":' ',
+                        "BikeFuelSupplySystem":" ",
+                        "BikeFuelTankCapacity":" ",
+                        "BikeFuelsupplysystem":" ",
+                        "BikeGearBox":" ",
+                        "BikeGroundClearance":" ",
+                        "BikeHeadlamp":" ",
+                        "BikeHeight":" ",
+                        "BikeKerbWeight":" ",
+                        "BikeLength": " ",
+                        "BikeMaxSpeed":" ",
+                        "BikeMaximumPower": " ",
+                        "BikeMaximumTorque":" ",
+                        "BikeMuffler":" ",
+                        "BikePowertoWeightRation":" ",
+
+
+                        //
+
+                        
+                        "BikeRearSuspension":" ",
+                        "BikeSaddleHeight":" ",
+                        "BikeSalePrice":" ",
+                        "BikeShowroomAvailableNumber":" ",
+                        "BikeTailLamp":" ",
+                        "BikeTyreFront":" ",
+                        "BikeTyreRear":" ",
+                        "BikeValvePerCylinder":" ",
+                        "BikeWheelBase":" ",
+                        "BikeWidth":" ",
+                        "BikeID":" ",
+}];
 
 
   CollectionReference _collectionRef =
@@ -111,18 +157,22 @@ Future<void> getData() async {
      
       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
+      setState(() {
+        loading = false;
+      });
 
 
-Future.delayed(const Duration(milliseconds: 1500), () {
 
-// Here you can write your code
+// Future.delayed(const Duration(milliseconds: 1500), () {
 
-  setState(() {
-    // Here you can write your code for open new view
-    loading = false;
-  });
+// // Here you can write your code
 
-});
+//   setState(() {
+//     // Here you can write your code for open new view
+//     loading = false;
+//   });
+
+// });
 
      });
        
@@ -1510,7 +1560,7 @@ ColorAvailableController.text = AllData[0]["ColorAvailable"];
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(width: 150, child:TextButton(onPressed: (){
+                    Container(width: 150, child:TextButton(onPressed: () async{
 
 
 
@@ -1569,16 +1619,24 @@ ColorAvailableController.text = AllData[0]["ColorAvailable"];
                         "BikeValvePerCylinder":BikeValvePerCylinderController.text,
                         "BikeWheelBase":BikeWheelBaseController.text,
                         "BikeWidth":BikeWidthController.text,
-                        "BikeID":widget.BikeID
+                     
 
                   
                       };
 
 
-                    await docUser.update(jsonData).then((value) =>               Navigator.push(
+                    await docUser.update(jsonData).then((value) =>setState((){
+
+
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  UploadBikeImage(BikeName: BikeNameController.text, BikeID:widget.BikeID)),
-                      )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        MaterialPageRoute(builder: (context) =>  ProductScreen(indexNumber: "2",)),
+                      );
+
+
+
+
+                    })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong!'),
                               action: SnackBarAction(

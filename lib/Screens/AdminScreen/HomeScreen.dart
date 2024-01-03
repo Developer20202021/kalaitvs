@@ -1060,6 +1060,50 @@ PopupMenuItem(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+
+
+                               Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 200,
+                  child: Center(
+                    child: Column(
+                      children: [
+
+                        Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 150,
+                        height: 150,),
+
+                        SizedBox(height: 5,),
+
+
+
+                        Text("ORTHEE BAJAJ MART DASHBOARD", style: TextStyle(
+                        
+                                fontSize: 20,
+                                color: Colors.black,
+                                overflow: TextOverflow.clip
+                              ),),
+                      ],
+                    ),
+                
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Colors.white,
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Colors.white
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+                
+                
+                 SizedBox(
+                  height: 10,
+                 ),
                 
                 
                      Padding(

@@ -257,7 +257,7 @@ Future<void> getData(String paymentDate) async {
               separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 15,),
               itemBuilder: (BuildContext context, int index) {
       
-                     DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
+                    //  DateTime paymentDateTime = (AllData[index]["PaymentDateTime"] as Timestamp).toDate();
       
       
                 return   Padding(
@@ -278,7 +278,7 @@ Future<void> getData(String paymentDate) async {
       
                                 Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
       
-                                Text("Date: ${paymentDateTime}"),
+                                Text("Date: ${AllData[index]["PaymentDateTime"]}"),
                               ],
                             ),
                       
