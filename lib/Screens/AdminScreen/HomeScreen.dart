@@ -206,7 +206,7 @@ Future<void> getTodayNagadCashData(String paymentDate) async {
     FirebaseFirestore.instance.collection('BikeSaleInfo');
 
 
-    Query query = _collectionRef.where("BikeSaleMonth", isEqualTo: paymentDate);
+    Query query = _collectionRef.where("BikeSaleDate", isEqualTo: paymentDate);
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -511,7 +511,7 @@ setState(() {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
-        title:  Text("Dashboard         V: 3.3.0 (working)", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Dashboard         V: 4.4.0 (working)", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
