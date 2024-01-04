@@ -227,6 +227,8 @@ Future<void> getData() async {
     BikeSalePriceController.text = widget.BikeSalePrice;
     BikeColorController.text = widget.BikeColor;
 
+    DiscountAmountController.text = "0";
+
 
     
  
