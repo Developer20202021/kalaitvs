@@ -13,7 +13,9 @@ import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/DueCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDueGiven.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayNagadBillPay.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthDuePaymentAddHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthNagadBillPay.dart';
@@ -662,7 +664,7 @@ setState(() {
                   children: [
                     Icon(Icons.payment),
                     SizedBox(width: 5,),
-                    Text("Today Due Add"),
+                    Text("আজকের বাকি কালেকশন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -690,7 +692,7 @@ setState(() {
                   children: [
                     Icon(Icons.payments_rounded),
                     SizedBox(width: 5,),
-                    Text("Monthly Due Add"),
+                   Text("মাসিক বাকি কালেকশন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -757,7 +759,7 @@ setState(() {
                   children: [
                     Icon(Icons.sell),
                     SizedBox(width: 5,),
-                    Text("Today Sales"),
+                    Text("আজকের মোট বিক্রয়", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -782,7 +784,33 @@ setState(() {
                   children: [
                     Icon(Icons.sell_sharp),
                     SizedBox(width: 5,),
-                    Text("Monthly Sales"),
+                   Text("মাসিক মোট বিক্রয়", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayNagadBillPay()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.account_balance_rounded),
+                    SizedBox(width: 5,),
+                    Text("আজকের নগদ ক্যাশ", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -807,7 +835,34 @@ setState(() {
                   children: [
                     Icon(Icons.account_balance_rounded),
                     SizedBox(width: 5,),
-                    Text("Monthly Cash"),
+                    Text("মাসিক নগদ ক্যাশ", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDueGiven()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.account_balance_rounded),
+                    SizedBox(width: 5,),
+                    Text("আজকের বাকি দেওয়া হয়েছে", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
