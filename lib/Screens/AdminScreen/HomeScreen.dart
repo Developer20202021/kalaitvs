@@ -511,7 +511,7 @@ setState(() {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
-        title: const Text("Dashboard", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Dashboard         V: 3.3.0 (working)", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -1411,7 +1411,7 @@ PopupMenuItem(
                                               
                                             Container(width: 100, child:TextButton(onPressed: (){
     
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayNagadBillPay()));
 
                 
                                             }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
@@ -1493,7 +1493,7 @@ PopupMenuItem(
                                               
                                             Container(width: 100, child:TextButton(onPressed: (){
     
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDueGiven()));
 
                 
                                             }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
@@ -1571,7 +1571,7 @@ PopupMenuItem(
                                               
                                             Container(width: 100, child:TextButton(onPressed: (){
     
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDaySalesHistory()));
 
                 
                                             }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(

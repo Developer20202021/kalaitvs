@@ -658,6 +658,134 @@ void dispose() {
                                       return  [
 
 
+                                      PopupMenuItem(
+                                          child: Text("All Owners"),
+                                          onTap: () {
+
+
+                                      
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                       
+                        bool payLoading = false;
+
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                            title: Text('Show Owner'),
+                            content:AllSaleData[i]["AllOwners"].isEmpty?Center(child: Text("Only One Owner available..."),):SingleChildScrollView(
+                              child: Column(
+                                children: [
+
+
+                                  Text("All Owners"),
+
+                                  SizedBox(height: 2,),
+
+
+                    for(int x = 0; x<AllSaleData[i]["AllOwners"].length; x++)
+                                 x==(int.parse(AllSaleData[i]["AllOwners"].length.toString())-1)? Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Material(
+                                    elevation: 20.0,
+                                    shadowColor: Colors.blueGrey,
+                                     child: ListTile(
+                                      textColor: Colors.green,
+                                        title: Text("Owner Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerName"]}"),
+                                     
+                                        subtitle: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                     
+                                            Text("Owner Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerName"]}"),
+                                     
+                                     
+                                            Text("Owner Phone No: ${AllSaleData[i]["AllOwners"][x]["NewCustomerPhoneNumber"]}"),
+                                     
+                                     
+                                            Text("Owner Father Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerFatherName"]}"),
+                                     
+                                            
+                                     
+                                     
+                                            Text("Previous Owner Name: ${AllSaleData[i]["AllOwners"][x]["PreviousCustomerName"]}"),
+                                     
+                                            Text("Previous Owner Phone No: ${AllSaleData[i]["AllOwners"][x]["PreviousCustomerPhoneNumber"]}"),
+                                     
+                                            Text("Previous Owner Address: ${AllSaleData[i]["AllOwners"][x]["PreviousCustomerAddress"]}"),
+                                     
+                                            Text("OwnerShipChangeFee: ${AllSaleData[i]["AllOwners"][x]["FeeAmount"]}"),
+                                     
+                                     
+                                            Text("Owner Change Date: ${AllSaleData[i]["AllOwners"][x]["PaymentDate"]}"),
+                                     
+                                     
+                                     
+                                     
+                                          ],
+                                        ),
+                                     
+                                      ),
+                                   ),
+                                 ):ListTile(
+                             
+                                    title: Text("Owner Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerName"]}"),
+
+                                    subtitle: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+
+                                        Text("Owner Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerName"]}"),
+
+
+                                        Text("Owner Phone No: ${AllSaleData[i]["AllOwners"][x]["NewCustomerPhoneNumber"]}"),
+
+
+                                        Text("Owner Father Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerFatherName"]}"),
+
+                                        
+
+
+                                        Text("Previous Owner Name: ${AllSaleData[i]["AllOwners"][x]["PreviousCustomerName"]}"),
+
+                                        Text("Previous Owner Phone No: ${AllSaleData[i]["AllOwners"][x]["PreviousCustomerPhoneNumber"]}"),
+
+                                        Text("Previous Owner Address: ${AllSaleData[i]["AllOwners"][x]["PreviousCustomerAddress"]}"),
+
+                                        Text("OwnerShipChangeFee: ${AllSaleData[i]["AllOwners"][x]["FeeAmount"]}"),
+
+
+                                        Text("Owner Change Date: ${AllSaleData[i]["AllOwners"][x]["PaymentDate"]}"),
+
+
+
+
+                                      ],
+                                    ),
+
+                                  )
+
+
+
+                              
+
+
+
+
+                                ])));});});
+
+
+
+
+                                            
+                                          },
+                                          value: '/hello',
+                                        ),
+
+
                                         PopupMenuItem(
                                           onTap: () {
 
