@@ -7,6 +7,7 @@ import 'package:tvs_app/Screens/AdminScreen/Accessories/UploadAccessories.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/CashMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DeliveryChallan.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficeDeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
@@ -80,41 +81,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home: CashMemoPDFView(SalesData: [{              "ClassOfVehicle":"MOTOR CYCLE",
-                  "BikeBuyingPrice":"3455",
-                  "YearOfManufacture":" ",
-                  "SeatingCapacity":"",
-                  "BikeValvePerCylinder":"",
-                  "MakersName":"Bajaj Auto LTD/INDIA",
-                  "BikeMaximumPower":"",
-                  "BikeWheelBase":"",
-                  "BikeTyreFront":"",
-                  "BikeTyreRear":"",
-                  "SaleID":"",
-                  "CustomerAddress":"Joypurhat Sadar, Joypurhat",
-                  "BikeID":"",
-                  "CustomerID":"",
-                  "CustomerNID": "",
-                  "BikeChassisNo":"dfsdfds342",
-                  "BikeEngineNo":"dffew4525",
-                  "BikeDeliveryNo":"B-125",
-                  "BikeName":"BAJAJ DISCOVER 125 DISC",
-                  "BikeColor":"Black",
-                  "BikeSalePrice":"66448",
-                  "DiscountWithBikeSalePrice":"234234",
-                  "BikeDeliveryDate":DateTime.now(),
-                  "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                  "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
-                  "BikeSaleYear":"${DateTime.now().year}",
-                  "BikeBillPay":"24344",
-                  "BikePaymentDue":"344",
-                  "CustomerType":"",
-                  "CustomerName":"Mahadi Hasan",
-                  "CustomerPhoneNumber":"01721915550",
-                  "BikeConditionMonth":"0",
-                  "CustomerFatherName":"Mosta Hasan",
-                  "CustomerGuarantor1Address":"",
-                    }]),
+      home: LogInScreen()
     );
   }
 
@@ -124,6 +91,67 @@ class MyApp extends StatelessWidget {
 
 
 
+
+
+// DuePayPDFPreview(PaymentData: [{
+
+
+//                         "FileNo":"B-1233",
+//                         "CustomerNID":"43425252",
+//                         "CustomerName":"Mahadi Hasan",
+//                         "CustomerID":"25345345",
+//                         "CustomerPhoneNumber":"023479252",
+//                         "Amount": "130",
+//                         "PaymentDateTime": DateTime.now().toIso8601String(),
+//                         "PaymentDate":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+//                         "PaymentMonth":"${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+//                         "PaymentYear":"${DateTime.now().year.toString()}",
+//                         "adminEmail":"mahh13424",
+//                         "adminName":"Shaju",
+//                         "BikePaymentDue":"2344",
+
+
+//                               }]),
+
+
+
+
+
+// CashMemoPDFView(SalesData: [{              "ClassOfVehicle":"MOTOR CYCLE",
+//                   "BikeBuyingPrice":"3455",
+//                   "YearOfManufacture":" ",
+//                   "SeatingCapacity":"",
+//                   "BikeValvePerCylinder":"",
+//                   "MakersName":"Bajaj Auto LTD/INDIA",
+//                   "BikeMaximumPower":"",
+//                   "BikeWheelBase":"",
+//                   "BikeTyreFront":"",
+//                   "BikeTyreRear":"",
+//                   "SaleID":"",
+//                   "CustomerAddress":"Joypurhat Sadar, Joypurhat",
+//                   "BikeID":"",
+//                   "CustomerID":"",
+//                   "CustomerNID": "",
+//                   "BikeChassisNo":"dfsdfds342",
+//                   "BikeEngineNo":"dffew4525",
+//                   "BikeDeliveryNo":"B-125",
+//                   "BikeName":"BAJAJ DISCOVER 125 DISC",
+//                   "BikeColor":"Black",
+//                   "BikeSalePrice":"66448",
+//                   "DiscountWithBikeSalePrice":"234234",
+//                   "BikeDeliveryDate":DateTime.now(),
+//                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+//                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
+//                   "BikeSaleYear":"${DateTime.now().year}",
+//                   "BikeBillPay":"24344",
+//                   "BikePaymentDue":"344",
+//                   "CustomerType":"",
+//                   "CustomerName":"Mahadi Hasan",
+//                   "CustomerPhoneNumber":"01721915550",
+//                   "BikeConditionMonth":"0",
+//                   "CustomerFatherName":"Mosta Hasan",
+//                   "CustomerGuarantor1Address":"",
+//                     }]),
 
 
 

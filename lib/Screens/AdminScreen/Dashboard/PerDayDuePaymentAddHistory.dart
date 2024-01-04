@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
 
 
 
@@ -243,18 +244,27 @@ Future<void> getData(String paymentDate) async {
                 return   Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
+
+                  
                              shape: RoundedRectangleBorder(
                     side: BorderSide(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(5),
                   ), 
                       
                             title: Text("${AllData[index]["Amount"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                            trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
+                            trailing: ElevatedButton(onPressed: (){
+
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => DuePayPDFPreview(PaymentData:[AllData[index]],)));
+
+
+                            }, child: Text("Print")),
                             subtitle: Column(
       
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+
+                                Text("NID:${AllData[index]["CustomerNID"]}"),
       
                                 Text("Phone Numnber:${AllData[index]["CustomerPhoneNumber"]}"),
       

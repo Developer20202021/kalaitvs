@@ -11,6 +11,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AfterSaleBike.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
@@ -46,6 +47,18 @@ class _EditCustomerInfoState extends State<CustomerProfile> {
 
 
 TextEditingController DueAmountController = TextEditingController();
+
+TextEditingController NewOwnerNameController = TextEditingController();
+
+TextEditingController NewOwnerAddressController = TextEditingController();
+
+TextEditingController NewOwnerFatherNameController = TextEditingController();
+
+TextEditingController NewOwnerPhoneNoController = TextEditingController();
+
+TextEditingController FeeAmountController = TextEditingController();
+
+TextEditingController NewOwnerNIDController = TextEditingController();
 
 
 
@@ -643,6 +656,433 @@ void dispose() {
                                     },
                                     itemBuilder: (BuildContext bc) {
                                       return  [
+
+
+                                        PopupMenuItem(
+                                          onTap: () {
+
+                                       showDialog(
+                      context: context,
+                      builder: (context) {
+                       
+                        bool payLoading = false;
+
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                            actions: [
+                              ElevatedButton(onPressed: () async{
+
+
+                          setState((){
+
+                            payLoading = true;
+
+                          });
+
+
+                final docUser = FirebaseFirestore.instance.collection("OwnerShipChange");
+
+
+
+                
+                      var OwnerShipChangeData ={
+
+
+                        "FileNo":AllSaleData[i]["BikeDeliveryNo"],
+                        "PreviousCustomerNID":AllSaleData[i]["CustomerNID"],
+                        "PreviousCustomerName":AllSaleData[i]["CustomerName"],
+                        "PreviousCustomerAddress":AllSaleData[i]["CustomerAddress"],
+                        "PreviousCustomerPhoneNumber":AllSaleData[i]["CustomerPhoneNumber"],
+                        "NewCustomerName":NewOwnerNameController.text.trim().toString().toLowerCase(),
+                        "NewCustomerPhoneNumber":NewOwnerPhoneNoController.text.trim().toString(),
+                        "OldSaleID":AllSaleData[i]["SaleID"],
+                        "NewCustomerAddress":NewOwnerAddressController.text.trim().toLowerCase().toString(),
+                        "NewCustomerFatherName":NewOwnerFatherNameController.text.trim().toLowerCase().toString(),
+                        "FeeAmount": FeeAmountController.text.trim().toString(),
+                        "PaymentDateTime": DateTime.now().toIso8601String(),
+                        "PaymentDate":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentMonth":"${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentYear":"${DateTime.now().year.toString()}",
+                       
+                     
+
+
+                              };
+
+                  await docUser.add(OwnerShipChangeData).then((value) =>  setState(() async{
+
+
+                    final docCustomerInfo = FirebaseFirestore.instance.collection("BikeSaleInfo").doc(AllSaleData[i]["SaleID"]);
+
+
+                    List AllOwners = AllSaleData[i]["AllOwners"];
+
+                    AllOwners.insert(AllOwners.length,OwnerShipChangeData);
+
+
+                    var jsonUpdateData = {
+                      "CustomerName":NewOwnerNameController.text.trim().toLowerCase().toString(),
+                      "CustomerFatherName":NewOwnerFatherNameController.text.trim().toLowerCase().toString(),
+                      "CustomerAddress":NewOwnerAddressController.text.trim().toLowerCase().toString(),
+
+                      "CustomerPhoneNumber":NewOwnerPhoneNoController.text.trim().toString(),
+
+                      "CustomerNID":NewOwnerNIDController.text.trim().toString(),
+
+                      "AllOwners":AllOwners,
+
+                       "LastUpdated":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}"
+
+                    
+
+                    };
+
+
+
+
+             await docCustomerInfo.update(jsonUpdateData).then((value) =>  setState(() async{
+
+
+
+
+              payLoading = false;
+
+              getSaleData();
+
+
+              Navigator.pop(context);
+
+
+
+
+
+
+
+
+
+  })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: const Text('Customer Payment Add Successful!!!'),
+            backgroundColor: (Colors.green),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+
+
+
+
+
+
+
+                        var customerMsg = "Dear Customer, From Orthee Bajaj Mart আপনার বিক্রিত ১ টি গাড়ির Ownership পরিবর্তন হয়েছে। ধন্যবাদ";
+
+
+
+                        final CustomerSmsResponse = await http
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
+
+                       try {
+
+                         if (CustomerSmsResponse.statusCode == 200) {
+                          // If the server did return a 200 OK response,
+                          // then parse the JSON.
+                          
+                          print(jsonDecode(CustomerSmsResponse.body));
+                        
+                        } else {
+                          // If the server did not return a 200 OK response,
+                          // then throw an exception.
+                          throw Exception('Failed to load album');
+                        }
+                         
+                       } catch (e) {
+                         
+                       }
+
+
+
+                        
+                 var NewOwnerMsg = "Dear New Owner, From Orthee Bajaj Mart OwnerShip is Changed Successfully. Thank you.";
+
+
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${NewOwnerPhoneNoController.text.trim()}&message=${NewOwnerMsg}'));
+
+                            try {
+                                if (response.statusCode == 200) {
+                                  // If the server did return a 200 OK response,
+                                  // then parse the JSON.
+                                  print(jsonDecode(response.body));
+              
+                                
+                                } else {
+                                  // If the server did not return a 200 OK response,
+                                  // then throw an exception.
+                                  throw Exception('Failed to load album');
+                                }
+                              
+                            } catch (e) {
+                              
+                            }
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DuePayPDFPreview(PaymentData:[paymentData],)));
+
+                  // Navigator.pop(context);
+
+
+
+
+  })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: const Text('Customer Payment Add Successful!!!'),
+            backgroundColor: (Colors.green),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            )));
+
+
+
+                              }, child: Text("Change")),
+
+
+
+                              ElevatedButton(onPressed: (){
+
+                                 Navigator.pop(context);
+
+
+                              }, child: Text("Cancel"))
+
+
+
+                              ],
+                            title: Text('Name Chnage'),
+                            content:payLoading==true?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
+                              child: Column(
+                                children: [
+
+
+                                
+                      TextField(
+                      
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'New Owner Name:',
+            
+                          hintText: 'New Owner Name:',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                        controller: NewOwnerNameController,
+                    
+                    ),
+
+                    SizedBox(height: 4,),
+
+
+
+                     TextField(
+                      
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'New Owner Father Name:',
+            
+                          hintText: 'New Owner Father Name:',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+
+                        controller: NewOwnerFatherNameController,
+                    
+                    ),
+
+                    SizedBox(height: 4,),
+
+
+
+                     TextField(
+                      
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'New Owner Phone No:',
+            
+                          hintText: 'New Owner Phone No:',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      
+                      controller: NewOwnerPhoneNoController,
+                    
+                    ),
+
+                    SizedBox(height: 4,),
+
+
+
+                    TextField(
+                      
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'New Owner Address:',
+            
+                          hintText: 'New Owner Address:',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+
+                      controller: NewOwnerAddressController,
+                    
+                    ),
+
+                    SizedBox(height: 4,),
+
+
+
+                    TextField(
+                      
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'New Owner NID',
+            
+                          hintText: 'New Owner NID',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+
+                      controller: NewOwnerNIDController,
+                    
+                    ),
+
+                    SizedBox(height: 4,),
+
+
+
+                    TextField(
+                      
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Ownership Change Fee',
+            
+                          hintText: 'Ownership Change Fee',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Colors.purple),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+
+                      
+                      controller: FeeAmountController,
+                    
+                    ),
+
+                    SizedBox(height: 4,),
+
+
+
+
+
+
+                                ])));});});
+
+      
+                                          },
+                                          child: Text("OwnerShipChange"),
+                                          value: '/hello',
+                                        ),
+
+
+
                                         PopupMenuItem(
                                           onTap: () {
 
@@ -720,6 +1160,7 @@ void dispose() {
                     
                     
                     TextField(
+                      readOnly: true,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -751,6 +1192,7 @@ void dispose() {
                     
                     
                     TextField(
+                      readOnly: true,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -782,6 +1224,7 @@ void dispose() {
                     
                     
                     TextField(
+                      readOnly: true,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -805,14 +1248,21 @@ void dispose() {
                     ),
 
 
+
+                    
+                     SizedBox(
+                                    height: 14,
+                                  ),
+
+
                     
                     TextField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Amount',
+                          labelText: 'Payment',
             
-                          hintText: 'Amount',
+                          hintText: 'Payment',
                           //  enabledBorder: OutlineInputBorder(
                           //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //   ),
@@ -865,7 +1315,7 @@ void dispose() {
                             final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo").doc(AllSaleData[i]["SaleID"]);
 
                               final UpadateData ={
-
+                                
                                 "BikePaymentDue":(double.parse(AllSaleData[i]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString())).toString(),
                                 "TotalCashIn":(double.parse(AllSaleData[i]["TotalCashIn"].toString()) + double.parse(DueAmountController.text.trim().toString())).toString(),
 
@@ -943,6 +1393,8 @@ void dispose() {
 
 
                       final jsonData ={
+                        "CustomerName":AllSaleData[i]["CustomerName"],
+                        "FileNo":AllSaleData[i]["BikeDeliveryNo"],
                         "CustomerNID":AllSaleData[i]["CustomerNID"],
                         "CustomerID":widget.CustomerID,
                         "CustomerPhoneNumber":AllSaleData[i]["CustomerPhoneNumber"],
@@ -952,7 +1404,8 @@ void dispose() {
                         "PaymentMonth":"${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
                         "PaymentYear":"${DateTime.now().year.toString()}",
                         "adminEmail":adminEmail,
-                        "adminName":adminName
+                        "adminName":adminName,
+                        "BikePaymentDue":(double.parse(AllSaleData[i]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString())).toString(),
 
                         
                       };
@@ -962,6 +1415,26 @@ void dispose() {
 
 
 
+
+                              var paymentData ={
+
+
+                        "FileNo":AllSaleData[i]["BikeDeliveryNo"],
+                        "CustomerNID":AllSaleData[i]["CustomerNID"],
+                        "CustomerName":AllSaleData[i]["CustomerName"],
+                        "CustomerID":widget.CustomerID,
+                        "CustomerPhoneNumber":AllSaleData[i]["CustomerPhoneNumber"],
+                        "Amount": DueAmountController.text.trim().toString(),
+                        "PaymentDateTime": DateTime.now().toIso8601String(),
+                        "PaymentDate":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentMonth":"${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentYear":"${DateTime.now().year.toString()}",
+                        "adminEmail":adminEmail,
+                        "adminName":adminName,
+                        "BikePaymentDue":(double.parse(AllSaleData[i]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString())).toString(),
+
+
+                              };
 
 
 
@@ -1026,7 +1499,12 @@ void dispose() {
                     payLoading = false;
                   });
 
-                  Navigator.pop(context);
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => DuePayPDFPreview(PaymentData:[paymentData],)));
+
+                  // Navigator.pop(context);
+
+
 
 
   })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(

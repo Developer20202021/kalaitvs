@@ -707,9 +707,33 @@ pdf.addPage(pw.Page(
 
 
 
+              pw.Container(
+
+                width: 600,
+                height: 100,
+  
+                  padding: const pw.EdgeInsets.all(3.0),
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border.all(color: PdfColors.black)
+                  ),
+                  child: pw.Text('Remarks'),
+                ),
 
 
-          pw.Text("Receive with thanks the above mentioned Vehicle with Perfect condition along with tools and accessories."),
+
+                 pw.SizedBox(
+                      height: 4,
+  
+              ),
+
+
+
+
+
+
+
+
+          pw.Text("Receive with thanks the above mentioned Vehicle with Perfect condition along with tools and accessories.", style: pw.TextStyle(fontSize: 7)),
 
 
 
@@ -721,7 +745,7 @@ pdf.addPage(pw.Page(
 
 
                  pw.SizedBox(
-                      height: 70,
+                      height: 10,
   
               ),
 
