@@ -15,6 +15,7 @@ import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/DueCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDueGiven.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDuePaymentAddHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayFileClosed.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayNagadBillPay.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDaySalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerMonthDuePaymentAddHistory.dart';
@@ -874,6 +875,32 @@ setState(() {
 
 
 
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayFileClosed()));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.file_download_done),
+                    SizedBox(width: 5,),
+                    Text("আজকের ফাইল ক্লোজড তথ্য", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
 
 
 
@@ -894,7 +921,7 @@ setState(() {
                   children: [
                     Icon(Icons.preview_outlined),
                     SizedBox(width: 5,),
-                    Text("Accessories"),
+                    Text("Parts"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -956,7 +983,7 @@ setState(() {
                   children: [
                     Icon(Icons.upload_file),
                     SizedBox(width: 5,),
-                    Text("Upload Accessories"),
+                    Text("Upload Parts"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],
@@ -983,7 +1010,7 @@ setState(() {
                   children: [
                     Icon(Icons.history),
                     SizedBox(width: 5,),
-                    Text("Accessories Sales"),
+                    Text("Parts Sales"),
                     SizedBox(width: 5,),
                     Icon(Icons.arrow_right_alt),
                   ],

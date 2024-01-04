@@ -870,6 +870,7 @@ void dispose() {
                                 "TotalCashIn":(double.parse(AllSaleData[i]["TotalCashIn"].toString()) + double.parse(DueAmountController.text.trim().toString())).toString(),
 
                                 "CustomerType":(double.parse(AllSaleData[i]["BikePaymentDue"].toString())-double.parse(DueAmountController.text.trim().toString()))<=0?"Paid":"Due",
+                                "LastUpdated":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}"
                          
                                 
                                 };
@@ -1097,51 +1098,51 @@ void dispose() {
                                         PopupMenuItem(
                                           onTap: ()async {
 
-                                      try {
+                                      // try {
 
-                                              CollectionReference _collectionRef =
-                                                FirebaseFirestore.instance.collection('BikeSaleInfo');
-                                                    _collectionRef.doc(AllSaleData[i]["SaleID"]).delete().then(
-                                            (doc) => setState((){
+                                      //         CollectionReference _collectionRef =
+                                      //           FirebaseFirestore.instance.collection('BikeSaleInfo');
+                                      //               _collectionRef.doc(AllSaleData[i]["SaleID"]).delete().then(
+                                      //       (doc) => setState((){
 
 
-                                          AwesomeDialog(
-                                            showCloseIcon: true,
+                                      //     AwesomeDialog(
+                                      //       showCloseIcon: true,
 
-                                            btnOkOnPress: () {
-                                              Navigator.pop(context);
-                                            },
+                                      //       btnOkOnPress: () {
+                                      //         Navigator.pop(context);
+                                      //       },
                                         
-                                            context: context,
-                                            dialogType: DialogType.success,
-                                            animType: AnimType.rightSlide,
-                                            body: SingleChildScrollView(
-                                              child: Text("Delete Successfull"))).show();
+                                      //       context: context,
+                                      //       dialogType: DialogType.success,
+                                      //       animType: AnimType.rightSlide,
+                                      //       body: SingleChildScrollView(
+                                      //         child: Text("Delete Successfull"))).show();
 
 
 
 
-                                            }),
-                                            onError: (e) => print("Error updating document $e"),
-                                          );
+                                      //       }),
+                                      //       onError: (e) => print("Error updating document $e"),
+                                      //     );
                                         
-                                      } catch (e) {
+                                      // } catch (e) {
 
 
-                                        AwesomeDialog(
-                                            showCloseIcon: true,
+                                      //   AwesomeDialog(
+                                      //       showCloseIcon: true,
 
-                                            btnOkOnPress: () {
-                                              Navigator.pop(context);
-                                            },
+                                      //       btnOkOnPress: () {
+                                      //         Navigator.pop(context);
+                                      //       },
                                         
-                                            context: context,
-                                            dialogType: DialogType.success,
-                                            animType: AnimType.rightSlide,
-                                            body: SingleChildScrollView(
-                                              child: Text("${e}"))).show();
+                                      //       context: context,
+                                      //       dialogType: DialogType.success,
+                                      //       animType: AnimType.rightSlide,
+                                      //       body: SingleChildScrollView(
+                                      //         child: Text("${e}"))).show();
                                         
-                                      }
+                                      // }
                                             
                                           },
                                           child: Text("Delete"),

@@ -44,6 +44,9 @@ bool loading = true;
 bool online = true;
 
 
+int TotalBikeStock=0;
+
+
   // Firebase All Customer Data Load
 
 List  AllData = [0];
@@ -60,12 +63,36 @@ Future<void> getData() async {
 
     // Get data from docs and convert map to List
      AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     
+     if (AllData.isEmpty) {
+       
+     } else {
+
+      for (var i = 0; i <AllData.length; i++) {
+
+        var getEveryBikeStock = AllData[i]["BikeShowroomAvailableNumber"];
+
+        int getEveryBikeStockInt = int.parse(getEveryBikeStock.toString());
+
+        TotalBikeStock = TotalBikeStock + getEveryBikeStockInt;
+        
+      }
+
+      
+      
+       
+     }
+
+
      setState(() {
       AllBikeNamePopUpList = querySnapshot.docs.map((doc) => doc.data()).toList();
      
       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
       loading = false;
      });
+
+
 
     print(AllData);
 }
@@ -364,7 +391,7 @@ if (connectivityResult == ConnectivityResult.mobile) {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
-        title: const Text("Bikes", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Bikes (${TotalBikeStock.toString()})", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
