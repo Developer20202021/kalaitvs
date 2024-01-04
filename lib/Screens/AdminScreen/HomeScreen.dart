@@ -182,6 +182,111 @@ Future<void> getData(String paymentDate) async {
 
 
 
+
+
+
+
+List  TodayNagadCashData = [];
+    int CashAdd = 0;
+    int todayDue = 0;
+    int todaySale =0;
+    int todayProfit = 0;
+    int todayWithDiscountSale =0;
+
+
+Future<void> getTodayNagadCashData(String paymentDate) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('BikeSaleInfo');
+
+
+    Query query = _collectionRef.where("BikeSaleMonth", isEqualTo: paymentDate);
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     TodayNagadCashData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+    //  moneyAdd = 0;
+
+
+
+
+     if (TodayNagadCashData.length == 0) {
+       setState(() {
+      
+        // DataLoad = "0";
+        // loading = false;
+
+        CashAdd = 0;
+      });
+       
+     } else {
+
+      setState(() {
+        // DataLoad = "";
+              TodayNagadCashData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      });
+
+      for (var i = 0; i < TodayNagadCashData.length; i++) {
+
+      var money = TodayNagadCashData[i]["BikeBillPay"];
+      int moneyInt = int.parse(money);
+      
+      var todayDueMoney =  TodayNagadCashData[i]["BikePaymentDue"];
+
+      int todayDueMoneyInt = int.parse(todayDueMoney.toString());
+
+      var todaySaleMoney = TodayNagadCashData[i]["BikeSalePrice"];
+      int todaySaleMoneyInt = int.parse(todaySaleMoney.toString());
+
+      var todaySalePrice = TodayNagadCashData[i]["BikeSalePrice"];
+      var BuyingPrice = TodayNagadCashData[i]["BikeBuyingPrice"];
+
+      int todaySalePriceInt = int.parse(todaySalePrice.toString());
+
+      int BuyingPriceInt = int.parse(BuyingPrice.toString()); 
+
+      int todayPrfitInt = todaySalePriceInt - BuyingPriceInt;
+
+      var WithdiscountSale =  TodayNagadCashData[i]["BikeBuyingPrice"];
+
+      int todayWithDiscountSaleInt = int.parse(WithdiscountSale.toString());
+
+      
+
+      setState(() {
+    
+       CashAdd = CashAdd + moneyInt;
+       todayDue = todayDue + todayDueMoneyInt;
+       todaySale = todaySale + todaySaleMoneyInt;
+       todayProfit = todayProfit + todayPrfitInt;
+       todayWithDiscountSale = todayWithDiscountSale + todayWithDiscountSaleInt;
+      
+        // loading = false;
+      });
+       
+     }
+
+     print(moneyAdd);
+       
+     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
 // internet Connection Checker
 
 bool online = true;
@@ -221,6 +326,7 @@ setState(() {
     getPaidCustomerData();
     getDueCustomerData();
     getData(PaymentDate);
+    getTodayNagadCashData(PaymentDate);
     super.initState();
 
 
@@ -1023,28 +1129,7 @@ PopupMenuItem(
                 
                 padding: EdgeInsets.all(18.0),
               ),
-              
 
-
-
-              
-
-
-
-
-
-
-              
-
-              
-
-
-
-
-
-
-              
-             
             ];
           },
         )
@@ -1066,28 +1151,114 @@ PopupMenuItem(
                                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                  height: 200,
+                  height: 400,
                   child: Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 150,
-                        height: 150,),
-
+                  
+                        Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 50,
+                        height: 50,),
+                  
                         SizedBox(height: 5,),
-
-
-
-                        Text("ORTHEE BAJAJ MART DASHBOARD", style: TextStyle(
+                  
+                  
+                  
+                        Text("আজকের বাকি কালেকশন: ${moneyAdd.toString()}৳", style: TextStyle(
+                        
+                                fontSize: 18,
+                                color: Colors.black,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                  
+                        
+                        SizedBox(height: 3,),
+                  
+                  
+                  
+                        Text("আজকের নগদ ক্যাশ গ্রহণ: ${CashAdd.toString()}৳", style: TextStyle(
                         
                                 fontSize: 20,
-                                color: Colors.black,
-                                overflow: TextOverflow.clip
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
                               ),),
+                  
+                           SizedBox(height: 3,),
+                  
+                        
+                         Text("আজকের Discount সহ নগদ ক্যাশ গ্রহণ : ${todayWithDiscountSale.toString()}৳", style: TextStyle(
+                        
+                                fontSize: 18,
+                                color: Colors.black,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                          
+                           SizedBox(height: 3,),
+                  
+                  
+                        Text("আজকে মোট বাকি দেওয়া হয়েছে: ${todayDue.toString()}৳", style: TextStyle(
+                        
+                                fontSize: 20,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                           SizedBox(height: 3,),
+                        
+                  
+                        Text("আজকে মোট বিক্রয় হয়েছে: ${todaySale.toString()}৳ ", style: TextStyle(
+                        
+                                fontSize: 18,
+                                color: Colors.black,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                  
+                           SizedBox(height: 3,),
+                  
+                          
+                          
+                        
+                        Text("আজকে লাভ হয়েছে: ${todayProfit.toString()}৳ ", style: TextStyle(
+                        
+                                fontSize: 18,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                        
+                           SizedBox(height: 3,),
+                  
+                        
+                        Text("আজকে মোট গাড়ি বিক্রয় হয়েছে: ${TodayNagadCashData.length.toString()}টি", style: TextStyle(
+                        
+                                fontSize: 18,
+                                color: Colors.black,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                         SizedBox(height: 3,),
+                  
+                  
+                  
+                  
+                  
+                  
                       ],
                     ),
-                
-                
                   ),
                        
                  decoration: BoxDecoration(
@@ -1104,6 +1275,332 @@ PopupMenuItem(
                  SizedBox(
                   height: 10,
                  ),
+
+
+
+
+        
+
+
+
+
+
+
+  // নগদ গ্রহণ 
+
+
+                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 300,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 100,
+                        height: 100,),
+
+                        SizedBox(height: 4,),
+
+                      
+                          Text("আজকের নগদ ক্যাশ গ্রহন:${CashAdd.toString()}৳", style: TextStyle(
+                    // ${moneyAdd.toString()}
+                            fontSize: 23,
+                            color:Colors.white,
+                            overflow: TextOverflow.clip,
+                            fontFamily: "Josefin Sans"
+                           
+                          ),),
+                    
+                             SizedBox(
+                                    height: 17,
+                                   ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Row(
+                                              
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                
+                                
+                                children: [
+                                              
+                                              
+                                            Container(width: 100, child:TextButton(onPressed: (){
+    
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+
+                
+                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
+                                 
+                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                                          ),),),      
+                                ],),
+                            )
+                  
+                        ],
+                      ),
+                    ),
+                
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 242,133,0),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 242,133,0)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+
+
+
+                 SizedBox(height: 10,),
+
+
+
+
+      
+
+
+
+
+      // মোট বাকি বিক্রয়
+
+
+                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 300,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 100,
+                        height: 100,),
+
+                        SizedBox(height: 4,),
+
+                      
+                          Text("আজকের মোট বাকি বিক্রয়:${todayDue.toString()}৳", style: TextStyle(
+                    // ${moneyAdd.toString()}
+                            fontSize: 23,
+                            color:Colors.white,
+                            overflow: TextOverflow.clip,
+                            fontFamily: "Josefin Sans"
+                           
+                          ),),
+                    
+                             SizedBox(
+                                    height: 17,
+                                   ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Row(
+                                              
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                
+                                
+                                children: [
+                                              
+                                              
+                                            Container(width: 100, child:TextButton(onPressed: (){
+    
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+
+                
+                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
+                                 
+                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                                          ),),),      
+                                ],),
+                            )
+                  
+                        ],
+                      ),
+                    ),
+                
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 242,133,0),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 242,133,0)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+
+
+
+                 SizedBox(height: 10,),
+
+
+        
+
+
+         // মোট বাকি বিক্রয়
+
+
+                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 300,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 100,
+                        height: 100,),
+
+                        SizedBox(height: 4,),
+
+                      
+                          Text("আজকের মোট বিক্রয়:${todaySale.toString()}৳", style: TextStyle(
+                    // ${moneyAdd.toString()}
+                            fontSize: 23,
+                            color:Colors.white,
+                            overflow: TextOverflow.clip,
+                            fontFamily: "Josefin Sans"
+                           
+                          ),),
+                    
+                             SizedBox(
+                                    height: 17,
+                                   ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Row(
+                                              
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                
+                                
+                                children: [
+                                              
+                                              
+                                            Container(width: 100, child:TextButton(onPressed: (){
+    
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+
+                
+                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
+                                 
+                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                                          ),),),      
+                                ],),
+                            )
+                  
+                        ],
+                      ),
+                    ),
+                
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 242,133,0),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 242,133,0)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+
+
+
+                 SizedBox(height: 10,),
+
+
+
+
+          // বাকি কালেকশন
+                  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                  height: 300,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Image.asset("lib/images/bycicle.png", fit:  BoxFit.cover, width: 100,
+                        height: 100,),
+
+                        SizedBox(height: 4,),
+
+                      
+                          Text("আজকের বাকি কালেকশন:${moneyAdd.toString()}৳", style: TextStyle(
+                    // ${moneyAdd.toString()}
+                            fontSize: 23,
+                            color:Colors.white,
+                            overflow: TextOverflow.clip,
+                            fontFamily: "Josefin Sans"
+                           
+                          ),),
+                    
+                             SizedBox(
+                                    height: 17,
+                                   ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Row(
+                                              
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                
+                                
+                                children: [
+                                              
+                                              
+                                            Container(width: 100, child:TextButton(onPressed: (){
+    
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
+
+                
+                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
+                                 
+                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                                          ),),),      
+                                ],),
+                            )
+                  
+                        ],
+                      ),
+                    ),
+                
+                
+                  ),
+                       
+                 decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 242,133,0),
+                
+                  border: Border.all(
+                            width: 2,
+                            color: Color.fromARGB(255, 242,133,0)
+                          ),
+                  borderRadius: BorderRadius.circular(10)      
+                 ),)),
+
+
+
+                 SizedBox(height: 10,),
+
+
+
+
+
+
+
                 
                 
                      Padding(
@@ -1227,100 +1724,7 @@ PopupMenuItem(
                 
                 
                  
-                     Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                  height: 200,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: Column(
-                        children: [
-                          Text("Today Due Payment Add:${moneyAdd.toString()}৳", style: TextStyle(
-                    // ${moneyAdd.toString()}
-                            fontSize: 20,
-                            color:Colors.white,
-                            overflow: TextOverflow.clip
-                           
-                          ),),
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                             SizedBox(
-                                    height: 17,
-                                   ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Row(
-                                              
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                
-                                
-                                children: [
-                                              
-                                              
-                                            Container(width: 100, child:TextButton(onPressed: (){
-                
-                
-                
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDuePaymentAddHistory()));
-                
-                
-                
-                
-                
-                
-                
-                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
-                                 
-                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
-                                          ),),),
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                ],),
-                            )
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                        ],
-                      ),
-                    ),
-                
-                
-                  ),
-                       
-                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 242,133,0),
-                
-                  border: Border.all(
-                            width: 2,
-                            color: Color.fromARGB(255, 242,133,0)
-                          ),
-                  borderRadius: BorderRadius.circular(10)      
-                 ),)),
                 
                 
                  SizedBox(
