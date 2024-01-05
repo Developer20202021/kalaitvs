@@ -65,6 +65,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   connectivity_plus: ^5.0.2
   number_to_words_english: ^2.0.2
+  bijoy_helper: ^0.0.5
 
   
   

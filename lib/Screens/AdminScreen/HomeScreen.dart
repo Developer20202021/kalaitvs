@@ -1,5 +1,9 @@
 import 'dart:async';
-
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayCreditHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDebitHistory.dart';
+import 'package:uuid/uuid.dart';
+import 'package:bijoy_helper/bijoy_helper.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -52,9 +56,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+ var uuid = Uuid();
 
 
+bool loading = false;
 
+
+TextEditingController DebitController = TextEditingController();
+
+TextEditingController DebitAmountController = TextEditingController();
 
 
 
@@ -392,6 +402,13 @@ setState(() {
 
   @override
   Widget build(BuildContext context) {
+
+
+      var DebitID = uuid.v4();
+
+
+
+
     return Scaffold(
 
 
@@ -505,12 +522,455 @@ setState(() {
       
       
       appBar: AppBar(
-           systemOverlayStyle: SystemUiOverlayStyle(
+
+
+
+                  leading: 
+                      PopupMenuButton(
+                        onSelected: (value) {
+                          // your logic
+                        },
+                        itemBuilder: (BuildContext bc) {
+                          return  [
+                            PopupMenuItem(
+                                child: Text("আয় যুক্ত করুন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                            value: '/about',
+                                            onTap: () async {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  String SelectedStudentStatus =
+                                                      "";
+                                                  String Title ="নিচে আয়ের খাত লিখবেন";
+
+                                                  String LabelText ="আয়ের খাত লিখবেন";
+
+                                                  return StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) {
+                                                      return AlertDialog(
+                                                        title:  Column(
+                                                          children: [
+                                                            Center(
+                                                              child: Text(
+                                                                  "${Title}", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                                            ),
+
+                                                            
+                                                    
+
+                                    Center(child: Text("*অবশ্যই বাংলায় আয়ের উৎসের নাম লিখবেন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold, fontSize: 12, color: Colors.red),)),
+                                                          ],
+                                                        ),
+                                                        content: SingleChildScrollView(
+                                                          
+                                                          child:  Column(
+                                                            children: [
+              
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '${LabelText}',
+
+                      hintText: '${LabelText}',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: DebitController,
+                  ),
+                ),
+
+
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                      SizedBox(
+                              height: 20,
+                            ),
+
+                    
+
+                    Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'আয়ের পরিমান(৳)',
+
+                      hintText: 'আয়ের পরিমান(৳)',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: DebitAmountController,
+                  ),
+                ),
+
+
+
+
+
+
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context),
+                                                            child:
+                                                                Text("Cancel"),
+                                                          ),
+
+
+                                                  ElevatedButton(
+                                                          onPressed:
+                                                            () async {
+
+            setState((){
+
+              loading = true;
+
+            });
+
+
+            var updateData =
+                      {
+                        "DebitID": DebitID,
+                        "DebitName":DebitController.text.trim().toLowerCase().toBijoy,
+                        "DebitAmount":DebitAmountController.text.trim().toLowerCase(),
+                        "year":"${DateTime.now().year}",
+                        "month":"${DateTime.now().month}/${DateTime.now().year}",
+                        "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                        "DateTime":DateTime.now().toIso8601String(),
+                        "CollectorName":"",
+                        "CollectorEmail":""
+                        };
+
+                  final StudentInfo = FirebaseFirestore.instance.collection('DebitInfo').doc(DebitID);
+                  
+                  StudentInfo.set(updateData).then((value) =>setState(() {
+                                        
+
+                                        Navigator.pop(context);
+
+                                final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'successfull',
+                                        message: 'Hey Thank You. Good Job',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                       setState(() {
+                        loading = false;
+                             });
+                            }))
+                      .onError((error,stackTrace) =>setState(() {
+                        final snackBar = SnackBar(
+                  /// need to set following properties for best effect of awesome_snackbar_content
+                        elevation: 0,
+                        
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        content: AwesomeSnackbarContent(
+                        title: 'Something Wrong!!!!',
+                        message: 'Try again later...',
+
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                        contentType: ContentType.failure,
+                            ),
+                        );
+
+                ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                      setState(() {
+                            loading = false;
+                               });
+                      }));
+
+
+
+
+                                                                  },
+                                                                  child: const Text(
+                                                                      "Save"),
+                                                                ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+
+
+
+
+                           PopupMenuItem(
+                                child: Text("ব্যয় যুক্ত করুন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                            value: '/about',
+                                            onTap: () async {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  String SelectedStudentStatus =
+                                                      "";
+                                                  String Title ="নিচে ব্যয়ের খাত লিখবেন";
+
+                                                  String LabelText ="আয়ের খাত লিখবেন";
+
+                                                  return StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) {
+                                                      return AlertDialog(
+                                                        title:  Column(
+                                                          children: [
+                                                            
+                                                            Center(
+                                                              child: Text(
+                                                                  "${Title}", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                                            ),
+
+
+
+
+                                                            Center(child: Text("*অবশ্যই বাংলায় ব্যয়ের  উৎসের নাম লিখবেন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold, fontSize: 12, color: Colors.red),)),
+                                                          ],
+                                                        ),
+                                                        content: SingleChildScrollView(
+                                                          
+                                                          child:  Column(
+                                                            children: [
+              
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'ব্যয়ের খাত লিখবেন',
+
+                      hintText: 'ব্যয়ের খাত লিখবেন',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: DebitController,
+                  ),
+                ),
+
+
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                      SizedBox(
+                              height: 20,
+                            ),
+
+                    
+
+                    Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'ব্যয়ের পরিমান(৳)',
+
+                      hintText: 'ব্যয়ের পরিমান(৳)',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: DebitAmountController,
+                  ),
+                ),
+
+
+
+
+
+
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context),
+                                                            child:
+                                                                Text("Cancel"),
+                                                          ),
+
+
+                                                  ElevatedButton(
+                                                          onPressed:
+                                                            () async {
+
+            setState((){
+
+              loading = true;
+
+            });
+
+
+            var updateData =
+                      {
+                        "CreditID": DebitID,
+                        "CreditName":DebitController.text.trim().toLowerCase().toBijoy,
+                        "CreditAmount":DebitAmountController.text.trim().toLowerCase(),
+                        "year":"${DateTime.now().year}",
+                        "month":"${DateTime.now().month}/${DateTime.now().year}",
+                        "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                        "DateTime":DateTime.now().toIso8601String(),
+                        "CollectorName":"",
+                        "CollectorEmail":""
+                        };
+
+                  final StudentInfo = FirebaseFirestore.instance.collection('CreditInfo').doc(DebitID);
+                  
+                  StudentInfo.set(updateData).then((value) =>setState(() {
+                                        
+
+                                        Navigator.pop(context);
+
+                                final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'successfull',
+                                        message: 'Hey Thank You. Good Job',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                       setState(() {
+                        loading = false;
+                             });
+                            }))
+                      .onError((error,stackTrace) =>setState(() {
+                        final snackBar = SnackBar(
+                  /// need to set following properties for best effect of awesome_snackbar_content
+                        elevation: 0,
+                        
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        content: AwesomeSnackbarContent(
+                        title: 'Something Wrong!!!!',
+                        message: 'Try again later...',
+
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                        contentType: ContentType.failure,
+                            ),
+                        );
+
+                ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                      setState(() {
+                            loading = false;
+                               });
+                      }));
+
+
+
+
+                                                                  },
+                                                                  child: const Text(
+                                                                      "Save"),
+                                                                ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+                          
+                          ];
+                        },
+                      ),
+
+
+  systemOverlayStyle: SystemUiOverlayStyle(
       // Navigation bar
       statusBarColor: Theme.of(context).primaryColor, // Status bar
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-       automaticallyImplyLeading: false,
+      //  automaticallyImplyLeading: false,
         title:  Text("Dashboard    V: 7.7.1 (Live)", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
@@ -897,6 +1357,54 @@ setState(() {
                 
                 padding: EdgeInsets.all(18.0),
               ),
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayDebitHistory()));
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.payment),
+                    SizedBox(width: 5,),
+                    Text("আজকের অতিরিক্ত আয়ের পরিমান", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayCreditHistory()));
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.payment),
+                    SizedBox(width: 5,),
+                    Text("আজকের ব্যয়ের পরিমান", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
 
 
 
