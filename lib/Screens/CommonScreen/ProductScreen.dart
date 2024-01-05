@@ -90,13 +90,87 @@ Future<void> getData() async {
       AllBikeNamePopUpList = querySnapshot.docs.map((doc) => doc.data()).toList();
      
       AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
       loading = false;
+
+      // getPerDaySalesData();
      });
 
 
 
     print(AllData);
 }
+
+
+
+
+
+// List todaySalesData =[];
+
+// List getSalesData =[];
+
+
+
+// Future getPerDaySalesData() async{
+
+
+//   for (var i = 0; i < AllData.length; i++) {
+
+
+//       CollectionReference _SingleBikeDataRef =
+//     FirebaseFirestore.instance.collection("BikeSaleInfo");
+
+//     Query SingleBikeDataquery = _SingleBikeDataRef.where("BikeID", isEqualTo: AllData[i]["BikeID"]).where("BikeSaleDate", isEqualTo: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+//     QuerySnapshot BikeImagequerySnapshot = await SingleBikeDataquery.get();
+
+//     // Get data from docs and convert map to List
+//      getSalesData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+
+//      setState(() {
+//        getSalesData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+//      });
+
+//      if (getSalesData.isEmpty) {
+
+//       setState(() {
+//         todaySalesData.insert(todaySalesData.length, {"BikeName":AllData[i]["BikeName"], "SaleNumber":"0"});
+//       });
+       
+//      } else {
+
+
+//       setState(() {
+//         todaySalesData.insert(todaySalesData.length, {"BikeName":AllData[i]["BikeName"], "SaleNumber":getSalesData.length.toString()});
+//       });
+
+
+       
+//      }
+
+//      setState(() {
+//       loading = false;
+//     });
+
+
+    
+//   }
+
+
+
+// print(todaySalesData);
+
+// }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

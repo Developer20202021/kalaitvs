@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/PerDayBikeSalePDF.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
 
 
@@ -43,6 +44,8 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
 
           getData(paymentDate);
 
+          getAllBikesData(paymentDate);
+
 
 
 
@@ -79,6 +82,8 @@ class _PerDaySalesHistoryState extends State<PerDaySalesHistory> {
    var DataLoad = ""; 
   // Firebase All Customer Data Load
 
+  bool loading = false;
+
 List  AllData = [];
     int moneyAdd = 0;
 
@@ -88,6 +93,10 @@ List  AllData = [];
 Future<void> getData(String paymentDate) async {
     // Get docs from collection reference
     // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    setState(() {
+      loading = true;
+    });
 
 
     Query query = _collectionRef.where("BikeSaleDate", isEqualTo: paymentDate);
@@ -105,12 +114,14 @@ Future<void> getData(String paymentDate) async {
      if (AllData.length == 0) {
        setState(() {
         DataLoad = "0";
+        loading = false;
       });
        
      } else {
 
       setState(() {
         DataLoad = "";
+        loading = false;
       });
 
       for (var i = 0; i < AllData.length; i++) {
@@ -123,6 +134,7 @@ Future<void> getData(String paymentDate) async {
       setState(() {
         moneyAdd = moneyAdd + moneyInt;
         AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+        
       });
        
      }
@@ -133,39 +145,154 @@ Future<void> getData(String paymentDate) async {
 
 
 
-
-
-
-
-
-
-    //  for (var i = 0; i < AllData.length; i++) {
-
-    //    var money = AllData[i]["SalePrice"];
-    //   int moneyInt = int.parse(money);
-
-      
-
-    //   setState(() {
-    //     moneyAdd = moneyAdd + moneyInt;
-    //   });
-       
-    //  }
-
-    //  print(moneyAdd);
-
-    //  setState(() {
-    //    AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    //  });
-
     print(AllData);
 }
+
+
+
+List  AllBikesData = [];
+
+
+
+
+ 
+
+Future<void> getAllBikesData(String SaleDate) async {
+
+  setState(() {
+    loading = true;
+  });
+
+   CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('product');
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+     AllBikesData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     
+     if (AllBikesData.isEmpty) {
+
+    setState(() {
+    loading = false;
+  });
+
+
+       
+     } else {
+
+
+      
+     setState(() {
+     
+      AllBikesData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+
+      getPerDaySalesData("${SaleDate}");
+     });
+
+
+
+      
+      
+       
+     }
+
+
+
+
+
+    print(AllBikesData);
+}
+
+
+
+
+
+
+List todaySalesData =[];
+
+// List getSalesData =[];
+
+
+
+Future getPerDaySalesData(String SaleDate) async{
+
+
+  setState(() {
+    loading = true;
+  });
+
+  todaySalesData.clear();
+
+  for (var i = 0; i < AllBikesData.length; i++) {
+
+
+      CollectionReference _SingleBikeDataRef =
+    FirebaseFirestore.instance.collection("BikeSaleInfo");
+
+    Query SingleBikeDataquery = _SingleBikeDataRef.where("BikeName", isEqualTo: AllBikesData[i]["BikeName"]).where("BikeSaleDate", isEqualTo: "${SaleDate}");
+    QuerySnapshot BikeImagequerySnapshot = await SingleBikeDataquery.get();
+
+    // Get data from docs and convert map to List
+   List  getSalesData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+
+    //  setState(() {
+    //    getSalesData = BikeImagequerySnapshot.docs.map((doc) => doc.data()).toList();
+    //  });
+
+    print("__________________${i}___${SaleDate}_______${getSalesData}");
+
+     if (getSalesData.isEmpty) {
+
+      setState(() {
+        todaySalesData.insert(todaySalesData.length, {"BikeName":AllBikesData[i]["BikeName"], "SaleNumber":"0","Date":SaleDate});
+      });
+       
+     } else {
+
+
+      setState(() {
+        todaySalesData.insert(todaySalesData.length, {"BikeName":AllBikesData[i]["BikeName"], "SaleNumber":getSalesData.length, "Date":SaleDate});
+      });
+
+
+       
+     }
+
+ 
+
+
+    
+  }
+
+
+
+   setState(() {
+    loading = false;
+  });
+
+
+
+print(todaySalesData);
+
+}
+
+
+
+
+
+
 
 
 @override
   void initState() {
     // TODO: implement initState
     getData(PaymentDate);
+
+    getAllBikesData(PaymentDate);
     super.initState();
   }
 
@@ -192,6 +319,14 @@ Future<void> getData(String paymentDate) async {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+       floatingActionButton: FloatingActionButton(onPressed: (){
+
+        Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => PerDayBikeSalePDFPreview(BikesData: todaySalesData)),
+                      );
+
+      }, child: Text("Print"),),
       
       appBar: AppBar(
            systemOverlayStyle: SystemUiOverlayStyle(
@@ -249,7 +384,7 @@ Future<void> getData(String paymentDate) async {
       ],
         
       ),
-      body:DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(
+      body:loading?Center(child: CircularProgressIndicator(),): DataLoad== "0"? Center(child: Text("No Data Available")): RefreshIndicator(
         onRefresh: refresh,
         child: ListView.separated(
               itemCount: AllData.length,
