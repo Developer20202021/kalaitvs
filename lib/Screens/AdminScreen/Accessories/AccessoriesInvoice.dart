@@ -145,26 +145,6 @@ pdf.addPage(pw.Page(
                       children: [
 
 
-                      // The first row just contains a phrase 'INVOICE FOR PAYMENT'
-                        // pw.TableRow(
-                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
-                          
-                        //   children: [
-                        //     pw.Padding(
-                        //       child: pw.Text(
-                        //         'MONEY RECEIPT',
-                        //         style: pw.Theme.of(context).header4,
-                        //         textAlign: pw.TextAlign.center,
-                        //       ),
-                        //       padding: pw.EdgeInsets.all(7),
-                        //     ),
-                        //   ],
-                        // ),
-
-
-
-
-
                       pw.TableRow(
                         decoration: pw.BoxDecoration(color: PdfColors.grey100),
                           children: [
@@ -289,17 +269,6 @@ pdf.addPage(pw.Page(
 
                           ],
                         ),
-
-
-
-
-
-
-
-
-
-
-
 
 
           ]),

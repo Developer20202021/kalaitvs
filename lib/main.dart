@@ -8,6 +8,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/CashMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/NameChangeFrom.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficeDeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
@@ -81,7 +82,24 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home: LogInScreen()
+      home: NameChangePDFView(NameChangeData: [{
+                        "FileNo":"B-1334",
+                        "PreviousCustomerFatherName":"Anamul Haque",
+                        "PreviousCustomerNID":"34363",
+                        "PreviousCustomerName":"Orthee",
+                        "PreviousCustomerAddress":"Komorgram Sadar, Kalai, Joypurhat, Rajshahi Bangladesh",
+                        "PreviousCustomerPhoneNumber":"01722237022",
+                        "NewCustomerName":"Mahadi Hasan",
+                        "NewCustomerPhoneNumber":"01822237022",
+                        "OldSaleID":"45345",
+                        "NewCustomerAddress":"Kalai Sadar, Kalai, Joypurhat, Rajshahi Bangladesh",
+                        "NewCustomerFatherName":"Hasan",
+                        "FeeAmount": '390',
+                        "PaymentDateTime": DateTime.now().toIso8601String(),
+                        "PaymentDate":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentMonth":"${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
+                        "PaymentYear":"${DateTime.now().year.toString()}",
+      }],)
     );
   }
 

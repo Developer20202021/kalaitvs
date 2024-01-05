@@ -12,6 +12,7 @@ import 'package:tvs_app/Screens/AdminScreen/AfterSaleBike.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/NameChangeFrom.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
@@ -693,6 +694,19 @@ void dispose() {
                                      child: ListTile(
                                       textColor: Colors.green,
                                         title: Text("Owner Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerName"]}"),
+
+                                        trailing: ElevatedButton(onPressed: () {
+
+
+                                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  NameChangePDFView(NameChangeData: AllSaleData[i]["AllOwners"][x])),
+                                        );
+
+
+
+
+                                        }, child: Text("Print")),
                                      
                                         subtitle: Column(
                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -730,7 +744,15 @@ void dispose() {
                                       ),
                                    ),
                                  ):ListTile(
-                             
+                                    trailing: ElevatedButton(onPressed: (){
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  NameChangePDFView(NameChangeData: AllSaleData[i]["AllOwners"][x])),
+                                        );
+
+
+                                    }, child: Text("Print")),
                                     title: Text("Owner Name: ${AllSaleData[i]["AllOwners"][x]["NewCustomerName"]}"),
 
                                     subtitle: Column(
@@ -818,6 +840,7 @@ void dispose() {
 
 
                         "FileNo":AllSaleData[i]["BikeDeliveryNo"],
+                        "PreviousCustomerFatherName":AllSaleData[i]["CustomerFatherName"],
                         "PreviousCustomerNID":AllSaleData[i]["CustomerNID"],
                         "PreviousCustomerName":AllSaleData[i]["CustomerName"],
                         "PreviousCustomerAddress":AllSaleData[i]["CustomerAddress"],
@@ -827,6 +850,7 @@ void dispose() {
                         "OldSaleID":AllSaleData[i]["SaleID"],
                         "NewCustomerAddress":NewOwnerAddressController.text.trim().toLowerCase().toString(),
                         "NewCustomerFatherName":NewOwnerFatherNameController.text.trim().toLowerCase().toString(),
+                        "NewCustomerNID":NewOwnerNIDController.text.trim().toString(),
                         "FeeAmount": FeeAmountController.text.trim().toString(),
                         "PaymentDateTime": DateTime.now().toIso8601String(),
                         "PaymentDate":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}",
@@ -860,7 +884,7 @@ void dispose() {
 
                       "AllOwners":AllOwners,
 
-                       "LastUpdated":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}"
+                       "NameChangeUpdated":"${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}"
 
                     
 
@@ -879,7 +903,13 @@ void dispose() {
               getSaleData();
 
 
-              Navigator.pop(context);
+                              Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  NameChangePDFView(NameChangeData: [OwnerShipChangeData])),
+                                        );
+
+
+              // Navigator.pop(context);
 
 
 
