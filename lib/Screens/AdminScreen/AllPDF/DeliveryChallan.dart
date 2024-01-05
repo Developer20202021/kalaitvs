@@ -340,7 +340,7 @@ pdf.addPage(pw.Page(
                 width: 300,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerName"]}", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerName"].toString().toUpperCase()}", style: pw.TextStyle(fontSize: 14,))))
 
               ]),
 
@@ -365,7 +365,7 @@ pdf.addPage(pw.Page(
                 width: 470,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerFatherName"]}", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerFatherName"].toString().toUpperCase()}", style: pw.TextStyle(fontSize: 14,))))
 
               ]),
 

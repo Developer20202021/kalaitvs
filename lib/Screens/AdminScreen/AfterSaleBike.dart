@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/CashMemo.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/Certifications.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficeDeliveryChallan.dart';
 import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dart';
@@ -95,7 +96,7 @@ setState(() {
                 trailing: ElevatedButton(onPressed: (){
         
                   Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>  OfficeDeliveryChallanPDFPreview(SalesData: widget.SalesData)));
+                          MaterialPageRoute(builder: (context) =>  CertificationPDFPreview(SalesData: widget.SalesData)));
         
         
                 }, child: Text("Print")),
@@ -120,7 +121,7 @@ setState(() {
         
               ListTile(
                 leading: Icon(Icons.picture_as_pdf),
-                title: Text("Delivery Challan PDF"),
+                title: Text("Normal Delivery Challan PDF"),
                 trailing: ElevatedButton(onPressed: (){
         
                   Navigator.push(context,
@@ -143,6 +144,22 @@ setState(() {
         
                    Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>  CashMemoPDFView(SalesData: widget.SalesData)));
+        
+        
+                }, child: Text("Print")),
+        
+              ),
+
+
+
+
+              ListTile(
+                leading: Icon(Icons.picture_as_pdf),
+                title: Text("Official Delivery Chalan"),
+                trailing: ElevatedButton(onPressed: (){
+        
+                  Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>  OfficeDeliveryChallanPDFPreview(SalesData: widget.SalesData)));
         
         
                 }, child: Text("Print")),

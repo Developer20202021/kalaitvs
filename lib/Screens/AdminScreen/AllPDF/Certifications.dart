@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -12,18 +13,18 @@ import 'package:printing/printing.dart';
 
 
 
-class OfficeDeliveryChallanPDFPreview extends StatefulWidget {
+class CertificationPDFPreview extends StatefulWidget {
 
 
 final List SalesData;
 
- const OfficeDeliveryChallanPDFPreview({super.key,  required this.SalesData});
+ const CertificationPDFPreview({super.key,  required this.SalesData});
 
   @override
-  State<OfficeDeliveryChallanPDFPreview> createState() => _OfficeDeliveryChallanPDFPreviewState();
+  State<CertificationPDFPreview> createState() => _CertificationPDFPreviewState();
 }
 
-class _OfficeDeliveryChallanPDFPreviewState extends State<OfficeDeliveryChallanPDFPreview> {
+class _CertificationPDFPreviewState extends State<CertificationPDFPreview> {
 
 
 
@@ -55,7 +56,7 @@ class _OfficeDeliveryChallanPDFPreviewState extends State<OfficeDeliveryChallanP
        
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Delivery Challan", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
+        title: const Text("Certification", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -310,11 +311,13 @@ pdf.addPage(pw.Page(
                 
                 
                 
-                child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("DELIVERY CHALLAN", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
+                child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("TO WHOM IT CONCERN", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
 
 
             pw.SizedBox(height: 20),
 
+
+          
 
             pw.Row(
                 
@@ -336,7 +339,9 @@ pdf.addPage(pw.Page(
             pw.SizedBox(height: 20),
 
 
+            pw.Text("This is certify that we have sold new vehicle to:"),
 
+            pw.SizedBox(height: 10),
 
 
             
@@ -415,14 +420,14 @@ pdf.addPage(pw.Page(
 
 
 
-               pw.Text("Please receive the undermentioned vehicles/with standard/extra tools with spare wheel and accessories on the following particulars:"),
+              //  pw.Text("Please receive the undermentioned vehicles/with standard/extra tools with spare wheel and accessories on the following particulars:"),
 
 
-                   pw.SizedBox(
-                      height: 10,   
-              ),
+              //      pw.SizedBox(
+              //         height: 10,   
+              // ),
 
-
+                    pw.Text("On the following particular-"),
 
 
 
@@ -692,8 +697,83 @@ pdf.addPage(pw.Page(
 
 
 
+                        pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                '10. Wheel Base',
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
 
 
+                              pw.Padding(
+                              child: pw.Text(
+                                ':${SalesData[0]["BikeWheelBase"]}',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
+
+
+                        pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                "11. Maker's Name",
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                ': Bajaj Auto LTD/INDIA',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
+
+
+
+                         pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                "12. Unit Price",
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                ': ${SalesData[0]["BikeSalePrice"]}',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
 
           ]),
 
@@ -704,49 +784,10 @@ pdf.addPage(pw.Page(
   
               ),
 
-
-
-              pw.Container(
-
-                width: 600,
-                height: 100,
+              //    pw.SizedBox(
+              //         height: 10,
   
-                  padding: const pw.EdgeInsets.all(3.0),
-                  decoration: pw.BoxDecoration(
-                    border: pw.Border.all(color: PdfColors.black)
-                  ),
-                  child: pw.Text('Remarks'),
-                ),
-
-
-
-                 pw.SizedBox(
-                      height: 4,
-  
-              ),
-
-
-
-
-
-
-
-
-          pw.Text("Receive with thanks the above mentioned Vehicle with Perfect condition along with tools and accessories.", style: pw.TextStyle(fontSize: 7)),
-
-
-
-              
-
-
-
-
-
-
-                 pw.SizedBox(
-                      height: 10,
-  
-              ),
+              // ),
 
 
 
@@ -805,36 +846,3 @@ pdf.addPage(pw.Page(
 
 return pdf.save();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
