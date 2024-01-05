@@ -6,6 +6,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllPDF/CashMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/Certifications.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficeDeliveryChallan.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficialSalesInvoice.dart';
 import 'package:tvs_app/Screens/CommonScreen/DeveloperAccess/DeveloperAccess.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
@@ -110,6 +111,9 @@ setState(() {
                 leading: Icon(Icons.picture_as_pdf),
                 title: Text("Sales Invoice PDF"),
                 trailing: ElevatedButton(onPressed: (){
+
+                  Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>  OfficialSalesInvoice(SalesData: widget.SalesData)));
         
         
                 }, child: Text("Print")),
