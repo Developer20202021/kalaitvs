@@ -10,6 +10,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/NowBikeStockPDF.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PreviousBikeSell.dart';
@@ -383,6 +384,15 @@ if (connectivityResult == ConnectivityResult.mobile) {
          
     
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+        Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => NowBikeStockPDFPreview(BikesData: AllData, TotalBikes: TotalBikeStock.toString())),
+                      );
+
+      }, child: Text("Print"),),
+
+
       appBar:  AppBar(
 
       systemOverlayStyle: SystemUiOverlayStyle(

@@ -482,10 +482,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                Container(width: 150, child:TextButton(onPressed: (){
 
-                           Navigator.push(
-                        context,
-
-             MaterialPageRoute(builder: (context) => const LogInScreen()),
+                    Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => const LogInScreen()),
                       );
 
 

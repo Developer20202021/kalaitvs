@@ -12,19 +12,19 @@ import 'package:printing/printing.dart';
 
 
 
-class NowBikeStockPDFPreview extends StatefulWidget {
+class DueCollectionPDFPreview extends StatefulWidget {
 
 
-final List BikesData;
-final String TotalBikes;
+final List CloseFileData;
+final String TotalMoney;
 
- const NowBikeStockPDFPreview({super.key,  required this.BikesData, required this.TotalBikes});
+ const DueCollectionPDFPreview({super.key,  required this.CloseFileData, required this.TotalMoney});
 
   @override
-  State<NowBikeStockPDFPreview> createState() => _NowBikeStockPDFPreviewState();
+  State<DueCollectionPDFPreview> createState() => _DueCollectionPDFPreviewState();
 }
 
-class _NowBikeStockPDFPreviewState extends State<NowBikeStockPDFPreview> {
+class _DueCollectionPDFPreviewState extends State<DueCollectionPDFPreview> {
 
 
 
@@ -56,7 +56,7 @@ class _NowBikeStockPDFPreviewState extends State<NowBikeStockPDFPreview> {
        
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("মডেল অনুযায়ী বাইক ষ্টক", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+        title: const Text("*বকেয়া কালেকশন*", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -64,7 +64,7 @@ class _NowBikeStockPDFPreviewState extends State<NowBikeStockPDFPreview> {
         
       ),
       body: PdfPreview(
-        build: (context) => makePdf(widget.BikesData, widget.TotalBikes),
+        build: (context) => makePdf(widget.CloseFileData, widget.TotalMoney),
       ),
     );
   }
@@ -81,7 +81,7 @@ class _NowBikeStockPDFPreviewState extends State<NowBikeStockPDFPreview> {
 
 
 
-Future<Uint8List> makePdf(List BikesData, CreditTotalAmount) async {
+Future<Uint8List> makePdf(List CloseFileData, totalMoney) async {
 
 final netImage = await networkImage('https://i.ibb.co/SR6tHQt/bajaj-logo.jpg');
 
@@ -272,7 +272,7 @@ pdf.addPage(pw.Page(
                         border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,), left:  pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,),top:  pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,),right:  pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,),)),
                 
                 
-                child: pw.Center(child: pw.Text("g‡Wj Abyhvqx evBK óK", style:pw.TextStyle(fontSize: 20,  font: Banglattf, color: PdfColor.fromInt(0x000000))))) ),
+                child: pw.Center(child: pw.Text("e‡Kqv Kv‡jKkb", style:pw.TextStyle(fontSize: 20,  font: Banglattf, color: PdfColor.fromInt(0x000000))))) ),
 
 
           pw.SizedBox(
@@ -338,13 +338,43 @@ pdf.addPage(pw.Page(
                             ),
 
                             pw.Padding(
-                              child: pw.Text("evB‡Ki bvg", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              child: pw.Text("‡µZvi bvg", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
                               padding: pw.EdgeInsets.all(4),
                             ),
 
 
                               pw.Padding(
-                              child: pw.Text("msL¨v", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              child: pw.Text("‡gvevBj", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("dvBj bs", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("wdì/Awdm", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("Av`vqK…Z UvKv", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("‡gvU evKx", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("gš—e¨", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
                               padding: pw.EdgeInsets.all(4),
                             ),
 
@@ -357,7 +387,7 @@ pdf.addPage(pw.Page(
 
                     
                     
-                    for(int x =0; x<BikesData.length; x++)
+                    for(int x =0; x<CloseFileData.length; x++)
 
                        pw.TableRow(
                         decoration: pw.BoxDecoration(color: PdfColors.grey100),
@@ -371,13 +401,43 @@ pdf.addPage(pw.Page(
 
 
                             pw.Padding(
-                              child: pw.Text("${BikesData[x]["BikeName"]}", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold,  color: PdfColor.fromInt(0x000000))),
+                              child: pw.Text("${CloseFileData[x]["CustomerName"].toString().toUpperCase()}", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold,  color: PdfColor.fromInt(0x000000))),
                               padding: pw.EdgeInsets.all(4),
                             ),
 
 
                               pw.Padding(
-                              child: pw.Text("${BikesData[x]["BikeShowroomAvailableNumber"]}", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                              child: pw.Text("${CloseFileData[x]["CustomerPhoneNumber"]}", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                             pw.Padding(
+                              child: pw.Text("${CloseFileData[x]["FileNo"]}", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text(" ", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("${CloseFileData[x]["Amount"]}", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                            pw.Padding(
+                              child: pw.Text("${CloseFileData[x]["BikePaymentDue"]}", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                              padding: pw.EdgeInsets.all(4),
+                            ),
+
+
+                             pw.Padding(
+                              child: pw.Text(" ", style:pw.TextStyle(fontSize: 11,font: Banglattf, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
                               padding: pw.EdgeInsets.all(4),
                             ),
 
@@ -420,7 +480,7 @@ pw.SizedBox(height: 16),
                       
                       child: pw.Padding(padding:pw.EdgeInsets.only(
                         top: 10,right:10,
-                        bottom:10, left: 10),child: pw.Text("${CreditTotalAmount} wU", style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000)))))
+                        bottom:10, left: 10),child: pw.Text("${totalMoney}", style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000)))))
                 ])
 
             ]),),
@@ -460,25 +520,6 @@ pw.SizedBox(height: 16),
 
 
                   ]),),
-
-
-
-             
-
-
-
-
-
-
-
-                  // pw.Padding(padding: pw.EdgeInsets.only(right: 10,top: 30),child: pw.Column(children: [
-
-                  //   pw.Text("_____________________________"),
-
-                  //   pw.Text("AUTHORISED SIGNATURE",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: ttf)),
-
-
-                  // ]),),
 
 
 

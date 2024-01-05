@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/CloseFilePDFView.dart';
 
 
 
@@ -187,6 +188,14 @@ Future<void> getData(String paymentDate) async {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+         floatingActionButton: FloatingActionButton(onPressed: (){
+
+        Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => CloseFilePDFPreview(CloseFileData: AllData)),
+                      );
+
+      }, child: Text("Print"),),
       
       appBar: AppBar(
            systemOverlayStyle: SystemUiOverlayStyle(

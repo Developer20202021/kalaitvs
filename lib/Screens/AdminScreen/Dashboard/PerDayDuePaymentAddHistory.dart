@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/DueCollectionPDF.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
 
 
@@ -174,6 +175,14 @@ Future<void> getData(String paymentDate) async {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+        Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => DueCollectionPDFPreview(CloseFileData: AllData, TotalMoney: moneyAdd.toString(),)),
+                      );
+
+      }, child: Text("Print"),),
       
       appBar: AppBar(
            systemOverlayStyle: SystemUiOverlayStyle(
