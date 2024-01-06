@@ -622,7 +622,7 @@ if (connectivityResult == ConnectivityResult.mobile) {
               
               
               // BikeShowroomAvailableNumber
-              AllData[index]["BikeShowroomAvailableNumber"]=="0"?
+              int.parse(AllData[index]["BikeShowroomAvailableNumber"].toString())<=0?
             
               Text(""):
               
@@ -835,7 +835,7 @@ if (connectivityResult == ConnectivityResult.mobile) {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                   
-                          child:AllData[index]["BikeShowroomAvailableNumber"]=="0"? Padding(
+                          child:int.parse(AllData[index]["BikeShowroomAvailableNumber"].toString())<=0? Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text("Out of Stock"),
                           ):Padding(

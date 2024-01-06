@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:number_to_words_english/number_to_words_english.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -291,7 +292,7 @@ pdf.addPage(pw.Page(
 
 
               pw.SizedBox(
-                      height: 30,
+                      height: 10,
                       
                 
               ),
@@ -314,7 +315,7 @@ pdf.addPage(pw.Page(
                 child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("Sales Invoice", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
 
 
-            pw.SizedBox(height: 20),
+            pw.SizedBox(height: 10),
 
 
           
@@ -336,7 +337,7 @@ pdf.addPage(pw.Page(
 
 
 
-            pw.SizedBox(height: 20),
+            // pw.SizedBox(height: 20),
 
 
             // pw.Text("This is certify that we have sold new vehicle to:"),
@@ -359,7 +360,7 @@ pdf.addPage(pw.Page(
                 width: 300,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerName"].toString().toUpperCase()}", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerName"].toString().toUpperCase()}", style: pw.TextStyle(fontSize: 11,))))
 
               ]),
 
@@ -384,7 +385,7 @@ pdf.addPage(pw.Page(
                 width: 470,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerFatherName"].toString().toUpperCase()}", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerFatherName"].toString().toUpperCase()}", style: pw.TextStyle(fontSize: 11,))))
 
               ]),
 
@@ -409,14 +410,14 @@ pdf.addPage(pw.Page(
                 width: 440,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerAddress"]}", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerAddress"]}", style: pw.TextStyle(fontSize: 11,))))
 
               ]),
 
 
 
 
-               pw.SizedBox(height: 10),
+              //  pw.SizedBox(height: 10),
 
 
 
@@ -858,10 +859,12 @@ pdf.addPage(pw.Page(
 
 
 
-                            pw.Padding(
+                            pw.Container(
+                              height: 200,
+                              child: pw.Padding(
                               child: pw.Text("${SalesData[0]["BikeChassisNo"]}", style:pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold,  color: PdfColor.fromInt(0x000000))),
                               padding: pw.EdgeInsets.all(4),
-                            ),
+                            ),),
 
 
                               pw.Padding(
@@ -901,6 +904,159 @@ pdf.addPage(pw.Page(
 
 
           ]),
+
+
+
+
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+
+            pw.Text("${NumberToWordsEnglish.convert(int.parse(SalesData[0]["BikeSalePrice"].toString()))}"),
+
+            pw.Padding(
+            padding:pw.EdgeInsets.only(bottom: 5,),
+            child:  pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.end,
+              // crossAxisAlignment: pw.CrossAxisAlignment.end,
+              children: [
+
+                pw.Row(
+
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  
+                  children: [
+
+                    pw.Text("Total Amount", style:pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold,  color: PdfColor.fromInt(0x000000))),
+
+                    // pw.SizedBox(width: 5),
+
+                    pw.Container(
+                      width: 100,
+                        decoration:  pw.BoxDecoration(
+                        border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,), left:  pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,),top:  pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,),right:  pw.BorderSide(width: 1, style: pw.BorderStyle.dashed,),)),
+                      
+                      child: pw.Padding(padding:pw.EdgeInsets.only(
+                        top: 5,right:5,
+                        bottom:5, left: 5),child: pw.Text("${SalesData[0]["BikeSalePrice"]}/-", style:pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000)))))
+                ])
+
+            ]),),
+          ]),
+
+
+
+          pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("M.R. No.", style: pw.TextStyle(fontSize: 9,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 100,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+
+
+               pw.SizedBox(height: 10),
+
+
+               pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("Date", style: pw.TextStyle(fontSize: 9,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 100,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+
+
+               pw.SizedBox(height: 10),
+
+
+
+               pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("For tk", style: pw.TextStyle(fontSize: 9,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 100,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+
+
+               pw.SizedBox(height: 10),
+
+
+               pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("(Taka)", style: pw.TextStyle(fontSize: 9,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 100,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+
+
+               pw.SizedBox(height: 10),
+
+
+
+               pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("In Cash/By", style: pw.TextStyle(fontSize: 9,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 100,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+
+
+              //  pw.SizedBox(height: 10),
 
 
 

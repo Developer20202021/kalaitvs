@@ -312,7 +312,7 @@ pdf.addPage(pw.Page(
                 
                 
                 
-                child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("SALES INVOICE", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
+                child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("MONEY RECEIPT", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
 
 
            

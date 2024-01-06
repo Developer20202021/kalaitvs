@@ -690,6 +690,31 @@ pdf.addPage(pw.Page(
                           ],
                         ),
 
+                        pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                "10. RPM",
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                ': ${SalesData[0]["RPM"]}',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
+
 
 
 

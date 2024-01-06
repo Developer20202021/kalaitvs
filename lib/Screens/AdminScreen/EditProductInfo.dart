@@ -69,6 +69,8 @@ bool loading = true;
   TextEditingController BikeSalePriceController = TextEditingController();
   TextEditingController BikeNameController = TextEditingController();
   TextEditingController ColorAvailableController = TextEditingController();
+  TextEditingController RPMController = TextEditingController();
+  TextEditingController HorsePowerController = TextEditingController();
 
 
 
@@ -132,6 +134,8 @@ List  AllData = [{
                         "BikeWheelBase":" ",
                         "BikeWidth":" ",
                         "BikeID":" ",
+                        "RPM":" ",
+                        "HorsePower":" "
 }];
 
 
@@ -262,6 +266,9 @@ BikeBuyingPriceController.text = AllData[0]["BikeBuyingPrice"];
 BikeSalePriceController.text = AllData[0]["BikeSalePrice"];
 BikeNameController.text = AllData[0]["BikeName"];
 ColorAvailableController.text = AllData[0]["ColorAvailable"];
+RPMController.text = AllData[0]["RPM"];
+HorsePowerController.text = AllData[0]["HorsePower"];
+
 
 
 
@@ -1619,6 +1626,8 @@ ColorAvailableController.text = AllData[0]["ColorAvailable"];
                         "BikeValvePerCylinder":BikeValvePerCylinderController.text,
                         "BikeWheelBase":BikeWheelBaseController.text,
                         "BikeWidth":BikeWidthController.text,
+                        "RPM":RPMController.text.trim(),
+                        "HorsePower":HorsePowerController.text.trim()
                      
 
                   

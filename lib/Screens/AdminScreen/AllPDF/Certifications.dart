@@ -755,12 +755,92 @@ pdf.addPage(pw.Page(
 
 
 
+                        pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                "12. RPM",
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                ': ${SalesData[0]["RPM"]}',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
+
+
+                        pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                "13. Horse Power",
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                ': ${SalesData[0]["HorsePower"]}',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
+
+
+
+                        pw.TableRow(
+                        // decoration: pw.BoxDecoration(color: PdfColors.blue100),
+                          children: [
+                            pw.Padding(
+                              child: pw.Text(
+                                "14. Laden Weight",
+                                style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+
+                              pw.Padding(
+                              child: pw.Text(
+                                ': ${SalesData[0]["BikeLadenWeight"]}',
+                               style: pw.TextStyle(fontSize: 9),
+                                textAlign: pw.TextAlign.start,
+                              ),
+                              padding: pw.EdgeInsets.all(2),
+                            ),
+
+                          ],
+                        ),
+
+
+
                          pw.TableRow(
                         // decoration: pw.BoxDecoration(color: PdfColors.blue100),
                           children: [
                             pw.Padding(
                               child: pw.Text(
-                                "12. Unit Price",
+                                "15. Unit Price",
                                 style: pw.TextStyle(fontSize: 9),
                                 textAlign: pw.TextAlign.start,
                               ),

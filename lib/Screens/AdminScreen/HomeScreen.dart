@@ -267,7 +267,7 @@ Future<void> getTodayNagadCashData(String paymentDate) async {
 
       int todayPrfitInt = todaySalePriceInt - BuyingPriceInt;
 
-      var WithdiscountSale =  TodayNagadCashData[i]["BikeBuyingPrice"];
+      var WithdiscountSale =  TodayNagadCashData[i]["DiscountWithBikeSalePrice"];
 
       int todayWithDiscountSaleInt = int.parse(WithdiscountSale.toString());
 
@@ -1940,6 +1940,18 @@ PopupMenuItem(
                                 overflow: TextOverflow.clip,
                                  fontFamily: "Josefin Sans"
                               ),),
+
+
+                        Text("Discount বাদ দিয়ে বিক্রয়: ${todayWithDiscountSale.toString()}৳ ", style: TextStyle(
+                        
+                                fontSize: 18,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+
+                        
                   
                         
                            SizedBox(height: 3,),

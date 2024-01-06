@@ -227,7 +227,7 @@ Future<void> getData() async {
     BikeSalePriceController.text = widget.BikeSalePrice;
     BikeColorController.text = widget.BikeColor;
 
-    DiscountAmountController.text = "0";
+    // DiscountAmountController.text = "0";
 
 
     
@@ -816,7 +816,7 @@ Future<void> getData() async {
               "BikeDeliveryNo":BikeDeliveryNoController.text.trim(),
               "BikeSalePrice":BikeSalePriceController.text.trim(),
               "BikeDeliveryDate":DateTime.now().toIso8601String(),
-              "BikeBillPay":BikeBillPay,
+              "BikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
               "BikePaymentDue": AllData.isNotEmpty?(double.parse(AllData[0]["BikePaymentDue"])+double.parse(BikePaymentDueString)).toString():BikePaymentDueString,
               "CustomerType":CustomerType,
               "DuePaymentGivingDay":DuePaymentGivingDayInt.toString()        
@@ -931,13 +931,13 @@ Future<void> getData() async {
                   "BikeName":BikeNameController.text,
                   "BikeColor":widget.BikeColor,
                   "BikeSalePrice":widget.BikeSalePrice,
-                  "DiscountWithBikeSalePrice":(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())),
+                  "DiscountWithBikeSalePrice":DiscountAvailable?(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())):int.parse(widget.BikeSalePrice.toString()),
                   "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():0,
                   "BikeDeliveryDate":DateTime.now(),
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleYear":"${DateTime.now().year}",
-                  "BikeBillPay":BikeBillPayController.text.trim(),
+                  "BikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
                   "BikePaymentDue":BikePaymentDueString,
                   "CustomerType":CustomerType,
                   "CustomerName":CustomerData[0]["CustomerName"],
@@ -958,6 +958,9 @@ Future<void> getData() async {
                   "adminName":adminName,
                   "TotalCashIn":BikeBillPayController.text.trim(),
                   "AllOwners":[],
+                  "RPM":GetBikeData[0]["RPM"],
+                  "HorsePower":GetBikeData[0]["HorsePower"],
+                  "BikeLadenWeight":GetBikeData[0]["BikeKerbWeight"],
                 
                   
                 };
@@ -1014,7 +1017,7 @@ Future<void> getData() async {
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleYear":"${DateTime.now().year}",
-                  "BikeBillPay":BikeBillPayController.text.trim().toString(),
+               
                   "BikeBillPayToWord":NumberToWordsEnglish.convert(int.parse(BikeBillPayController.text.trim().toString())),
                   "BikePaymentDue":BikePaymentDueString,
                   "CustomerType":CustomerType,
@@ -1036,7 +1039,11 @@ Future<void> getData() async {
                   "adminName":adminName,
                   "SalePrice":BikeSalePrice,
                   "DuePrice":BikePaymentDueInt.toString(),
-                   "TotalCashIn":BikeBillPayController.text.trim(),
+                  "TotalCashIn":BikeBillPayController.text.trim(),
+                  "RPM":GetBikeData[0]["RPM"],
+                  "HorsePower":GetBikeData[0]["HorsePower"],
+                  "BikeLadenWeight":GetBikeData[0]["BikeKerbWeight"],
+                   "BikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
 
                       };
 

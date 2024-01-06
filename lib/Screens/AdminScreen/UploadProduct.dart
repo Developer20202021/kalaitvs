@@ -71,6 +71,8 @@ class _UploadProductState extends State<UploadProduct> {
   TextEditingController ColorAvailableController = TextEditingController();
   TextEditingController YearOfManufactureController = TextEditingController();
   TextEditingController SeatingCapacityController = TextEditingController();
+  TextEditingController RPMController = TextEditingController();
+  TextEditingController HorsePowerController = TextEditingController();
   
 
   File? _photo;
@@ -948,6 +950,64 @@ if (this.mounted) {
                       
                       ),
                   controller: BikePowertoWeightRationController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+                TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'RPM',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'RPM',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: RPMController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+                 TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'HorsePower',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'HorsePower',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: HorsePowerController,
                 ),
               
                 SizedBox(
@@ -2106,7 +2166,9 @@ if (this.mounted) {
                         "BikeID":bikeid,
                         "AllBikeImage":AllUploadImageUrl,
                         "SeatingCapacity":SeatingCapacityController.text.trim(),
-                        "YearOfManufacture":YearOfManufactureController.text.trim()
+                        "YearOfManufacture":YearOfManufactureController.text.trim(),
+                        "RPM":RPMController.text.trim(),
+                        "HorsePower":HorsePowerController.text.trim()
 
                   
                       };

@@ -970,7 +970,7 @@ void dispose() {
 
                                           Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  NameChangePDFView(NameChangeData: AllSaleData[i]["AllOwners"][x])),
+                                          MaterialPageRoute(builder: (context) =>  NameChangePDFView(NameChangeData: [AllSaleData[i]["AllOwners"][x]])),
                                         );
 
 
