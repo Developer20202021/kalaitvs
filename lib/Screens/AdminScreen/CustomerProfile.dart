@@ -13,6 +13,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/NameChangeFrom.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/ServiceMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
@@ -23,7 +24,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:tvs_app/Screens/DeveloperFolder/InternetChecker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
+import 'package:uuid/uuid.dart';
 
 
 
@@ -46,6 +47,8 @@ class CustomerProfile extends StatefulWidget {
 
 class _EditCustomerInfoState extends State<CustomerProfile> {
 
+   var uuid = Uuid();
+
 
 TextEditingController DueAmountController = TextEditingController();
 
@@ -60,6 +63,10 @@ TextEditingController NewOwnerPhoneNoController = TextEditingController();
 TextEditingController FeeAmountController = TextEditingController();
 
 TextEditingController NewOwnerNIDController = TextEditingController();
+
+TextEditingController ServiceNameController = TextEditingController();
+
+TextEditingController ServiceAmountController = TextEditingController();
 
 
 
@@ -250,7 +257,7 @@ void dispose() {
 
 
 
-
+    var ServiceID = uuid.v4();
     
 
 
@@ -657,6 +664,251 @@ void dispose() {
                                     },
                                     itemBuilder: (BuildContext bc) {
                                       return  [
+
+
+
+                              
+
+                     
+
+                            PopupMenuItem(
+                                child: Text("সার্ভিস যুক্ত করুন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                            value: '/about',
+                                            onTap: () async {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  String SelectedStudentStatus =
+                                                      "";
+                                                  String Title ="নিচে সার্ভিসের নাম লিখবেন";
+
+                                                  String LabelText ="সার্ভিসের নাম লিখবেন";
+
+                                                  return StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) {
+                                                      return AlertDialog(
+                                                        title:  Column(
+                                                          children: [
+                                                            Center(
+                                                              child: Text(
+                                                                  "${Title}", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                                            ),
+
+                                                            
+                                                    
+
+                                
+                                                          ],
+                                                        ),
+                                                        content: SingleChildScrollView(
+                                                          
+                                                          child:  Column(
+                                                            children: [
+              
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '${LabelText}',
+
+                      hintText: '${LabelText}',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: ServiceNameController,
+                  ),
+                ),
+
+
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                      SizedBox(
+                              height: 20,
+                            ),
+
+                    
+
+                    Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'সার্ভিস ফি(৳)',
+
+                      hintText: 'সার্ভিস ফি(৳)',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: ServiceAmountController,
+                  ),
+                ),
+
+
+
+
+
+
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context),
+                                                            child:
+                                                                Text("Cancel"),
+                                                          ),
+
+
+                                                  ElevatedButton(
+                                                          onPressed:
+                                                            () async {
+
+            setState((){
+
+              loading = true;
+
+            });
+
+
+            var updateData =
+                      {
+                        "ServiceID": ServiceID,
+                        "CustomerID":"${widget.CustomerID}",
+                        "ServiceName":ServiceNameController.text.trim().toLowerCase(),
+                        "FileNo":AllSaleData[i]["BikeDeliveryNo"],
+                        "ServiceAmount":ServiceAmountController.text.trim().toLowerCase(),
+                        "BikeID":AllSaleData[i]["BikeID"],
+                        "SaleID":AllSaleData[i]["SaleID"],
+                        "CustomerAddress":AllSaleData[i]["CustomerAddress"],
+                        "CustomerName":AllSaleData[i]["CustomerName"],
+                        "CustomerPhoneNumber":AllSaleData[i]["CustomerPhoneNumber"],
+                        "year":"${DateTime.now().year}",
+                        "month":"${DateTime.now().month}/${DateTime.now().year}",
+                        "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                        "DateTime":DateTime.now().toIso8601String(),
+                        "CollectorName":"",
+                        "CollectorEmail":""
+                        };
+
+                  final StudentInfo = FirebaseFirestore.instance.collection('ServiceInfo').doc(ServiceID);
+                  
+                  StudentInfo.set(updateData).then((value) =>setState(() {
+                                        
+
+                          Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => ServiceMemoPDFPreview(CreditData: [updateData],)),
+                      );
+
+                                final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'successfull',
+                                        message: 'Hey Thank You. Good Job',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                       setState(() {
+                        loading = false;
+                             });
+                            }))
+                      .onError((error,stackTrace) =>setState(() {
+                        final snackBar = SnackBar(
+                  /// need to set following properties for best effect of awesome_snackbar_content
+                        elevation: 0,
+                        
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        content: AwesomeSnackbarContent(
+                        title: 'Something Wrong!!!!',
+                        message: 'Try again later...',
+
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                        contentType: ContentType.failure,
+                            ),
+                        );
+
+                ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                      setState(() {
+                            loading = false;
+                               });
+                      }));
+
+
+
+
+                                                                  },
+                                                                  child: const Text(
+                                                                      "Save"),
+                                                                ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                       PopupMenuItem(
