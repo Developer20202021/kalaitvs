@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayCreditHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDebitHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayNameChangeHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayServiceHistory.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bijoy_helper/bijoy_helper.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -299,6 +301,70 @@ Future<void> getTodayNagadCashData(String paymentDate) async {
 
 
 
+List  OwnerShipChangeData = [];
+    int OwnerShipChangeAdd = 0;
+
+
+
+Future<void> getOwnerShipChangeData() async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('OwnerShipChange');
+
+    Query query = _collectionRef.where("PaymentDate", isEqualTo: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     OwnerShipChangeData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+     OwnerShipChangeAdd = 0;
+
+
+
+
+     if (OwnerShipChangeData.length == 0) {
+       setState(() {
+      
+        loading = false;
+      });
+       
+     } else {
+
+   
+
+      for (var i = 0; i < OwnerShipChangeData.length; i++) {
+
+       var money = OwnerShipChangeData[i]["FeeAmount"];
+      int moneyInt = int.parse(money);
+
+      
+
+      setState(() {
+        OwnerShipChangeAdd = OwnerShipChangeAdd + moneyInt;
+        OwnerShipChangeData = querySnapshot.docs.map((doc) => doc.data()).toList();
+        loading = false;
+      });
+       
+     }
+
+     print(moneyAdd);
+       
+     }
+
+    print(OwnerShipChangeData);
+}
+
+
+
+
+
+
+
+
+
+
 
 // internet Connection Checker
 
@@ -340,14 +406,8 @@ setState(() {
     getDueCustomerData();
     getData(PaymentDate);
     getTodayNagadCashData(PaymentDate);
+    getOwnerShipChangeData();
     super.initState();
-
-
-
-
-
-  
-    
 
   FlutterNativeSplash.remove();
   
@@ -1410,6 +1470,58 @@ setState(() {
 
 
 
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayServiceFeeHistory()));
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.payment),
+                    SizedBox(width: 5,),
+                    Text("আজকের সার্ভিস ফি পরিমান", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PerDayNameChangeHistory()));
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.payment),
+                    SizedBox(width: 5,),
+                    Text("আজকের নাম পরিবর্তন ফি", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
+
+
+
+
+
+
 
 
 
@@ -1781,13 +1893,13 @@ PopupMenuItem(
                            SizedBox(height: 3,),
                   
                         
-                         Text("আজকের Discount সহ বিক্রয় : ${todayWithDiscountSale.toString()}৳", style: TextStyle(
+                        //  Text("আজকের Discount সহ বিক্রয় : ${todayWithDiscountSale.toString()}৳", style: TextStyle(
                         
-                                fontSize: 18,
-                                color: Colors.black,
-                                overflow: TextOverflow.clip,
-                                 fontFamily: "Josefin Sans"
-                              ),),
+                        //         fontSize: 18,
+                        //         color: Colors.black,
+                        //         overflow: TextOverflow.clip,
+                        //          fontFamily: "Josefin Sans"
+                        //       ),),
                   
                           
                            SizedBox(height: 3,),
@@ -1841,6 +1953,20 @@ PopupMenuItem(
                               ),),
                   
                          SizedBox(height: 3,),
+
+
+
+
+                         Text("আজকের মোট নাম পরিবর্তন ফি: ${OwnerShipChangeAdd.toString()}৳", style: TextStyle(
+                        
+                                fontSize: 20,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.clip,
+                                 fontFamily: "Josefin Sans"
+                              ),),
+                  
+                           SizedBox(height: 3,),
                   
                   
                   

@@ -323,7 +323,7 @@ pdf.addPage(pw.Page(
                         
                         child: pw.Padding(
                           padding:pw.EdgeInsets.only(bottom: 5, left: 30),
-                          child: pw.Text("${CreditData[0]["FileNo"]}", style:pw.TextStyle(fontSize: 11, font: Banglattf,  color: PdfColor.fromInt(0x000000)))))
+                          child: pw.Text("${CreditData[0]["FileNo"]}", style:pw.TextStyle(fontSize: 11,  color: PdfColor.fromInt(0x000000)))))
                   ]),
 
 

@@ -18,6 +18,7 @@ import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
+import 'package:tvs_app/Screens/AdminScreen/MyServices.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -664,6 +665,21 @@ void dispose() {
                                     },
                                     itemBuilder: (BuildContext bc) {
                                       return  [
+
+
+                            
+                            PopupMenuItem(
+                              child: Text("আমার সার্ভিস", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                              onTap: () {
+
+
+                      Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => MyServiceHistory(SaleID: AllSaleData[i]["SaleID"])),
+                      );
+                                
+                              },
+                              value: '/hello',
+                            ),
 
 
 
