@@ -1062,17 +1062,18 @@ setState(() {
                   child: Column(
                     children: [
                     Center(
-                      child:  CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(
-                          "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
+                        child:  ClipOval(
+                          child: Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoocHKiIUok-RD7VaxEivcDEwGLdbsMO5JL66hM1Z12x9t6kEvwqKoUNvDeRBc6H9dh4g&usqp=CAU",
+                            width: 100,
+                            height: 100,
+                          ),
                         ),
                       ),
-                    ),
 
 
-                    Text("Name:${widget.userName}"),
-                    Text("Email:${widget.userEmail}"),
+                    Text("Name:${widget.userName}", style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text("Email:${widget.userEmail}", style: TextStyle(fontWeight: FontWeight.bold),),
 
 
 

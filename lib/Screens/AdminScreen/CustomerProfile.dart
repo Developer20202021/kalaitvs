@@ -394,6 +394,8 @@ void dispose() {
                         child:  ClipOval(
                           child: Image.network(
                             AllData[0]["CustomerImageUrl"]==""?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoocHKiIUok-RD7VaxEivcDEwGLdbsMO5JL66hM1Z12x9t6kEvwqKoUNvDeRBc6H9dh4g&usqp=CAU":"${AllData[0]["CustomerImageUrl"]}",
+                            width: 200,
+                            height: 150,
                           ),
                         ),
                       ),
@@ -1212,7 +1214,7 @@ void dispose() {
 
 
                         final CustomerSmsResponse = await http
-                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
 
                        try {
 
@@ -1240,7 +1242,7 @@ void dispose() {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${NewOwnerPhoneNoController.text.trim()}&message=${NewOwnerMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${NewOwnerPhoneNoController.text.trim()}&message=${NewOwnerMsg}'));
 
                             try {
                                 if (response.statusCode == 200) {
@@ -1872,7 +1874,7 @@ void dispose() {
 
 
                         final CustomerSmsResponse = await http
-                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
 
                        try {
 
@@ -1900,7 +1902,7 @@ void dispose() {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01711414664&message=${AdminMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=01711414664&message=${AdminMsg}'));
 
                             try {
                                 if (response.statusCode == 200) {
