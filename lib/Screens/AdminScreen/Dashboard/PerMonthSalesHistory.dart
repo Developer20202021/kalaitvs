@@ -90,7 +90,7 @@ List  AllData = [];
     int moneyAdd = 0;
 
   CollectionReference _collectionRef =
-    FirebaseFirestore.instance.collection('BikeSalePrice');
+    FirebaseFirestore.instance.collection('BikeSaleInfo');
 
 Future<void> getData(String paymentDate) async {
     // Get docs from collection reference
@@ -125,7 +125,7 @@ Future<void> getData(String paymentDate) async {
 
       for (var i = 0; i < AllData.length; i++) {
 
-       var money = AllData[i]["SalePrice"];
+       var money = AllData[i]["BikeSalePrice"];
       int moneyInt = int.parse(money);
 
       
@@ -288,7 +288,7 @@ Future<void> getData(String paymentDate) async {
                     borderRadius: BorderRadius.circular(5),
                   ), 
                       
-                            title: Text("${AllData[index]["SalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                            title: Text("${AllData[index]["BikeSalePrice"]}৳", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                             trailing: Text("NID:${AllData[index]["CustomerNID"]}"),
                             subtitle: Column(
       

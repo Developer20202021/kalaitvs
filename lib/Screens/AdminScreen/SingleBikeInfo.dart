@@ -775,9 +775,13 @@ Future<void> getData() async {
               int BikeSalePriceInt = int.parse(BikeSalePrice);
               int BikeBillPayInt = int.parse(BikeBillPay);
               int BikePaymentDueInt =  BikeSalePriceInt - BikeBillPayInt;
+              int DiscountPrice = DiscountAvailable?int.parse(DiscountAmountController.text.trim().toString()):0;
+
+              int withDiscountDue = BikePaymentDueInt-DiscountPrice;
+
               var CustomerType = "Due";
 
-              if (BikePaymentDueInt == 0) {
+              if (withDiscountDue <= 0) {
 
                 setState(() {
                   CustomerType = "Paid";
@@ -931,14 +935,15 @@ Future<void> getData() async {
                   "BikeName":BikeNameController.text,
                   "BikeColor":widget.BikeColor,
                   "BikeSalePrice":widget.BikeSalePrice,
-                  "DiscountWithBikeSalePrice":DiscountAvailable?(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())):int.parse(widget.BikeSalePrice.toString()),
-                  "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():0,
+                  // "DiscountWithBikeSalePrice":DiscountAvailable?(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())):int.parse(widget.BikeSalePrice.toString()),
+               
                   "BikeDeliveryDate":DateTime.now(),
                   "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
                   "BikeSaleYear":"${DateTime.now().year}",
                   "BikeBillPay":BikeBillPayController.text.trim().toString(),
-                  "BikePaymentDue":BikePaymentDueString,
+                  "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():"0",
+                  "BikePaymentDue":DiscountAvailable?((int.parse(widget.BikeSalePrice.toString())-int.parse(BikeBillPayController.text.trim().toString()))-int.parse(DiscountAmountController.text.trim().toString())).toString():(int.parse(widget.BikeSalePrice.toString())-int.parse(BikeBillPayController.text.trim().toString())).toString(),
                   "CustomerType":CustomerType,
                   "CustomerName":CustomerData[0]["CustomerName"],
                   "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
@@ -961,7 +966,7 @@ Future<void> getData() async {
                   "RPM":GetBikeData[0]["RPM"],
                   "HorsePower":GetBikeData[0]["HorsePower"],
                   "BikeLadenWeight":GetBikeData[0]["BikeKerbWeight"],
-                  "WithDiscountBikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
+                  // "WithDiscountBikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
                 
                   
                 };
@@ -988,68 +993,69 @@ Future<void> getData() async {
                       )));
 
 
-                      final salePrice = FirebaseFirestore.instance.collection("BikeSalePrice");
+                  //     final salePrice = FirebaseFirestore.instance.collection("BikeSalePrice");
 
-                      final saleData ={
-                  "ClassOfVehicle":"MOTOR CYCLE",
-                  "BikeBuyingPrice":GetBikeData[0]["BikeBuyingPrice"],
-                  "YearOfManufacture":GetBikeData[0]["YearOfManufacture"],
-                  "SeatingCapacity":GetBikeData[0]["SeatingCapacity"],
-                  "BikeValvePerCylinder":GetBikeData[0]["BikeValvePerCylinder"],
-                  "MakersName":"Bajaj Auto LTD/INDIA",
-                  "BikeMaximumPower":GetBikeData[0]["BikeMaximumPower"],
-                  "BikeWheelBase":GetBikeData[0]["BikeWheelBase"],
-                  "BikeTyreFront":GetBikeData[0]["BikeTyreFront"],
-                  "BikeTyreRear":GetBikeData[0]["BikeTyreRear"],
-                  "SaleID":SaleID,
-                  "BikeID":widget.BikeID,
-                  "CustomerID":widget.CustomerID,
-                  "CustomerNID": widget.CustomerNID,
-                  "BikeChassisNo":BikeChassisNoController.text,
-                  "BikeEngineNo":BikeEngineNoController.text,
-                  "BikeDeliveryNo":BikeDeliveryNoController.text,
-                  "BikeName":BikeNameController.text,
-                  "BikeConditionMonth":ConditionAvailable?BikeConditionMonthController.text.trim().toString():"0",
-                  "BikeColor":widget.BikeColor,
-                  "BikeSalePrice":widget.BikeSalePrice,
-                  "DiscountWithBikeSalePrice":DiscountAvailable?(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())):widget.BikeSalePrice.toString(),
-                  "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():0,
-                  "BikeDeliveryDate":DateTime.now(),
-                  "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                  "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
-                  "BikeSaleYear":"${DateTime.now().year}",
+                  //     final saleData ={
+                  // "ClassOfVehicle":"MOTOR CYCLE",
+                  // "BikeBuyingPrice":GetBikeData[0]["BikeBuyingPrice"],
+                  // "YearOfManufacture":GetBikeData[0]["YearOfManufacture"],
+                  // "SeatingCapacity":GetBikeData[0]["SeatingCapacity"],
+                  // "BikeValvePerCylinder":GetBikeData[0]["BikeValvePerCylinder"],
+                  // "MakersName":"Bajaj Auto LTD/INDIA",
+                  // "BikeMaximumPower":GetBikeData[0]["BikeMaximumPower"],
+                  // "BikeWheelBase":GetBikeData[0]["BikeWheelBase"],
+                  // "BikeTyreFront":GetBikeData[0]["BikeTyreFront"],
+                  // "BikeTyreRear":GetBikeData[0]["BikeTyreRear"],
+                  // "SaleID":SaleID,
+                  // "BikeID":widget.BikeID,
+                  // "CustomerID":widget.CustomerID,
+                  // "CustomerNID": widget.CustomerNID,
+                  // "BikeChassisNo":BikeChassisNoController.text,
+                  // "BikeEngineNo":BikeEngineNoController.text,
+                  // "BikeDeliveryNo":BikeDeliveryNoController.text,
+                  // "BikeName":BikeNameController.text,
+                  // "BikeConditionMonth":ConditionAvailable?BikeConditionMonthController.text.trim().toString():"0",
+                  // "BikeColor":widget.BikeColor,
+                  // "BikeSalePrice":widget.BikeSalePrice,
+                  // "DiscountWithBikeSalePrice":DiscountAvailable?(int.parse(widget.BikeSalePrice.toString())-int.parse(DiscountAmountController.text.trim().toString())):widget.BikeSalePrice.toString(),
+                  // "Discount":DiscountAvailable?DiscountAmountController.text.trim().toString():"0",
+                  // "BikeDeliveryDate":DateTime.now(),
+                  // "BikeSaleDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                  // "BikeSaleMonth":"${DateTime.now().month}/${DateTime.now().year}",
+                  // "BikeSaleYear":"${DateTime.now().year}",
                
-                  "BikeBillPayToWord":NumberToWordsEnglish.convert(int.parse(BikeBillPayController.text.trim().toString())),
-                  "BikePaymentDue":BikePaymentDueString,
-                  "CustomerType":CustomerType,
-                  "CustomerName":CustomerData[0]["CustomerName"],
-                  "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
-                  "CustomerAddress":CustomerData[0]["CustomerAddress"],
-                  "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
-                  "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
-                  "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
-                  "CustomerGuarantor1Name":CustomerData[0]["CustomerGuarantor1Name"],
-                  "CustomerGuarantor1PhoneNumber":CustomerData[0]["CustomerGuarantor1PhoneNumber"],
-                  "CustomerGuarantor2Address":CustomerData[0]["CustomerGuarantor2Address"],
-                  "CustomerGuarantor2NID":CustomerData[0]["CustomerGuarantor2NID"],
-                  "CustomerGuarantor2Name":CustomerData[0]["CustomerGuarantor2Name"],
-                  "CustomerGuarantor2PhoneNumber":CustomerData[0]["CustomerGuarantor2PhoneNumber"],
-                  "DuePaymentGivingDay":CustomerData[0]["DuePaymentGivingDay"],
-                  "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
-                  "adminEmail":adminEmail,
-                  "adminName":adminName,
-                  "SalePrice":BikeSalePrice,
-                  "DuePrice":BikePaymentDueInt.toString(),
-                  "TotalCashIn":BikeBillPayController.text.trim(),
-                  "RPM":GetBikeData[0]["RPM"],
-                  "HorsePower":GetBikeData[0]["HorsePower"],
-                  "BikeLadenWeight":GetBikeData[0]["BikeKerbWeight"],
-                  "WithDiscountBikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
-                  "BikeBillPay":BikeBillPayController.text.trim().toString(),
+                  // "BikeBillPayToWord":NumberToWordsEnglish.convert(int.parse(BikeBillPayController.text.trim().toString())),
+                  // // "BikePaymentDue":BikePaymentDueString,
+                  // "BikePaymentDue":DiscountAvailable?((int.parse(widget.BikeSalePrice.toString())-int.parse(BikeBillPayController.text.trim().toString()))-int.parse(DiscountAmountController.text.trim().toString())).toString():(int.parse(widget.BikeSalePrice.toString())-int.parse(BikeBillPayController.text.trim().toString())).toString(),
+                  // "CustomerType":CustomerType,
+                  // "CustomerName":CustomerData[0]["CustomerName"],
+                  // "CustomerPhoneNumber":CustomerData[0]["CustomerPhoneNumber"],
+                  // "CustomerAddress":CustomerData[0]["CustomerAddress"],
+                  // "CustomerFatherName":CustomerData[0]["CustomerFatherName"],
+                  // "CustomerGuarantor1Address":CustomerData[0]["CustomerGuarantor1Address"],
+                  // "CustomerGuarantor1NID":CustomerData[0]["CustomerGuarantor1NID"],
+                  // "CustomerGuarantor1Name":CustomerData[0]["CustomerGuarantor1Name"],
+                  // "CustomerGuarantor1PhoneNumber":CustomerData[0]["CustomerGuarantor1PhoneNumber"],
+                  // "CustomerGuarantor2Address":CustomerData[0]["CustomerGuarantor2Address"],
+                  // "CustomerGuarantor2NID":CustomerData[0]["CustomerGuarantor2NID"],
+                  // "CustomerGuarantor2Name":CustomerData[0]["CustomerGuarantor2Name"],
+                  // "CustomerGuarantor2PhoneNumber":CustomerData[0]["CustomerGuarantor2PhoneNumber"],
+                  // "DuePaymentGivingDay":CustomerData[0]["DuePaymentGivingDay"],
+                  // "CustomerMotherName":CustomerData[0]["CustomerMotherName"],
+                  // "adminEmail":adminEmail,
+                  // "adminName":adminName,
+                  // "SalePrice":BikeSalePrice,
+                  // "DuePrice":BikePaymentDueInt.toString(),
+                  // "TotalCashIn":BikeBillPayController.text.trim(),
+                  // "RPM":GetBikeData[0]["RPM"],
+                  // "HorsePower":GetBikeData[0]["HorsePower"],
+                  // "BikeLadenWeight":GetBikeData[0]["BikeKerbWeight"],
+                  // // "WithDiscountBikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
+                  // "BikeBillPay":BikeBillPayController.text.trim().toString(),
 
-                      };
+                  //     };
 
-                    await salePrice.add(saleData).then((value) => print(""));
+                  //   await salePrice.add(saleData).then((value) => print(""));
 
                     List BikeData = [0];
 
@@ -1081,7 +1087,7 @@ Future<void> getData() async {
 
 
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context) =>  AfterSaleBike(SalesData: [saleData])));
+                        MaterialPageRoute(builder: (context) =>  AfterSaleBike(SalesData: [jsonData])));
 
 
 

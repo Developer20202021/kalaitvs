@@ -444,7 +444,7 @@ setState(() {
                           
                     Future createCustomer(String CustomerName, CustomerNID, CustomerAddress, CustomerPhoneNumber) async{
 
-                      final docUser = FirebaseFirestore.instance.collection("customer");
+                     
 
             
 
@@ -462,6 +462,9 @@ setState(() {
                         "BikeModelName":widget.BikeModelName,
                         "BikeSalePrice":widget.BikeSalePrice
                       };
+
+
+                       final docUser = FirebaseFirestore.instance.collection("customer");
 
                             await docUser.doc(CustomerID).set(jsonData).then((value) =>     Navigator.push(
                         context,
@@ -492,10 +495,12 @@ setState(() {
                         "BikeSalePrice":widget.BikeSalePrice
                       };
 
+                      final docUser = FirebaseFirestore.instance.collection("customer").doc(AllData[0]["CustomerID"]);
 
-                            await docUser.doc(CustomerID).update(jsonData).then((value) =>     Navigator.push(
+
+                         await docUser.update(jsonData).then((value) =>     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  ProductSaleEditCustomer(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice, BikeBuyingPrice: widget.BikeBuyingPrice, BikeId: widget.BikeId, CustomerID: CustomerID, AllData: AllData, AllDataEmpty: AllData.isEmpty,)),
+                        MaterialPageRoute(builder: (context) =>  ProductSaleEditCustomer(CustomerNID: customerNIDController.text, CustomerAddress: customerAddressController.text, CustomerName: customerNameController.text, CustomerPhoneNumber: customerPhoneNumberController.text, BikeColor: widget.BikeColor,BikeModelName: widget.BikeModelName,BikeName: widget.BikeName,BikeSalePrice: widget.BikeSalePrice, BikeBuyingPrice: widget.BikeBuyingPrice, BikeId: widget.BikeId, CustomerID: AllData[0]["CustomerID"], AllData: AllData, AllDataEmpty: AllData.isEmpty,)),
                       )).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                               content: const Text('Something Wrong!'),

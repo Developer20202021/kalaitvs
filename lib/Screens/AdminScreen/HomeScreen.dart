@@ -206,7 +206,6 @@ List  TodayNagadCashData = [];
     int todayDue = 0;
     int todaySale =0;
     int todayProfit = 0;
-    int todayWithDiscountSale =0;
 
 
 Future<void> getTodayNagadCashData(String paymentDate) async {
@@ -267,9 +266,7 @@ Future<void> getTodayNagadCashData(String paymentDate) async {
 
       int todayPrfitInt = todaySalePriceInt - BuyingPriceInt;
 
-      var WithdiscountSale =  TodayNagadCashData[i]["DiscountWithBikeSalePrice"];
-
-      int todayWithDiscountSaleInt = int.parse(WithdiscountSale.toString());
+ 
 
       
 
@@ -279,7 +276,7 @@ Future<void> getTodayNagadCashData(String paymentDate) async {
        todayDue = todayDue + todayDueMoneyInt;
        todaySale = todaySale + todaySaleMoneyInt;
        todayProfit = todayProfit + todayPrfitInt;
-       todayWithDiscountSale = todayWithDiscountSale + todayWithDiscountSaleInt;
+  
       
         // loading = false;
       });
@@ -1031,7 +1028,7 @@ setState(() {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
       //  automaticallyImplyLeading: false,
-        title:  Text("Dashboard   V: 15.7.6 (Live)", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Dashboard   V: 21.3.2 (Live)", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -1942,14 +1939,6 @@ PopupMenuItem(
                               ),),
 
 
-                        Text("Discount বাদ দিয়ে বিক্রয়: ${todayWithDiscountSale.toString()}৳ ", style: TextStyle(
-                        
-                                fontSize: 18,
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.clip,
-                                 fontFamily: "Josefin Sans"
-                              ),),
 
                         
                   

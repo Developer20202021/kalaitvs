@@ -632,7 +632,7 @@ pdf.addPage(pw.Page(
                 width: 200,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeBillPay"]} tk", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${(int.parse(SalesData[0]["BikeBillPay"].toString())+int.parse(SalesData[0]["Discount"].toString())).toString()} tk", style: pw.TextStyle(fontSize: 14,))))
 
               ]),
 
