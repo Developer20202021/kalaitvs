@@ -239,7 +239,7 @@ pdf.addPage(pw.Page(
 
                    pw.SizedBox(height: 6),
 
-                  pw.Center(child: pw.Text("Mobile: 01711414664, 01721608030, Phone: 0571-51139", style:pw.TextStyle(fontSize: 9,  font: ttf)),),
+                  pw.Center(child: pw.Text("Mobile: 01711414664, 01721608030, 01718148814", style:pw.TextStyle(fontSize: 9,  font: ttf)),),
 
                   pw.SizedBox(height: 6),
                   // pw.Center(child: pw.Text("EIIN: 122026", style:pw.TextStyle(fontSize: 11,  font: ttf)),),
