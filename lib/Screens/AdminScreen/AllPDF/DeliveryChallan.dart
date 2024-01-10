@@ -314,6 +314,18 @@ pdf.addPage(pw.Page(
                 child: pw.Padding(padding: pw.EdgeInsets.all(10), child: pw.Text("DELIVERY CHALLAN", style: pw.TextStyle(fontSize: 14, color: PdfColors.white, font: ttf))))),
 
 
+
+            pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+
+                  pw.Text("File No:- ${SalesData[0]["BikeDeliveryNo"]}"),
+
+
+                  pw.Text("Date:- ${SalesData[0]["BikeSaleDate"]}"),
+
+              ]),
            
 
 
@@ -402,6 +414,31 @@ pdf.addPage(pw.Page(
 
 
               pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("Phone No", style: pw.TextStyle(fontSize: 11,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 440,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerPhoneNumber"]}", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+
+
+
+
+               pw.SizedBox(height: 10),
+
+
+
+              pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
 
@@ -433,7 +470,7 @@ pdf.addPage(pw.Page(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
 
-                  pw.Text("Color", style: pw.TextStyle(fontSize: 11,)),
+                  pw.Text("Colour", style: pw.TextStyle(fontSize: 11,)),
 
                   pw.SizedBox(width: 4),
 
@@ -514,7 +551,7 @@ pdf.addPage(pw.Page(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
 
-                  pw.Text("Bike Engine No", style: pw.TextStyle(fontSize: 11,)),
+                  pw.Text("Engine No", style: pw.TextStyle(fontSize: 11,)),
 
                   pw.SizedBox(width: 4),
 
@@ -543,13 +580,13 @@ pdf.addPage(pw.Page(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
 
-                  pw.Text("Bike Price", style: pw.TextStyle(fontSize: 11,)),
+                  pw.Text("Bike Total Price", style: pw.TextStyle(fontSize: 11,)),
 
                   pw.SizedBox(width: 4),
 
                   pw.Container(
                 
-                width: 430,
+                width: 380,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
                     child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeSalePrice"]} tk", style: pw.TextStyle(fontSize: 14,))))
@@ -579,7 +616,7 @@ pdf.addPage(pw.Page(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
 
-                  pw.Text("Cash In", style: pw.TextStyle(fontSize: 11,)),
+                  pw.Text("DP/Cash In", style: pw.TextStyle(fontSize: 11,)),
 
                   pw.SizedBox(width: 4),
 
@@ -687,45 +724,45 @@ pdf.addPage(pw.Page(
                 children: [
 
 
-                pw.Row(
+              //   pw.Row(
                 
-                mainAxisAlignment: pw.MainAxisAlignment.start,
-                children: [
+              //   mainAxisAlignment: pw.MainAxisAlignment.start,
+              //   children: [
 
-                  pw.Text("File No", style: pw.TextStyle(fontSize: 11,)),
+              //     pw.Text("File No", style: pw.TextStyle(fontSize: 11,)),
 
-                  pw.SizedBox(width: 4),
+              //     pw.SizedBox(width: 4),
 
-                  pw.Container(
+              //     pw.Container(
                 
-                width: 200,
-                decoration:  pw.BoxDecoration(
-                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeDeliveryNo"]}", style: pw.TextStyle(fontSize: 14,))))
+              //   width: 200,
+              //   decoration:  pw.BoxDecoration(
+              //   border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+              //       child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeDeliveryNo"]}", style: pw.TextStyle(fontSize: 14,))))
 
-              ]),
-
-
+              // ]),
 
 
 
-               pw.Row(
+
+
+              //  pw.Row(
                 
-                mainAxisAlignment: pw.MainAxisAlignment.start,
-                children: [
+              //   mainAxisAlignment: pw.MainAxisAlignment.start,
+              //   children: [
 
-                  pw.Text("Phone No", style: pw.TextStyle(fontSize: 11,)),
+              //     pw.Text("Phone No", style: pw.TextStyle(fontSize: 11,)),
 
-                  pw.SizedBox(width: 4),
+              //     pw.SizedBox(width: 4),
 
-                  pw.Container(
+              //     pw.Container(
                 
-                width: 200,
-                decoration:  pw.BoxDecoration(
-                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerPhoneNumber"]}", style: pw.TextStyle(fontSize: 14,))))
+              //   width: 200,
+              //   decoration:  pw.BoxDecoration(
+              //   border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+              //       child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["CustomerPhoneNumber"]}", style: pw.TextStyle(fontSize: 14,))))
 
-              ]),
+              // ]),
 
 
               ]),
@@ -764,23 +801,23 @@ pdf.addPage(pw.Page(
 
 
 
-              pw.Row(
+              // pw.Row(
                 
-                mainAxisAlignment: pw.MainAxisAlignment.start,
-                children: [
+              //   mainAxisAlignment: pw.MainAxisAlignment.start,
+              //   children: [
 
-                  pw.Text("Date", style: pw.TextStyle(fontSize: 11,)),
+              //     pw.Text("Date", style: pw.TextStyle(fontSize: 11,)),
 
-                  pw.SizedBox(width: 4),
+              //     pw.SizedBox(width: 4),
 
-                  pw.Container(
+              //     pw.Container(
                 
-                width: 465,
-                decoration:  pw.BoxDecoration(
-                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeSaleDate"]}", style: pw.TextStyle(fontSize: 14,))))
+              //   width: 465,
+              //   decoration:  pw.BoxDecoration(
+              //   border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+              //       child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeSaleDate"]}", style: pw.TextStyle(fontSize: 14,))))
 
-              ]),
+              // ]),
 
 
 

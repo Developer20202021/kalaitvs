@@ -337,8 +337,6 @@ pdf.addPage(pw.Page(
 
                   pw.Text("Date: ${SalesData[0]["BikeSaleDate"]}"),
 
-                  
-
               ]),
 
 
