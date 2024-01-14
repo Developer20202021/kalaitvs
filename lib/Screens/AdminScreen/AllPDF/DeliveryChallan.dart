@@ -576,6 +576,12 @@ pdf.addPage(pw.Page(
 
 
               pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  
+                  
+                  
+                  pw.Row(
                 
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 children: [
@@ -586,11 +592,35 @@ pdf.addPage(pw.Page(
 
                   pw.Container(
                 
-                width: 380,
+                width: 170,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
                     child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeSalePrice"]} tk", style: pw.TextStyle(fontSize: 14,))))
 
+              ]),
+
+
+
+              pw.Row(
+                
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+
+                  pw.Text("Weight", style: pw.TextStyle(fontSize: 11,)),
+
+                  pw.SizedBox(width: 4),
+
+                  pw.Container(
+                
+                width: 180,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeLadenWeight"]}", style: pw.TextStyle(fontSize: 14,))))
+
+              ]),
+              
+              
+              
               ]),
 
 
