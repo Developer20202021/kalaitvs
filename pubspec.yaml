@@ -133,7 +133,9 @@ flutter:
     - family: Caladea
       fonts:
         - asset: lib/fonts/Caladea-BoldItalic.ttf
-
+    - family: Bungee
+      fonts:
+        - asset: lib/fonts/Bungee-Regular.ttf
 
   # fonts:
   #   - family: Schyler
