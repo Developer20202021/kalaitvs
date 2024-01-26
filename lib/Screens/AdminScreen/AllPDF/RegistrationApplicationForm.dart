@@ -179,7 +179,7 @@ pdf.addPage(pw.Page(
                   pw.Text("To be filled in by the office", style:pw.TextStyle(fontSize: 11,   color: PdfColor.fromInt(0x000000))),
 
 
-                  pw.Text("Section-1", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                  pw.Text("Section-I", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
     
 
                 ]))
@@ -439,7 +439,7 @@ pdf.addPage(pw.Page(
                   pw.Text("To be filled in by the Owner", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
 
 
-                  pw.Text("Section II", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                  pw.Text("Section-II", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
 
                   pw.Text("(Owner information)", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
                 ]))
@@ -645,7 +645,7 @@ pdf.addPage(pw.Page(
                   pw.Text("To be filled in by the Owner", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
 
 
-                  pw.Text("Section III", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                  pw.Text("Section-III", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
 
                   pw.Text("(Owner information)", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
                 ]))
@@ -896,7 +896,7 @@ pdf.addPage(pw.Page(
                   // pw.Text("To be filled in by the Owner", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
 
 
-                  pw.Text("Section IV", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+                  pw.Text("Section-IV", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
 
                   pw.Text("(Additional information for transport vehicle)", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
                 ]))
