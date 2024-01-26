@@ -13,18 +13,18 @@ import 'package:printing/printing.dart';
 
 
 
-class OwnerParticularRegPDF extends StatefulWidget {
+class RegistrationApplicationFormPDF extends StatefulWidget {
 
 
 final List SalesData;
 
- const OwnerParticularRegPDF({super.key,  required this.SalesData});
+ const RegistrationApplicationFormPDF({super.key,  required this.SalesData});
 
   @override
-  State<OwnerParticularRegPDF> createState() => _OwnerParticularRegPDFState();
+  State<RegistrationApplicationFormPDF> createState() => _RegistrationApplicationFormPDFState();
 }
 
-class _OwnerParticularRegPDFState extends State<OwnerParticularRegPDF> {
+class _RegistrationApplicationFormPDFState extends State<RegistrationApplicationFormPDF> {
 
 
 
@@ -56,7 +56,7 @@ class _OwnerParticularRegPDFState extends State<OwnerParticularRegPDF> {
        
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Owner's Particulars", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
+        title: const Text("Registration Application Form", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -127,7 +127,7 @@ pdf.addPage(pw.Page(
     theme: pw.ThemeData.withFont(base: pw.Font.ttf(await rootBundle.load("lib/fonts/Caladea-BoldItalic.ttf")),),
     buildBackground: (context)=>pw.FullPage(ignoreMargins: true,child: pw.Container(
 
-       margin: const pw.EdgeInsets.all(10),
+       margin: const pw.EdgeInsets.all(7),
             decoration: pw.BoxDecoration(
               // border: pw.Border.all(
               //     color: const PdfColor.fromInt(0xf44336), width: 1),
@@ -229,7 +229,7 @@ pdf.addPage(pw.Page(
                 //   child: pw.Center(child:  pw.Image(netImage, height: 70, width: 70, ),),),
 
                 pw.Padding(
-                  padding: pw.EdgeInsets.only(left: 20,),
+                  padding: pw.EdgeInsets.only(left: 0,),
                   
                   child: pw.Column(children: [
 
@@ -268,8 +268,8 @@ pdf.addPage(pw.Page(
             //             border: pw.Border(bottom: pw.BorderSide(width: 1,), left:  pw.BorderSide(width: 1, ),top:  pw.BorderSide(width: 1, ),right:  pw.BorderSide(width: 1,),)),
                       
             //           child: pw.Padding(padding:pw.EdgeInsets.only(
-            //             top: 15,right:10,
-            //             bottom:10, left: 10),child: pw.Center(child: pw.Text("Stamp Size Color Photograph", style:pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))))))
+            //             top: 15,right:7,
+            //             bottom:7, left: 7),child: pw.Center(child: pw.Text("Stamp Size Color Photograph", style:pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))))))
             //     ]),
 
             
@@ -282,7 +282,7 @@ pdf.addPage(pw.Page(
         pw.Table(
               
           columnWidths: {
-            0: pw.FixedColumnWidth(300.0),
+            0: pw.FixedColumnWidth(200),
             1: pw.FlexColumnWidth(300),
             2: pw.FlexColumnWidth(300),
            
@@ -298,16 +298,186 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("Regn No : ", style:pw.TextStyle(fontSize: 10,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("Regn No : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("Date :", style:pw.TextStyle(fontSize: 10,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("Date :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
               
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("Prev. Regn. No. (If any) :", style:pw.TextStyle(fontSize: 10,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("Prev. Regn. No. (If any) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+            
+
+
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Issue No :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Date :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Issue by :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+
+                
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Diary No :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Date :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Received by :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+              
+
+
+
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Customer ID :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("District : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Vehicle ID :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+
+
+
+
+                
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Veh. Description :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Call non date :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+
+
+            
+
+                            
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Refusal date : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Refusal Code :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Refused by :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+            
+
+
+           pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("P.O./Bank : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Index :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+            
+        
+                pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Remarks (if any)", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("Index No.", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                 ]),
 
@@ -318,7 +488,7 @@ pdf.addPage(pw.Page(
 
 
 
-             pw.SizedBox(height: 10,),
+             pw.SizedBox(height: 7,),
 
 
         ])); // Center
