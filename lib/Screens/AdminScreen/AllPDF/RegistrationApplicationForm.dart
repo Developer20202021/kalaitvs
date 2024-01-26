@@ -147,73 +147,13 @@ pdf.addPage(pw.Page(
                 alignment: pw.Alignment.center,
                 children: [
 
-          //  pw.Positioned(
-          //           bottom: 5,
-          //           left: 5,
-          //           child: pw.Transform(
-          //             transform: Matrix4.diagonal3Values(1, -1, 1),
-          //             adjustLayout: true,
-          //             child: pw.SvgImage(
-          //               svg: swirls3,
-          //               height: 160,
-          //             ),
-          //           ),
-          //         ),
-
-
-          //           pw.Positioned(
-          //           top: 5,
-          //           left: 5,
-          //           child: pw.SvgImage(
-          //             svg: swirls3,
-          //             height: 160,
-          //           ),
-          //         ),
-          //         pw.Positioned(
-          //           top: 5,
-          //           right: 5,
-          //           child: pw.Transform(
-          //             transform: Matrix4.diagonal3Values(-1, 1, 1),
-          //             adjustLayout: true,
-          //             child: pw.SvgImage(
-          //               svg: swirls3,
-          //               height: 160,
-          //             ),
-          //           ),
-          //         ),
-
-          //         pw.Positioned(
-          //           bottom: 5,
-          //           right: 5,
-          //           child: pw.Transform(
-          //             transform: Matrix4.diagonal3Values(-1, -1, 1),
-          //             adjustLayout: true,
-          //             child: pw.SvgImage(
-          //               svg: swirls3,
-          //               height: 160,
-          //             ),
-          //           ),
-          //         ),
-
-
-                    //  pw.Image(backImage, height: 950, width: 550,),
-
-                  
-                  // pw.Container(
-                  //       width: 1380.0,
-                  //       height: 890.0,
-                  //       child: pw.Image(pw.MemoryImage(imageData))
-                  //   )
-
-
                 ]
               )
       )
     ))
   ),
   
-  // theme: pw.ThemeData.withFont(base: pw.Font.ttf(await rootBundle.load("lib/fonts/Bungee-Regular.ttf")),),
-  //     pageFormat: PdfPageFormat.a4,
+
       build: (pw.Context context) {
         return pw.Center(
           child: pw.Column(children: [
@@ -243,9 +183,6 @@ pdf.addPage(pw.Page(
     
 
                 ]))
-
-
-
 
             ]),
 
@@ -481,6 +418,203 @@ pdf.addPage(pw.Page(
 
                 ]),
 
+             ]),
+
+             pw.SizedBox(height: 7,),
+
+
+     
+             pw.Row(
+              
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+
+              children: [
+
+
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left: 200,),
+                  
+                  child: pw.Column(children: [
+
+                  pw.Text("To be filled in by the Owner", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
+
+
+                  pw.Text("Section II", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+
+                  pw.Text("(Owner information)", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
+                ]))
+
+            ]),
+
+
+
+            pw.SizedBox(height: 7,),
+
+
+        
+
+
+                     
+        pw.Table(
+              
+          columnWidths: {
+            0: pw.FixedColumnWidth(300),
+            1: pw.FlexColumnWidth(300),
+
+           
+          },
+              
+              children: [
+
+
+                pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("1. Name of owner :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("2. Date of birth :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+          
+
+                ]),
+
+
+            
+
+
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("3. Father/Husband :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("4. Nationality :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+   
+
+                ]),
+
+
+
+                
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("5. Sex :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("6. Guardian's name :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+            
+
+                ]),
+
+              
+
+
+
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("7. Owner's Address (One only):", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+    
+
+                ]),
+
+
+
+
+
+
+                
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("8. Phone No. (if any) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("9. PO/Bank :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+        
+
+                ]),
+
+
+
+
+            
+
+                            
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("10. Joint owner :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("11. Owner type :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+
+
+                ]),
+
+
+            
+
+
+           pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("12. Hire :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("13. Hire purchase :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+
+
+                ]),
+
 
 
 
@@ -488,7 +622,528 @@ pdf.addPage(pw.Page(
 
 
 
-             pw.SizedBox(height: 7,),
+
+
+
+
+              pw.SizedBox(height: 7,),
+
+
+     
+             pw.Row(
+              
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+
+              children: [
+
+
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left: 200,),
+                  
+                  child: pw.Column(children: [
+
+                  pw.Text("To be filled in by the Owner", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
+
+
+                  pw.Text("Section III", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+
+                  pw.Text("(Owner information)", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
+                ]))
+
+            ]),
+
+
+
+            pw.SizedBox(height: 7,),
+
+
+        
+
+
+                     
+        pw.Table(
+              
+          columnWidths: {
+            0: pw.FixedColumnWidth(300),
+            1: pw.FlexColumnWidth(300),
+
+           
+          },
+              
+              children: [
+
+
+                pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("14. Vehicle or trailer :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("15. Prev. Regn. No. (if any) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+          
+
+                ]),
+
+
+            
+
+
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("14a. Class of vehicle :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("15a. Maker's name :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+   
+
+                ]),
+
+
+
+                
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("16. Type of body :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("17. Maker's Country :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+            
+
+                ]),
+
+              
+
+
+
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("18. Color (cabin/body) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("19. Year of manufacture :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+    
+
+                ]),
+
+
+
+
+
+
+                
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("20. Number of cylinders : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("21. Chassis number :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+        
+
+                ]),
+
+
+
+
+            
+
+                            
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("22. Engine number :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("23. Fuel used :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+
+
+                ]),
+
+
+            
+
+
+           pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("24. Horse power :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("25. RPM :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+            
+            
+           pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("26. Cubic capacity :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("27. Seats (incl. driver) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+            
+          
+          pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("28. No. of Standee :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("29. Wheel base :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+          
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("30. Unladen weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("31. Maximum laden/train weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+             ]),
+
+
+
+
+
+             
+              pw.SizedBox(height: 7,),
+
+
+     
+             pw.Row(
+              
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+
+              children: [
+
+
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(left: 150,),
+                  
+                  child: pw.Column(children: [
+
+                  // pw.Text("To be filled in by the Owner", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
+
+
+                  pw.Text("Section IV", style:pw.TextStyle(fontSize: 12,  fontWeight: pw.FontWeight.bold, color: PdfColor.fromInt(0x000000))),
+
+                  pw.Text("(Additional information for transport vehicle)", style:pw.TextStyle(fontSize: 10,   color: PdfColor.fromInt(0x000000))),
+                ]))
+
+            ]),
+
+
+
+            pw.SizedBox(height: 7,),
+
+
+        
+
+
+                     
+        pw.Table(
+              
+          columnWidths: {
+            0: pw.FixedColumnWidth(300),
+            1: pw.FlexColumnWidth(300),
+
+           
+          },
+              
+              children: [
+
+
+                pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("32. No. of types :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("33. Tyres size :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+          
+
+                ]),
+
+
+            
+
+
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("34. No. of axle : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("35. Maximum axle weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+   
+
+                ]),
+
+
+
+                
+            pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    a) Front axle (1)     (2)", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+            
+
+                ]),
+
+              
+
+
+
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    b) Central axle(1)    (2)     (3)", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+    
+
+                ]),
+
+
+
+
+
+
+                
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text(" ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    c) Rear axle (1)     (2)    (3)", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+        
+
+                ]),
+
+
+
+
+            
+
+                            
+              pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("36. Dimensions (mm) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              
+
+
+                ]),
+
+
+            
+
+
+           pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    a) Overall length                                       b) Overall width", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("      c) Overall height", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+
+            
+            
+           pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("37. Overhangs (%)", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+            
+          
+          pw.TableRow(
+                
+                  children: [
+
+               pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    a) Front                                           b) Rear", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+               pw.Padding(
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    c) Other", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+                ]),
+
+          
+              // pw.TableRow(
+                
+              //     children: [
+
+              //  pw.Padding(
+                
+              //   padding: pw.EdgeInsets.only(top: 6),
+              //   child: pw.Text("30. Unladen weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              //  pw.Padding(
+              //   padding: pw.EdgeInsets.only(top: 6),
+              //   child: pw.Text("31. Maximum laden/train weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+
+              //   ]),
+
+             ]),
+
+
+
+           pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.start,
+            children: [pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("38. A copy of the drawing showing the vehicle dimension specifications of the body and of the seating", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),),]),
+
+      
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.start,
+            children: [
+                 pw.Padding(
+                
+                padding: pw.EdgeInsets.only(top: 6),
+                child: pw.Text("    arrangements approved by ..........................................................................on..............................................................................is attached herewith.", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),])
+
+
+
+
 
 
         ])); // Center
