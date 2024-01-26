@@ -118,7 +118,7 @@ final Banglafont = await rootBundle.load("lib/fonts/Siyam-Rupali-ANSI.ttf");
 final Banglattf = pw.Font.ttf(Banglafont);
 
 
-pdf.addPage(pw.Page(
+pdf.addPage(pw.MultiPage(
   
   pageTheme: pw.PageTheme(
     pageFormat: PdfPageFormat.a4,
@@ -146,65 +146,6 @@ pdf.addPage(pw.Page(
                 alignment: pw.Alignment.center,
                 children: [
 
-          //  pw.Positioned(
-          //           bottom: 5,
-          //           left: 5,
-          //           child: pw.Transform(
-          //             transform: Matrix4.diagonal3Values(1, -1, 1),
-          //             adjustLayout: true,
-          //             child: pw.SvgImage(
-          //               svg: swirls3,
-          //               height: 160,
-          //             ),
-          //           ),
-          //         ),
-
-
-          //           pw.Positioned(
-          //           top: 5,
-          //           left: 5,
-          //           child: pw.SvgImage(
-          //             svg: swirls3,
-          //             height: 160,
-          //           ),
-          //         ),
-          //         pw.Positioned(
-          //           top: 5,
-          //           right: 5,
-          //           child: pw.Transform(
-          //             transform: Matrix4.diagonal3Values(-1, 1, 1),
-          //             adjustLayout: true,
-          //             child: pw.SvgImage(
-          //               svg: swirls3,
-          //               height: 160,
-          //             ),
-          //           ),
-          //         ),
-
-          //         pw.Positioned(
-          //           bottom: 5,
-          //           right: 5,
-          //           child: pw.Transform(
-          //             transform: Matrix4.diagonal3Values(-1, -1, 1),
-          //             adjustLayout: true,
-          //             child: pw.SvgImage(
-          //               svg: swirls3,
-          //               height: 160,
-          //             ),
-          //           ),
-          //         ),
-
-
-                    //  pw.Image(backImage, height: 950, width: 550,),
-
-                  
-                  // pw.Container(
-                  //       width: 1380.0,
-                  //       height: 890.0,
-                  //       child: pw.Image(pw.MemoryImage(imageData))
-                  //   )
-
-
                 ]
               )
       )
@@ -214,7 +155,7 @@ pdf.addPage(pw.Page(
   // theme: pw.ThemeData.withFont(base: pw.Font.ttf(await rootBundle.load("lib/fonts/JosefinSans-BoldItalic.ttf")),),
   //     pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {
-        return pw.Center(
+        return [pw.Center(
           child: pw.Column(children: [
 
             pw.Row(
@@ -235,15 +176,15 @@ pdf.addPage(pw.Page(
 
                   pw.Text("M/S. ORTHEE BAJAJ MART", style:pw.TextStyle(fontSize: 21, fontWeight: pw.FontWeight.bold, font: ttf, color: PdfColor.fromInt(0x000000))),
                   pw.Text("‡gmvm© A_©x evRvR gvU©", style:pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold, font: Banglattf, color: PdfColor.fromInt(0x000000))),
-                  pw.Center(child: pw.Text("Dealer: Uttara Motors Ltd.", style:pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, font: ttf, color: PdfColor.fromInt(0x000000))),),
+                  // pw.Center(child: pw.Text("Dealer: Uttara Motors Ltd.", style:pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, font: ttf, color: PdfColor.fromInt(0x000000))),),
 
-                  pw.Center(child: pw.Text("Kalai, Joypurhat", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: ttf, color: PdfColor.fromInt(0x000000))),),
+                  // pw.Center(child: pw.Text("Kalai, Joypurhat", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: ttf, color: PdfColor.fromInt(0x000000))),),
 
-                   pw.SizedBox(height: 6),
+                  //  pw.SizedBox(height: 6),
 
-                  pw.Center(child: pw.Text("Mobile: 01711414664, 01721608030, 01718148814", style:pw.TextStyle(fontSize: 10,  font: ttf, color: PdfColor.fromInt(0x000000))),),
+                  // pw.Center(child: pw.Text("Mobile: 01711414664, 01721608030, 01718148814", style:pw.TextStyle(fontSize: 10,  font: ttf, color: PdfColor.fromInt(0x000000))),),
 
-                  pw.SizedBox(height: 6),
+                  // pw.SizedBox(height: 6),
                   // pw.Center(child: pw.Text("EIIN: 122026", style:pw.TextStyle(fontSize: 11,  font: ttf)),),
 
 
@@ -301,7 +242,7 @@ pdf.addPage(pw.Page(
 
 
               pw.SizedBox(
-                      height: 30,
+                      height: 10,
               ),
 
 
@@ -434,32 +375,32 @@ pw.SizedBox(height: 16),
 
 
 
-                 pw.SizedBox(
-                      height: 70,
+              //    pw.SizedBox(
+              //         height: 10,
                       
                 
-              ),
+              // ),
 
 
 
 
 
-            pw.Row(
+            // pw.Row(
 
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            //   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               
               
               
-              children: [
+            //   children: [
 
-                  pw.Padding(padding: pw.EdgeInsets.only(left: 10,top: 30, right: 10),child: pw.Column(children: [
+            //       pw.Padding(padding: pw.EdgeInsets.only(left: 10,top: 30, right: 10),child: pw.Column(children: [
 
-                    pw.Text("___________________________"),
+            //         pw.Text("___________________________"),
 
-                    pw.Text("¯^v¶i",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: Banglattf)),
+            //         pw.Text("¯^v¶i",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: Banglattf)),
 
 
-                  ]),),
+            //       ]),),
 
 
 
@@ -471,26 +412,26 @@ pw.SizedBox(height: 16),
 
 
 
-                  // pw.Padding(padding: pw.EdgeInsets.only(right: 10,top: 30),child: pw.Column(children: [
+            //       // pw.Padding(padding: pw.EdgeInsets.only(right: 10,top: 30),child: pw.Column(children: [
 
-                  //   pw.Text("_____________________________"),
+            //       //   pw.Text("_____________________________"),
 
-                  //   pw.Text("AUTHORISED SIGNATURE",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: ttf)),
-
-
-                  // ]),),
+            //       //   pw.Text("AUTHORISED SIGNATURE",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: ttf)),
 
 
+            //       // ]),),
 
-              ]),
 
 
+            //   ]),
 
 
 
 
 
-        ])); // Center
+
+
+        ]))]; // Center
       }));
 
 
