@@ -11,6 +11,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllPDF/DuePayMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/NameChangeFrom.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/OfficeDeliveryChallan.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/RegistrationApplicationForm.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/RegistrationApplicationTwo.dart';
 import 'package:tvs_app/Screens/AdminScreen/CreateNewCustomer.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerPaymentAdd.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerProfile.dart';
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
-      home:RegistrationApplicationFormPDF(SalesData: [])
+      home:RegistrationApplicationFormTwo(SalesData: [])
     );
   }
 
