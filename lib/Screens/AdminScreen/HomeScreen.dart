@@ -1038,8 +1038,8 @@ setState(() {
                                               showDialog(
                                                 context: context,
                                                 builder: (context) {
-                                                  String SelectedStudentStatus =
-                                                      "";
+                                                  // String SelectedStudentStatus =
+                                                  //     "";
 
 
                                                   return StatefulBuilder(
@@ -1070,7 +1070,7 @@ setState(() {
               
               
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.name,
@@ -1111,7 +1111,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1147,7 +1147,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1184,7 +1184,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1220,7 +1220,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1255,7 +1255,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1290,7 +1290,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1325,7 +1325,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1360,7 +1360,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1397,7 +1397,7 @@ setState(() {
                     
 
               Container(
-                  width: 200,
+                  width: 300,
                   child: TextField(
                     onChanged: (value) {},
                     keyboardType: TextInputType.number,
@@ -1459,14 +1459,22 @@ setState(() {
             var updateData =
                       {
                         "CustomerID": DebitID,
-                        "CustomerName":DebitController.text.trim().toLowerCase().toBijoy,
-                        "CreditAmount":DebitAmountController.text.trim().toLowerCase(),
-                        "year":"${DateTime.now().year}",
-                        "month":"${DateTime.now().month}/${DateTime.now().year}",
-                        "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                        "CustomerName":CustomerNameController.text.trim().toLowerCase(),
+                        "CustomerFatherName":CustomerFatherNameController.text.trim().toLowerCase(),
+                        "CustomerMotherName":CustomerMotherNameController.text.trim().toLowerCase(),
+                        "CustomerAddress":CustomerAddressController.text.trim(),
+                        "CustomerPhoneNo":CustomerPhoneNoController.text.trim(),
+                        "EngineNo":EngineNoController.text.trim(),
+                        "ChassisNo":ChassisNoController.text.trim(),
+                        "DueAmount":CustomerDueAmountController.text.trim().toLowerCase(),
+                        "BikeSalePrice":BikeSalePriceController.text.trim(),
+                        "SaleDate":SaleDateController.text.trim().toLowerCase(),
+                        // "year":"${DateTime.now().year}",
+                        // "month":"${DateTime.now().month}/${DateTime.now().year}",
+                        // "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
                         "DateTime":DateTime.now().toIso8601String(),
-                        "CollectorName":"",
-                        "CollectorEmail":""
+                        // "CollectorName":"",
+                        // "CollectorEmail":""
                         };
 
                   final OldDueCustomer = FirebaseFirestore.instance.collection('OldDueCustomer').doc(DebitID);
