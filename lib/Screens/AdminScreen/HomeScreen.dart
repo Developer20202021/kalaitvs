@@ -3,6 +3,7 @@ import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayCreditHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDebitHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayNameChangeHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayServiceHistory.dart';
+import 'package:tvs_app/Screens/AdminScreen/OldDueCustomers.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bijoy_helper/bijoy_helper.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -79,6 +80,7 @@ TextEditingController BikeSalePriceController = TextEditingController();
 TextEditingController SaleDateController = TextEditingController();
 TextEditingController CustomerAddressController = TextEditingController();
 TextEditingController CustomerDueAmountController = TextEditingController();
+TextEditingController TotalCashInController = TextEditingController();
 
 
 
@@ -1390,7 +1392,7 @@ setState(() {
 
             
 
-                           SizedBox(
+            SizedBox(
                 height: 20,
                  ),
 
@@ -1420,6 +1422,44 @@ setState(() {
                       ),
                     ),
                     controller: SaleDateController,
+                  ),
+                ),
+
+
+
+
+            
+
+               SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 300,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Total Cash In',
+
+                      hintText: 'Total Cash In',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: TotalCashInController,
                   ),
                 ),
 
@@ -1466,9 +1506,11 @@ setState(() {
                         "CustomerPhoneNo":CustomerPhoneNoController.text.trim(),
                         "EngineNo":EngineNoController.text.trim(),
                         "ChassisNo":ChassisNoController.text.trim(),
-                        "DueAmount":CustomerDueAmountController.text.trim().toLowerCase(),
+                        "DueAmount":CustomerDueAmountController.text.trim(),
                         "BikeSalePrice":BikeSalePriceController.text.trim(),
                         "SaleDate":SaleDateController.text.trim().toLowerCase(),
+                        "CustomerType":"Due",
+                        "TotalCashIn":TotalCashInController.text.trim().toString(),
                         // "year":"${DateTime.now().year}",
                         // "month":"${DateTime.now().month}/${DateTime.now().year}",
                         // "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
@@ -1548,6 +1590,11 @@ setState(() {
 
                         PopupMenuItem(
                             child: Text("পূর্বের বকেয়া কাস্টমার", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                            onTap: () {
+
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => OldDueCustomer()));
+                              
+                            },
                             value: '/contact',
                           )
 

@@ -66,6 +66,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   number_to_words_english: ^2.0.2
   bijoy_helper: ^0.0.5
+  data_table_2: ^2.5.10
 
   
   
