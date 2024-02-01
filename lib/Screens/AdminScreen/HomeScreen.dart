@@ -69,6 +69,17 @@ TextEditingController DebitController = TextEditingController();
 TextEditingController DebitAmountController = TextEditingController();
 
 
+TextEditingController CustomerNameController = TextEditingController();
+TextEditingController CustomerFatherNameController = TextEditingController();
+TextEditingController CustomerMotherNameController = TextEditingController();
+TextEditingController CustomerPhoneNoController = TextEditingController();
+TextEditingController EngineNoController = TextEditingController();
+TextEditingController ChassisNoController = TextEditingController();
+TextEditingController BikeSalePriceController = TextEditingController();
+TextEditingController SaleDateController = TextEditingController();
+TextEditingController CustomerAddressController = TextEditingController();
+TextEditingController CustomerDueAmountController = TextEditingController();
+
 
 
    // Firebase All Customer Data Load
@@ -1002,6 +1013,514 @@ setState(() {
                       }));
 
 
+                              },
+                             child: const Text("Save"),
+                                                                ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+
+
+
+
+
+
+
+                      PopupMenuItem(
+                                child: Text("পূর্বের বকেয়া যুক্ত করুন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                            value: '/about',
+                                            onTap: () async {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  String SelectedStudentStatus =
+                                                      "";
+
+
+                                                  return StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) {
+                                                      return AlertDialog(
+                                                        title:  Column(
+                                                          children: [
+                                                            
+                                                            Center(
+                                                              child: Text(
+                                                                  "নিচে পূর্বের Information লিখুন ", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                                            ),
+
+
+
+
+                              Center(child: Text("*অবশ্যই সব Information লিখবেন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold, fontSize: 12, color: Colors.red),)),
+                                                          ],
+                                                        ),
+                                                        content: SingleChildScrollView(
+                                                          
+                                                          child:  Column(
+                                                            children: [
+              
+              
+              
+              
+              
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Chassis No',
+
+                      hintText: 'Chassis No',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: ChassisNoController,
+                  ),
+                ),
+
+
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                      SizedBox(
+                              height: 20,
+                            ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Engine No',
+
+                      hintText: 'Engine No',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: EngineNoController,
+                  ),
+                ),
+
+
+
+
+        SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Customer Name',
+
+                      hintText: 'Customer Name',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CustomerNameController,
+                  ),
+                ),
+
+
+
+            
+            
+        SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Customer Father Name',
+
+                      hintText: 'Customer Father Name',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CustomerFatherNameController,
+                  ),
+                ),
+
+
+
+                          
+        SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Customer Mother  Name',
+
+                      hintText: 'Customer Mother Name',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CustomerMotherNameController,
+                  ),
+                ),
+
+
+
+               SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Customer Address',
+
+                      hintText: 'Customer Address',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CustomerAddressController,
+                  ),
+                ),
+
+
+          
+                        SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Customer Phone No',
+
+                      hintText: 'Customer Phone No',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CustomerPhoneNoController,
+                  ),
+                ),
+
+
+
+            SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Due Amount',
+
+                      hintText: 'Due Amount',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CustomerDueAmountController,
+                  ),
+                ),
+
+
+              
+               SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Bike Sale Price',
+
+                      hintText: 'Bike Sale Price',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: BikeSalePriceController,
+                  ),
+                ),
+
+
+
+            
+
+                           SizedBox(
+                height: 20,
+                 ),
+
+                    
+
+              Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Sale Date',
+
+                      hintText: 'Sale Date',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: SaleDateController,
+                  ),
+                ),
+
+
+
+
+
+
+
+
+
+
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context),
+                                                            child:
+                                                                Text("Cancel"),
+                                                          ),
+
+
+                                       ElevatedButton(
+                                                          onPressed:
+                                                            () async {
+
+            setState((){
+
+              loading = true;
+
+            });
+
+
+            var updateData =
+                      {
+                        "CustomerID": DebitID,
+                        "CustomerName":DebitController.text.trim().toLowerCase().toBijoy,
+                        "CreditAmount":DebitAmountController.text.trim().toLowerCase(),
+                        "year":"${DateTime.now().year}",
+                        "month":"${DateTime.now().month}/${DateTime.now().year}",
+                        "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                        "DateTime":DateTime.now().toIso8601String(),
+                        "CollectorName":"",
+                        "CollectorEmail":""
+                        };
+
+                  final OldDueCustomer = FirebaseFirestore.instance.collection('OldDueCustomer').doc(DebitID);
+                  
+                  OldDueCustomer.set(updateData).then((value) =>setState(() {
+                                        
+
+                                        Navigator.pop(context);
+
+                                final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'successfull',
+                                        message: 'Hey Thank You. Good Job',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                       setState(() {
+                        loading = false;
+                             });
+                            }))
+                      .onError((error,stackTrace) =>setState(() {
+                        final snackBar = SnackBar(
+                  /// need to set following properties for best effect of awesome_snackbar_content
+                        elevation: 0,
+                        
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        content: AwesomeSnackbarContent(
+                        title: 'Something Wrong!!!!',
+                        message: 'Try again later...',
+
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                        contentType: ContentType.failure,
+                            ),
+                        );
+
+                ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+                      setState(() {
+                            loading = false;
+                               });
+                      }));
+
+
 
 
                                                                   },
@@ -1016,6 +1535,15 @@ setState(() {
                                               );
                                             },
                                           ),
+
+                      
+
+
+
+
+
+
+
                           
                           ];
                         },
