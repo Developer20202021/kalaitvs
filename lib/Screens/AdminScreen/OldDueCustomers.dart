@@ -510,6 +510,11 @@ Future<void> getData() async {
                           setState((){
                                 loading = false;
                               });
+
+                          getData();
+
+                          Navigator.pop(context);
+
           
           
                         })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
