@@ -30,6 +30,7 @@ class _OldDueCustomerState extends State<OldDueCustomer> {
 
   TextEditingController DueAmountPayController = TextEditingController();
   TextEditingController CommentController = TextEditingController();
+  TextEditingController CustomerPhoneNoController = TextEditingController();
 
 
 
@@ -65,6 +66,57 @@ Future<void> getData() async {
 
 
      if (AllDueCustomerInfo.isNotEmpty) {
+
+      setState((){
+         AllDueCustomerInfo = querySnapshot.docs.map((doc) => doc.data()).toList();
+        loading = false;
+        
+      });
+
+
+       
+     } else {
+
+    setState((){
+        loading = false;
+      });
+
+       
+     }
+
+
+
+    print(AllDueCustomerInfo);
+}
+
+
+
+
+
+Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    setState((){
+      loading = true;
+    });
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('OldDueCustomer');
+
+        Query query = _collectionRef.where("CustomerPhoneNo", isEqualTo: CustomerPhoneNo);
+
+
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllDueCustomerInfo = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    
+
+     if (AllDueCustomerInfo.isNotEmpty) {
+
+      AllDueCustomerInfo.clear();
 
       setState((){
          AllDueCustomerInfo = querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -134,7 +186,57 @@ Future<void> getData() async {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Old Due Customer",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+   
+          children: [
+            Text("Old Due Customer",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+
+               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+
+                   Container(
+                      width: 300,
+                      height: 50,
+                      child: TextField(
+                       
+                        onChanged: (value) {},
+                        keyboardType: TextInputType.multiline,
+                                 
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Search By Phone No',
+                   
+                          hintText: 'Search By Phone No',
+                   
+                          //  enabledBorder: OutlineInputBorder(
+                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //     ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3, color: Theme.of(context).primaryColor),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                          ),
+                        ),
+                        controller: CustomerPhoneNoController,
+                      ),
+                    ),
+
+                    ElevatedButton(onPressed: (){
+
+
+                      getByPhoneNoData(CustomerPhoneNoController.text.trim());
+
+                    }, child: Text("Search"))
+                 ],
+               ),
+          ],
+        ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -288,7 +390,122 @@ Future<void> getData() async {
            
                         //  DataCell(Text("Pay")),
            
-                         DataCell(Text("Message")),
+                         DataCell(AllDueCustomerInfo[index]["CustomerType"]=="Paid"?Text(""):ElevatedButton(onPressed: (){
+          
+          
+          
+                                          showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+          
+                                                         
+                                      
+          
+                                         return StatefulBuilder(
+                                                 builder:
+                                             (context, setState) {
+                                                                return AlertDialog(
+                                          title: Text('SEND SMS'),
+                                          
+                                          content:SingleChildScrollView(child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children:[
+
+
+
+                                       
+                                       
+                                        Container(
+                                          width: 400,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                       
+                                            children: [
+                                          
+
+                                    Text("Dear Customer, Orthee Bajaj Mart এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}"),
+
+
+                               
+                                          
+                                          
+                                      ElevatedButton(onPressed: () async{
+
+
+                           String msgTxt = "Dear Customer, Orthee Bajaj Mart এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}";
+                                      
+                            final response = await http
+                                .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllDueCustomerInfo[index]["CustomerPhoneNo"]}&message=${msgTxt}'));
+
+                                    // Navigator.pop(context);
+
+                            if (response.statusCode == 200) {
+                              // If the server did return a 200 OK response,
+                              // then parse the JSON.
+                          Navigator.pop(context);
+
+                                final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'successfull',
+                                        message: 'Hey Thank You. Good Job',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+                            
+                            } else {
+
+                      Navigator.pop(context);
+
+                                final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'Network Problem or Balance is very low',
+                                        message: 'Network Problem or Balance is very low',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.failure,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+                              // If the server did not return a 200 OK response,
+                              // then throw an exception.
+                              throw Exception('Failed to load album');
+                            }
+
+
+
+                                                          }, child: Text("Send")),
+
+                                          ],),
+                                        )
+
+
+
+
+
+                                            ])));});});}, child: Text("Send"),)),
+
+
+
+
+
+
+
+
            
                          DataCell(ElevatedButton(onPressed: (){
           
@@ -374,6 +591,9 @@ Future<void> getData() async {
                                                               await docUser.update(jsonData).then((value) =>setState((){
                                           
                                                                 Navigator.pop(context);
+
+
+                                                                getData();
                                           
                                           
                                                                 
@@ -436,7 +656,7 @@ Future<void> getData() async {
 
 
            
-                     DataCell(ElevatedButton(onPressed: (){
+                     DataCell(AllDueCustomerInfo[index]["CustomerType"]=="Paid"?Text(""):ElevatedButton(onPressed: (){
           
           
           
