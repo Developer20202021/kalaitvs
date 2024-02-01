@@ -190,6 +190,12 @@ Future<void> getData() async {
                    label: Text('Due Amount'),
                    numeric: true,
                  ),
+
+
+                 DataColumn(
+                   label: Text('Total Cash In'),
+                   numeric: true,
+                 ),
            
                  DataColumn(
                    label: Text('Engine No'),
@@ -265,6 +271,8 @@ Future<void> getData() async {
                          DataCell(Text(AllDueCustomerInfo[index]["BikeSalePrice"].toString())),
            
                          DataCell(Text(AllDueCustomerInfo[index]["DueAmount"].toString())),
+
+                         DataCell(Text(AllDueCustomerInfo[index]["TotalCashIn"].toString())),
            
                          DataCell(Text(AllDueCustomerInfo[index]["EngineNo"].toString())),
            
@@ -280,7 +288,46 @@ Future<void> getData() async {
            
                          DataCell(Text("Message")),
            
-                         DataCell(Text("Comment")),
+                         DataCell(ElevatedButton(onPressed: (){
+          
+          
+          
+                                          showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+          
+                                                         
+                                      
+          
+                                                            return StatefulBuilder(
+                                                              builder:
+                                                                  (context, setState) {
+                                                                return AlertDialog(
+                                          title: Text('Comments'),
+                                          
+                                          content:SingleChildScrollView(child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children:[
+
+                                            Text("${AllDueCustomerInfo[index]["Comment"]}", style: TextStyle(overflow: TextOverflow.clip, ),),
+
+
+
+
+
+                                            ])));});});}, child: Text("View"),)
+                                            
+                                            
+                                            
+                                             ),
+
+
+
+
+
+
+
+
            
                      DataCell(ElevatedButton(onPressed: (){
           

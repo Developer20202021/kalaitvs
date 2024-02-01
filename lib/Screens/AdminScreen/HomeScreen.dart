@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayCreditHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDebitHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayNameChangeHistory.dart';
@@ -81,6 +82,7 @@ TextEditingController SaleDateController = TextEditingController();
 TextEditingController CustomerAddressController = TextEditingController();
 TextEditingController CustomerDueAmountController = TextEditingController();
 TextEditingController TotalCashInController = TextEditingController();
+TextEditingController CommentController = TextEditingController();
 
 
 
@@ -1463,6 +1465,39 @@ setState(() {
                   ),
                 ),
 
+            SizedBox(
+                height: 20,
+                 ),
+              
+                 Container(
+                  width: 300,
+                  child: TextField(
+                   
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Comment',
+
+                      hintText: 'Comment',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: CommentController,
+                  ),
+                ),
+
 
 
 
@@ -1510,6 +1545,7 @@ setState(() {
                         "BikeSalePrice":BikeSalePriceController.text.trim(),
                         "SaleDate":SaleDateController.text.trim().toLowerCase(),
                         "CustomerType":"Due",
+                        "Comment":CommentController.text.trim(),
                         "TotalCashIn":TotalCashInController.text.trim().toString(),
                         // "year":"${DateTime.now().year}",
                         // "month":"${DateTime.now().month}/${DateTime.now().year}",
