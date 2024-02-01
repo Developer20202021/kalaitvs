@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _OldDueCustomerState extends State<OldDueCustomer> {
    var uuid = Uuid();
 
   TextEditingController DueAmountPayController = TextEditingController();
+  TextEditingController CommentController = TextEditingController();
 
 
 
@@ -310,6 +312,111 @@ Future<void> getData() async {
                                             children:[
 
                                             Text("${AllDueCustomerInfo[index]["Comment"]}", style: TextStyle(overflow: TextOverflow.clip, ),),
+
+
+                                       
+                                       
+                                        Container(
+                                          width: 400,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                       
+                                            children: [
+                                          
+                                          
+                                                                            
+                                                         SizedBox(
+                                                            height: 10,
+                                                          ),
+                                          
+                                          
+                                                           TextField(
+                                                              keyboardType: TextInputType.multiline,
+                                                              maxLines: 5,
+                                                            decoration: InputDecoration(
+                                                                border: OutlineInputBorder(),
+                                                                labelText: 'New Comment Add',
+                                          
+                                                                hintText: 'New Comment Add',
+                                                                //  enabledBorder: OutlineInputBorder(
+                                                                //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                                                                //   ),
+                                                                  focusedBorder: OutlineInputBorder(
+                                                                    borderSide: BorderSide(width: 3, color: Colors.purple),
+                                                                  ),
+                                                                  errorBorder: OutlineInputBorder(
+                                                                    borderSide: BorderSide(
+                                                                        width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                                                                  ),
+                                                                
+                                                                
+                                                                ),
+                                                            controller: CommentController,
+                                                          ),
+                                          
+                                          
+                                          
+                                                          ElevatedButton(onPressed: () async{
+                                          
+                                          
+                                                               final docUser = FirebaseFirestore.instance.collection("OldDueCustomer").doc(AllDueCustomerInfo[index]["CustomerID"]);
+                                          
+                                                                // var productID = docUser.doc().id;
+                                                               
+                                          
+                                                                final jsonData ={
+                                          
+                                                                    "Comment":CommentController.text.trim()
+                                                            
+                                                                };
+                                          
+                                          
+                                                              await docUser.update(jsonData).then((value) =>setState((){
+                                          
+                                                                Navigator.pop(context);
+                                          
+                                          
+                                                                
+                                                                          final snackBar = SnackBar(
+                                          
+                                          elevation: 0,
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: Colors.transparent,
+                                          content: AwesomeSnackbarContent(
+                                          titleFontSize: 12,
+                                          title: 'Update successfull',
+                                          message: 'Hey Thank You. Good Job',
+                                          
+                                                                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                          contentType: ContentType.success,
+                                                  ),
+                                              );
+                                          
+                                                              ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+                                          
+                                          
+                                                              })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                              backgroundColor: Colors.red,
+                                                                        content: const Text('Something Wrong!'),
+                                                                        action: SnackBarAction(
+                                                                          label: 'Undo',
+                                                                          onPressed: () {
+                                                                            // Some code to undo the change.
+                                                                          },
+                                                                        ),
+                                                                      )));
+                                          
+                                          
+                                          
+                                          
+                                                          }, child: Text("Update")),
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          ],),
+                                        )
 
 
 
