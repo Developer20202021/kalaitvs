@@ -17,6 +17,7 @@ import 'package:tvs_app/Screens/AdminScreen/AllPDF/ServiceMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/CustomerInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditCustomerInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/EditPreviousCustomerInfo.dart';
+import 'package:tvs_app/Screens/AdminScreen/EditSaleInfo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/MyServices.dart';
 import 'package:tvs_app/Screens/AdminScreen/SingleCustomerFile.dart';
@@ -683,6 +684,29 @@ void dispose() {
                               },
                               value: '/hello',
                             ),
+
+
+
+
+                  // Edit Customer Sale info
+
+                     PopupMenuItem(
+                              child: Text("Edit", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                              onTap: () {
+
+
+                      Navigator.push(
+                        context,MaterialPageRoute(builder: (context) => EditSaleInfo(BikeSaleInfo: [AllSaleData[i]])),
+                      );
+                                
+                              },
+                              value: '/hello',
+                            ),
+
+
+
+
+
 
 
 

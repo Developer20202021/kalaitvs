@@ -774,7 +774,7 @@ Future<void> getData() async {
 
 
 
-                                                final snackBar = SnackBar(
+                                  final snackBar = SnackBar(
                                   
                                       elevation: 0,
                                       behavior: SnackBarBehavior.floating,
