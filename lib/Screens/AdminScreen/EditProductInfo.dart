@@ -71,6 +71,8 @@ bool loading = true;
   TextEditingController ColorAvailableController = TextEditingController();
   TextEditingController RPMController = TextEditingController();
   TextEditingController HorsePowerController = TextEditingController();
+  TextEditingController YearOfManufactureController = TextEditingController();
+  TextEditingController SeatingCapacityController = TextEditingController();
 
 
 
@@ -135,7 +137,9 @@ List  AllData = [{
                         "BikeWidth":" ",
                         "BikeID":" ",
                         "RPM":" ",
-                        "HorsePower":" "
+                        "HorsePower":" ",
+                        "YearOfManufacture":" ",
+                        "SeatingCapacity":" ",
 }];
 
 
@@ -268,6 +272,8 @@ BikeNameController.text = AllData[0]["BikeName"];
 ColorAvailableController.text = AllData[0]["ColorAvailable"];
 RPMController.text = AllData[0]["RPM"];
 HorsePowerController.text = AllData[0]["HorsePower"];
+YearOfManufactureController.text = AllData[0]["YearOfManufacture"];
+SeatingCapacityController.text = AllData[0]["SeatingCapacity"];
 
 
 
@@ -600,6 +606,68 @@ HorsePowerController.text = AllData[0]["HorsePower"];
                 SizedBox(
                   height: 10,
                 ),
+
+                
+                TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'RPM',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'RPM',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: RPMController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+                 TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'HorsePower',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'HorsePower',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: HorsePowerController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+
+                
       
       
                   TextField(
@@ -1442,6 +1510,68 @@ HorsePowerController.text = AllData[0]["HorsePower"];
                 SizedBox(
                   height: 10,
                 ),
+
+
+
+                
+                TextField(
+  
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Year of Manufacture',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'Year of Manufacture',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: YearOfManufactureController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
+
+
+                                TextField(
+  
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Seating Capacity',
+                       labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Colors.green: Colors.black
+              ),
+                      hintText: 'Seating Capacity',
+                      //  enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //   ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Colors.green),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                      
+                      
+                      ),
+                  controller: SeatingCapacityController,
+                ),
+              
+                SizedBox(
+                  height: 10,
+                ),
       
       
       
@@ -1627,7 +1757,9 @@ HorsePowerController.text = AllData[0]["HorsePower"];
                         "BikeWheelBase":BikeWheelBaseController.text,
                         "BikeWidth":BikeWidthController.text,
                         "RPM":RPMController.text.trim(),
-                        "HorsePower":HorsePowerController.text.trim()
+                        "HorsePower":HorsePowerController.text.trim(),
+                        "YearOfManufacture":YearOfManufactureController.text.trim(),
+                        "SeatingCapacity":SeatingCapacityController.text.trim(),
                      
 
                   
