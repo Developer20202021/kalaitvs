@@ -266,6 +266,10 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
                    label: Text('SL'),
                    size: ColumnSize.L,
                  ),
+                 DataColumn2(
+                   label: Text('File No'),
+                   size: ColumnSize.L,
+                 ),
                  DataColumn(
                    label: Text('Customer Name'),
                  ),
@@ -363,6 +367,7 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
                    AllDueCustomerInfo.length,
                    (index) => DataRow(cells: [
                          DataCell(Text('${index+1}')),
+                         DataCell(Text(AllDueCustomerInfo[index]["FileNo"].toString())),
                          DataCell(Text(AllDueCustomerInfo[index]["CustomerName"].toString().toUpperCase())),
                          DataCell(Text(AllDueCustomerInfo[index]["CustomerPhoneNo"].toString())),
            
@@ -820,10 +825,12 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
                           final jsonData = {
                               "TrxID":TrxID,
                               "CustomerName":AllDueCustomerInfo[index]["CustomerName"],
+                              "FileNo":AllDueCustomerInfo[index]["FileNo"],
                               "CustomerPhoneNo":AllDueCustomerInfo[index]["CustomerPhoneNo"],
                               "DueAmount":(int.parse(AllDueCustomerInfo[index]["DueAmount"].toString())-int.parse(DueAmountPayController.text.trim().toString())).toString(),
                               "CustomerType":DueAmountInt<=0?"Paid":"Due",
                               "TotalCashIn":(int.parse(AllDueCustomerInfo[index]["TotalCashIn"].toString())+int.parse(DueAmountPayController.text.trim().toString())).toString(),
+                              "CashIn":DueAmountPayController.text.trim(),
                               "DateTime":DateTime.now().toIso8601String(),
                               "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"
                           };

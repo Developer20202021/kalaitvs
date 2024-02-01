@@ -5,6 +5,7 @@ import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayDebitHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayNameChangeHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/Dashboard/PerDayServiceHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/OldDueCustomers.dart';
+import 'package:tvs_app/Screens/AdminScreen/TotalOldDuePay.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bijoy_helper/bijoy_helper.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -83,6 +84,7 @@ TextEditingController CustomerAddressController = TextEditingController();
 TextEditingController CustomerDueAmountController = TextEditingController();
 TextEditingController TotalCashInController = TextEditingController();
 TextEditingController CommentController = TextEditingController();
+TextEditingController FileNoController = TextEditingController();
 
 
 
@@ -604,6 +606,16 @@ setState(() {
                         },
                         itemBuilder: (BuildContext bc) {
                           return  [
+
+                             PopupMenuItem(
+                                  child: Text("বকেয়া পরিশোধের হিসাব", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                                  value: '/hello',
+                                  onTap: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => TotalOldDuePay()));
+                                  },
+                                ),
+
+
                             PopupMenuItem(
                                 child: Text("আয় যুক্ত করুন", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
                                             value: '/about',
@@ -1148,6 +1160,42 @@ setState(() {
                 height: 20,
                  ),
 
+
+        
+                      Container(
+                  width: 300,
+                  child: TextField(
+                    onChanged: (value) {},
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'File No',
+
+                      hintText: 'File No',
+
+                      //  enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                      //     ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Theme.of(context).primaryColor),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                      ),
+                    ),
+                    controller: FileNoController,
+                  ),
+                ),
+
+
+
+
+        SizedBox(
+                height: 20,
+                 ),
+
                     
 
               Container(
@@ -1534,6 +1582,7 @@ setState(() {
             var updateData =
                       {
                         "CustomerID": DebitID,
+                        "FileNo":FileNoController.text.trim(),
                         "CustomerName":CustomerNameController.text.trim().toLowerCase(),
                         "CustomerFatherName":CustomerFatherNameController.text.trim().toLowerCase(),
                         "CustomerMotherName":CustomerMotherNameController.text.trim().toLowerCase(),
