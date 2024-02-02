@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllPDF/OwnerParticularReg.dart';
+import 'package:tvs_app/Screens/RegiForm/AllRegistrationForm.dart';
 
 
 
@@ -1410,8 +1411,8 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
                       "ETINNo":eTINNoController.text.trim(),
                       "GuardianName":GuardianNameController.text.trim(),
                       "VehicleRegistrationNo":VehicleRegistrationNoController.text.trim(),
-                      "EngineNo":widget.SaleInfo[0]["BikeEngineNo"],
-                      "ChassisNo":widget.SaleInfo[0]["BikeChassisNo"],
+                      "EngineNo":EnginenumberController.text.trim(),
+                      "ChassisNo":ChassisnumberController.text.trim(),
                       "YearOfMFG":YearOfMFGOfVehicleController.text.trim(),
                       "PreviousReg":PrevRegistrationNoController.text.trim(),
                       "BankNameForFee":BankNameforFeeTaxDepositController.text.trim(),
@@ -1420,6 +1421,24 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
                       "OwnerType":OwnerTypeController.text.trim(),
                       "Hire":HireController.text.trim(),
                       "Hirepurchase":HirePurchaseController.text.trim(),
+                      "VehicleorTrailer":VehicleorTrailerController.text.trim(),
+                      "PrevRegnNo":PrevRegnNoController.text.trim(),
+                      "Classofvehicle":ClassofvehicleController.text.trim(),
+                      "Makersname":MakersnameController.text.trim(),
+                      "Typeofbody":TypeofbodyController.text.trim(),
+                      "MakersCountry":MakersCountryController.text.trim(),
+                      "Color":ColorController.text.trim(),
+                      "Yearofmanufacture":YearofmanufactureController.text.trim(),
+                      "Numberofcylinders":NumberofcylindersController.text.trim(),
+                      "Fuelused":FuelusedController.text.trim(),
+                      "Horsepower":HorsepowerController.text.trim(),
+                      "RPM":RPMController.text.trim(),
+                      "Cubiccapacity":CubiccapacityController.text.trim(),
+                      "Seats":SeatsController.text.trim(),
+                      "NoofStandee":NoofStandeeController.text.trim(),
+                      "Wheelbase":WheelbaseController.text.trim(),
+                      "Unladenweight":UnladenweightController.text.trim(),
+                      "ladentrainweight":ladentrainweightController.text.trim(),
                       
                       
                     }];
@@ -1427,7 +1446,7 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
 
 
                     Navigator.push(
-                        context,MaterialPageRoute(builder: (context) => OwnerParticularRegPDF(SalesData: AllSaleData)),
+                        context,MaterialPageRoute(builder: (context) => AllRegistrationForm(SalesData: AllSaleData)),
                       );
                       
 

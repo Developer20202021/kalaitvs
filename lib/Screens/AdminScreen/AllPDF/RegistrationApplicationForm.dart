@@ -564,7 +564,7 @@ pdf.addPage(pw.Page(
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("9. PO/Bank :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("9. PO/Bank : ${SalesData[0]["POBank"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
         
 
@@ -583,11 +583,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("10. Joint owner :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("10. Joint owner : ${SalesData[0]["JointOwner"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("11. Owner type :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("11. Owner type : ${SalesData[0]["OwnerType"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
               
 
@@ -605,11 +605,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("12. Hire :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("12. Hire : ${SalesData[0]["Hire"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("13. Hire purchase :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("13. Hire purchase : ${SalesData[0]["Hirepurchase"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
 
 
@@ -680,11 +680,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("14. Vehicle or trailer :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("14. Vehicle or trailer : ${SalesData[0]["VehicleorTrailer"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("15. Prev. Regn. No. (if any) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("15. Prev. Regn. No. (if any) : ${SalesData[0]["PrevRegnNo"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
           
 
@@ -701,11 +701,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("14a. Class of vehicle :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("14a. Class of vehicle : ${SalesData[0]["Classofvehicle"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("15a. Maker's name :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("15a. Maker's name : ${SalesData[0]["Makersname"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
    
 
@@ -721,11 +721,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("16. Type of body :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("16. Type of body : ${SalesData[0]["Typeofbody"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("17. Maker's Country :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("17. Maker's Country : ${SalesData[0]["MakersCountry"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
             
 
@@ -742,11 +742,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("18. Color (cabin/body) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("18. Color (cabin/body) : ${SalesData[0]["Color"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("19. Year of manufacture :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("19. Year of manufacture : ${SalesData[0]["Yearofmanufacture"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
               
     
@@ -766,11 +766,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("20. Number of cylinders : ", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("20. Number of cylinders : ${SalesData[0]["Numberofcylinders"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("21. Chassis number :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("21. Chassis number : ${SalesData[0]["ChassisNo"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
         
 
@@ -789,11 +789,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("22. Engine number :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("22. Engine number : ${SalesData[0]["EngineNo"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("23. Fuel used :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("23. Fuel used : ${SalesData[0]["Fuelused"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
               
 
@@ -811,11 +811,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("24. Horse power :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("24. Horse power : ${SalesData[0]["Horsepower"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("25. RPM :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("25. RPM : ${SalesData[0]["RPM"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                 ]),
 
@@ -829,11 +829,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("26. Cubic capacity :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("26. Cubic capacity : ${SalesData[0]["Cubiccapacity"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("27. Seats (incl. driver) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("27. Seats (incl. driver) : ${SalesData[0]["Seats"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                 ]),
 
@@ -846,11 +846,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("28. No. of Standee :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("28. No. of Standee : ${SalesData[0]["NoofStandee"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("29. Wheel base :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("29. Wheel base : ${SalesData[0]["Wheelbase"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                 ]),
 
@@ -862,11 +862,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("30. Unladen weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("30. Unladen weight (kg) : ${SalesData[0]["Unladenweight"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("31. Maximum laden/train weight (kg) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("31. Maximum laden/train weight (kg) : ${SalesData[0]["ladentrainweight"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                 ]),
 
