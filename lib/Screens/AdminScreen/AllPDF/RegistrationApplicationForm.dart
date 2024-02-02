@@ -474,11 +474,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("1. Name of owner :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("1. Name of owner : ${SalesData[0]["CustomerName"].toString().toUpperCase()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("2. Date of birth :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("2. Date of birth : ${SalesData[0]["DateOfBirth"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
           
 
@@ -495,11 +495,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("3. Father/Husband :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("3. Father/Husband : ${SalesData[0]["CustomerFatherName"].toString().toUpperCase()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("4. Nationality :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("4. Nationality : ${SalesData[0]["Nationality"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
    
 
@@ -515,11 +515,11 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("5. Sex :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("5. Sex : ${SalesData[0]["Sex"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("6. Guardian's name :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("6. Guardian's name : ${SalesData[0]["GuardianName"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
             
 
@@ -536,7 +536,7 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("7. Owner's Address (One only):", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("7. Owner's Address (One only): ${SalesData[0]["PermanentAddress"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),
@@ -560,7 +560,7 @@ pdf.addPage(pw.Page(
                pw.Padding(
                 
                 padding: pw.EdgeInsets.only(top: 6),
-                child: pw.Text("8. Phone No. (if any) :", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
+                child: pw.Text("8. Phone No. (if any) : ${SalesData[0]["CellPhoneNo"].toString()}", style:pw.TextStyle(fontSize: 7,  color: PdfColor.fromInt(0x000000))),),
 
                pw.Padding(
                 padding: pw.EdgeInsets.only(top: 6),

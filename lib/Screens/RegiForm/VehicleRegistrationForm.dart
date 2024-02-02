@@ -43,6 +43,35 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
   TextEditingController YearOfMFGOfVehicleController = TextEditingController();
   TextEditingController PrevRegistrationNoController = TextEditingController();
   TextEditingController BankNameforFeeTaxDepositController = TextEditingController();
+  TextEditingController POBankController = TextEditingController();
+  TextEditingController JointOwnerController = TextEditingController();
+  TextEditingController HireController = TextEditingController();
+  TextEditingController HirePurchaseController = TextEditingController();
+  TextEditingController OwnerTypeController = TextEditingController();
+  TextEditingController VehicleorTrailerController = TextEditingController();
+  TextEditingController PrevRegnNoController = TextEditingController();
+  TextEditingController ClassofvehicleController = TextEditingController();
+  TextEditingController MakersnameController = TextEditingController();
+  TextEditingController TypeofbodyController = TextEditingController();
+  TextEditingController MakersCountryController = TextEditingController();
+  TextEditingController ColorController = TextEditingController();
+  TextEditingController YearofmanufactureController = TextEditingController();
+  TextEditingController NumberofcylindersController = TextEditingController();
+  TextEditingController ChassisnumberController = TextEditingController();
+  TextEditingController EnginenumberController = TextEditingController();
+  TextEditingController FuelusedController = TextEditingController();
+  TextEditingController HorsepowerController = TextEditingController();
+  TextEditingController RPMController = TextEditingController();
+  TextEditingController CubiccapacityController = TextEditingController();
+  TextEditingController SeatsController = TextEditingController();
+  TextEditingController NoofStandeeController = TextEditingController();
+  TextEditingController WheelbaseController = TextEditingController();
+  TextEditingController UnladenweightController = TextEditingController();
+  TextEditingController ladentrainweightController = TextEditingController();
+
+
+
+
 
 
 
@@ -88,7 +117,21 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
     PresentAddressController.text = widget.SaleInfo[0]["CustomerAddress"];
     PermanentAddressController.text = widget.SaleInfo[0]["CustomerAddress"];
     CellPhoneNoController.text = widget.SaleInfo[0]["CustomerPhoneNumber"];
-    
+    YearOfMFGOfVehicleController.text = widget.SaleInfo[0]["YearOfManufacture"];
+    VehicleorTrailerController.text = widget.SaleInfo[0]["BikeName"];
+    ClassofvehicleController.text = widget.SaleInfo[0]["ClassOfVehicle"];
+    MakersnameController.text = widget.SaleInfo[0]["MakersName"];
+    MakersCountryController.text = "INDIA";
+    ColorController.text = widget.SaleInfo[0]["BikeColor"];
+    YearofmanufactureController.text = widget.SaleInfo[0]["YearOfManufacture"];
+    NumberofcylindersController.text = widget.SaleInfo[0]["BikeValvePerCylinder"];
+    ChassisnumberController.text = widget.SaleInfo[0]["BikeChassisNo"];
+    EnginenumberController.text = widget.SaleInfo[0]["BikeEngineNo"];
+    HorsepowerController.text = widget.SaleInfo[0]["HorsePower"];
+    RPMController.text = widget.SaleInfo[0]["RPM"];
+    SeatsController.text = widget.SaleInfo[0]["SeatingCapacity"];
+    WheelbaseController.text = widget.SaleInfo[0]["BikeWheelBase"];
+    ladentrainweightController.text = widget.SaleInfo[0]["BikeLadenWeight"];
 
 
 
@@ -639,6 +682,711 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
                     ),
 
 
+              
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'PO/Bank',
+            
+                          hintText: 'PO/Bank',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: POBankController,
+                    ),
+
+
+              
+               SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Joint Owner',
+            
+                          hintText: 'Joint Owner',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: JointOwnerController,
+                    ),
+
+
+              
+                             SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Owner Type',
+            
+                          hintText: 'Owner Type',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: OwnerTypeController,
+                    ),
+
+
+              
+                   SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Hire',
+            
+                          hintText: ' Hire',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:  HireController,
+                    ),
+
+              
+
+                                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Hire purchase ',
+            
+                          hintText: ' Hire purchase ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:   HirePurchaseController,
+                    ),
+
+
+              
+                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Vehicle or trailer',
+            
+                          hintText: ' Vehicle or trailer',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:    VehicleorTrailerController,
+                    ),
+
+              
+                            
+                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Prev. Regn. No. (if any)',
+            
+                          hintText: ' Prev. Regn. No. (if any)',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:PrevRegnNoController,
+                    ),
+
+
+                
+
+                                            
+                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Class of vehicle ',
+            
+                          hintText: ' Class of vehicle',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: ClassofvehicleController,
+                    ),
+
+
+          
+
+                              SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Makers name ',
+            
+                          hintText: ' Makers name ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:  MakersnameController,
+                    ),
+
+
+                
+
+                
+                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Type of body ',
+            
+                          hintText: ' Type of body ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:   TypeofbodyController,
+                    ),
+
+                
+
+                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Makers Country',
+            
+                          hintText: 'Makers Country',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:   MakersCountryController,
+                    ),
+
+
+                
+
+                                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Color (cabin/body) ',
+            
+                          hintText: 'Color (cabin/body) ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:   ColorController,
+                    ),
+
+
+                
+                
+                                    SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Year of manufacture',
+            
+                          hintText: ' Year of manufacture',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:    YearofmanufactureController,
+                    ),
+
+
+                
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Number of cylinders',
+            
+                          hintText: 'Number of cylinders',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:    NumberofcylindersController,
+                    ),
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Chassis number',
+            
+                          hintText: ' Chassis number',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:     ChassisnumberController,
+                    ),
+
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Engine number',
+            
+                          hintText: ' Engine number',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:      EnginenumberController,
+                    ),
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Fuel used',
+            
+                          hintText: ' Fuel used ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: FuelusedController,
+                    ),
+                
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Horse power ',
+            
+                          hintText: 'Horse power',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: HorsepowerController,
+                    ),
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'RPM',
+            
+                          hintText: 'RPM',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:  RPMController,
+                    ),
+
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Cubic capacity',
+            
+                          hintText: 'Cubic capacity',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:   CubiccapacityController,
+                    ),
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Seats (incl. driver)',
+            
+                          hintText: 'Seats (incl. driver)',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:   SeatsController,
+                    ),
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' No. of Standee',
+            
+                          hintText: ' No. of Standee',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:    NoofStandeeController,
+                    ),
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Wheel base',
+            
+                          hintText: ' Wheel base',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:     WheelbaseController,
+                    ),
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Unladen weight (kg) ',
+            
+                          hintText: ' Unladen weight (kg) ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:      UnladenweightController,
+                    ),
+
+
+
+                 SizedBox(height: 20,),
+
+
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: ' Maximum laden/train weight (kg) ',
+            
+                          hintText: ' Maximum laden/train weight (kg) ',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller:      ladentrainweightController,
+                    ),
 
               SizedBox(height: 10,),
 
@@ -666,7 +1414,14 @@ class _VehicleRegistrationFormState extends State<VehicleRegistrationForm> {
                       "ChassisNo":widget.SaleInfo[0]["BikeChassisNo"],
                       "YearOfMFG":YearOfMFGOfVehicleController.text.trim(),
                       "PreviousReg":PrevRegistrationNoController.text.trim(),
-                      "BankNameForFee":BankNameforFeeTaxDepositController.text.trim()
+                      "BankNameForFee":BankNameforFeeTaxDepositController.text.trim(),
+                      "POBank":POBankController.text.trim(),
+                      "JointOwner":JointOwnerController.text.trim(),
+                      "OwnerType":OwnerTypeController.text.trim(),
+                      "Hire":HireController.text.trim(),
+                      "Hirepurchase":HirePurchaseController.text.trim(),
+                      
+                      
                     }];
 
 
