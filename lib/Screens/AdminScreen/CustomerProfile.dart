@@ -71,6 +71,8 @@ TextEditingController ServiceNameController = TextEditingController();
 
 TextEditingController ServiceAmountController = TextEditingController();
 
+TextEditingController CommentController = TextEditingController();
+
 
 
 
@@ -698,6 +700,151 @@ void dispose() {
                       Navigator.push(
                         context,MaterialPageRoute(builder: (context) => EditSaleInfo(BikeSaleInfo: [AllSaleData[i]])),
                       );
+                                
+                              },
+                              value: '/hello',
+                            ),
+
+  
+                       PopupMenuItem(
+                              child: Text("Comment", style: TextStyle(fontFamily: "Josefin Sans", fontWeight: FontWeight.bold),),
+                              onTap: () {
+
+                                          showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+          
+                                                         
+                                      
+          
+                                                            return StatefulBuilder(
+                                                              builder:
+                                                                  (context, setState) {
+                                                                return AlertDialog(
+                                          title: Text('Comments'),
+                                          
+                                          content:SingleChildScrollView(child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children:[
+
+                                            Text("${AllSaleData[i]["Comment"]}", style: TextStyle(overflow: TextOverflow.clip, ),),
+
+
+                                       
+                                       
+                                        Container(
+                                          width: 400,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                       
+                                            children: [
+                                          
+                                          
+                                                                            
+                                                         SizedBox(
+                                                            height: 10,
+                                                          ),
+                                          
+                                          
+                                                           TextField(
+                                                              keyboardType: TextInputType.multiline,
+                                                              maxLines: 5,
+                                                            decoration: InputDecoration(
+                                                                border: OutlineInputBorder(),
+                                                                labelText: 'New Comment Add',
+                                          
+                                                                hintText: 'New Comment Add',
+                                                                //  enabledBorder: OutlineInputBorder(
+                                                                //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                                                                //   ),
+                                                                  focusedBorder: OutlineInputBorder(
+                                                                    borderSide: BorderSide(width: 3, color: Colors.purple),
+                                                                  ),
+                                                                  errorBorder: OutlineInputBorder(
+                                                                    borderSide: BorderSide(
+                                                                        width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                                                                  ),
+                                                                
+                                                                
+                                                                ),
+                                                            controller: CommentController,
+                                                          ),
+                                          
+                                          
+                                          
+                                                          ElevatedButton(onPressed: () async{
+                                          
+                                          
+                                                               final docUser = FirebaseFirestore.instance.collection("BikeSaleInfo").doc(AllSaleData[i]["SaleID"]);
+                                          
+                                                                // var productID = docUser.doc().id;
+                                                               
+                                          
+                                                                final jsonData ={
+                                          
+                                                                    "Comment":CommentController.text.trim()
+                                                            
+                                                                };
+                                          
+                                          
+                                                              await docUser.update(jsonData).then((value) =>setState((){
+                                          
+                                                              getData();
+
+
+                                                                Navigator.pop(context);
+
+
+                                                              
+                                          
+                                          
+                                                                
+                                                                          final snackBar = SnackBar(
+                                          
+                                          elevation: 0,
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: Colors.transparent,
+                                          content: AwesomeSnackbarContent(
+                                          titleFontSize: 12,
+                                          title: 'Update successfull',
+                                          message: 'Hey Thank You. Good Job',
+                                          
+                                                                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                          contentType: ContentType.success,
+                                                  ),
+                                              );
+                                          
+                                                              ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+                                          
+                                          
+                                                              })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                              backgroundColor: Colors.red,
+                                                                        content: const Text('Something Wrong!'),
+                                                                        action: SnackBarAction(
+                                                                          label: 'Undo',
+                                                                          onPressed: () {
+                                                                            // Some code to undo the change.
+                                                                          },
+                                                                        ),
+                                                                      )));
+                                          
+                                          
+                                          
+                                          
+                                                          }, child: Text("Update")),
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          ],),
+                                        )
+
+
+
+
+
+                                            ])));});});
                                 
                               },
                               value: '/hello',
