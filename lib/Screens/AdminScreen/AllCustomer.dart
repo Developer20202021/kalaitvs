@@ -434,7 +434,7 @@ Future<void> getSearchData(String phoneNumber) async {
         ],
         
       ),
-      body: DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(
+      body:loading?Center(child: CircularProgressIndicator()): DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(
         onRefresh: refresh,
         child: ListView.separated(
           separatorBuilder: (BuildContext context, int index) => const Divider(),
@@ -507,7 +507,7 @@ Future<void> getSearchData(String phoneNumber) async {
                   
                      leading: CircleAvatar(
                         backgroundColor: Theme.of(context).primaryColor,
-                        child: Text("${AllData[index]["CustomerName"][0].toString()}",style: TextStyle(color: Colors.white),),
+                        child: Text("${AllData[index]["CustomerName"][0].toString().toUpperCase()}",style: TextStyle(color: Colors.white),),
                       ),
                     
                       subtitle:  Column(
@@ -518,9 +518,9 @@ Future<void> getSearchData(String phoneNumber) async {
                           Text('Phone No:${AllData[index]["CustomerPhoneNumber"]}'),
                         ],
                       ),
-                      trailing: Text("${AllData[index]["CustomerType"]}"),
+                      trailing:AllData[index]["CustomerType"]=="Due"? Text("${AllData[index]["CustomerType"]}", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),):Text("${AllData[index]["CustomerType"]}",style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),),
                   
-                  title: Text("${AllData[index]["CustomerName"].toString()}", style: TextStyle(
+                  title: Text("${AllData[index]["CustomerName"].toString().toUpperCase()}", style: TextStyle(
                     fontWeight: FontWeight.bold
                   ),)),
               ),

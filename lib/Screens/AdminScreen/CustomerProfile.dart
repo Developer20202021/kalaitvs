@@ -436,7 +436,7 @@ void dispose() {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["CustomerName"].toString()}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["CustomerName"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
@@ -456,7 +456,7 @@ void dispose() {
                                     )),
                                   Container(child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text("${AllData[0]["CustomerFatherName"]}", style: TextStyle(fontSize: 15.0),),
+                                    child: Text("${AllData[0]["CustomerFatherName"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                   )),
                                 
                                 ]),
@@ -471,7 +471,7 @@ void dispose() {
                                   )),
                                   Container(child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text("${AllData[0]["CustomerMotherName"]}", style: TextStyle(fontSize: 15.0),),
+                                    child: Text("${AllData[0]["CustomerMotherName"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                   )),
                                 
                                 ]),
@@ -2250,7 +2250,7 @@ void dispose() {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("NID:${AllSaleData[i]["CustomerNID"]}"),
-                                  Text("Name:${AllSaleData[i]["CustomerName"]}"),
+                                  Text("Name:${AllSaleData[i]["CustomerName"].toString().toUpperCase()}"),
                                   Text("Phone Number:${AllSaleData[i]["CustomerPhoneNumber"]}"),
                   
                                   Text("Date: ${AllSaleData[i]["BikeSaleDate"]}"),
@@ -2277,6 +2277,8 @@ void dispose() {
 
 
                                    Text("Cash In: ${AllSaleData[i]["BikeBillPay"]} "),
+
+                                   Text("Due: ${AllSaleData[i]["BikePaymentDue"]} "),
 
                                    Text("Total CashIn: ${AllSaleData[i]["TotalCashIn"].toString()}",style: TextStyle(color: Colors.green, fontSize: 14, fontWeight: FontWeight.bold),),
                                 ],
