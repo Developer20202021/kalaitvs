@@ -402,7 +402,7 @@ pdf.addPage(pw.Page(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
 
-              pw.Text("            a) I the undersigned do hereby declare that to the best of my knowledge and belief, the information given and the", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+              pw.Text("            a) I  the  undersigned  do   hereby  declare  that to  the  best  of  my  knowledge and belief, the information given and the", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
 
@@ -488,7 +488,7 @@ pdf.addPage(pw.Page(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
 
-              pw.Text("            I the undersigned do hereby certify that the vehicle in question has been sold by me/my firm and the ownership", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+              pw.Text("                I  the  undersigned  do  hereby  certify  that the   vehicle  in   question  has  been  sold  by  me/my  firm   and  the   ownership", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
 
@@ -573,19 +573,61 @@ pdf.addPage(pw.Page(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
 
-              pw.Text("            Certificate that the particulars pertaining to the owner and the vehicle (Chassis No. .......................................Engine", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+            
+              pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+
+                  pw.Text("            Certificate that the particulars pertaining to the owner and the vehicle (Chassis No.", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
 
-               pw.Text("                No...................................................) given in the application match with the ownership documents attached to this", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+                pw.Container(
+                width: 120,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dotted))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 1, left: 30),child: pw.Text("${SalesData[0]["ChassisNo"]}", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))))),
+
+                  pw.Text("Engine", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+
+              ]),
 
 
-                pw.Text("               application. It is further certified that the vehicle complies with the registration requirements specified in the MV Act", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
-                pw.Text("               and the Rules and/or Regulations made thereunder and the vehicle is not mechanically defective. The necessary", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
-                pw.Text("               documents/papers are available as per list enclosed.", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+               pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+
+                  pw.Text("           No", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+
+                pw.Container(
+                
+                width: 147,
+                decoration:  pw.BoxDecoration(
+                border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dotted))),
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 1, left: 30),child: pw.Text("${SalesData[0]["EngineNo"]}", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))))),
+
+                  pw.Text(") given in the application match with the ownership documents attached to this", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+
+              ]),
+
+              
+
+
+
+              //  pw.Text("             No...................................................) given in the application match with the ownership documents attached to this", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+
+
+                pw.Text("          application.  It  is  further  certified  that  the  vehicle  complies  with  the  registration  requirements specified  in  the  MV  Act", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+
+
+                pw.Text("          and the Rules and/or Regulations made thereunder and the vehicle is not mechanically defective. The necessary documents/", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+
+                pw.Text("          papers are available as per list enclosed.", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
                 ]),),]),
 
@@ -711,14 +753,14 @@ pdf.addPage(pw.Page(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
 
-              pw.Text("                   Necessary fees and taxes amounting to taka.............................................................................................has been paid to", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+              pw.Text("                Necessary  fees  and  taxes  amounting  to  taka....................................................................................................................has  been  paid  to", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
 
 
 
 
-                pw.Text("               PO/Bank...................................................................vide vouchers and receipts enclosed.", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+                pw.Text("               PO/Bank.....................................................................vide vouchers and receipts enclosed.", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
 
