@@ -9,6 +9,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesInvoice.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllCustomer.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/PartsCashMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 
@@ -387,7 +388,7 @@ Future<void> getData(String paymentDate) async {
                               trailing: TextButton(onPressed: (){
       
       
-                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AccessoriesInvoice(CustomerPhoneNumber: AllData[index]["CustomerPhoneNumber"] , AccessoriesID: AllData[index]["AccessoriesID"], AccessoriesName:AllData[index]["AccessoriesName"].toString(), AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], CustomerID:AllData[index]["CustomerID"] , SaleDate:AllData[index]["SaleDate"] )));
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PartsCashMemoPDF(SalesData: [AllData[index]])));
       
       
                                

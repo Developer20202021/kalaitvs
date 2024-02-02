@@ -24,11 +24,12 @@ class AccessoriesSaleToCustomer extends StatefulWidget {
  final AccessoriesID;
  final AccessoriesSalePrice;
  final AccessoriesAvailableNumber;
+ final PartsID;
 
 
 
 
-  const AccessoriesSaleToCustomer({super.key, required this.AccessoriesID, required this.AccessoriesName, required this.AccessoriesSalePrice, required this.AccessoriesAvailableNumber});
+  const AccessoriesSaleToCustomer({super.key, required this.AccessoriesID, required this.AccessoriesName, required this.AccessoriesSalePrice, required this.AccessoriesAvailableNumber, required this.PartsID});
 
   @override
   State<AccessoriesSaleToCustomer> createState() => _AccessoriesSaleToCustomerState();
@@ -218,7 +219,7 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
 
                   "AccessoriesName":widget.AccessoriesName,
                   "AccessoriesSalePrice":widget.AccessoriesSalePrice,
-               
+                  "PartsID":widget.PartsID,
                   "AccessoriesID":widget.AccessoriesID,
                   "CustomerName":CustomerNameController.text.trim().toLowerCase(),
                   "CustomerPhoneNumber":CustomerPhoneNumberController.text.trim(),

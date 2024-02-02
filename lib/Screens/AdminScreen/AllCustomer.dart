@@ -388,19 +388,6 @@ Future<void> getSearchData(String phoneNumber) async {
 
 
 
-
-
-            
-
-
-
-
-
-
-
-
-
-
           }, icon: Icon(Icons.close)):IconButton(onPressed: (){
 
 
@@ -410,18 +397,6 @@ Future<void> getSearchData(String phoneNumber) async {
             });
 
 
-          
-
-            
-
-
-
-
-
-
-
-
-          
 
           }, icon: Icon(Icons.search))
 

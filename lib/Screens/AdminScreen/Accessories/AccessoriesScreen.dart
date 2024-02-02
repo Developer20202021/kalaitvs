@@ -31,6 +31,11 @@ bool loading = true;
 var DataLoad = "";
 int moneyAdd =0;
 var totalAccessoriesScreen = "";
+int TotalParts = 0;
+int TotalAmount = 0;
+
+
+TextEditingController PartsIDController = TextEditingController();
 
    // Firebase All Customer Data Load
 
@@ -56,30 +61,41 @@ Future<void> getData() async {
       setState(() {
         DataLoad = "0";
         loading = false;
+
+        print("______________________________________h");
       });
        
      } else {
 
+            setState(() {
+              TotalAmount = 0;
+              TotalParts = 0;
+            });
 
-          //  for (var i = 0; i < AllData.length; i++) {
 
-          //       var money = AllData[i]["BikePaymentDue"];
-          //       int moneyInt = int.parse(money);
+           for (var i = 0; i < AllData.length; i++) {
+
+                var SinglePartsFromServer = AllData[i]["AccessoriesAvailableNumber"];
+                int SinglePartsInt = int.parse(SinglePartsFromServer);
+
+                int SinglePartsAmount = int.parse(AllData[i]["AccessoriesSalePrice"].toString())*SinglePartsInt;
 
       
 
-          //             setState(() {
-          //               totalAccessoriesScreen = AllData.length.toString();
-          //               moneyAdd = moneyAdd + moneyInt;
-          //               AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
-          //             });
+                      setState(() {
+               
+                       TotalParts = TotalParts + SinglePartsInt;
+                       TotalAmount = TotalAmount + SinglePartsAmount;
+                      
+                      });
 
        
-          //         }
+                  }
 
 
 
           setState(() {
+             DataLoad = "";
                AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
                loading = false;
           });
@@ -97,6 +113,71 @@ Future<void> getData() async {
 
 
 
+Future<void> getByPartsID(String PartsID) async {
+
+
+    setState(() {
+      loading = true;
+    });
+
+     Query _SearchCollectionRefQuery = _collectionRef.where("PartsID", isEqualTo: PartsID);
+
+    QuerySnapshot querySnapshot = await _SearchCollectionRefQuery.get();
+
+    // Get data from docs and convert map to List
+     AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+       if (AllData.length == 0) {
+
+      setState(() {
+        DataLoad = "0";
+        loading = false;
+      });
+       
+     } else {
+
+
+            setState(() {
+              TotalAmount = 0;
+              TotalParts = 0;
+            });
+
+
+           for (var i = 0; i < AllData.length; i++) {
+
+                var SinglePartsFromServer = AllData[i]["AccessoriesAvailableNumber"];
+                int SinglePartsInt = int.parse(SinglePartsFromServer);
+
+                int SinglePartsAmount = int.parse(AllData[i]["AccessoriesSalePrice"].toString())*SinglePartsInt;
+
+      
+
+                      setState(() {
+               
+                       TotalParts = TotalParts + SinglePartsInt;
+                       TotalAmount = TotalAmount + SinglePartsAmount;
+
+                      //  print("___________________________${TotalAmount}");
+                      
+                      });
+
+       
+                  }
+
+          setState(() {
+               AllData = querySnapshot.docs.map((doc) => doc.data()).toList();
+               loading = false;
+          });
+
+
+
+
+     }
+
+
+    print(AllData);
+}
 
 
 
@@ -263,9 +344,67 @@ Future<void> getData() async {
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Parts", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+
+
+            SizedBox(width: 10,),
+
+
+                         Container(
+                          width: 300,
+                          height: 50,
+                           child: TextField(
+                                          keyboardType: TextInputType.name,
+                           
+                                           decoration: InputDecoration(
+                                               border: OutlineInputBorder(),
+                                               labelText: 'Enter Parts ID',
+                           
+                                               hintText: 'Enter Parts ID',
+                                       
+                                               //  enabledBorder: OutlineInputBorder(
+                                               //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                                               //     ),
+                                                   focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                                                   ),
+                                                   errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                                                   ),
+                                               
+                                               
+                                               ),
+                                           controller: PartsIDController,
+                                         ),
+                         ),
+
+            SizedBox(width: 10,),
+
+            ElevatedButton(onPressed: ()async{
+
+              getByPartsID(PartsIDController.text.trim());
+
+            }, child: Text("Search")),
+
+
+
+                        SizedBox(width: 10,),
+
+            ElevatedButton(onPressed: ()async{
+
+              getData();
+
+            }, child: Text("Reload")),
+
+
+
+            Text("    Total Parts:(${TotalParts.toString()})        ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+
+
+             Text("     Total Price:(${TotalAmount.toString()} ৳)    ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
           ],
         ),
         backgroundColor: Colors.transparent,
@@ -276,7 +415,7 @@ Future<void> getData() async {
 
         
       ),
-      body: DataLoad == "0"? Center(child: Text("No Data Available")):RefreshIndicator(
+      body:loading?Center(child: CircularProgressIndicator(),): DataLoad == "0"? Center(child: Text("No Data Available")):RefreshIndicator(
         onRefresh: refresh,
         child: GridView.builder(
                 itemCount: AllData.length,
@@ -390,7 +529,7 @@ Future<void> getData() async {
                          Navigator.push(
                       context,
                               
-                             MaterialPageRoute(builder: (context) => AccessoriesSaleToCustomer(AccessoriesID: AllData[index]["AccessoriesID"], AccessoriesName: AllData[index]["AccessoriesName"], AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], AccessoriesAvailableNumber: AllData[index]["AccessoriesAvailableNumber"])),
+                             MaterialPageRoute(builder: (context) => AccessoriesSaleToCustomer(AccessoriesID: AllData[index]["AccessoriesID"], AccessoriesName: AllData[index]["AccessoriesName"], AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], AccessoriesAvailableNumber: AllData[index]["AccessoriesAvailableNumber"], PartsID: AllData[index]["PartsID"],)),
                     );
                               
                               

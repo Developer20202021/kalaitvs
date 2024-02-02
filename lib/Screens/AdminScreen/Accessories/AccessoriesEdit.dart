@@ -352,25 +352,6 @@ class _EditAccessoriesState extends State<EditAccessories> {
 
 
 
-
-
-
-
-
-
-                 
-
-
-
-
-
-
-
-
-
-
-
-
                     docUser.update(AccessoriesData).then((value) =>setState((){
 
 
