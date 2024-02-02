@@ -51,6 +51,7 @@ class _SingleBikeInfoState extends State<SingleBikeInfo> {
   TextEditingController BikeBillPayController = TextEditingController();
   TextEditingController DiscountAmountController = TextEditingController();
   TextEditingController QtyController = TextEditingController();
+  TextEditingController CommentController = TextEditingController();
 
   bool DiscountAvailable = false;
   bool ConditionAvailable = false;
@@ -749,6 +750,42 @@ Future<void> getData() async {
           ),
 
 
+
+        
+
+        TextField(
+          maxLines: 5,
+            keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter Comment......',
+                 labelStyle: TextStyle(
+          color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+        ),
+                hintText: 'Enter Comment......',
+                //  enabledBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                //   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                  ),
+                
+                
+                ),
+            controller: CommentController,
+          ),
+
+
+
+        SizedBox(
+            height: 10,
+          ),
+
+
   
             ChessisNoTextFieldEmpty||EngineNoTextFieldEmpty?Text(""):Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -966,6 +1003,7 @@ Future<void> getData() async {
                   "RPM":GetBikeData[0]["RPM"],
                   "HorsePower":GetBikeData[0]["HorsePower"],
                   "BikeLadenWeight":GetBikeData[0]["BikeKerbWeight"],
+                  "Comment":CommentController.text.trim(),
                   // "WithDiscountBikeBillPay":DiscountAvailable?(int.parse(BikeBillPayController.text.trim().toString())-int.parse(DiscountAmountController.text.trim().toString())).toString():BikeBillPayController.text.trim().toString(),
                 
                   
