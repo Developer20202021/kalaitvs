@@ -11,6 +11,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/AccessoriesScreen.dart';
 import 'package:tvs_app/Screens/AdminScreen/Accessories/PerMonthAccessoriesSalesHistory.dart';
 import 'package:tvs_app/Screens/AdminScreen/AllAdmin.dart';
+import 'package:tvs_app/Screens/AdminScreen/AllPDF/PartsCashMemo.dart';
 import 'package:tvs_app/Screens/AdminScreen/HomeScreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
@@ -294,7 +295,7 @@ class _AccessoriesSaleToCustomerState extends State<AccessoriesSaleToCustomer> {
 
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PerMonthAccessoriesSalesHistory()),
+                  MaterialPageRoute(builder: (context) => PartsCashMemoPDF(SalesData: [AccessoriesData])),
                 );
 
 
