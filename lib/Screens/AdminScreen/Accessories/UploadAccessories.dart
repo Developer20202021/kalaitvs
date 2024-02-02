@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
   TextEditingController AccessoriesSalePriceController = TextEditingController();
   TextEditingController AccessoriesNameController = TextEditingController();
   TextEditingController AccessoriesAvailableNumberController = TextEditingController();
-  TextEditingController ImageLinkController = TextEditingController();
+  TextEditingController PartsIDController = TextEditingController();
+  TextEditingController ModelController = TextEditingController();
 
 
 
@@ -193,46 +195,15 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
               SizedBox(height: 8,),
 
               TextField(
-               keyboardType: TextInputType.url,
+               keyboardType: TextInputType.name,
 
-               onChanged: (value) {
-
-
-                if (value.isEmpty || value == null) {
-
-                  setState(() {
-                    buttonVisible = false;
-                  });
-                  
-                }
-
-                else{
-
-
-                   setState(() {
-                    buttonVisible = true;
-                  });
-
-
-
-                }
-                
-
-
-
-                 print(value);
-               },
-
-               
-               
-               
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Image Link',
+                    labelText: 'Parts ID',
                      labelStyle: TextStyle(
         color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
             ),
-                    hintText: 'Image Link',
+                    hintText: 'Parts ID',
             
                     //  enabledBorder: OutlineInputBorder(
                     //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
@@ -247,16 +218,42 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
                     
                     
                     ),
-                controller: ImageLinkController,
+                controller: PartsIDController,
               ),
             
             
+              SizedBox(
+                height: 10,
+              ),
+
+
+          
+             TextField(
+               keyboardType: TextInputType.name,
+
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Model',
+                     labelStyle: TextStyle(
+        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+            ),
+                    hintText: 'Model',
             
-            
-            
-            
-            
-            
+                    //  enabledBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                    //     ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                    
+                    
+                    ),
+                controller: ModelController,
+              ),
             
             
               SizedBox(
@@ -271,7 +268,7 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(width: 150, child:buttonVisible? TextButton(onPressed: (){
+                  Container(width: 150, child: TextButton(onPressed: (){
 
                     setState(() {
                       loading = true;
@@ -285,31 +282,14 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
                   "AccessoriesName":AccessoriesNameController.text.trim().toLowerCase(),
                   "AccessoriesSalePrice":AccessoriesSalePriceController.text.trim(),
                   "AccessoriesAvailableNumber":AccessoriesAvailableNumberController.text.trim(),
-                  "ImageLink":ImageLinkController.text.trim(),
-                  "AccessoriesID":AccessoriesID.toString()
+                  "ImageLink":"https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg",
+                  "AccessoriesID":AccessoriesID.toString(),
+                  "PartsID":PartsIDController.text.trim(),
+                  "Model":ModelController.text.trim(),
 
 
                
                 };
-
-
-
-
-
-
-
-
-
-                 
-
-
-
-
-
-
-
-
-
 
 
 
@@ -320,12 +300,35 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
                       loading = false;
 
 
+              
+                          final snackBar = SnackBar(
+                                        
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                        titleFontSize: 12,
+                                        title: 'successfull',
+                                        message: 'Hey Thank You. Good Job',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                                ),
+                                            );
+
+                    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(snackBar);
+
+
 
 
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AccessoriesScreen()),
                 );
+
+
+
+
 
 
 
@@ -354,7 +357,7 @@ class _UploadAccessoriesState extends State<UploadAccessories> {
                   }, child: Text("Upload", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                    
           backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-        ),):Text(""),),
+        ),),),
 
 
 

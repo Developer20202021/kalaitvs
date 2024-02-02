@@ -261,7 +261,13 @@ Future<void> getData() async {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Accessories", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Parts", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+          ],
+        ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -277,11 +283,31 @@ Future<void> getData() async {
                 
                 itemBuilder: (context, index) => Container(
                 margin: const EdgeInsets.all(15.0),
-                  padding: const EdgeInsets.all(3.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Theme.of(context).primaryColor)
+                  padding: const EdgeInsets.only(top: 60),
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(color: Theme.of(context).primaryColor)
+                  // ),
+                  // height: 230,
+
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)
                   ),
-                  height: 330,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
 
                   child: Column(
 
@@ -293,43 +319,54 @@ Future<void> getData() async {
 
                         //Image Container 
 
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                                width: 130.0,
-                                height: 130.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                child: Image.network(
-                                  "${AllData[index]["ImageLink"]}",
-                                  height: 130.0,
-                                  width: 130.0,
-                                ),
-                              ),
-                          ),
+                        // Center(
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(2.0),
+                        //     child: Container(
+                        //         width: 130.0,
+                        //         height: 130.0,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        //           color: Theme.of(context).primaryColor,
+                        //         ),
+                        //         child: Image.network(
+                        //           "${AllData[index]["ImageLink"]}",
+                        //           height: 130.0,
+                        //           width: 130.0,
+                        //         ),
+                        //       ),
+                        //   ),
+                        // ),
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18,top: 2, right: 3),
+                          child: Text("Parts Name: ${AllData[index]["AccessoriesName"].toString()}", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold), overflow: TextOverflow.clip,),
                         ),
 
 
                         Padding(
                           padding: const EdgeInsets.only(left: 18,top: 2, right: 3),
-                          child: Text("${AllData[index]["AccessoriesName"].toString()}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold), overflow: TextOverflow.clip,),
+                          child: Text("Model:- ${AllData[index]["Model"].toString()}", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold), overflow: TextOverflow.clip,),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18,top: 2, right: 3),
+                          child: Text("ID:- ${AllData[index]["PartsID"].toString()}", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold), overflow: TextOverflow.clip,),
                         ),
 
                         
 
                         Padding(
                           padding: const EdgeInsets.only(left: 18,top: 2),
-                          child: Text("${AllData[index]["AccessoriesAvailableNumber"]} available", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                          child: Text("Stock:- ${AllData[index]["AccessoriesAvailableNumber"]} available", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
                         ),
 
                       
 
                         Padding(
                           padding: const EdgeInsets.only(left: 18,top: 2),
-                          child: Text("Price: ${AllData[index]["AccessoriesSalePrice"]}৳", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                          child: Text("Price:- ${AllData[index]["AccessoriesSalePrice"]}৳", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.green),),
                         ),
 
 
@@ -380,7 +417,7 @@ Future<void> getData() async {
 
                          Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => EditAccessories(AcceessoriesID: AllData[index]["AccessoriesID"], AccessoriesAvailableNumber: AllData[index]["AccessoriesAvailableNumber"], AccessoriesName: AllData[index]["AccessoriesName"], AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], ImageLink: AllData[index]["ImageLink"])),
+                                MaterialPageRoute(builder: (context) => EditAccessories(AcceessoriesID: AllData[index]["AccessoriesID"], AccessoriesAvailableNumber: AllData[index]["AccessoriesAvailableNumber"], AccessoriesName: AllData[index]["AccessoriesName"], AccessoriesSalePrice: AllData[index]["AccessoriesSalePrice"], ImageLink: AllData[index]["ImageLink"], Model:AllData[index]["Model"], PartsID: AllData[index]["PartsID"],)),
                               );
 
 
@@ -416,7 +453,7 @@ Future<void> getData() async {
 
                 ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                   crossAxisCount: 2,
+                   crossAxisCount: 4,
                   mainAxisExtent: 350,
                 ),
               ),

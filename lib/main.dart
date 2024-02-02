@@ -38,6 +38,7 @@ import 'package:tvs_app/Screens/CommonScreen/ProductScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/RegistrationScreen.dart';
 import 'package:tvs_app/Screens/CommonScreen/SingleProductInfo.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:tvs_app/Screens/Parts/UploadParts.dart';
 import 'package:tvs_app/Screens/RegiForm/MultiPDF.dart';
 
 

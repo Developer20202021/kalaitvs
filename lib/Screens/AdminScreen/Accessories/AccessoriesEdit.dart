@@ -23,11 +23,13 @@ class EditAccessories extends StatefulWidget {
   final AccessoriesName;
   final AccessoriesAvailableNumber;
   final ImageLink;
+  final PartsID;
+  final Model;
 
 
 
 
-  const EditAccessories({super.key, required this.AcceessoriesID, required this.AccessoriesAvailableNumber, required this.AccessoriesName, required this.AccessoriesSalePrice, required this.ImageLink});
+  const EditAccessories({super.key, required this.AcceessoriesID, required this.AccessoriesAvailableNumber, required this.AccessoriesName, required this.AccessoriesSalePrice, required this.ImageLink, required this.Model, required this.PartsID});
 
   @override
   State<EditAccessories> createState() => _EditAccessoriesState();
@@ -41,7 +43,8 @@ class _EditAccessoriesState extends State<EditAccessories> {
   TextEditingController AccessoriesNameController = TextEditingController();
   TextEditingController AccessoriesAvailableNumberController = TextEditingController();
   TextEditingController ImageLinkController = TextEditingController();
-
+  TextEditingController PartsIDController = TextEditingController();
+  TextEditingController ModelController = TextEditingController();
 
 
 
@@ -70,6 +73,8 @@ class _EditAccessoriesState extends State<EditAccessories> {
       AccessoriesNameController.text = widget.AccessoriesName;
       AccessoriesAvailableNumberController.text = widget.AccessoriesAvailableNumber;
       ImageLinkController.text = widget.ImageLink;
+      PartsIDController.text = widget.PartsID;
+      ModelController.text = widget.Model;
 
 
 
@@ -92,7 +97,7 @@ class _EditAccessoriesState extends State<EditAccessories> {
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Upload Accessories",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Edit Accessories",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -239,14 +244,75 @@ class _EditAccessoriesState extends State<EditAccessories> {
                     ),
                 controller: ImageLinkController,
               ),
+
+              SizedBox(
+                height: 10,
+              ),
+
+
+            
+            SizedBox(height: 8,),
+
+              TextField(
+               keyboardType: TextInputType.name,
+
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Parts ID',
+                     labelStyle: TextStyle(
+        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+            ),
+                    hintText: 'Parts ID',
+            
+                    //  enabledBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                    //     ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                    
+                    
+                    ),
+                controller: PartsIDController,
+              ),
             
             
+              SizedBox(
+                height: 10,
+              ),
+
+
+          
+             TextField(
+               keyboardType: TextInputType.name,
+
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Model',
+                     labelStyle: TextStyle(
+        color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+            ),
+                    hintText: 'Model',
             
-            
-            
-            
-            
-            
+                    //  enabledBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                    //     ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                        ),
+                    
+                    
+                    ),
+                controller: ModelController,
+              ),
             
             
               SizedBox(
@@ -276,7 +342,9 @@ class _EditAccessoriesState extends State<EditAccessories> {
                   "AccessoriesSalePrice":AccessoriesSalePriceController.text.trim(),
                   "AccessoriesAvailableNumber":AccessoriesAvailableNumberController.text.trim(),
                   "ImageLink":ImageLinkController.text.trim(),
-                  "AccessoriesID":widget.AcceessoriesID.toString()
+                  "AccessoriesID":widget.AcceessoriesID.toString(),
+                  "PartsID":PartsIDController.text.trim(),
+                  "Model":ModelController.text.trim(),
 
 
                
