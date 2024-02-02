@@ -450,7 +450,7 @@ pdf.addPage(pw.Page(
 
                   pw.Container(
                 
-                width: 460,
+                width: 470,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
                     child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("01 (One)", style: pw.TextStyle(fontSize: 14,))))
