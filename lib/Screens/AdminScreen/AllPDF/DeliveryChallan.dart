@@ -535,7 +535,7 @@ pdf.addPage(pw.Page(
 
                   pw.Container(
                 
-                width: 230,
+                width: 200,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
                     child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeChassisNo"]}", style: pw.TextStyle(fontSize: 14,))))
@@ -557,7 +557,7 @@ pdf.addPage(pw.Page(
 
                   pw.Container(
                 
-                width: 120,
+                width: 170,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
                     child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeEngineNo"]}", style: pw.TextStyle(fontSize: 14,))))
@@ -674,7 +674,7 @@ pdf.addPage(pw.Page(
 
                   pw.Container(
                 
-                width: 120,
+                width: 190,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
                     child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikePaymentDue"]} tk", style: pw.TextStyle(fontSize: 14,))))
@@ -729,10 +729,10 @@ pdf.addPage(pw.Page(
 
                   pw.Container(
                 
-                width: 160,
+                width: 170,
                 decoration:  pw.BoxDecoration(
                 border: pw.Border(bottom: pw.BorderSide(width: 1, style: pw.BorderStyle.dashed))),
-                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeConditionMonth"]} Month", style: pw.TextStyle(fontSize: 14,))))
+                    child: pw.Padding(padding: pw.EdgeInsets.only(bottom: 5, left: 30),child: pw.Text("${SalesData[0]["BikeConditionMonth"]} Day", style: pw.TextStyle(fontSize: 14,))))
 
               ]),
 
