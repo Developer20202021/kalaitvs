@@ -445,7 +445,7 @@ pdf.addPage(pw.Page(
 
 
 
-               pw.Text("Seal", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+              //  pw.Text("Seal", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
                 ]),)
@@ -526,7 +526,7 @@ pdf.addPage(pw.Page(
 
                   children: [
 
-              pw.Text("Signature of owner", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
+              pw.Text("Signature of owner registared dealer", style:pw.TextStyle(fontSize: 8,  color: PdfColor.fromInt(0x000000))),
 
 
 
