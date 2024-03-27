@@ -428,7 +428,7 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
                                             children: [
                                           
 
-                                    Text("Dear Customer, Orthee Bajaj Mart এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}"),
+                                    Text("Dear Customer, KALAI TVS CENTER এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}"),
 
 
                                
@@ -437,7 +437,7 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
                                       ElevatedButton(onPressed: () async{
 
 
-                           String msgTxt = "Dear Customer, Orthee Bajaj Mart এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}";
+                           String msgTxt = "Dear Customer, KALAI TVS CENTER এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}";
                                       
                             final response = await http
                                 .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllDueCustomerInfo[index]["CustomerPhoneNo"]}&message=${msgTxt}'));
@@ -862,7 +862,7 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
           
                               try {
           
-                                    var AdminMsg = "Dear Customer,Orthee Bajaj Mart এ ${DueAmountPayController.text.trim()} টাকা কিস্তি পরিশোধ করেছেন।";
+                                    var AdminMsg = "Dear Customer,KALAI TVS CENTER এ ${DueAmountPayController.text.trim()} টাকা কিস্তি পরিশোধ করেছেন।";
           
           
           

@@ -48,7 +48,7 @@ Future main() async{
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyBmXm4c5IVk9-7g2_ynWv74AwiJiot3NZY", appId: "1:1092346361632:android:28bf6a1c762eda3dda8945", messagingSenderId: "1092346361632", projectId: "ortheebajaj")
+  await Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyB3sduE3GEYU5cs702KT3IYciGmyu1-izE", appId: "1:518943304913:android:bd8a74f195a6c7d36129f0", messagingSenderId: "518943304913", projectId: "kalaitvsapp")
     ,);
 
 
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
-      title: 'M/S ORTHEE BAJAJ MART',
+      title: ' KALAI TVS CENTER',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.aleo().fontFamily,

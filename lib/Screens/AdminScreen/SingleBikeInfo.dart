@@ -1251,7 +1251,7 @@ try {
 
 
 
-    var customerMsg = "Dear Customer,ORTHEE BAJAJ MART থেকে ${BikeBillPay} টাকা পরিশোধ করে ${BikeName} Bike ক্রয় করেছেন। Thank You";
+    var customerMsg = "Dear Customer,KALAI TVS CENTER থেকে ${BikeBillPay} টাকা পরিশোধ করে ${BikeName} Bike ক্রয় করেছেন। Thank You";
 
 
 
@@ -1298,7 +1298,7 @@ Future SendSMSToAdmin(String AdminPhoneNumber, String CustomerPhoneNumber, Strin
 
 
 
-    var AdminMsg = "Dear Admin, ORTHEE BAJAJ MART থেকে ${BikeBillPay} টাকা পরিশোধ করে ${BikeName} Bike ক্রয় করেছেন। Phone no:$CustomerPhoneNumber}";
+    var AdminMsg = "Dear Admin, KALAI TVS CENTER থেকে ${BikeBillPay} টাকা পরিশোধ করে ${BikeName} Bike ক্রয় করেছেন। Phone no:$CustomerPhoneNumber}";
 
 
 

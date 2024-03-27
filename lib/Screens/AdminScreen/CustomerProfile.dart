@@ -1396,7 +1396,7 @@ void dispose() {
 
 
 
-                        var customerMsg = "Dear Customer, From Orthee Bajaj Mart আপনার বিক্রিত ১ টি গাড়ির Ownership পরিবর্তন হয়েছে। ধন্যবাদ";
+                        var customerMsg = "Dear Customer, From KALAI TVS CENTER আপনার বিক্রিত ১ টি গাড়ির Ownership পরিবর্তন হয়েছে। ধন্যবাদ";
 
 
 
@@ -1424,7 +1424,7 @@ void dispose() {
 
 
                         
-                 var NewOwnerMsg = "Dear New Owner, From Orthee Bajaj Mart OwnerShip is Changed Successfully. Thank you.";
+                 var NewOwnerMsg = "Dear New Owner, From KALAI TVS CENTER OwnerShip is Changed Successfully. Thank you.";
 
 
 

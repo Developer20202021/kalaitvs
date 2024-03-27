@@ -82,7 +82,7 @@ class _OfficeDeliveryChallanPDFPreviewState extends State<OfficeDeliveryChallanP
 
 Future<Uint8List> makePdf(List SalesData) async {
 
-final netImage = await networkImage('https://i.ibb.co/SR6tHQt/bajaj-logo.jpg');
+final netImage = await networkImage('https://i.ibb.co/71Kw2KJ/tvs-logo-33710.png');
 
 // final backImage = await networkImage('https://i.ibb.co/yfvj470/pngwing-com.png');
 
@@ -231,8 +231,8 @@ pdf.addPage(pw.Page(
                   child: pw.Column(children: [
 
 
-                  pw.Text("M/S. ORTHEE BAJAJ MART", style:pw.TextStyle(fontSize: 21, fontWeight: pw.FontWeight.bold, font: ttf)),
-                  pw.Text("‡gmvm© A_©x evRvR gvU©", style:pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold, font: Banglattf)),
+                  pw.Text("KALAI TVS CENTER", style:pw.TextStyle(fontSize: 21, fontWeight: pw.FontWeight.bold, font: ttf)),
+                  pw.Text("KvjvB wUwfGm ‡m›Uvi", style:pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold, font: Banglattf)),
                   pw.Center(child: pw.Text("Dealer: Uttara Motors Ltd.", style:pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, font: ttf)),),
 
                   pw.Center(child: pw.Text("Kalai, Joypurhat", style:pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, font: ttf)),),
@@ -808,7 +808,7 @@ pdf.addPage(pw.Page(
 
                     pw.Text("_____________________________"),
 
-                    pw.Text("FOR ORTHEE BAJAJ MART",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: ttf)),
+                    pw.Text("FOR KALAI TVS CENTER",style:pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, font: ttf)),
 
 
                   ]),),

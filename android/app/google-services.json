@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1092346361632",
-    "project_id": "ortheebajaj",
-    "storage_bucket": "ortheebajaj.appspot.com"
+    "project_number": "518943304913",
+    "project_id": "kalaitvsapp",
+    "storage_bucket": "kalaitvsapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092346361632:android:28bf6a1c762eda3dda8945",
+        "mobilesdk_app_id": "1:518943304913:android:bd8a74f195a6c7d36129f0",
         "android_client_info": {
-          "package_name": "com.inansoft.ortheebajaj"
+          "package_name": "com.inansoft.kalaitvs"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBmXm4c5IVk9-7g2_ynWv74AwiJiot3NZY"
+          "current_key": "AIzaSyB3sduE3GEYU5cs702KT3IYciGmyu1-izE"
         }
       ],
       "services": {

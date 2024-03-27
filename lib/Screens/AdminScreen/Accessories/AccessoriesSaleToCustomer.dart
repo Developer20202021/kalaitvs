@@ -405,7 +405,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String AccessoriesSalePrice
 
 try {
 
-   var CustomerMsg = "Dear Customer,ORTHEE BAJAJ MART থেকে ${AccessoriesSalePrice}৳ Product ক্রয় করেছেন। ধন্যবাদ";
+   var CustomerMsg = "Dear Customer,KALAI TVS CENTER থেকে ${AccessoriesSalePrice}৳ Product ক্রয় করেছেন। ধন্যবাদ";
 
 
 

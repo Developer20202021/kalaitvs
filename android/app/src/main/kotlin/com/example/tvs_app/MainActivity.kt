@@ -1,4 +1,4 @@
-package com.inansoft.ortheebajaj
+package com.inansoft.kalaitvs
 
 import io.flutter.embedding.android.FlutterActivity
 
