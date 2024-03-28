@@ -81,9 +81,9 @@ class MyApp extends StatelessWidget {
       title: ' KALAI TVS CENTER',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: GoogleFonts.aleo().fontFamily,
+        fontFamily: GoogleFonts.acme().fontFamily,
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pinkAccent),
         useMaterial3: true,
       ),
       home:LogInScreen()

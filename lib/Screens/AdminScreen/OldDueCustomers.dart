@@ -440,7 +440,7 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
                            String msgTxt = "Dear Customer, KALAI TVS CENTER এ নিয়মিত  কিস্তি পরিশোধ করুন।আপনার বকেয়া ${AllDueCustomerInfo[index]["DueAmount"]}";
                                       
                             final response = await http
-                                .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllDueCustomerInfo[index]["CustomerPhoneNo"]}&message=${msgTxt}'));
+                                .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${AllDueCustomerInfo[index]["CustomerPhoneNo"]}&message=${msgTxt}'));
 
                                     // Navigator.pop(context);
 
@@ -867,7 +867,7 @@ Future<void> getByPhoneNoData(String CustomerPhoneNo) async {
           
           
                                   final response = await http
-                                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllDueCustomerInfo[index]["CustomerPhoneNo"]}&message=${AdminMsg}'));
+                                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${AllDueCustomerInfo[index]["CustomerPhoneNo"]}&message=${AdminMsg}'));
           
                                   if (response.statusCode == 200) {
                                     // If the server did return a 200 OK response,

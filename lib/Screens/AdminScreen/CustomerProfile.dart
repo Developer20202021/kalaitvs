@@ -1401,7 +1401,7 @@ void dispose() {
 
 
                         final CustomerSmsResponse = await http
-                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
 
                        try {
 
@@ -1429,7 +1429,7 @@ void dispose() {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${NewOwnerPhoneNoController.text.trim()}&message=${NewOwnerMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${NewOwnerPhoneNoController.text.trim()}&message=${NewOwnerMsg}'));
 
                             try {
                                 if (response.statusCode == 200) {
@@ -2061,7 +2061,7 @@ void dispose() {
 
 
                         final CustomerSmsResponse = await http
-                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${AllSaleData[i]["CustomerPhoneNumber"]}&message=${customerMsg}'));
 
                        try {
 
@@ -2089,7 +2089,7 @@ void dispose() {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=01919517496&message=${AdminMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=01919517496&message=${AdminMsg}'));
 
                             try {
                                 if (response.statusCode == 200) {

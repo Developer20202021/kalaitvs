@@ -71,7 +71,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
   //                 final response = await http
-  //                     .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=01721915550&message=${AdminMsg}'));
+  //                     .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=01721915550&message=${AdminMsg}'));
 
   //                 if (response.statusCode == 200) {
   //                   // If the server did return a 200 OK response,
@@ -415,7 +415,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
                         final CustomerSmsResponse = await http
-                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+                            .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${CustomerPhoneNumber}&message=${customerMsg}'));
 
                         if (CustomerSmsResponse.statusCode == 200) {
                           // If the server did return a 200 OK response,
@@ -449,7 +449,7 @@ class _CustomerPaymentAddState extends State<CustomerPaymentAdd> {
 
 
                   final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=01919517496&message=${AdminMsg}'));
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=01919517496&message=${AdminMsg}'));
 
                   if (response.statusCode == 200) {
                     // If the server did return a 200 OK response,
@@ -747,7 +747,7 @@ Future SendSMSToCustomer(String CustomerPhoneNumber, String CustomerNID, String 
 
 
   final response = await http
-      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=1024519252916991043295858a1b3ac3cb09ae52385b1489dff95&to=${CustomerPhoneNumber}&message=${customerMsg}'));
+      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100652154441711641284984b1e50c89ba56b8fc76695c0732dc7&to=${CustomerPhoneNumber}&message=${customerMsg}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
